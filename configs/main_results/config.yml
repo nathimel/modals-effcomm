@@ -1,0 +1,31 @@
+# modals specific parameters
+forces: 2
+force_names: 
+  - weak
+  - strong
+flavors: 3
+flavor_names:
+  - epistemic
+  - deontic
+  - circumstantial
+utility_function: 'half-credit'
+language_of_thought_primitives:
+  - conjunction
+  - disjunction
+  - negation
+
+# other experiment parameters
+maximum_language_size: 5 
+evolutionary_alg:
+  - seed_population_size: 200
+  - num_generations: 20
+  - max_mutations: 3
+  - processes: 6
+
+# save paths
+path_to_save_meaning_space: 'meaning_space.json'
+path_to_save_expressions: 'expresions.json'
+path_to_save_artificial_languages: 'output/main_results/languages/artificial.json'
+path_to_save_natural_languages: 'output/main_results/languages/natural.json'
+path_to_save_frontier: 'output/main_results/languages/frontier.json'
+dir_path_to_save_analysis: 'output/main_results/languages/analysis'
