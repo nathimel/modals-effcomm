@@ -1,18 +1,19 @@
 #!/bin/sh
 
-# Usage: ./scripts/main_results/run.sh path-to-config  
-# Example: ./scripts/main_results/run.sh configs/main_results/config.yml 
+# Usage: ./scripts/main_results/run.sh path_to_config path_to_save_meaning_space 
+# Example: ./scripts/main_results/run.sh configs/main_results/config.yml outputs/main_results/meaning_space.yml
 
-if test $# -lt 1
+if test $# -lt 2
 then
-    echo "Usage: ./scripts/main_results/run.sh path-to-config"
+    echo "Usage: ./scripts/main_results/run.sh path_to_config path_to_save_meaning_space"
     exit 1
 fi
 
 
 CONFIG=$1
+MEANING_SPACE_SAVE_FILE=$2
 
-python3 src/build_meaning_space.py $CONFIG #not obvious this is necessary
+python3 src/build_meaning_space.py $CONFIG $MEANING_SPACE_SAVE_FILE
 
 python3 src/generate_expressions.py $CONFIG
 
