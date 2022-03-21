@@ -1,5 +1,4 @@
-# An Efficient Communication Analysis of Modal Typology
----
+# An Efficient Communication Analysis of Modal Typology  
 This code accompanies XXX.
 
 This repo has the following structure:  

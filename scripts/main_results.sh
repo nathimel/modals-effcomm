@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Usage: ./scripts/main_results/run.sh path_to_config path_to_save_meaning_space 
-# Example: ./scripts/main_results/run.sh configs/main_results/config.yml outputs/main_results/meaning_space.yml
+# Usage: ./scripts/main_results/run.sh path_to_config path_to_save_meaning_space path_to_save_expressions
+# Example: ./scripts/main_results/run.sh configs/main_results/config.yml outputs/main_results/meaning_space.yml outputs/main_results/expressions.yml
 
 if test $# -lt 2
 then
@@ -12,10 +12,11 @@ fi
 
 CONFIG=$1
 MEANING_SPACE_SAVE_FILE=$2
+EXPRESSIONS_SAVE_FILE=$3
 
 python3 src/build_meaning_space.py $CONFIG $MEANING_SPACE_SAVE_FILE
 
-python3 src/generate_expressions.py $CONFIG
+python3 src/generate_expressions.py $CONFIG $EXPRESSIONS_SAVE_FILE
 
 python3 src/sample_languages.py $CONFIG
 
