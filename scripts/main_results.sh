@@ -16,7 +16,7 @@ EXPRESSIONS_SAVE_FILE=$3
 
 python3 src/build_meaning_space.py $CONFIG $MEANING_SPACE_SAVE_FILE
 
-python3 src/generate_expressions.py $CONFIG $EXPRESSIONS_SAVE_FILE
+python3 src/generate_expressions.py $CONFIG $MEANING_SPACE_SAVE_FILE $EXPRESSIONS_SAVE_FILE
 
 python3 src/sample_languages.py $CONFIG
 

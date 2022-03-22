@@ -9,28 +9,32 @@
     point = Meaning_Point('foo')
     space = Meaning_Space({point})
 """
+from altk.language.language import Meaning
 
-class Meaning_Space:
+class Meaning_Space(Meaning):
     """A container for meaning points.
 
     Attributes:
         points: a set containing meaning point names or indices as keys and Meaning_Points as values.
     """
     
-    def __init__(self, points=None):
+    def __init__(self, points):
+        # super().__init__()
         self.__points = set()
-        self.setpoints(points)
+        self.set_points(points)
+        # raise NotImplementedError()
 
-    def setpoints(self, points: set):
+    def set_points(self, points: set):
         self.__points = points
-    def getpoints(self):
+    def get_points(self):
         return self.__points
-    points=property(getpoints, setpoints)
+    points=property(get_points, set_points)
 
-    def __str__(self):
-        raise NotImplementedError()
+    def __len__(self):
+        return len(self.get_points())
 
-class Meaning_Point:
+
+class Meaning_Point(Meaning):
     """An object of reference.
 
     Examples of meaning points include 'weak+deontic' meaning for modals, or 
@@ -40,21 +44,20 @@ class Meaning_Point:
         name: a string that uniquely identifies the meaning point.
     """
     def __init__(self, name=None):
+        # super().__init__()
         self.__name = str()
         self.__data = None
-        self.setname(name)
+        self.set_name(name)
+        # raise NotImplementedError()
 
-    def setname(self, name):
+    def set_name(self, name):
         self.__name = name
-    def getname(self):
+    def get_name(self):
         return self.__name
-    name=property(getname, setname)
+    name=property(get_name, set_name)
 
-    def setdata(self, data):
+    def set_data(self, data):
         self.__data = data
-    def getdata(self):
+    def get_data(self):
         return self.__data
-    data=property(getdata, setdata)
-
-    def __str__(self):
-        raise NotImplementedError
+    data=property(get_data, set_data)

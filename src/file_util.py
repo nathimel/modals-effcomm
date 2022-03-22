@@ -1,5 +1,6 @@
 import os
-
+import yaml
+from modal_meaning import Modal_Meaning_Space
 
 # save paths
 # I have a design decision to make. Either I fully specify the fullpath every time, or assume the existence of certain directory structure for the project.
@@ -13,3 +14,8 @@ import os
 # path_to_save_frontier: 'output/main_results/languages/frontier.yml'
 # dir_path_to_save_analysis: 'output/main_results/languages/analysis'
 
+def load_modal_meaning_space(fn: str)->Modal_Meaning_Space:
+    """Read and the Modal_Meaning_Space object for the experiment saved in a .yml file."""
+    with open(fn, "r") as stream:
+        mms = yaml.safe_load(stream)
+    return mms
