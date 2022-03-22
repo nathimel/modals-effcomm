@@ -1,4 +1,4 @@
-"""Functions to support efficient communication analyses of languages.
+"""Functions and classes to support efficient communication analyses of languages.
 
     Elaboration.
 
@@ -18,4 +18,4 @@ def optimality():
     pass
 
 def naturalness():
-    pass
+    pass    

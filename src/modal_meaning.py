@@ -90,8 +90,6 @@ class Modal_Meaning_Space(Universe):
         
         since the latter suggests defining a modal meaning as a more general distribution over the space and there are infinitely many.
         """
-        print(self.forces, self.flavors)
-
         shape = (len(self.forces), len(self.flavors))
         arrs = [
             np.array(i).reshape(shape) for i in product([0, 1], repeat=len(self.get_objects()))]
@@ -125,17 +123,25 @@ class Modal_Meaning(Meaning):
         points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
 
     Example usage:
+        >>> m = Modal_Meaning({'weak+epistemic'}, space)
     """
 
     def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
-        self.points = points
+        self.__points = set()
+        self.set_points(points)
         self.meaning_space = meaning_space
+
+    def set_points(self, points: set):
+            self.__points = points
+    def get_points(self):
+            return self.__points
+    points=property(get_points, set_points)
 
     def points_to_array(self):
         """Converts the set of points to a numpy array.
 
         Example usage: 
-            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, ms)
+            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
             >>> m.points_to_array()
             [[1 1 0],
              [1 0 0]]
@@ -151,7 +157,7 @@ class Modal_Meaning(Meaning):
         """Converts to set of points to a pandas DataFrame.
 
         Example usage:
-            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, ms)
+            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
             >>> m.points_to_df()
                     epistemic  deontic  circumstantial
             weak            1        1               0

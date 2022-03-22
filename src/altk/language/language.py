@@ -38,7 +38,6 @@ class Expression:
         self.__meaning = None
         self.set_form(form)
         self.set_meaning(meaning)
-        raise NotImplementedError()
     
     def set_form(self,form):
         self.__form = form

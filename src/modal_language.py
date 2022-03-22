@@ -56,7 +56,16 @@ class Modal_Expression(Expression):
 
     """A container for modal forms and meanings."""
 
-    def __init__(self, form, meaning):
+    def __init__(self, form, meaning, lot_expression):
         super().__init__(form, meaning)
+        self.__lot_expression = str()
+        self.set_lot_expression(lot_expression)
+    
+    def set_lot_expression(self, e):
+        self.__lot_expression = e
+    def get_lot_expression(self):
+        return self.__lot_expression
 
+    def __str__(self) -> str:
+        return "Modal_Expression: [\nform={0}\nmeaning={1}\nlot_expression={2}]".format(self.get_form(), self.get_meaning(), self.get_lot_expression())
     
