@@ -1,4 +1,8 @@
-"""A program to build the modal meaning space for an efficient communication experiment."""
+"""A program to build the modal meaning space for an efficient communication experiment.
+
+    Load the configurations from the config.yml specified in command-line args, and automaticaly create modal force and flavor names if none specified. Save the modal meaning space to a .yml file for use in the rest of the experiment.
+
+"""
 
 import sys
 import yaml
