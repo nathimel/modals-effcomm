@@ -579,6 +579,10 @@ def estimate_shortest_lot_expressions(configs: dict, meanings: list[Modal_Meanin
 
     Returns:
     """
+
+    
+
+
     arrs = []
     results = []
     for meaning in meanings:

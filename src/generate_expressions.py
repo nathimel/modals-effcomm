@@ -7,10 +7,8 @@ import sys
 import yaml
 import itertools
 import numpy as np
-from modal_meaning import Modal_Meaning, Modal_Meaning_Point, Modal_Meaning_Space
-from modal_expression import Modal_Expression
-from heuristic import estimate_shortest_lot_expressions
-from file_util import load_modal_meaning_space, load_configs
+from modal_meaning import Modal_Meaning_Space
+from file_util import load_space, load_configs
 
 def generate_expressions(space: Modal_Meaning_Space):
     """Short description.
@@ -22,30 +20,18 @@ def generate_expressions(space: Modal_Meaning_Space):
     Returns:
         expressions: a list of Modal_Expressions
     """
-    possible_meanings = enumerate_possible_meanings(space)
-    forms = estimate_shortest_lot_expressions(possible_meanings)
+    possible_meanings = [x for x in space.generate_meanings()]
+
+
+    # expressions = [Modal_Expression(form=, meaning=, lot_expression=,) for x in meanings]
+
+    # for i, meaning in enumerate(space.generate_meanings()):
+    #     form = "artificial_{}".format(i)
+    #     lot_expression = heuristic(meaning) #should be parallelized
+    #     e = Expresion()
+
 
     return []
-
-
-def enumerate_possible_meanings(space: Modal_Meaning_Space):
-    """Enumerate the possible subsets of the meaning space, 2^|space| total.
-
-    Restrict to the case when the nonzero probability meaning points are equally likely and sum to 1. E.g, if just one meaning point is possible, it has probability 1. This is equivalent to enumerating the bit-arrays, or the powerset of the meaning space.
-
-    Args:
-        space: the modal meaning space.
-
-    Returns:
-        meanings: a list of the possible modal meanings.
-    """
-    results = [
-        np.array(i) for i in itertools.product([0, 1], repeat=len(space))
-        ]
-    results = results[1:] # remove the empty meaning
-    distributions = [arr/arr.sum() for arr in results]
-    meanings = [Modal_Meaning({k:v for k,v in list(zip(space.get_points(), arr))}) for arr in distributions]
-    return meanings
 
 
 def save_expressions(fn, expressions):
@@ -63,8 +49,8 @@ def main():
     expression_save_fn = sys.argv[3]
 
     configs = load_configs(config_fn)
-    mms = load_modal_meaning_space(meaning_space_fn)
-    expressions = generate_expressions(configs, mms)
+    space = load_space(meaning_space_fn)
+    expressions = generate_expressions(space)
     save_expressions(expression_save_fn, expressions)
 
 if __name__ == "__main__":

@@ -3,6 +3,9 @@
 The base object of altk is a Language. This is intended to model a language scientifically (especially parts of its semantics) and to enable various use cases. Most notably, experiments such as analyses of efficient communication, learnability, automatic corpus generation for ML probing, etc.
 """
 
+from abc import abstractmethod
+
+
 class Language:
 
     """Minimally contains Expression objects."""
@@ -17,6 +20,14 @@ class Language:
     def get_expressions(self):
         return self.__expressions
     expressions=property(get_expressions, set_expressions)
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
+
+    @abstractmethod
+    def __eq__(self, __o: object) -> bool:
+        pass
     
 class Expression:
 
@@ -41,12 +52,10 @@ class Expression:
         return self.__meaning
     meaning=property(get_meaning, set_meaning)
 
-class Form:
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
 
-    def __init__(self):
-        raise NotImplementedError
-
-class Meaning:
-
-    def __init__(self):
-        raise NotImplementedError
+    @abstractmethod
+    def __eq__(self, __o: object) -> bool:
+        pass

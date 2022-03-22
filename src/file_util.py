@@ -14,11 +14,17 @@ from modal_meaning import Modal_Meaning_Space
 # path_to_save_frontier: 'output/main_results/languages/frontier.yml'
 # dir_path_to_save_analysis: 'output/main_results/languages/analysis'
 
-def load_modal_meaning_space(fn: str)->Modal_Meaning_Space:
+def save_space(fn, space: Modal_Meaning_Space):
+    """Saves the modal meaning space to a .yml file."""
+    space = {'forces': space.forces, 'flavors': space.flavors}
+    with open(fn, 'w') as outfile:
+        yaml.dump(space, outfile)
+
+def load_space(fn: str)->Modal_Meaning_Space:
     """Read and the Modal_Meaning_Space object for the experiment saved in a .yml file."""
     with open(fn, "r") as stream:
-        mms = yaml.safe_load(stream)
-    return Modal_Meaning_Space(mms)
+        d = yaml.safe_load(stream)
+    return Modal_Meaning_Space(d['forces'], d['flavors'])
 
 def load_configs(fn: str)->dict:
     """Load the configs .yml file as a dict."""

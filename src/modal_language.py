@@ -1,6 +1,6 @@
 import altk
-from altk.language.language import Form, Expression, Language
-from modal_meaning import Modal_Meaning_Space, Modal_Meaning_Point
+from altk.language.syntax import Form
+from altk.language.language import Expression
 
 ##############################################################################
 # Forms
@@ -48,15 +48,6 @@ class Natural_Language_Modal_Form(Modal_Form):
         return self.__natural_form
     natural_form=property(get_natural_form, set_natural_form)
 
-##############################################################################
-# Meaning
-##############################################################################
-class Modal_Meaning(Modal_Meaning_Space):
-    """"A modal meaning is a set of Modal_Meaning_Points it can be used to communicate.
-    """
-
-    def __init__(self, points):
-        super().__init__(points)
 
 ##############################################################################
 # Expression
