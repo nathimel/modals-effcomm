@@ -3,6 +3,7 @@
 import sys
 import yaml
 from modal_meaning import Modal_Meaning_Point, Modal_Meaning_Space
+from file_util import load_configs
 
 def build_default_force_names(num_forces: int):
     """Construct default names for the modal forces.
@@ -27,7 +28,7 @@ def build_default_flavor_names(num_flavors: int):
     return flavor_names
 
 
-def fill_meaning_point_names(num_forces: int, num_flavors: int, force_names=None, flavor_names=None):
+def fill_meaning_point_names(num_forces: int, num_flavors: int, force_names=None, flavor_names=None)->set:
     """
     Loads the number and names of expressible modal forces and modal flavors (conversational backgrounds) from the config file. Constructs names for
     the meanings if all force and flavor names not fully specified.
@@ -64,19 +65,6 @@ def fill_meaning_point_names(num_forces: int, num_flavors: int, force_names=None
 
     return point_names
 
-
-def build_space(points):
-    """Builds the Modal_Meaning_Space used for effcomm analysis.
-
-    Args:
-        points: a set of the meaning point names
-
-    Returns:
-        space: a modal meaning space to be used by every langauge in the experiment.
-    """
-    space = Modal_Meaning_Space({Modal_Meaning_Point(name=point) for point in points})
-    return space
-
 def save_space(fn, space: Modal_Meaning_Space):
     """Saves the modal meaning space to a .yml file."""
     with open(fn, 'w') as outfile:
@@ -90,15 +78,15 @@ def main():
 
     config_fn = sys.argv[1]
     path_to_save_meaning_space = sys.argv[2]
-    with open(config_fn, "r") as stream:
-        configs = yaml.safe_load(stream)
+    configs = load_configs(config_fn)
     
-    space = fill_meaning_point_names(
+    point_names = fill_meaning_point_names(
         configs['num_forces'], 
         configs['num_flavors'], 
         configs['force_names'], 
         configs['flavor_names']
     )
+    space = Modal_Meaning_Space(point_names)
     save_space(path_to_save_meaning_space, space)
 
 if __name__ == "__main__":

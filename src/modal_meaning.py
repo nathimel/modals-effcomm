@@ -1,8 +1,10 @@
-from ssl import get_default_verify_paths
-from altk.effcomm.meaning import Meaning_Point, Meaning_Space
+from altk.effcomm.meaning import Meaning_Point, Meaning_Space, Distribution_Meaning
 
 class Modal_Meaning_Space(Meaning_Space):
-    """A set representing the possible modal (force, flavor) pairs.
+    """Represents the set of possible modal (force, flavor) pairs.
+
+    Attributes:
+        points:
 
     Example usage:
         >>> points = {'weak+epistemic', 'weak+deontic'}
@@ -10,16 +12,21 @@ class Modal_Meaning_Space(Meaning_Space):
         >>> space = Modal_Meaning_Space(mps)
     """
 
-
     def __init__(self, points):
         super().__init__(points)
     
     def __str__(self):
-        points = ",\n".join([str(point) for point in self.getpoints()])
-        space = "Modal_Meaning_Space: [\n{}]".format(points)
+        points = ",\n".join([str(point) for point in self.get_points()])
+        space = "Modal_Meaning_Space: [\n{}\n]".format(points)
         return space
 
 class Modal_Meaning_Point(Meaning_Point):
+
+    """A meaning point is a (force,flavor) pair.
+
+    Attributes:
+        name:
+    """
 
     def __init__(self, name=None):
         super().__init__(name=name)
@@ -35,9 +42,12 @@ class Modal_Meaning_Point(Meaning_Point):
         return "Point: (name={0}, data={1})".format(
         str(self.get_name()), str(self.get_data()))
 
-class Modal_Meaning(Modal_Meaning_Space):
+class Modal_Meaning(Distribution_Meaning):
     """"A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
     
+    Attributes:
+        distribution:
+
     Example usage:
         >>> points = {'weak+epistemic', 'weak+deontic'}
         >>> mps = {Modal_Meaning_Point(name=point) for point in points})
@@ -52,14 +62,7 @@ class Modal_Meaning(Modal_Meaning_Space):
     """
 
     def __init__(self, distribution):
-        self.__distribution = dict()
-        self.set_distribution(distribution)
-
-    def set_distribution(self, distribution):
-        self.__distribution = distribution
-    def get_distribution(self):
-        return self.__distribution
-    distribution=property(get_distribution, set_distribution)
+        super().__init__(distribution)
 
     def __str__(self):
         entries = ["{0}: {1}".format(k, v) for k,v in self.get_distribution().items()]

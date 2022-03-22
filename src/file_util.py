@@ -18,4 +18,10 @@ def load_modal_meaning_space(fn: str)->Modal_Meaning_Space:
     """Read and the Modal_Meaning_Space object for the experiment saved in a .yml file."""
     with open(fn, "r") as stream:
         mms = yaml.safe_load(stream)
-    return mms
+    return Modal_Meaning_Space(mms)
+
+def load_configs(fn: str)->dict:
+    """Load the configs .yml file as a dict."""
+    with open(fn, "r") as stream:
+        configs = yaml.safe_load(stream)
+    return configs

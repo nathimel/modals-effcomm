@@ -11,7 +11,7 @@
 """
 from altk.language.language import Meaning
 
-class Meaning_Space(Meaning):
+class Meaning_Space:
     """A container for meaning points.
 
     Attributes:
@@ -19,10 +19,8 @@ class Meaning_Space(Meaning):
     """
     
     def __init__(self, points):
-        # super().__init__()
         self.__points = set()
         self.set_points(points)
-        # raise NotImplementedError()
 
     def set_points(self, points: set):
         self.__points = points
@@ -34,7 +32,7 @@ class Meaning_Space(Meaning):
         return len(self.get_points())
 
 
-class Meaning_Point(Meaning):
+class Meaning_Point:
     """An object of reference.
 
     Examples of meaning points include 'weak+deontic' meaning for modals, or 
@@ -44,11 +42,9 @@ class Meaning_Point(Meaning):
         name: a string that uniquely identifies the meaning point.
     """
     def __init__(self, name=None):
-        # super().__init__()
         self.__name = str()
         self.__data = None
         self.set_name(name)
-        # raise NotImplementedError()
 
     def set_name(self, name):
         self.__name = name
@@ -61,3 +57,21 @@ class Meaning_Point(Meaning):
     def get_data(self):
         return self.__data
     data=property(get_data, set_data)
+
+class Distribution_Meaning(Meaning):
+    """A distribution over points in the meaning space.
+    
+    Attributes:
+        distribution:
+    
+    """
+
+    def __init__(self, distribution):
+        self.__distribution = dict()
+        self.set_distribution(distribution)
+
+    def set_distribution(self, distribution):
+        self.__distribution = distribution
+    def get_distribution(self):
+        return self.__distribution
+    distribution=property(get_distribution, set_distribution)
