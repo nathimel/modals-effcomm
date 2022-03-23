@@ -1,3 +1,14 @@
+"""Classes and functions for defining a Language of Thought for modals.
+
+This representation language is a hypothesis about how to measure the cognitive complexity of a natural language modal. Details about the LoT and the heuristic algorithm for finding a modal's minimum length description can be found at XXX.
+
+    Typical usage example:
+
+    mlot = Modal_Language_of_Thought(space)
+    meanings = mlot.minimum_lot_descriptions(meanings)
+"""
+
+
 import sys
 import numpy as np
 from nltk.tree import *
@@ -11,11 +22,17 @@ from modal_meaning import Modal_Meaning, Modal_Meaning_Space
 class ExpressionTree:
 
     def __init__(self, node, children=[]):
-        """
-        Construct an expression tree (E.T.) wrapper for nltk Tree.
-        The following are valid expression trees:
-        - (Atom)
-        - (Operator (E.T.) (E.T.))
+        """Construct an expression tree (E.T.). 
+        
+        This class is a wrapper for nltk Tree, which works better with a modal LoT. 
+        
+            The following are valid expression trees:
+            - (Atom)
+            - (Operator (E.T.) (E.T.))
+        
+        Args:
+            - node: an nltk.tree Tree, Nonterminal or a string to recursively repackage into an ExpressionTree.
+            - children: list of nltk.tree or Nonterminal objects.
         """
 
         # Addition is at least binary
@@ -78,17 +95,24 @@ class ExpressionTree:
 """Class for defining representation language primitives and running a minimum description length algorithm.
 
     Example usage:
-        >>> mlot = Modal_Language_of_Thought(space)
-        >>> expressions = mlot.minimum_descriptions(meanings)
-"""
 
+    mlot = Modal_Language_of_Thought(space)
+    expressions = mlot.minimum_descriptions(meanings)
+"""
 
 class Modal_Language_of_Thought:
 
-    def __init__(self, meaning_space: Modal_Meaning_Space, operators: list[str]):
+    def __init__(self, meaning_space: Modal_Meaning_Space, negation=False):
+        """Initialize the LoT, which depends on the number of forces and flavors.
+
+        Args:
+            meaning_space: the modal meaning space
+
+            operators: a list of strings representing the operators to use in the LoT. E.g., ['negation']
+        """
         self.forces = meaning_space.forces
         self.flavors = meaning_space.flavors
-        self.operators = operators
+        self.contains_negation = negation
 
 
     def minimum_lot_descriptions(self, meanings: list[Modal_Meaning])->list:
@@ -135,8 +159,7 @@ class Modal_Language_of_Thought:
             relative_operations: a list of functions from ExpressionTree to ExpressionTree, parametrized by an atom.
 
         Returns: 
-            shortest: the string representation of the shortest
-        expression found.
+            shortest: the ExpressionTree representing the shortest expression found.
         """
 
         atoms = [ExpressionTree("0"), ExpressionTree("1")] + [ExpressionTree(x) for x in self.forces] + [ExpressionTree(x) for x in self.flavors]
@@ -185,7 +208,7 @@ class Modal_Language_of_Thought:
             ]
         relative_operations = [self.__distr_m_over_a]
 
-        if 'negation' in self.operators:
+        if self.contains_negation:
             e_c = self.__array_to_dnf(arr, complement=True)        
             simple_operations.append(self.__sum_complement)
             results = [
@@ -208,19 +231,20 @@ class Modal_Language_of_Thought:
 
     def __array_to_dnf(self, arr: np.ndarray, complement=False)->ExpressionTree:
         """
-        Creates a Disjunctive Normal Form (Sum of Products)
-        ExpressionTree of nonzero array entries.
-        [[1,1,1],
-        [1,1,1]]
-        =>
-        (+ (
-            * Q_1 f_1) 
-            (* Q_1 f_2) 
-            (* Q_1 f_3) 
-            (* Q_2 f_1) 
-            (* Q_2 f_2) 
-            (* Q_2 f_3)
-            )
+        Creates a Disjunctive Normal Form (Sum of Products) ExpressionTree of nonzero array entries. 
+
+        The followin is an illustration
+            [[1,1,1],
+            [1,1,1]]
+            =>
+            (+ (
+                * Q_1 f_1) 
+                (* Q_1 f_2) 
+                (* Q_1 f_3) 
+                (* Q_2 f_1) 
+                (* Q_2 f_2) 
+                (* Q_2 f_3)
+                )
         """
         # Special case: 0
         if np.count_nonzero(arr) == 0:
@@ -400,7 +424,9 @@ class Modal_Language_of_Thought:
     def __flavor_cover(self, ET: ExpressionTree)->ExpressionTree:
         """
         Replace the sum of all flavors with multiplicative identity.
-            \sum_{i=1}^{|flavors|}(flavor_i) = 1
+        If $n=$ num_flavors, and $f_i$ is the $i$-th flavor,
+
+            $\sum_{i=1}^{n}(f_i) = 1$
         """
         # Unwrap atoms and check for array cover.
         if (ET.tree().label() == Nonterminal("+")

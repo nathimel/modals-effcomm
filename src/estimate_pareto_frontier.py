@@ -1,0 +1,1 @@
+"""Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off."""

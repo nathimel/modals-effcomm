@@ -14,9 +14,9 @@ class Modal_Meaning_Space(Universe):
         df: a pandas DataFrame representing the table.
 
     Example usage:
-        >>> points = {'weak+epistemic', 'weak+deontic'}
-        >>> space = Modal_Meaning_Space(points)
-        >>> space
+        points = {'weak+epistemic', 'weak+deontic'}
+        space = Modal_Meaning_Space(points)
+        space
         
     """
 
@@ -26,8 +26,8 @@ class Modal_Meaning_Space(Universe):
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
 
         Args:
-            forces: a set of the modal force names
-            flavors: a set of the modal flavor names
+            - forces: a set of the modal force names
+            - flavors: a set of the modal flavor names
         """
         self.forces = list(forces)
         self.flavors = list(flavors)
@@ -39,13 +39,14 @@ class Modal_Meaning_Space(Universe):
         """Converts a force name to a table row index.
         
         Args:
-            force: the name of the modal force
+            - force: the name of the modal force
         Returns:
-            index: an integer representing the row of the table of modal variation corresponding to the force passed.
+            - index: an integer representing the row of the table of modal variation corresponding to the force passed.
 
         Example usage:
-            >>> space = Modal_Meaning_Space({'weak'}, {'epistemic'})
-            >>> space.force_to_index('weak')
+            
+            space = Modal_Meaning_Space({'weak'}, {'epistemic'})
+            space.force_to_index('weak')
             0
         """
         return self.forces.index(force)
@@ -54,13 +55,14 @@ class Modal_Meaning_Space(Universe):
         """Converts a flavor name to a table row index.
         
         Args:
-            flavor: the name of the modal force
+            - flavor: the name of the modal force
         Returns:
-            index: an integer representing the row of the table of modal variation corresponding to the force passed.
+            - index: an integer representing the row of the table of modal variation corresponding to the force passed.
 
         Example usage:
-            >>> space = Modal_Meaning_Space({'weak'}, {'epistemic'})
-            >>> space.force_to_index('epistemic')
+            
+            space = Modal_Meaning_Space({'weak'}, {'epistemic'})
+            space.force_to_index('epistemic')
             0
         """
         return self.flavors.index(flavor)
@@ -102,7 +104,7 @@ class Modal_Meaning_Space(Universe):
         """Converts a numpy array to a set of points.
 
         Args:
-            a: numpy array representing a modal meaning.
+            - a: numpy array representing a modal meaning.
 
         Raises: 
             ValueError: if the meaning space doesn't match the array shape.axis 0 (rows) are forces, axis 1 (columns) are flavors.
@@ -120,10 +122,11 @@ class Modal_Meaning(Meaning):
     """"A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
     
     Attributes:
-        points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
+        - points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
 
     Example usage:
-        >>> m = Modal_Meaning({'weak+epistemic'}, space)
+
+        m = Modal_Meaning({'weak+epistemic'}, space)
     """
 
     def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
@@ -141,10 +144,14 @@ class Modal_Meaning(Meaning):
         """Converts the set of points to a numpy array.
 
         Example usage: 
-            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
-            >>> m.points_to_array()
+
+            m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
+            m.points_to_array()
             [[1 1 0],
              [1 0 0]]
+
+        Returns:
+            np.ndarray: the array representation of the points instantiated on the modal table of variation
         """
         a = np.array(self.meaning_space.arr)
         for point in self.points:
@@ -157,11 +164,15 @@ class Modal_Meaning(Meaning):
         """Converts to set of points to a pandas DataFrame.
 
         Example usage:
-            >>> m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
-            >>> m.points_to_df()
+            
+            m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
+            m.points_to_df()
                     epistemic  deontic  circumstantial
             weak            1        1               0
             strong          1        0               0
+
+        Returns:
+            pd.DataFrame: the dataframe representation of the points instantiated on the modal table of variation
         """
         return pd.DataFrame(
             data=self.points_to_array(), 

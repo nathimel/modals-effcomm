@@ -1,60 +1,18 @@
-import altk
-from altk.language.syntax import Form
 from altk.language.language import Expression
-
-##############################################################################
-# Forms
-##############################################################################
-
-class Modal_Form(Form):
-    """Modals are given forms identified with their shortest LoT expressions.
-    
-    Example usage for hypothetical 'mought': 
-        >>> form = "(+ (* (weak ) (epistemic ) ) (* (strong ) (deontic ) ) )"
-        >>> modal_form = Modal_Form(form)
-
-    """
-    def __init__(self, form):
-        self.__form = str()
-        self.set_form(form)
-    
-    def set_form(self, f):
-        self.__form = f
-    def get_form(self):
-        return self.__form
-    form=property(get_form, set_form)
-
-    def __str__(self):
-        return str(self.__form)
-
-class Natural_Language_Modal_Form(Modal_Form):
-
-    """Natural language modals additionally store their actual linguistic forms.
-
-    Examples for English 'might': 
-        >>> lot_form = "(* (weak ) (epistemic ))"
-        >>> actual_form = "might"
-        >>> might = Natural_Language_Modal_Form(lot_form, actual_form)
-    """
-
-    def __init__(self, form, natural_form):
-        super().__init__(form)
-        self.__natural_form = str()
-        self.set_natural_form(natural_form)
-
-    def set_natural_form(self, f):
-        self.__natural_form = f
-    def get_natural_form(self):
-        return self.__natural_form
-    natural_form=property(get_natural_form, set_natural_form)
-
 
 ##############################################################################
 # Expression
 ##############################################################################
 class Modal_Expression(Expression):
 
-    """A container for modal forms and meanings."""
+    """A container for modal forms, meanings and other data.
+    
+        It is useful to additionally store the modal's shortest LoT description, as well as the complexity associated with this description. For semantic universals formulated in at the level of individual modal lexical items, e.g. the Independence of Force and Flavors, satisfaction of such universals is also stored.
+
+        Example usage:
+            
+            e = Modal_Expression('might', {'weak+epistemic'}, '(* (weak ) (epistemic ))')
+    """
 
     def __init__(self, form, meaning, lot_expression):
         super().__init__(form, meaning)
