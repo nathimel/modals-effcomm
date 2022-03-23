@@ -10,10 +10,10 @@ import sys
 import yaml
 import itertools
 import numpy as np
-from modal_meaning import Modal_Meaning_Space
-from modal_language_of_thought import Modal_Language_of_Thought
-from modal_language import Modal_Expression, Modal_Language, is_iff
-from file_util import load_configs, load_expressions, save_languages
+from modals.modal_meaning import Modal_Meaning_Space
+from modals.modal_language_of_thought import Modal_Language_of_Thought
+from modals.modal_language import Modal_Expression, Modal_Language, is_iff
+from misc.file_util import load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
 
 def generate_languages(expressions: list[Modal_Expression], configs: dict) -> list[Modal_Language]:

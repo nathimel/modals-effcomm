@@ -13,7 +13,7 @@ import sys
 import numpy as np
 from nltk.tree import *
 from nltk.grammar import *
-from modal_meaning import Modal_Meaning, Modal_Meaning_Space
+from modals.modal_meaning import Modal_Meaning, Modal_Meaning_Space
 
 ##############################################################################
 # ExpressionTree

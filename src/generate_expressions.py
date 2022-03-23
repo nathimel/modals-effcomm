@@ -8,10 +8,10 @@ import sys
 import yaml
 import itertools
 import numpy as np
-from modal_meaning import Modal_Meaning_Space
-from modal_language_of_thought import Modal_Language_of_Thought
-from modal_language import Modal_Expression
-from file_util import load_space, load_configs, save_expressions
+from modals.modal_meaning import Modal_Meaning_Space
+from modals.modal_language_of_thought import Modal_Language_of_Thought
+from modals.modal_language import Modal_Expression
+from misc.file_util import load_space, load_configs, save_expressions
 
 def generate_expressions(space: Modal_Meaning_Space, configs: dict):
     """Short description.

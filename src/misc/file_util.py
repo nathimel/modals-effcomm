@@ -1,6 +1,6 @@
 import yaml
-from modal_meaning import Modal_Meaning_Space, Modal_Meaning
-from modal_language import Modal_Expression, Modal_Language
+from modals.modal_meaning import Modal_Meaning_Space, Modal_Meaning
+from modals.modal_language import Modal_Expression, Modal_Language
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs

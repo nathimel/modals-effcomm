@@ -6,8 +6,8 @@
 
 import sys
 import yaml
-from modal_meaning import Modal_Meaning_Space
-from file_util import load_configs, save_space
+from modals.modal_meaning import Modal_Meaning_Space
+from misc.file_util import load_configs, save_space
 
 def build_default_force_names(num_forces: int):
     """Construct default names for the modal forces.
