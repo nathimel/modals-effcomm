@@ -17,6 +17,15 @@ from file_util import load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
 
 def generate_languages(expressions: list[Modal_Expression], configs: dict) -> list[Modal_Language]:
+    """Generate languages by randomly sampling bags of expressions.
+
+    There is nothing to prevent repeat bags from being sampled.
+
+    Args:
+        - expressions: a list of the possible modal expressions to sample from
+
+        - configs: the configurations dictionary loaded from .yml file.
+    """
 
     lang_size = configs['maximum_language_size']
     sample_size = configs['sample_size']
