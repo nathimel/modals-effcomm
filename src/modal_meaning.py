@@ -115,12 +115,14 @@ class Modal_Meaning_Space(Universe):
         return { "{0}+{1}".format(self.forces[pair[0]], self.flavors[pair[1]]) for pair in np.argwhere(a)}
 
     def __str__(self):
-        return str(self.get_df())
+        return str(self.arr())
 
     
 class Modal_Meaning(Meaning):
     """"A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
     
+    TODO: Design to be immutable.
+
     Attributes:
         - points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
 
@@ -132,7 +134,7 @@ class Modal_Meaning(Meaning):
     def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
         self.__points = set()
         self.set_points(points)
-        self.meaning_space = meaning_space
+        self.__meaning_space = meaning_space
 
     def set_points(self, points: set):
             self.__points = points
@@ -140,7 +142,11 @@ class Modal_Meaning(Meaning):
             return self.__points
     points=property(get_points, set_points)
 
-    def points_to_array(self):
+    def get_meaning_space(self):
+        return self.__meaning_space
+    meaning_space=property(get_meaning_space)
+
+    def to_array(self):
         """Converts the set of points to a numpy array.
 
         Example usage: 
@@ -160,7 +166,7 @@ class Modal_Meaning(Meaning):
             a[indices] = 1
         return a
 
-    def points_to_df(self):
+    def to_df(self):
         """Converts to set of points to a pandas DataFrame.
 
         Example usage:

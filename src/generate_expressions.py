@@ -19,9 +19,9 @@ def generate_expressions(space: Modal_Meaning_Space, configs: dict):
     Generate all possible meanings specified by the modal meaning space. For each meaning find an appropriate form. Store this information in a modal expression.
 
     Args:
-        space: a Modal Meaning Space constraining the set of possible meanings to generate expressions for.
+        - space: a Modal Meaning Space constraining the set of possible meanings to generate expressions for.
     Returns:
-        expressions: a list of Modal_Expressions
+        - expressions: a list of Modal_Expressions
     """
 
     mlot = Modal_Language_of_Thought(space, configs['language_of_thought_operators'])
@@ -39,8 +39,9 @@ def generate_expressions(space: Modal_Meaning_Space, configs: dict):
 def main():
     if len(sys.argv) != 4:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/build_meaning_space.py path_to_config_file path_to_save_meaning_space path_to_save_expresions")
-        sys.exit(1)
+        print("Usage: python3 src/generat_expressions.py path_to_config_file path_to_save_meaning_space path_to_save_expresions")
+        raise TypeError() #TODO: create an actual error class for the package
+        
     config_fn = sys.argv[1]
     meaning_space_fn = sys.argv[2]
     expression_save_fn = sys.argv[3]

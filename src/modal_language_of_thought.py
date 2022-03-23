@@ -126,7 +126,7 @@ class Modal_Language_of_Thought:
         Returns:
             descriptions: a list of descriptions of each meaning in the lot
         """
-        arrs = [meaning.points_to_array() for meaning in meanings]
+        arrs = [meaning.to_array() for meaning in meanings]
         r = [str(self.__joint_heuristic(arr)) for arr in arrs]
         return r
 

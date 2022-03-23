@@ -13,9 +13,9 @@ def build_default_force_names(num_forces: int):
     """Construct default names for the modal forces.
 
     Args: 
-        num_forces: an integer representing the number of possible modal force distinctions in a language
+        - num_forces: an integer representing the number of possible modal force distinctions in a language
     Returns:
-        force_names: a set of the default modal force names
+        - force_names: a set of the default modal force names
     """
     force_names = set(["Q_%d" % (i + 1) for i in range(num_forces)])
     return force_names
@@ -24,9 +24,9 @@ def build_default_flavor_names(num_flavors: int):
     """Construct default names for the modal flavors.
 
     Args: 
-        num_forces: an integer representing the number of possible modal flavor distinctions in a language
+        - num_forces: an integer representing the number of possible modal flavor distinctions in a language
     Returns:
-        flavor_names: a set of the default modal flavor names
+        - flavor_names: a set of the default modal flavor names
     """
     flavor_names = set(["f_%d" % (i + 1) for i in range(num_flavors)])
     return flavor_names
@@ -38,14 +38,14 @@ def get_force_flavor_names(num_forces: int, num_flavors: int, force_names=None, 
     the meanings if all force and flavor names not fully specified.
 
     Args:
-        forces: an integer of the number of modal forces.
-        flavors: an integer of the number of modal flavors.
-        force_names: list of the names of the modal forces.
-        flavor_names: list of the names of the modal flavors.
+        - forces: an integer of the number of modal forces.
+        - flavors: an integer of the number of modal flavors.
+        - force_names: list of the names of the modal forces.
+        - flavor_names: list of the names of the modal flavors.
 
     Returns: 
-        force_names: list of (possibly auto-generated) names of the modal forces.
-        flavor_names: list of (possibly auto-generated) names of the modal flavors.
+        - force_names: list of (possibly auto-generated) names of the modal forces.
+        - flavor_names: list of (possibly auto-generated) names of the modal flavors.
     """
     if num_forces < 1 or num_flavors < 1:
         raise ValueError("The analysis requires at least one force and flavor")
@@ -67,7 +67,7 @@ def main():
     if len(sys.argv) != 3:
         print("Incorrect number of arguments.")
         print("Usage: python3 src/build_meaning_space.py path_to_config_file path_to_save_meaning_space")
-        sys.exit(1)
+        raise TypeError() #TODO: create an actual error class for the package
 
     config_fn = sys.argv[1]
     path_to_save_meaning_space = sys.argv[2]

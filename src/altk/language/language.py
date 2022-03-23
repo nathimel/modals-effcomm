@@ -13,7 +13,6 @@ class Language:
     def __init__(self, expressions=None):
         self.__expressions = list()
         self.set_expressions(expressions)
-        raise NotImplementedError()
     
     def set_expressions(self, expressions):
         self.__expressions = expressions
@@ -50,6 +49,10 @@ class Expression:
     def get_meaning(self):
         return self.__meaning
     meaning=property(get_meaning, set_meaning)
+
+    @abstractmethod
+    def yaml_rep(self):
+        pass
 
     @abstractmethod
     def __str__(self) -> str:
