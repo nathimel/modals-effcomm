@@ -181,13 +181,16 @@ class Modal_Meaning(Meaning):
             pd.DataFrame: the dataframe representation of the points instantiated on the modal table of variation
         """
         return pd.DataFrame(
-            data=self.points_to_array(), 
+            data=self.to_array(), 
             index=self.meaning_space.forces,
             columns=self.meaning_space.flavors,
             )
 
     def __str__(self) -> str:
-        return str(self.points_to_df())
+        return str(self.to_df())
+
+    def __hash__(self) -> int:
+        return hash(tuple(self.get_points()))
 
     def __eq__(self, __o: object) -> bool:
-        return self.points == __o.points
+        return self.get_points() == __o.get_points()

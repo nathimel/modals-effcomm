@@ -4,7 +4,7 @@
 
 if test $# -lt 2
 then
-    echo "Usage: ./scripts/main_results/run.sh path_to_config path_to_save_meaning_space path_to_save_expressions path_to_save_artificial_languages"
+    echo "Usage: ./scripts/main_results/run.sh path_to_config path_to_meaning_space path_to_expressions path_to_artificial_languages"
     exit 1
 fi
 
@@ -22,7 +22,7 @@ python3 src/sample_languages.py $CONFIG $EXPRESSIONS_SAVE_FILE $ARTIFICIAL_LANGU
 
 # python3 src/add_natural_languages.py $CONFIG
 
-# python3 src/estimate_pareto_frontier.py $CONFIG
+python3 src/estimate_pareto_frontier.py $CONFIG $EXPRESSIONS_SAVE_FILE $ARTIFICIAL_LANGUAGES_SAVE_FILE
 
 # python3 src/measure_languages.py $CONFIG
 

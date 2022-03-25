@@ -1,1 +1,0 @@
-"""Functions for measuring informativeness in efficient communication analyses of languages."""

@@ -1,3 +1,4 @@
+import numpy as np
 from altk.language.language import Expression, Language
 
 ##############################################################################
@@ -18,11 +19,23 @@ class Modal_Expression(Expression):
         super().__init__(form, meaning)
         self.__lot_expression = str()
         self.set_lot_expression(lot_expression)
-    
+
     def set_lot_expression(self, e):
         self.__lot_expression = e
     def get_lot_expression(self):
         return self.__lot_expression
+
+    def __hash__(self) -> int:
+        return (
+            hash(self.get_form())
+            + hash(self.get_meaning())
+            + hash(self.get_lot_expression())
+            )
+
+    def __eq__(self, __o: object) -> bool:
+        return (self.get_form() == __o.get_form()
+            and self.get_meaning() == __o.get_meaning()
+            and self.get_lot_expression() == __o.get_lot_expression())
 
     def __str__(self) -> str:
         return "Modal_Expression: [\nform={0}\nmeaning={1}\nlot_expression={2}]".format(self.get_form(), self.get_meaning(), self.get_lot_expression())
@@ -58,6 +71,12 @@ class Modal_Language(Language):
     def __str__(self) -> str:
         return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.expressions]))
 
+    def __hash__(self) -> int:
+        return hash(tuple(self.get_expressions()))
+
+    def __eq__(self, __o: object) -> bool:
+        return self.get_expressions() == __o.get_expressions()
+
     def yaml_rep(self) -> list:
         """A dict of the language name and list of the expressions for compact saving in a .yml file."""
         return {
@@ -83,4 +102,5 @@ def is_iff(e: Modal_Expression) -> bool:
     Formally, 
         XXX.
     """
-    return False
+    return int(np.random.uniform(0,3)) # dummy
+

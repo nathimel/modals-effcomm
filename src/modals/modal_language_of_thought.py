@@ -64,6 +64,21 @@ class ExpressionTree:
         
         self.tree_ = Tree(node=node, children=children_)
 
+    @classmethod
+    def from_string(cls, s: str) -> None:
+        """Convert a bracketed string into an ExpressionTree.
+
+        Args:
+            - s: the bracketed string
+
+            ExpressionTree: the tree for the LoT representation.
+
+        Example usage:
+
+        """
+        t = Tree.fromstring(s)
+        return cls(t)
+
     def unwrap_singleton_sum(self, children)->Tree:
         """
         Addition is a n-ary for n >= 2. If n == 1, remove the addition
@@ -102,7 +117,7 @@ class ExpressionTree:
 
 class Modal_Language_of_Thought:
 
-    def __init__(self, meaning_space: Modal_Meaning_Space, negation=False):
+    def __init__(self, meaning_space: Modal_Meaning_Space, lot_configs: dict):
         """Initialize the LoT, which depends on the number of forces and flavors.
 
         Args:
@@ -112,7 +127,7 @@ class Modal_Language_of_Thought:
         """
         self.forces = meaning_space.forces
         self.flavors = meaning_space.flavors
-        self.contains_negation = negation
+        self.contains_negation = bool('negation' in lot_configs)
 
 
     def minimum_lot_descriptions(self, meanings: list[Modal_Meaning])->list:
@@ -219,7 +234,7 @@ class Modal_Language_of_Thought:
             result = results[np.argmin(complexities)]
 
         else:
-            result = self.heuristic(e, simple_operations, relative_operations)
+            result = self.__heuristic(e, simple_operations, relative_operations)
 
         return result
 

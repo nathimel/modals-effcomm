@@ -56,7 +56,7 @@ def save_expressions(fn, expressions: list[Modal_Expression]):
     with open(fn, 'w') as outfile:
         yaml.safe_dump(struct, outfile)
 
-def load_expressions(fn):
+def load_expressions(fn) -> list[Modal_Expression]:
     """Loads the set of modal expressions from the specified .yml file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)

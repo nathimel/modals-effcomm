@@ -4,29 +4,6 @@ The base object of altk is a Language. This is intended to model a language scie
 """
 
 from abc import abstractmethod
-
-
-class Language:
-
-    """Minimally contains Expression objects."""
-
-    def __init__(self, expressions=None):
-        self.__expressions = list()
-        self.set_expressions(expressions)
-    
-    def set_expressions(self, expressions):
-        self.__expressions = expressions
-    def get_expressions(self):
-        return self.__expressions
-    expressions=property(get_expressions, set_expressions)
-
-    @abstractmethod
-    def __str__(self) -> str:
-        pass
-
-    @abstractmethod
-    def __eq__(self, __o: object) -> bool:
-        pass
     
 class Expression:
 
@@ -57,7 +34,61 @@ class Expression:
     @abstractmethod
     def __str__(self) -> str:
         pass
+    @abstractmethod
+    def __eq__(self, __o: object) -> bool:
+        pass
+    @abstractmethod
+    def __hash__(self) -> int:
+        pass
+
+
+class Language:
+
+    """Minimally contains Expression objects."""
+
+    def __init__(self, expressions: list[Expression]):
+        self.set_expressions(expressions)
+    
+    def set_expressions(self, expressions: list[Expression]):
+        if not expressions:
+            raise ValueError("list of Expressions must not be empty.")        
+        self.__expressions = expressions
+    def get_expressions(self):
+        return self.__expressions
+    expressions=property(get_expressions, set_expressions)
+
+    def has_expression(self, expression: Expression) -> bool:
+        """Whether the language has the expression"""
+        return expression in self.get_expressions()
+
+    def add_expression(self, expression: Expression):
+        """Add an expression to the list of expressions in a language."""
+        self.set_expressions(self.get_expressions() + [expression])
+
+    def size(self) -> int:
+        """Returns the length of the list of expressions in a language."""
+        return len(self.get_expressions())
+
+    def pop(self, index: int) -> Expression:
+        """Removes an expression at the specified index of the list of expressions, and returns it."""
+        if not self.size():
+            raise Exception("Cannot pop expressions from an empty language.")
+        expressions = self.get_expressions()
+        popped = expressions.pop(index)
+        self.set_expressions(expressions)
+        return popped
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
 
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
         pass
+    
+    @abstractmethod
+    def __hash__(self) -> int:
+        return self.get_expressions().__hash__()
+
+    def __eq__(self, __o: object) -> bool:
+        return self.get_expressions() == __o.get_expressions()

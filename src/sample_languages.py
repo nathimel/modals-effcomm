@@ -27,7 +27,7 @@ def generate_languages(expressions: list[Modal_Expression], configs: dict) -> li
         - configs: the configurations dictionary loaded from .yml file.
     """
 
-    lang_size = configs['maximum_language_size']
+    lang_size = configs['lang_size']
     sample_size = configs['sample_size']
 
     iffs, non_iffs = split_expressions(expressions, is_iff)
@@ -69,6 +69,9 @@ def main():
         print("Usage: python3 src/sample_languages.py path_to_config_file  path_to_save_expresions path_to_save_artificial_languages")
         raise TypeError() #TODO: create an actual error class for the package
 
+    # probably use tqdm above
+    print("Sampling languages ...", sep=' ')
+
     config_fn = sys.argv[1]
     expression_save_fn = sys.argv[2]
     lang_save_fn = sys.argv[3]
@@ -77,6 +80,8 @@ def main():
     expressions = load_expressions(expression_save_fn)
     languages = generate_languages(expressions, configs)
     save_languages(lang_save_fn, languages)
+
+    print("done.")
 
 if __name__ == "__main__":
     main()

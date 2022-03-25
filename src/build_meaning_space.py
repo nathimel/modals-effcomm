@@ -69,6 +69,8 @@ def main():
         print("Usage: python3 src/build_meaning_space.py path_to_config_file path_to_save_meaning_space")
         raise TypeError() #TODO: create an actual error class for the package
 
+    print("Building modal meaning space ...", sep=' ')
+
     config_fn = sys.argv[1]
     path_to_save_meaning_space = sys.argv[2]
     configs = load_configs(config_fn)
@@ -81,6 +83,8 @@ def main():
         )
     space = Modal_Meaning_Space(forces, flavors)
     save_space(path_to_save_meaning_space, space)
+
+    print("done.")
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,7 @@ def generate_expressions(space: Modal_Meaning_Space, configs: dict):
         - expressions: a list of Modal_Expressions
     """
 
-    mlot = Modal_Language_of_Thought(space, configs['language_of_thought_operators'])
+    mlot = Modal_Language_of_Thought(space, configs['language_of_thought'])
     meanings = [x for x in space.generate_meanings()]
     lot_expressions = mlot.minimum_lot_descriptions(meanings)
     modal_expressions = [
@@ -41,7 +41,10 @@ def main():
         print("Incorrect number of arguments.")
         print("Usage: python3 src/generat_expressions.py path_to_config_file path_to_save_meaning_space path_to_save_expresions")
         raise TypeError() #TODO: create an actual error class for the package
-        
+
+    # TODO: probably use tqdm in generate_expressions function
+    print("Generating expressions ...", sep=' ')
+
     config_fn = sys.argv[1]
     meaning_space_fn = sys.argv[2]
     expression_save_fn = sys.argv[3]
@@ -50,6 +53,8 @@ def main():
     space = load_space(meaning_space_fn)
     expressions = generate_expressions(space, configs)
     save_expressions(expression_save_fn, expressions)
+
+    print("done.")
 
 if __name__ == "__main__":
     main()
