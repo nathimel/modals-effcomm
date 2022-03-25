@@ -44,34 +44,27 @@ def save_expressions(fn, expressions: list[Modal_Expression]):
     expressions = [{
         'form': e.get_form(),
         'meaning': e.get_meaning().get_points(),
-        'lot_exp': e.get_lot_expression(),
+        'lot': e.get_lot_expression(),
         }
          for e in expressions]
-    struct = {
+    data = {
         'forces': space.forces, 
         'flavors': space.flavors, 
         'expressions': expressions
     }
 
     with open(fn, 'w') as outfile:
-        yaml.safe_dump(struct, outfile)
+        yaml.safe_dump(data, outfile)
 
 def load_expressions(fn) -> list[Modal_Expression]:
     """Loads the set of modal expressions from the specified .yml file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
-    (forces, flavors) = d['forces'], d['flavors']
+    space = Modal_Meaning_Space(d['forces'], d['flavors'])
     expressions = d['expressions']
-    expressions = [
-        Modal_Expression(
-            x['form'], 
-            Modal_Meaning(
-                x['meaning'], 
-                Modal_Meaning_Space(forces, flavors)),
-            x['lot_exp']) 
-        for x in expressions
-    ]
-    return expressions
+    return [
+        Modal_Expression.from_yaml_rep(x, space) for x in expressions
+        ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Languages
@@ -79,22 +72,23 @@ def load_expressions(fn) -> list[Modal_Expression]:
 
 def save_languages(fn, languages: list[Modal_Language]):
     """Saves a list of modal languages to a .yml file."""
-    langs = [x.yaml_rep() for x in languages]
-    with open(fn, "w") as outfile:
-        yaml.safe_dump(langs, outfile)
+    space = languages[0].get_expressions()[0].get_meaning().get_meaning_space()
+    langs = [lang.yaml_rep() for lang in languages]
+
+    data = {
+        'forces': space.forces, 
+        'flavors': space.flavors, 
+        'languages': langs
+    }
+
+    with open(fn, 'w') as outfile:
+        yaml.safe_dump(data, outfile)    
 
 def load_languages(fn) -> list[Modal_Language]:
     """Loads a list of modal languages from a .yml file."""
     with open(fn, "r") as stream:
-        expressions = yaml.safe_load(stream)        
-    langs = [
-        Modal_Language(
-            Modal_Expression(
-                form=e['form'],
-                meaning=e['meaning'],
-                lot_expression=e['lot'],
-            )
-            for e in expressions
-        ) for expressions in langs
-    ]
-    return langs
+        d = yaml.safe_load(stream)
+
+    space = Modal_Meaning_Space(d['forces'], d['flavors'])
+    languages = d['languages']
+    return [Modal_Language.from_yaml_rep(x, space) for x in languages]

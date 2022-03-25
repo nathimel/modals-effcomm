@@ -187,7 +187,8 @@ class Modal_Meaning(Meaning):
             )
 
     def __str__(self) -> str:
-        return str(self.to_df())
+        # return str(self.to_df())
+        return str(self.to_array())
 
     def __hash__(self) -> int:
         return hash(tuple(self.get_points()))

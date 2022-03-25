@@ -1,1 +1,0 @@
-"""Script for analyzing the results of the trade-off."""

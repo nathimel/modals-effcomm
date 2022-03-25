@@ -77,6 +77,10 @@ class Language:
         popped = expressions.pop(index)
         self.set_expressions(expressions)
         return popped
+    
+    def is_natural(self) -> bool:
+        """Whether a language represents a human natural language."""
+        raise NotImplementedError
 
     @abstractmethod
     def __str__(self) -> str:

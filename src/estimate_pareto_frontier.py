@@ -53,7 +53,7 @@ def main():
 
     # Run the algorithm
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
-    explored_langs = set(explored_langs)
+    explored_langs = list(set(explored_langs))
 
     save_languages(save_all_langs_fn, explored_langs)
 

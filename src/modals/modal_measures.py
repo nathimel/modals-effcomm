@@ -31,15 +31,19 @@ class Modal_Complexity_Measure(Complexity_Measure):
         return super().batch_complexity(langs)
 
     def language_complexity(self, language: Modal_Language) -> float:
-        return super().language_complexity(language)
+        """Sum of the language's item complexities.
+        
+        For information-theoretic measures, summing the individual items may not be the correct measure of a language's total complexity. In general we can also consider an average, instead of a sum.
+        """
+        return sum(
+            [self.item_complexity(e) for e in language.get_expressions()]
+            )
 
     def item_complexity(self, item: Modal_Expression) -> int:
         """Measure the complexity of a single item.
 
         Necessary when the complexity metric is  minimum description length.
         """
-        if self.get_measure() != 'lot':
-            raise ValueError("called item complexity for non-LoT-based complexity measure.")
         mlot = self.get_lot()
         return mlot.expression_complexity(
             ExpressionTree.from_string(item.get_lot_expression()))

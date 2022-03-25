@@ -19,4 +19,4 @@ class Complexity_Measure:
     def language_complexity(self, language: Language) -> float:
         """Measure the complexity of a single language.
         """
-        pass
+        raise NotImplementedError
