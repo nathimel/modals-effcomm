@@ -61,18 +61,17 @@ def main():
     # explored_langs = list(set(explored_langs))
 
     # Sanity check: create a perfectly informative language.
-    # vocab = []
-    # points = space.get_objects()
-    # for expression in expressions:
-    #     points_ = expression.get_meaning().get_points()
-    #     if len(points_) == 1:
-    #         point, = points_
-    #         vocab.append(expression)
-    #         print("is iff: ", is_iff(expression))
-    # assert len(vocab) == len(points)
-    # lang = Modal_Language(vocab)
-    # lang.set_name('Sanity_Check')
-    # explored_langs.append(lang)
+    vocab = []
+    points = space.get_objects()
+    for expression in expressions:
+        points_ = expression.get_meaning().get_points()
+        if len(points_) == 1:
+            point, = points_
+            vocab.append(expression)
+    assert len(vocab) == len(points)
+    lang = Modal_Language(vocab)
+    lang.set_name('Sanity_Check')
+    explored_langs.append(lang)
 
     save_languages(save_all_langs_fn, explored_langs)
 
