@@ -105,27 +105,30 @@ class Modal_Informativity_Measure(Informativity_Measure):
 
             - utility: a function u(m, m') representing similarity of meanings.
         """
-        success = []
+        meaning_rewards = 0
         for meaning in meanings:
+            meaning_reward = prior[meaning]
+            
+            speaker_rewards = 0
+            # probability a speaker chooses the expression
             for expression in expressions:
-                # probability a speaker chooses the expression
                 speaker_reward = speaker(expression, meaning)
 
                 # probability a listener recovers the meaning
-                listener_reward = []
+                listener_reward = 0
                 for meaning_ in expression.get_meaning().get_points():
                     reward = listener(meaning_, expression)
                     reward *= utility(meaning, meaning_)
-                    listener_reward.append(reward)
-                
-                success.append(
-                    prior[meaning] * speaker_reward * sum(listener_reward)
-                    )
+                    listener_reward += reward
+                speaker_reward *= listener_reward
+                speaker_rewards += speaker_reward
+            meaning_reward *= speaker_rewards
+            meaning_rewards += meaning_reward
 
-            success = sum(success)
-            if success < 0 or success > 1:
-                raise ValueError("communicative success must be in [0,1].")
-            return success
+        success = meaning_rewards
+        if success <= 0 or success > 1:
+            raise ValueError("communicative success must be in [0,1].")
+        return success
 
     def language_informativity(self, language: Modal_Language) -> float:
         """The informativity of a language is based on the successful communication between a Sender and a Receiver.
