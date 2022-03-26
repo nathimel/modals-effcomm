@@ -8,6 +8,8 @@ from modals.modal_language import Modal_Expression, Modal_Language
 from modals.modal_language_of_thought import Modal_Language_of_Thought
 from modals.modal_language_of_thought import ExpressionTree
 from modals.modal_meaning import Modal_Meaning_Space
+from altk.effcomm.informativity import Receiever, Sender
+from modals.modal_meaning import Modal_Meaning
 
 class Modal_Complexity_Measure(Complexity_Measure):
 
@@ -47,7 +49,22 @@ class Modal_Complexity_Measure(Complexity_Measure):
         mlot = self.get_lot()
         return mlot.expression_complexity(
             ExpressionTree.from_string(item.get_lot_expression()))
-        
+
+class Modal_Sender(Sender):
+
+    def __init__(self, space: Modal_Meaning_Space):
+        super().__init__(space)
+
+    def probability_of_expression(self, expression: Modal_Expression, meaning: Modal_Meaning):
+        return self.uniform_probability_function(expression, meaning)
+
+class Modal_Receiver(Receiever):
+
+    def __init__(self, space: Modal_Meaning_Space):
+        super().__init__(space)
+
+    def probability_of_meaning(self, meaning: Modal_Meaning, expression: Modal_Expression) -> dict:
+        return self.uniform_probability_function(expression, meaning)
 
 class Modal_Informativity_Measure(Informativity_Measure):
 
@@ -62,6 +79,77 @@ class Modal_Informativity_Measure(Informativity_Measure):
     def batch_informativity(self, langs: list[Modal_Language]) -> list[float]:
         return super().batch_informativity(langs)
 
+    def communicative_success(
+        self, 
+        meanings: list[Modal_Meaning], 
+        expressions: list[Modal_Expression], 
+        speaker: Modal_Sender, 
+        listener: Modal_Receiver, 
+        prior: dict,
+        utility
+        ) -> float:
+        """Helper function to compute the informativity of a language.
+
+        $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
+
+        Args:
+            - meanings: represents the set M
+
+            - expressions: the list of expressions in the language, L
+
+            - speaker: an encoder-like object, representing a map from meanings to expressions
+
+            - listener: an decoder-like object, representing map from expressions to meanings
+
+            - prior: p(m), distribution over meanings representing communicative need
+
+            - utility: a function u(m, m') representing similarity of meanings.
+        """
+        success = []
+        for meaning in meanings:
+            for expression in expressions:
+                # probability a speaker chooses the expression
+                speaker_reward = speaker.probability_of_expression(
+                    expression, meaning)
+
+                # probability a listener recovers the meaning
+                listener_reward = []
+                for meaning_ in expression.get_meaning().get_points():
+                    reward = listener.probability_of_meaning(
+                        meaning_, expression)
+                    reward *= utility(meaning, meaning_)
+                    listener_reward.append(reward)
+                
+                success.append(
+                    prior[meaning] + speaker_reward + sum(listener_reward)
+                    )
+        
+            return sum(success)
+
     def language_informativity(self, language: Modal_Language) -> float:
-        # return super().language_informativity(language)
-        return np.random.uniform() # dummy
+        """The informativity of a language is based on the successful communication between a Sender and a Receiver.
+
+        The Sender can be thought of as a conditional distribution over expressions given meanings. The Receiver is likewise a conditional distribution over meanings given expressions. The communicative need, or cognitive source, is a prior probability over meanings representing how frequently agents need to use certain meanings in communication. The utility function represents the similarity, or appropriateness, of the Receiver's guess m' about the Sender's intended meaning m.
+
+        For the case of modals, the informativity of a language $L$ with meaning space $M$ is:
+
+        $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
+        """
+        expressions = language.get_expressions()
+        space = language.get_meaning_space()
+        meanings = space.get_objects()
+
+        speaker = Modal_Sender(language)
+        listener = Modal_Receiver(language)
+        
+        prior = speaker.get_communicative_need()
+        utility = lambda m, m_: m == m_
+
+        return self.communicative_success(
+            meanings,
+            expressions,
+            speaker,
+            listener,
+            prior,
+            utility
+            )

@@ -22,9 +22,9 @@ def main():
 
     # Load configs
     configs = load_configs(config_fn)
-    sample_size = configs['sample_size']
 
     evolutionary_alg_configs = configs['evolutionary_alg']
+    sample_size = evolutionary_alg_configs['seed_population_size']
     max_mutations = evolutionary_alg_configs['max_mutations']
     generations = evolutionary_alg_configs['num_generations']
     processes = evolutionary_alg_configs['num_processes']
@@ -33,7 +33,7 @@ def main():
     # Set parameters for evolutionary algorithm optimizer
 
     expressions = load_expressions(expressions_fn)
-    seed_population = generate_languages(expressions, configs)
+    seed_population = generate_languages(expressions, lang_size, sample_size)
 
     space = expressions[0].get_meaning().get_meaning_space()
     complexity_measure = Modal_Complexity_Measure(

@@ -16,7 +16,11 @@ from modals.modal_language import Modal_Expression, Modal_Language, is_iff
 from misc.file_util import load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
 
-def generate_languages(expressions: list[Modal_Expression], configs: dict) -> list[Modal_Language]:
+def generate_languages(
+    expressions: list[Modal_Expression], 
+    lang_size: int,
+    sample_size: int,
+    ) -> list[Modal_Language]:
     """Generate languages by randomly sampling bags of expressions.
 
     There is nothing to prevent repeat bags from being sampled.
@@ -26,9 +30,6 @@ def generate_languages(expressions: list[Modal_Expression], configs: dict) -> li
 
         - configs: the configurations dictionary loaded from .yml file.
     """
-
-    lang_size = configs['lang_size']
-    sample_size = configs['sample_size']
 
     iffs, non_iffs = split_expressions(expressions, is_iff)
     sampler = Quasi_Natural_Vocabulary_Sampler(iffs, non_iffs)
@@ -77,8 +78,11 @@ def main():
     lang_save_fn = sys.argv[3]
 
     configs = load_configs(config_fn)
+    lang_size = configs['lang_size']
+    sample_size = configs['sample_size']    
+
     expressions = load_expressions(expression_save_fn)
-    languages = generate_languages(expressions, configs)
+    languages = generate_languages(expressions, lang_size, sample_size)
     save_languages(lang_save_fn, languages)
 
     print("done.")

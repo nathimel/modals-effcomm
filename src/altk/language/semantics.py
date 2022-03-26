@@ -55,15 +55,17 @@ class Meaning:
 
     Typical usage example:
 
-        >>> from altk.language.semantics import Meaning, Universe
-        >>> universe = Universe(set(range(10))) # 10 objects with int labels
-        >>> precise_meaning = Meaning({1}) # picks out one object
-        >>> vague_meaning = Meaning({1,6}) # can pick out more than one object
-        >>> vauge_meaning
-        Meaning: [
-            {1, 6}
-        ]
+        from altk.language.semantics import Meaning, Universe
+        universe = Universe(set(range(10))) # 10 objects with int labels
+        precise_meaning = Meaning({1}) # picks out one object
+        vague_meaning = Meaning({1,6}) # can pick out more than one object
     """
+
+    def set_universe(self, universe: Universe):
+        self.__universe = universe
+    def get_universe(self):
+        return self.__universe
+    universe=property(get_universe, set_universe)
     
     @abstractmethod
     def __str__(self) -> str:

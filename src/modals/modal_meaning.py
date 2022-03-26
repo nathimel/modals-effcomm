@@ -134,7 +134,7 @@ class Modal_Meaning(Meaning):
     def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
         self.__points = set()
         self.set_points(points)
-        self.__meaning_space = meaning_space
+        self.set_universe(meaning_space)
 
     def set_points(self, points: set):
             self.__points = points
@@ -143,8 +143,15 @@ class Modal_Meaning(Meaning):
     points=property(get_points, set_points)
 
     def get_meaning_space(self):
-        return self.__meaning_space
+        return self.get_universe()
     meaning_space=property(get_meaning_space)
+
+    def to_distribution(self) -> dict:
+        """Convert the set of points into a dict representing a uniform distribution over meaning points.
+        """
+        can_express = {k:len(self.get_points()) for k,v in self.get_points()}
+        space = {k:0 for k in self.get_meaning_space().get_objects() if k not in can_express}
+        return can_express | space
 
     def to_array(self):
         """Converts the set of points to a numpy array.

@@ -78,12 +78,6 @@ class Modal_Language(Language):
 
     def __init__(self, expressions: list[Modal_Expression], name=None):
         super().__init__(expressions)
-        # self.__name = None
-        # self.__complexity = None
-        # self.__informativity = None
-        # self.__optimality = None
-        # self.__iff = None
-
         self.set_name(name)
 
     def __str__(self) -> str:
@@ -94,6 +88,9 @@ class Modal_Language(Language):
 
     def __eq__(self, __o: object) -> bool:
         return self.get_expressions() == __o.get_expressions()
+
+    def get_meaning_space(self) -> Modal_Meaning_Space:
+        return self.get_universe()
 
     def set_complexity(self, complexity: float):
         self.__complexity = complexity

@@ -4,6 +4,8 @@ The base object of altk is a Language. This is intended to model a language scie
 """
 
 from abc import abstractmethod
+
+from altk.language.semantics import Universe
     
 class Expression:
 
@@ -48,6 +50,7 @@ class Language:
 
     def __init__(self, expressions: list[Expression]):
         self.set_expressions(expressions)
+        self.set_universe(expressions[0].get_meaning().get_universe())
     
     def set_expressions(self, expressions: list[Expression]):
         if not expressions:
@@ -81,6 +84,12 @@ class Language:
     def is_natural(self) -> bool:
         """Whether a language represents a human natural language."""
         raise NotImplementedError
+
+    def get_universe(self) -> Universe:
+        return self.__universe
+    def set_universe(self, universe: Universe):
+        self.__universe = universe
+    universe=property(get_universe, set_universe)
 
     @abstractmethod
     def __str__(self) -> str:
