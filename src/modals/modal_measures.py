@@ -121,10 +121,13 @@ class Modal_Informativity_Measure(Informativity_Measure):
                     listener_reward.append(reward)
                 
                 success.append(
-                    prior[meaning] + speaker_reward + sum(listener_reward)
+                    prior[meaning] * speaker_reward * sum(listener_reward)
                     )
-        
-            return sum(success)
+
+            success = sum(success)
+            if success < 0 or success > 1:
+                raise ValueError("communicative success must be in [0,1].")
+            return success
 
     def language_informativity(self, language: Modal_Language) -> float:
         """The informativity of a language is based on the successful communication between a Sender and a Receiver.

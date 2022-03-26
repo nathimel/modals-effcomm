@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import product
 from altk.language.language import Expression, Language
 from modals.modal_meaning import Modal_Meaning, Modal_Meaning_Space
 
@@ -150,12 +151,21 @@ class Modal_Language(Language):
 ##############################################################################
 
 def is_iff(e: Modal_Expression) -> bool:
-    """The Independence of Forces and Flavors Universal states that XXX.
+    """Whether an expression satisfies the Independence of Forces and Flavors Universal.
 
-    Formally, 
-        XXX.
+    The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
     """
-    return int(np.random.uniform(0,2)) # dummy
+    space = e.get_meaning().get_meaning_space()
+    forces = space.forces
+    flavors = space.flavors
+
+    points = e.get_meaning().get_points()
+
+    for (force, flavor) in product(forces, flavors):
+        point = "{0}+{1}".format(force, flavor)
+        if point not in points:
+            return False
+    return True
 
 def degree_iff(language: Modal_Language) -> float:
     """The fraction of a modal language satisfying the IFF semantic univeral.
