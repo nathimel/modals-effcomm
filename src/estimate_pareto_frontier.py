@@ -7,6 +7,9 @@ from modals.modal_language_of_thought import Modal_Language_of_Thought
 from modals.modal_measures import Modal_Complexity_Measure, Modal_Informativity_Measure
 from modals.modal_optimizer import Modal_Evolutionary_Optimizer
 from sample_languages import generate_languages
+from modals.modal_language import Modal_Expression
+from modals.modal_meaning import Modal_Meaning
+from modals.modal_language import Modal_Language
 
 def main():
     if len(sys.argv) != 4:
@@ -54,6 +57,20 @@ def main():
     # Run the algorithm
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
     explored_langs = list(set(explored_langs))
+
+    vocab = []
+    points = space.get_objects()
+    # Sanity check: create a perfectly informative language.
+    for expression in expressions:
+        points_ = expression.get_meaning().get_points()
+        if len(points_) == 1:
+            point, = points_
+            vocab.append(expression)
+    assert len(vocab) == len(points)
+    lang = Modal_Language(vocab)
+    lang.set_name('Sanity_Check')
+    explored_langs.append(lang)
+
 
     save_languages(save_all_langs_fn, explored_langs)
 

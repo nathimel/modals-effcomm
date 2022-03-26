@@ -23,11 +23,10 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         super().__init__(languages, comp_measure, inf_measure)
 
 
-    def measure_languages(self) -> None:
-        """
+    def measure_languages(self) -> list[Modal_Language]:
+        """Measure a list of languages and return a pair of (all languages, dominant_languages).
 
-        Returns: 
-            tuple[list[Language]]: a pair of the dominating_languages and all_languages.
+        Sets all the necessary data for the full efficient communication analysis.
         """
         langs = self.get_languages()
         # measure simplicity, informativity, and semantic universals
@@ -51,7 +50,8 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         dominating_languages = [langs[i] for i in dominating_indices]
         self.set_languages(langs)
         self.set_dominating_languages(dominating_languages)
-        self.measure_closeness(self.interpolate_data())        
+        self.measure_closeness(self.interpolate_data())  
+        return (self.get_languages(), self.get_dominating_languages())
 
     def get_results(self) -> tuple:
         """Get the main plot, dataframe, report of semantic univeral correlation with optimality.
@@ -133,7 +133,8 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         min_distances = np.min(distances, axis=1)
 
         for i, lang in enumerate(langs):
-            lang.set_optimality(min_distances[i])
+            # warning: yaml that saves lang must use float, not numpy.float64 !
+            lang.set_optimality(1 - float(min_distances[i]))
         self.set_languages(langs)
 
     def interpolate_data(self) -> np.ndarray:

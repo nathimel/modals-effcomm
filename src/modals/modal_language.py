@@ -81,6 +81,12 @@ class Modal_Language(Language):
         super().__init__(expressions)
         self.set_name(name)
 
+        # initialize all other attributes to None
+        self.set_complexity(None)
+        self.set_informativity(None)
+        self.set_optimality(None)
+        self.set_iff(None)
+
     def __str__(self) -> str:
         return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.expressions]))
 
@@ -116,24 +122,51 @@ class Modal_Language(Language):
         return self.__iff
 
     def yaml_rep(self) -> tuple:
-        """A pair of the language name and list of the expressions for compact saving in a .yml file."""
-        return (
-            self.get_name(), [
-                e.yaml_rep() for e in self.expressions
-                ]
+        """Get a data structure for safe compact saving in a .yml file.
+        
+        A tuple of the language name, and nested dict of list of the expressions, and trade-off data for compact saving in a .yml file.
+        """
+        data = (
+            self.get_name(),
+            {   'expressions': [e.yaml_rep() for e in self.get_expressions()],
+                'measurements': {
+                     'complexity': self.get_complexity(),
+                    'informativity': self.get_informativity(),
+                    'optimality': self.get_optimality(),
+                    'iff': self.get_iff(),
+                }
+            }
         )
+        return data
+
     @classmethod
-    def from_yaml_rep(cls, rep: dict, space: Modal_Meaning_Space):
+    def from_yaml_rep(cls, name: str, data: dict, space: Modal_Meaning_Space):
         """Takes a yaml representation and returns the corresponding Modal Language.
 
         Args: 
-            - rep: a dictionary of the form {'language_name': data}
+            - name: the name of the language
+
+            - data: a dictionary of the expressions and trade-off measurements
+
+            - space: the modal meaning space being used by the language.
         """
-        name, expressions = rep
+        expressions = data['expressions']
+        measurements = data['measurements']
+
+        complexity = measurements['complexity']
+        informativity = measurements['informativity']
+        optimality = measurements['optimality']
+        iff = measurements['iff']
+
         expressions = [
             Modal_Expression.from_yaml_rep(x, space) for x in expressions
         ]
-        return cls(expressions, name)
+        lang = cls(expressions, name)
+        lang.set_complexity(complexity)
+        lang.set_informativity(informativity)
+        lang.set_optimality(optimality)
+        lang.set_iff(iff)
+        return lang
 
     """Natural languages have meaningful names."""
     def set_name(self, name):

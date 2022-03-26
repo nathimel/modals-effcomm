@@ -73,16 +73,16 @@ def load_expressions(fn) -> list[Modal_Expression]:
 def save_languages(fn, languages: list[Modal_Language]):
     """Saves a list of modal languages to a .yml file."""
     space = languages[0].get_expressions()[0].get_meaning().get_meaning_space()
-    langs = [lang.yaml_rep() for lang in languages]
+    langs = dict(lang.yaml_rep() for lang in languages)
 
     data = {
         'forces': space.forces, 
         'flavors': space.flavors, 
-        'languages': langs
+        'languages': langs,
     }
 
     with open(fn, 'w') as outfile:
-        yaml.safe_dump(data, outfile)    
+        yaml.safe_dump(data, outfile)
 
 def load_languages(fn) -> list[Modal_Language]:
     """Loads a list of modal languages from a .yml file."""
@@ -91,4 +91,8 @@ def load_languages(fn) -> list[Modal_Language]:
 
     space = Modal_Meaning_Space(d['forces'], d['flavors'])
     languages = d['languages']
-    return [Modal_Language.from_yaml_rep(x, space) for x in languages]
+    return [
+        Modal_Language.from_yaml_rep(
+            name, data, space) 
+            for name, data in languages.items()
+        ]

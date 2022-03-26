@@ -90,10 +90,10 @@ class Modal_Informativity_Measure(Informativity_Measure):
         ) -> float:
         """Helper function to compute the informativity of a language.
 
-        $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
+            $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
 
         Args:
-            - meanings: represents the set M
+            - meanings: set M, all meaning points sender/receiver can entertain.
 
             - expressions: the list of expressions in the language, L
 
@@ -109,14 +109,12 @@ class Modal_Informativity_Measure(Informativity_Measure):
         for meaning in meanings:
             for expression in expressions:
                 # probability a speaker chooses the expression
-                speaker_reward = speaker.probability_of_expression(
-                    expression, meaning)
+                speaker_reward = speaker(expression, meaning)
 
                 # probability a listener recovers the meaning
                 listener_reward = []
                 for meaning_ in expression.get_meaning().get_points():
-                    reward = listener.probability_of_meaning(
-                        meaning_, expression)
+                    reward = listener(meaning_, expression)
                     reward *= utility(meaning, meaning_)
                     listener_reward.append(reward)
                 
@@ -151,8 +149,8 @@ class Modal_Informativity_Measure(Informativity_Measure):
         return self.communicative_success(
             meanings,
             expressions,
-            speaker,
-            listener,
+            speaker.probability_of_expression,
+            listener.probability_of_meaning,
             prior,
             utility
             )

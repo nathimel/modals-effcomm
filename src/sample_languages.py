@@ -5,13 +5,8 @@
 Every possible modal meaning that can be expressed by a language is given exactly one expression. This expression is chosen based on a the shortest formula in a language of thought (LoT), which is estimated by a boolean algebra formula minimization heuristic.
 """
 
-from ast import operator
 import sys
-import yaml
-import itertools
 import numpy as np
-from modals.modal_meaning import Modal_Meaning_Space
-from modals.modal_language_of_thought import Modal_Language_of_Thought
 from modals.modal_language import Modal_Expression, Modal_Language, is_iff
 from misc.file_util import load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
@@ -34,14 +29,18 @@ def generate_languages(
     iffs, non_iffs = split_expressions(expressions, is_iff)
     sampler = Quasi_Natural_Vocabulary_Sampler(iffs, non_iffs)
     
+    # TODO: use shane's more intelligent sampling alg to get unique langs.
+
+    # Turn the knob on degree-iff
+    degrees = np.resize(np.arange(lang_size+1)/lang_size, sample_size)
     langs = []
     for i in range(sample_size):
-        bag = sampler.sample_vocabulary(degree=0, size=lang_size)
+        bag = sampler.sample_vocabulary(degree=degrees[i], size=lang_size)
         lang = Modal_Language(bag)
         lang.set_name("dummy_lang_{}".format(i))
         langs.append(lang)
-    return langs
 
+    return langs
 
 def split_expressions(expressions, criterion) -> tuple:
     """Split a list of expressions into two groups based on a criterion.
