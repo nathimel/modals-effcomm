@@ -73,7 +73,9 @@ def load_expressions(fn) -> list[Modal_Expression]:
 def save_languages(fn, languages: list[Modal_Language]):
     """Saves a list of modal languages to a .yml file."""
     space = languages[0].get_expressions()[0].get_meaning().get_meaning_space()
-    langs = dict(lang.yaml_rep() for lang in languages)
+
+    # Do not use a dict, which will lose data from the yaml representation
+    langs = list(lang.yaml_rep() for lang in languages)
 
     data = {
         'forces': space.forces, 
@@ -86,6 +88,9 @@ def save_languages(fn, languages: list[Modal_Language]):
 
 def load_languages(fn) -> list[Modal_Language]:
     """Loads a list of modal languages from a .yml file."""
+
+    # TODO: use tqdm
+
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
 
@@ -94,5 +99,5 @@ def load_languages(fn) -> list[Modal_Language]:
     return [
         Modal_Language.from_yaml_rep(
             name, data, space) 
-            for name, data in languages.items()
+            for name, data in languages
         ]

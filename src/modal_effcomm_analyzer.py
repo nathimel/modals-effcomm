@@ -28,6 +28,9 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
 
         Sets all the necessary data for the full efficient communication analysis.
         """
+
+        # TODO: use tqdm.
+
         langs = self.get_languages()
         # measure simplicity, informativity, and semantic universals
         for lang in langs:

@@ -33,7 +33,9 @@ def main():
     # load languages
     sampled_languages = load_languages(sampled_languages_fn)
     # natural_languages = load_languages(natural_languages_fn)
-    langs = list(set(sampled_languages))
+    # langs = list(set(sampled_languages))
+    langs = sampled_languages
+    print("{} total langs...".format(len(langs)), sep=' ')
 
     ##########################################################################
     # Analysis

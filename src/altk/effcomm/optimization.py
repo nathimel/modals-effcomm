@@ -89,11 +89,14 @@ class Evolutionary_Optimizer:
             explored_languages.extend(languages)
 
             # Calculate dominating individuals
-            dominating_indices = pygmo.non_dominated_front_2d(list(zip(comm_cost, complexity)))
+            dominating_indices = pygmo.non_dominated_front_2d(
+                list(zip(comm_cost, complexity))
+                )
             dominating_languages = [languages[i] for i in dominating_indices]
 
             # Mutate dominating individuals
-            languages = self.sample_mutated(dominating_languages, self.sample_size, self.expressions)
+            languages = self.sample_mutated(
+                dominating_languages, self.sample_size, self.expressions)
         
         return (dominating_languages, explored_languages)
 

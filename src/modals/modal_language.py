@@ -91,6 +91,7 @@ class Modal_Language(Language):
         return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.expressions]))
 
     def __hash__(self) -> int:
+        """TODO: seems broken, set shrinks lists far too much."""
         return hash(tuple(self.get_expressions()))
 
     def __eq__(self, __o: object) -> bool:
@@ -188,11 +189,13 @@ def is_iff(e: Modal_Expression) -> bool:
 
     The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
     """
-    space = e.get_meaning().get_meaning_space()
-    forces = space.forces
-    flavors = space.flavors
-
     points = e.get_meaning().get_points()
+    forces = set()
+    flavors = set()
+    for point in points:
+        force, flavor = point.split("+")
+        forces.add(force)
+        flavors.add(flavor)
 
     for (force, flavor) in product(forces, flavors):
         point = "{0}+{1}".format(force, flavor)
