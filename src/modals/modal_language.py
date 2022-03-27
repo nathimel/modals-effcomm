@@ -91,7 +91,6 @@ class Modal_Language(Language):
         return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.expressions]))
 
     def __hash__(self) -> int:
-        """TODO: seems broken, set shrinks lists far too much."""
         return hash(tuple(self.get_expressions()))
 
     def __eq__(self, __o: object) -> bool:

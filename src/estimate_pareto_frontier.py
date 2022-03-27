@@ -11,6 +11,7 @@ from modals.modal_language import Modal_Expression
 from modals.modal_meaning import Modal_Meaning
 from modals.modal_language import Modal_Language
 from modals.modal_language import is_iff
+from misc.file_util import load_languages
 
 def main():
     if len(sys.argv) != 4:
@@ -58,8 +59,6 @@ def main():
     # Run the algorithm
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
 
-    # explored_langs = list(set(explored_langs))
-
     # Sanity check: create a perfectly informative language.
     vocab = []
     points = space.get_objects()
@@ -73,7 +72,12 @@ def main():
     lang.set_name('Sanity_Check')
     explored_langs.append(lang)
 
-    save_languages(save_all_langs_fn, explored_langs)
+    # Add explored langs to the pool of sampled langs
+    pool = load_languages(save_all_langs_fn)
+    pool.extend(explored_langs)
+    # pool = list(set(pool))
+
+    save_languages(save_all_langs_fn, pool)
 
     print('done.')
 

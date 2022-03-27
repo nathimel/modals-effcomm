@@ -1,7 +1,11 @@
 """Classes and functions for sampling pools of languages.
 """
 
+import random
 import numpy as np
+from tqdm import tqdm
+from modals.modal_language import Modal_Language
+
 
 class Quasi_Natural_Vocabulary_Sampler:
 
@@ -17,49 +21,56 @@ class Quasi_Natural_Vocabulary_Sampler:
 
                 - unnatural_terms: expressions not satisfying the criteria.
         """
-        self.natural_terms = natural_terms
-        self.unnatural_terms = unnatural_terms
+        self.natural_terms = tuple(natural_terms)
+        self.unnatural_terms = tuple(unnatural_terms)
 
-    def sample_vocabulary(self, degree: float, size: int, allow_synonymy=True,  nat_dist=None, unnat_dist=None) -> list:
-        """Sample a bag of expressions with a specified degree of quasi-naturalness.
+    def generate_quasi_natural_languages():
+        # Turn the knob on degree-iff
+        # degrees = np.resize(np.arange(lang_size+1)/lang_size, sample_size)
+        pass
 
-        See the documentation for np.random.choice for typical usage errors.
 
+    def random_combinations(self, expressions, sample_size, lang_size):
+        """Sample unique languages by generating unique random combinations of expressions.
+        
         Args:
-            - degree: a float in $[0,1]$ representing the fraction of natural terms to unnatural terms.
+            - expressions: the list of total possible expressions to sample from.
 
-            - size: the size of the bag of expressions to sample.
-
-            - allow_synonymy: Whether the sample is with or without replacement. Default is True, meaning the resulting bag of expressions can have repeated objects.
-
-            - nat_dist: optionally specify the distribution over natural expressions.
-
-            - unnat_dist: optionally specify the distribution over unnatural expressions.
-
-        Returns:
-            - expressions: the sampled bag of expressions.
         """
 
-        num_nats = int(np.floor(size * degree))
-        num_unnats = size - num_nats
+        indices_list = []
+        pool = tuple(expressions)
+        n = len(pool)
+        languages = []
 
-        # if allow_synonymy=False and the sample size is greater than the population size
-        if not allow_synonymy and num_nats < len(self.natural_terms):
-            raise ValueError("Not enough expressions in {0} to construct a {1}-sized language without synonymy.".format('self.natural_terms', num_nats))
-        nats = np.random.choice(
-            a=self.natural_terms, 
-            size=num_nats, 
-            p=nat_dist, 
-            replace=allow_synonymy
-        )
+        for i in tqdm(range(sample_size)):
+            while True:
+                indices = sorted(random.sample(range(n), lang_size))
+                if indices not in indices_list:
+                    # keep track of languages chosen
+                    indices_list.append(indices)
 
-        if not allow_synonymy and num_unnats < len(self.unnatural_terms):
-            raise ValueError("Not enough expressions in {0} to construct a {1}-sized language without synonymy.".format('self.unnatural_terms', num_unnats))
-        unnats = np.random.choice(
-            a=self.unnatural_terms, 
-            size=num_unnats, 
-            p=unnat_dist, 
-            replace=allow_synonymy
-        )
-        expressions = list(nats) + list(unnats)
-        return expressions
+                    # Add language
+                    bag = [pool[idx] for idx in indices]
+                    language = Modal_Language(
+                        bag,
+                        name="dummy_lang_{}".format(len(languages)),
+                    )
+                    languages.append(language)
+                    break
+
+        assert len(languages) == len(set(languages))
+
+        return languages
+
+
+    def indices_to_vocabulary(self, indices_natural, indices_unnatural):
+        """Construct a mixed vocabulary of natural and unnatural terms."""
+        natural_words = [
+            self.natural_terms[idx] for idx in indices_natural
+            ]
+        unnatural_words = [
+            self.unnatural_terms[idx] for idx in indices_unnatural
+            ]
+        return list(natural_words) + list(unnatural_words)
+        

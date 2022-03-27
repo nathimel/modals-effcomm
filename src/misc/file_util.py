@@ -86,10 +86,12 @@ def save_languages(fn, languages: list[Modal_Language]):
     with open(fn, 'w') as outfile:
         yaml.safe_dump(data, outfile)
 
+    print("Saved {} languages".format(len(langs)))
+
 def load_languages(fn) -> list[Modal_Language]:
     """Loads a list of modal languages from a .yml file."""
 
-    # TODO: use tqdm
+    # TODO: use tqdm 
 
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
