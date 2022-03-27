@@ -75,7 +75,7 @@ def main():
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
     pool.extend(explored_langs)
-    # pool = list(set(pool))
+    pool = list(set(pool))
 
     save_languages(save_all_langs_fn, pool)
 
