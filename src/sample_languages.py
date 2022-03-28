@@ -59,9 +59,9 @@ def generate_languages(
         # Otherwise, take random sample
         else:
             print('Sampling {0} languages of size {1}'.format(sample_size, word_amount))
-            # rlangs = random_combinations(expressions, sample_size, word_amount)
-            rlangs = quasi_natural_sample(
-                iffs, non_iffs, word_amount, sample_size)
+            rlangs = random_combinations(expressions, sample_size, word_amount)
+            # rlangs = quasi_natural_sample(
+                # iffs, non_iffs, word_amount, sample_size)
             languages.extend(rlangs)
 
     return languages
