@@ -30,7 +30,7 @@ def generate_languages(
 
         - configs: the configurations dictionary loaded from .yml file.
     """
-    iffs, non_iffs = split_expressions(expressions, is_iff)
+    # iffs, non_iffs = split_expressions(expressions, is_iff)
 
     word_amounts = [lang_size] if fixed_wordcount else range(1, lang_size+1)
     total_word_amount = len(expressions)
@@ -176,6 +176,11 @@ def main():
     # Turn the knob on iff
     expressions = load_expressions(expression_save_fn)
     languages = generate_languages(expressions, lang_size, sample_size)
+
+    # iffs, non_iffs = split_expressions(expressions, is_iff)
+    # languages.extend(generate_languages(iffs, lang_size, sample_size))
+
+
     save_languages(lang_save_fn, languages)
 
     print("done.")

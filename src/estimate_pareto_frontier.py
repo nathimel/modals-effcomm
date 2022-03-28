@@ -29,7 +29,7 @@ def main():
     configs = load_configs(config_fn)
 
     evolutionary_alg_configs = configs['evolutionary_alg']
-    sample_size = evolutionary_alg_configs['seed_population_size']
+    sample_size = evolutionary_alg_configs['generation_size']
     max_mutations = evolutionary_alg_configs['max_mutations']
     generations = evolutionary_alg_configs['num_generations']
     processes = evolutionary_alg_configs['num_processes']
