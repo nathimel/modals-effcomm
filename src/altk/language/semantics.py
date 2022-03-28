@@ -67,6 +67,12 @@ class Meaning:
         return self.__universe
     universe=property(get_universe, set_universe)
     
+    def get_objects(self):
+        return self.__objects
+    def set_objects(self, objects):
+        self.__objects = objects
+    objects=property(get_objects, set_objects)
+    
     @abstractmethod
     def __str__(self) -> str:
         pass

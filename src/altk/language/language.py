@@ -6,6 +6,7 @@ The base object of altk is a Language. This is intended to model a language scie
 from abc import abstractmethod
 
 from altk.language.semantics import Universe
+from altk.language.semantics import Meaning
     
 class Expression:
 
@@ -23,9 +24,9 @@ class Expression:
         return self.__form
     form=property(get_form, set_form)
 
-    def set_meaning(self, meaning):
+    def set_meaning(self, meaning: Meaning):
         self.__meaning = meaning
-    def get_meaning(self):
+    def get_meaning(self) -> Meaning:
         return self.__meaning
     meaning=property(get_meaning, set_meaning)
 

@@ -132,14 +132,13 @@ class Modal_Meaning(Meaning):
     """
 
     def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
-        self.__points = set()
         self.set_points(points)
         self.set_universe(meaning_space)
 
     def set_points(self, points: set):
-            self.__points = points
+            self.set_objects(points)
     def get_points(self):
-            return self.__points
+        return self.get_objects()
     points=property(get_points, set_points)
 
     def get_meaning_space(self):
