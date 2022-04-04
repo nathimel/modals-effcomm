@@ -13,7 +13,7 @@ import sys
 import numpy as np
 from nltk.tree import *
 from nltk.grammar import *
-from modals.modal_meaning import Modal_Meaning, Modal_Meaning_Space
+from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
 
 ##############################################################################
 # ExpressionTree
@@ -115,9 +115,9 @@ class ExpressionTree:
     expressions = mlot.minimum_descriptions(meanings)
 """
 
-class Modal_Language_of_Thought:
+class ModalLOT:
 
-    def __init__(self, meaning_space: Modal_Meaning_Space, lot_configs: dict):
+    def __init__(self, meaning_space: ModalMeaningSpace, lot_configs: dict):
         """Initialize the LoT, which depends on the number of forces and flavors.
 
         Args:
@@ -130,13 +130,13 @@ class Modal_Language_of_Thought:
         self.contains_negation = bool('negation' in lot_configs)
 
 
-    def minimum_lot_descriptions(self, meanings: list[Modal_Meaning])->list:
+    def minimum_lot_descriptions(self, meanings: list[ModalMeaning])->list:
         """Runs a heuristic to estimate the shortest length description of modal meanings in a language of thought.
 
         This is useful for measuring the complexity of modals, and the langauges containing them.
 
         Args:
-            meanings: a list of the Modal_Meanings
+            meanings: a list of the ModalMeanings
 
         Returns:
             descriptions: a list of descriptions of each meaning in the lot

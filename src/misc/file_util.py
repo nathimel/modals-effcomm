@@ -1,6 +1,6 @@
 import yaml
-from modals.modal_meaning import Modal_Meaning_Space, Modal_Meaning
-from modals.modal_language import Modal_Expression, Modal_Language
+from modals.modal_meaning import ModalMeaningSpace, ModalMeaning
+from modals.modal_language import ModalExpression, ModalLanguage
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs
@@ -16,23 +16,23 @@ def load_configs(fn: str)->dict:
 # Modal Meaning Space
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def save_space(fn, space: Modal_Meaning_Space):
+def save_space(fn, space: ModalMeaningSpace):
     """Saves the modal meaning space to a .yml file."""
     space = {'forces': space.forces, 'flavors': space.flavors}
     with open(fn, 'w') as outfile:
         yaml.safe_dump(space, outfile)
 
-def load_space(fn: str)->Modal_Meaning_Space:
-    """Read and the Modal_Meaning_Space object for the experiment saved in a .yml file."""
+def load_space(fn: str)->ModalMeaningSpace:
+    """Read and the ModalMeaningSpace object for the experiment saved in a .yml file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
-    return Modal_Meaning_Space(d['forces'], d['flavors'])
+    return ModalMeaningSpace(d['forces'], d['flavors'])
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Expressions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def save_expressions(fn, expressions: list[Modal_Expression]):
+def save_expressions(fn, expressions: list[ModalExpression]):
     """Saves the set of all possible modal expressions to a .yml file.
     
     Requires expressions to be nonempty in order to save data about the modal meaning space.
@@ -56,21 +56,21 @@ def save_expressions(fn, expressions: list[Modal_Expression]):
     with open(fn, 'w') as outfile:
         yaml.safe_dump(data, outfile)
 
-def load_expressions(fn) -> list[Modal_Expression]:
+def load_expressions(fn) -> list[ModalExpression]:
     """Loads the set of modal expressions from the specified .yml file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
-    space = Modal_Meaning_Space(d['forces'], d['flavors'])
+    space = ModalMeaningSpace(d['forces'], d['flavors'])
     expressions = d['expressions']
     return [
-        Modal_Expression.from_yaml_rep(x, space) for x in expressions
+        ModalExpression.from_yaml_rep(x, space) for x in expressions
         ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Languages
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def save_languages(fn, languages: list[Modal_Language]):
+def save_languages(fn, languages: list[ModalLanguage]):
     """Saves a list of modal languages to a .yml file."""
     space = languages[0].get_expressions()[0].get_meaning().get_meaning_space()
 
@@ -88,7 +88,7 @@ def save_languages(fn, languages: list[Modal_Language]):
 
     print("Saved {} languages".format(len(langs)))
 
-def load_languages(fn) -> list[Modal_Language]:
+def load_languages(fn) -> list[ModalLanguage]:
     """Loads a list of modal languages from a .yml file."""
 
     # TODO: use tqdm 
@@ -96,10 +96,10 @@ def load_languages(fn) -> list[Modal_Language]:
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
 
-    space = Modal_Meaning_Space(d['forces'], d['flavors'])
+    space = ModalMeaningSpace(d['forces'], d['flavors'])
     languages = d['languages']
     return [
-        Modal_Language.from_yaml_rep(
+        ModalLanguage.from_yaml_rep(
             name, data, space) 
             for name, data in languages
         ]

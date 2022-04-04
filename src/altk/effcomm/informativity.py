@@ -1,17 +1,16 @@
 """Functions for measuring informativity in efficient communication analyses of languages."""
 
 from abc import abstractmethod
-from importlib.metadata import distribution
 from altk.language.language import Language
 from altk.language.language import Expression
 from altk.language.semantics import Meaning
-from altk.language.semantics import Universe
+from altk.effcomm.agent import LiteralListener, LiteralSpeaker
 
 ##############################################################################
 # Classes
 ##############################################################################
 
-class Informativity_Measure:
+class InformativityMeasure:
 
     def __init__(self):
         raise NotImplementedError()
@@ -29,85 +28,7 @@ class Informativity_Measure:
         """Measure the informativity of a single language.
         """
         pass
-
-class Communicative_Agent:
-
-    def __init__(self, language: Language):
-        """Takes a language to construct a agent to define the relation between meanings and expressions.
-        
-        By default initialize to uniform communicative need distribution.
-        """
-        self.set_language(language)
-        self.set_communicative_need({point: 1/len(language.get_universe().get_objects()) for point in language.get_universe().get_objects()})
-
-    def uniform_probability_function(self, expression: Expression, meaning: Meaning):
-        """A map from meanings to expressions: the expression a speaker sends to communicate the meaning.
-        
-        Assume the probability of each expressible meaning point in an expression is equal.
-
-        Args:
-            - expression: 
-
-            - meaning: 
-        """
-        can_express = expression.get_meaning().get_objects()
-        if meaning in can_express:
-            return 1/len(can_express)
-        else:
-            return 0
-
-    def set_language(self, language: Language):
-        self.__language = language
-    def get_language(self):
-        return self.__language
-
-    def set_distribution(self, dist: dict):
-        self.__distribution = dist
-    def get_distribution(self):
-        return self.__distribution
-    distribution=property(get_distribution, set_distribution)
-
-    def set_communicative_need(self, distribution: dict):
-        self.__communicative_need = distribution
-    def get_communicative_need(self):
-        return self.__communicative_need
-
-class Sender(Communicative_Agent):
-
-    def __init__(self, language: Language):
-        super().__init__(language)
-
-    # given an intended meaning, return a distribution over expressions
-    def probability_of_expression(meaning: Meaning):
-        """A distribution over expressions. 
-        
-        Given an expression the Receiver heard, the probability of a meaning.
-
-        Args:
-            - meaning: 
-
-        Return: 
-            - distribution: a distribution over expressions.
-        """
-        pass
-
-class Receiver(Communicative_Agent):
-
-    def __init__(self, language: Language):
-        super().__init__(language)
-
-    def probability_of_meaning(expression: Expression) -> dict:
-        """A distribution over meanings. 
-        
-        Given an expression the Receiver heard, the probability of a meaning.
-
-        Args:
-            - expression: 
-
-        Return: 
-            - distribution: a distribution over meanings.
-        """
-        pass
+ 
 
 ##############################################################################
 # Functions
@@ -116,12 +37,12 @@ class Receiver(Communicative_Agent):
 def communicative_success(
     meanings: list[Meaning], 
     expressions: list[Expression], 
-    speaker: Sender, 
-    listener: Receiver,
+    speaker: LiteralSpeaker,
+    listener: LiteralListener,
     prior: dict,
     utility
     ) -> float:
-    """Helper function to compute the informativity of a language.
+    """Helper function to compute the literal informativity of a language.
 
         $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
 
@@ -130,9 +51,9 @@ def communicative_success(
 
         - expressions: the list of expressions in the language, L
 
-        - speaker: an encoder-like object, representing a map from meanings to expressions
+        - speaker: an encoder-like object, representing a map from meanings to expressions. Is a literal speaker in terms of the RSA framework.
 
-        - listener: an decoder-like object, representing map from expressions to meanings
+        - listener: an decoder-like object, representing map from expressions to meanings. Is a literal listener in terms of the RSA framework.
 
         - prior: p(m), distribution over meanings representing communicative need
 
@@ -160,5 +81,5 @@ def communicative_success(
 
     success = meaning_rewards
     if success <= 0 or success > 1:
-        raise ValueError("communicative success must be in [0,1].")
-    return success    
+        raise ValueError("communicative success must be in [0,1]. Num expressions: {0}.  Expressions received: {1}".format(len(expressions), expressions))
+    return success   

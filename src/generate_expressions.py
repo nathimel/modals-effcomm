@@ -8,12 +8,12 @@ import sys
 import yaml
 import itertools
 import numpy as np
-from modals.modal_meaning import Modal_Meaning_Space
-from modals.modal_language_of_thought import Modal_Language_of_Thought
-from modals.modal_language import Modal_Expression
+from modals.modal_meaning import ModalMeaningSpace
+from modals.modal_language_of_thought import ModalLOT
+from modals.modal_language import ModalExpression
 from misc.file_util import load_space, load_configs, save_expressions
 
-def generate_expressions(space: Modal_Meaning_Space, configs: dict):
+def generate_expressions(space: ModalMeaningSpace, configs: dict):
     """Short description.
     
     Generate all possible meanings specified by the modal meaning space. For each meaning find an appropriate form. Store this information in a modal expression.
@@ -24,11 +24,11 @@ def generate_expressions(space: Modal_Meaning_Space, configs: dict):
         - expressions: a list of Modal_Expressions
     """
 
-    mlot = Modal_Language_of_Thought(space, configs['language_of_thought'])
+    mlot = ModalLOT(space, configs['language_of_thought'])
     meanings = [x for x in space.generate_meanings()]
     lot_expressions = mlot.minimum_lot_descriptions(meanings)
     modal_expressions = [
-        Modal_Expression(
+        ModalExpression(
             form="dummy_form_{}".format(i),
             meaning=meaning,
             lot_expression=lot_expressions[i]

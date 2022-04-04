@@ -2,14 +2,14 @@
 
 import sys
 from misc.file_util import load_configs, load_expressions, save_languages
-from modals.modal_meaning import Modal_Meaning_Space
-from modals.modal_language_of_thought import Modal_Language_of_Thought
-from modals.modal_measures import Modal_Complexity_Measure, Modal_Informativity_Measure
+from modals.modal_meaning import ModalMeaningSpace
+from modals.modal_language_of_thought import ModalLOT
+from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
 from modals.modal_optimizer import Modal_Evolutionary_Optimizer
 from sample_languages import generate_languages
-from modals.modal_language import Modal_Expression
-from modals.modal_meaning import Modal_Meaning
-from modals.modal_language import Modal_Language
+from modals.modal_language import ModalExpression
+from modals.modal_meaning import ModalMeaning
+from modals.modal_language import ModalLanguage
 from modals.modal_language import is_iff
 from misc.file_util import load_languages
 
@@ -41,9 +41,9 @@ def main():
     seed_population = generate_languages(expressions, lang_size, sample_size)
 
     space = expressions[0].get_meaning().get_meaning_space()
-    complexity_measure = Modal_Complexity_Measure(
-        Modal_Language_of_Thought(space, configs['language_of_thought']))
-    informativity_measure = Modal_Informativity_Measure()
+    complexity_measure = ModalComplexityMeasure(
+        ModalLOT(space, configs['language_of_thought']))
+    informativity_measure = ModalInformativityMeasure()
 
     optimizer = Modal_Evolutionary_Optimizer(
         comp_measure=complexity_measure,
@@ -68,7 +68,7 @@ def main():
             point, = points_
             vocab.append(expression)
     assert len(vocab) == len(points)
-    lang = Modal_Language(vocab)
+    lang = ModalLanguage(vocab)
     lang.set_name('Sanity_Check')
     explored_langs.append(lang)
 

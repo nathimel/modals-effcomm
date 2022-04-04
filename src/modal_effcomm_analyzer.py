@@ -9,21 +9,21 @@ import pandas as pd
 from scipy import interpolate
 from scipy.spatial.distance import cdist
 from altk.effcomm.analysis import EffComm_Analyzer
-from modals.modal_language import Modal_Language, degree_iff
-from modals.modal_measures import Modal_Complexity_Measure, Modal_Informativity_Measure
+from modals.modal_language import ModalLanguage, degree_iff
+from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
 
 class Modal_EffComm_Analyzer(EffComm_Analyzer):
 
     def __init__(
         self,
-        languages: list[Modal_Language], 
-        comp_measure: Modal_Complexity_Measure, 
-        inf_measure: Modal_Informativity_Measure
+        languages: list[ModalLanguage], 
+        comp_measure: ModalComplexityMeasure, 
+        inf_measure: ModalInformativityMeasure
     ):
         super().__init__(languages, comp_measure, inf_measure)
 
 
-    def measure_languages(self) -> list[Modal_Language]:
+    def measure_languages(self) -> list[ModalLanguage]:
         """Measure a list of languages and return a pair of (all languages, dominant_languages).
 
         Sets all the necessary data for the full efficient communication analysis.

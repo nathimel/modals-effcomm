@@ -6,7 +6,7 @@
 
 import sys
 import yaml
-from modals.modal_meaning import Modal_Meaning_Space
+from modals.modal_meaning import ModalMeaningSpace
 from misc.file_util import load_configs, save_space
 
 def build_default_force_names(num_forces: int):
@@ -81,7 +81,7 @@ def main():
         configs['force_names'],
         configs['flavor_names'],
         )
-    space = Modal_Meaning_Space(forces, flavors)
+    space = ModalMeaningSpace(forces, flavors)
     save_space(path_to_save_meaning_space, space)
 
     print("done.")

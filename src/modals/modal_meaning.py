@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from altk.language.semantics import Universe, Meaning
 
-class Modal_Meaning_Space(Universe):
+class ModalMeaningSpace(Universe):
     """Represents the set of possible modal (force, flavor) pairs.
 
     Attributes:
@@ -96,7 +96,7 @@ class Modal_Meaning_Space(Universe):
         arrs = [
             np.array(i).reshape(shape) for i in product([0, 1], repeat=len(self.get_objects()))]
         arrs = arrs[1:] # remove the empty array meaning to prevent div by 0
-        meanings = [Modal_Meaning(self.array_to_points(arr), self) for arr in arrs]
+        meanings = [ModalMeaning(self.array_to_points(arr), self) for arr in arrs]
         return meanings
 
 
@@ -118,7 +118,7 @@ class Modal_Meaning_Space(Universe):
         return str(self.arr())
 
     
-class Modal_Meaning(Meaning):
+class ModalMeaning(Meaning):
     """"A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
     
     TODO: Design to be immutable.
@@ -131,7 +131,7 @@ class Modal_Meaning(Meaning):
         m = Modal_Meaning({'weak+epistemic'}, space)
     """
 
-    def __init__(self, points: set, meaning_space: Modal_Meaning_Space):
+    def __init__(self, points: set, meaning_space: ModalMeaningSpace):
         self.set_points(points)
         self.set_universe(meaning_space)
 

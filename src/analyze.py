@@ -3,10 +3,10 @@
 import sys
 from misc.file_util import load_configs
 from misc.file_util import load_languages
-from modals.modal_measures import Modal_Complexity_Measure, Modal_Informativity_Measure
+from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
 from modal_effcomm_analyzer import Modal_EffComm_Analyzer
-from modals.modal_language_of_thought import Modal_Language_of_Thought
-from modals.modal_meaning import Modal_Meaning_Space
+from modals.modal_language_of_thought import ModalLOT
+from modals.modal_meaning import ModalMeaningSpace
 from misc.file_util import load_space
 from misc.file_util import save_languages
 
@@ -41,12 +41,12 @@ def main():
     # Analysis
     ##########################################################################  
 
-    comp_measure = Modal_Complexity_Measure(
-        Modal_Language_of_Thought(
+    comp_measure = ModalComplexityMeasure(
+        ModalLOT(
             space,
             configs['language_of_thought']
             ))
-    inf_measure = Modal_Informativity_Measure()
+    inf_measure = ModalInformativityMeasure()
 
     analyzer = Modal_EffComm_Analyzer(langs, comp_measure, inf_measure)
     langs, dom_langs = analyzer.measure_languages()

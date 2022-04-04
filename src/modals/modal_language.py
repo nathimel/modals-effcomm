@@ -1,12 +1,12 @@
 import numpy as np
 from itertools import product
 from altk.language.language import Expression, Language
-from modals.modal_meaning import Modal_Meaning, Modal_Meaning_Space
+from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
 
 ##############################################################################
 # Expression
 ##############################################################################
-class Modal_Expression(Expression):
+class ModalExpression(Expression):
 
     """A container for modal forms, meanings and other data.
     
@@ -50,7 +50,7 @@ class Modal_Expression(Expression):
         }
 
     @classmethod
-    def from_yaml_rep(cls, rep: dict, space: Modal_Meaning_Space):
+    def from_yaml_rep(cls, rep: dict, space: ModalMeaningSpace):
         """Takes a yaml representation and returns the corresponding Modal Expression.
 
         Args: 
@@ -60,14 +60,14 @@ class Modal_Expression(Expression):
         meaning = rep['meaning']
         lot = rep['lot']
 
-        meaning = Modal_Meaning(meaning, space)
+        meaning = ModalMeaning(meaning, space)
         return cls(form, meaning, lot)
 
 ##############################################################################
 # Language
 ##############################################################################
 
-class Modal_Language(Language):
+class ModalLanguage(Language):
 
     """A container for modal expressions, and other efficient communication data.
 
@@ -77,7 +77,7 @@ class Modal_Language(Language):
         c = language.get_complexity()
     """
 
-    def __init__(self, expressions: list[Modal_Expression], name=None):
+    def __init__(self, expressions: list[ModalExpression], name=None):
         super().__init__(expressions)
         self.set_name(name)
 
@@ -96,7 +96,7 @@ class Modal_Language(Language):
     def __eq__(self, __o: object) -> bool:
         return self.get_expressions() == __o.get_expressions()
 
-    def get_meaning_space(self) -> Modal_Meaning_Space:
+    def get_meaning_space(self) -> ModalMeaningSpace:
         return self.get_universe()
 
     def set_complexity(self, complexity: float):
@@ -140,7 +140,7 @@ class Modal_Language(Language):
         return data
 
     @classmethod
-    def from_yaml_rep(cls, name: str, data: dict, space: Modal_Meaning_Space):
+    def from_yaml_rep(cls, name: str, data: dict, space: ModalMeaningSpace):
         """Takes a yaml representation and returns the corresponding Modal Language.
 
         Args: 
@@ -159,7 +159,7 @@ class Modal_Language(Language):
         iff = measurements['iff']
 
         expressions = [
-            Modal_Expression.from_yaml_rep(x, space) for x in expressions
+            ModalExpression.from_yaml_rep(x, space) for x in expressions
         ]
         lang = cls(expressions, name)
         lang.set_complexity(complexity)
@@ -183,7 +183,7 @@ class Modal_Language(Language):
 # Functions
 ##############################################################################
 
-def is_iff(e: Modal_Expression) -> bool:
+def is_iff(e: ModalExpression) -> bool:
     """Whether an expression satisfies the Independence of Forces and Flavors Universal.
 
     The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
@@ -202,7 +202,7 @@ def is_iff(e: Modal_Expression) -> bool:
             return False
     return True
 
-def degree_iff(language: Modal_Language) -> float:
+def degree_iff(language: ModalLanguage) -> float:
     """The fraction of a modal language satisfying the IFF semantic univeral.
     """
     iff_items = sum([is_iff(item) for item in language.get_expressions()])

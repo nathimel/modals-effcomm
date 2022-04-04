@@ -6,8 +6,8 @@ import random
 import math
 from tqdm import tqdm
 from pathos.multiprocessing import ProcessPool
-from altk.effcomm.complexity import Complexity_Measure
-from altk.effcomm.informativity import Informativity_Measure
+from altk.effcomm.complexity import ComplexityMeasure
+from altk.effcomm.informativity import InformativityMeasure
 
 from altk.language.language import Expression, Language
 
@@ -15,8 +15,8 @@ class Evolutionary_Optimizer:
 
     def __init__(
         self, 
-        comp_measure: Complexity_Measure, 
-        inf_measure: Informativity_Measure,
+        comp_measure: ComplexityMeasure, 
+        inf_measure: InformativityMeasure,
         expressions: list[Expression],
         sample_size: int, 
         max_mutations: int, 

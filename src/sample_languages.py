@@ -9,18 +9,18 @@ import sys
 import random
 import numpy as np
 from tqdm import tqdm
-from modals.modal_language import Modal_Expression, Modal_Language, is_iff
+from modals.modal_language import ModalExpression, ModalLanguage, is_iff
 from misc.file_util import load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
 from math import comb
 from itertools import combinations
 
 def generate_languages(
-    expressions: list[Modal_Expression], 
+    expressions: list[ModalExpression], 
     lang_size: int,
     sample_size: int,
     fixed_wordcount=False,
-    ) -> list[Modal_Language]:
+    ) -> list[ModalLanguage]:
     """Generate languages by randomly sampling bags of expressions.
 
     If sample size <= nCr, then take a random sample_size set of combinations. Otherwise, to prevent repeat languages, treat nCr as the sample size.
@@ -50,7 +50,7 @@ def generate_languages(
             # Construct the languages
             for subset in subsets:
                 bag = [expressions[idx] for idx in subset]
-                language = Modal_Language(
+                language = ModalLanguage(
                     bag, 
                     name="dummy_lang_{}".format(len(languages))
                     )
@@ -87,7 +87,7 @@ def random_combinations(expressions, sample_size, lang_size):
 
                 # Add language
                 bag = [pool[idx] for idx in indices]
-                language = Modal_Language(
+                language = ModalLanguage(
                     bag,
                     name="dummy_lang_{}".format(len(languages)),
                 )
@@ -125,7 +125,7 @@ def quasi_natural_sample(
                 unnatural_expressions = [unnatural_terms[idx] for idx in unnatural_indices]
                 expressions = natural_expressions + unnatural_expressions
 
-                language = Modal_Language(
+                language = ModalLanguage(
                     expressions,
                     name="dummy_lang_{}".format(len(languages)),
                 )

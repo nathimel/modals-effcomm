@@ -4,7 +4,7 @@
 from abc import abstractmethod
 from altk.language.language import Language
 
-class Complexity_Measure:
+class ComplexityMeasure:
 
     """A class for defining how to measure the cognitive complexity of a language.
     """

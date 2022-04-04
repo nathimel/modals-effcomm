@@ -1,16 +1,16 @@
 """Functions for analyzing the results of the simplicity/informativeness trade-off."""
 
 from altk.language.language import Language
-from altk.effcomm.complexity import Complexity_Measure
-from altk.effcomm.informativity import Informativity_Measure
+from altk.effcomm.complexity import ComplexityMeasure
+from altk.effcomm.informativity import InformativityMeasure
 
 class EffComm_Analyzer:
 
     def __init__(
         self,
         languages: list[Language], 
-        comp_measure: Complexity_Measure,
-        inf_measure: Informativity_Measure,
+        comp_measure: ComplexityMeasure,
+        inf_measure: InformativityMeasure,
         ):
         self.comp_measure = comp_measure
         self.inf_measure = inf_measure
