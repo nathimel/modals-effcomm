@@ -4,7 +4,7 @@ This representation language is a hypothesis about how to measure the cognitive 
 
     Typical usage example:
 
-    mlot = Modal_Language_of_Thought(space)
+    mlot = ModalLOT(space)
     meanings = mlot.minimum_lot_descriptions(meanings)
 """
 
