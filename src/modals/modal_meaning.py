@@ -139,11 +139,9 @@ class ModalMeaning(Meaning):
             self.set_objects(points)
     def get_points(self):
         return self.get_objects()
-    points=property(get_points, set_points)
 
     def get_meaning_space(self):
         return self.get_universe()
-    meaning_space=property(get_meaning_space)
 
     def to_distribution(self) -> dict:
         """Convert the set of points into a dict representing a uniform distribution over meaning points.
@@ -165,10 +163,10 @@ class ModalMeaning(Meaning):
         Returns:
             np.ndarray: the array representation of the points instantiated on the modal table of variation
         """
-        a = np.array(self.meaning_space.arr)
-        for point in self.points:
+        a = np.array(self.get_meaning_space().arr)
+        for point in self.get_points():
             force, flavor = point.split("+")
-            indices = (self.meaning_space.force_to_index(force), self.meaning_space.flavor_to_index(flavor))
+            indices = (self.get_meaning_space().force_to_index(force), self.get_meaning_space().flavor_to_index(flavor))
             a[indices] = 1
         return a
 
@@ -188,8 +186,8 @@ class ModalMeaning(Meaning):
         """
         return pd.DataFrame(
             data=self.to_array(), 
-            index=self.meaning_space.forces,
-            columns=self.meaning_space.flavors,
+            index=self.get_meaning_space().forces,
+            columns=self.get_meaning_space().flavors,
             )
 
     def __str__(self) -> str:

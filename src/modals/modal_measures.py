@@ -28,7 +28,6 @@ class ModalComplexityMeasure(ComplexityMeasure):
         self.__mlot = mlot
     def get_lot(self):
         return self.__mlot
-    mlot=property(get_lot, set_lot)
 
     def batch_complexity(self, langs: list[ModalLanguage]) -> list[float]:
         return super().batch_complexity(langs)

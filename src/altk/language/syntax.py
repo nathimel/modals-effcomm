@@ -30,7 +30,6 @@ class Form:
         self._form = form
     def get_form(self, form):
         return self._form
-    form=property(get_form, set_form)
 
     @abstractmethod
     def __str__(self) -> str:

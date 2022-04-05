@@ -22,9 +22,9 @@ class ModalExpression(Expression):
         self.set_lot_expression(lot_expression)
 
     def set_lot_expression(self, e):
-        self.__lot_expression = e
+        self._lot_expression = e
     def get_lot_expression(self):
-        return self.__lot_expression
+        return self._lot_expression
 
     def __hash__(self) -> int:
         return (
@@ -100,26 +100,24 @@ class ModalLanguage(Language):
         return self.get_universe()
 
     def set_complexity(self, complexity: float):
-        self.__complexity = complexity
+        self._complexity = complexity
     def get_complexity(self) -> float:
-        return self.__complexity
-    complexity=property(get_complexity, set_complexity)
+        return self._complexity
 
     def set_informativity(self, informativity: float):
-        self.__informativity = informativity
+        self._informativity = informativity
     def get_informativity(self) -> float:
-        return self.__informativity
-    informativity=property(get_informativity, set_informativity)
+        return self._informativity
 
     def set_optimality(self, optimality: float):
-        self.__optimality = optimality
+        self._optimality = optimality
     def get_optimality(self) -> float:
-        return self.__optimality
+        return self._optimality
 
     def set_iff(self, iff: float):
-        self.__iff = iff
+        self._iff = iff
     def get_iff(self):
-        return self.__iff
+        return self._iff
 
     def yaml_rep(self) -> tuple:
         """Get a data structure for safe compact saving in a .yml file.
@@ -170,9 +168,9 @@ class ModalLanguage(Language):
 
     """Natural languages have meaningful names."""
     def set_name(self, name):
-        self.__name = name
+        self._name = name
     def get_name(self):
-        return self.__name
+        return self._name
     name=property(get_name, set_name)
 
     def is_natural(self) -> bool:
