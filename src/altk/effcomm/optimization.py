@@ -1,11 +1,11 @@
 """Classes and functions for generating languages that optimize the simplicity/informativeness trade-off, e.g. via an iterative evolutionary algorithm."""
 
 import copy
-import pygmo
 import random
 import math
 from tqdm import tqdm
 from pathos.multiprocessing import ProcessPool
+from pygmo import non_dominated_front_2d
 from altk.effcomm.complexity import ComplexityMeasure
 from altk.effcomm.informativity import InformativityMeasure
 
@@ -89,7 +89,7 @@ class Evolutionary_Optimizer:
             explored_languages.extend(languages)
 
             # Calculate dominating individuals
-            dominating_indices = pygmo.non_dominated_front_2d(
+            dominating_indices = non_dominated_front_2d(
                 list(zip(comm_cost, complexity))
                 )
             dominating_languages = [languages[i] for i in dominating_indices]

@@ -30,20 +30,19 @@ class Communicative_Agent:
             return 0
 
     def set_language(self, language: Language):
-        self.__language = language
+        self._language = language
     def get_language(self):
-        return self.__language
+        return self._language
 
     def set_distribution(self, dist: dict):
-        self.__distribution = dist
+        self._distribution = dist
     def get_distribution(self):
-        return self.__distribution
-    distribution=property(get_distribution, set_distribution)
+        return self._distribution
 
     def set_communicative_need(self, distribution: dict):
-        self.__communicative_need = distribution
+        self._communicative_need = distribution
     def get_communicative_need(self):
-        return self.__communicative_need
+        return self._communicative_need
 
 class Speaker(Communicative_Agent):
 

@@ -13,22 +13,20 @@ class Expression:
     """Minimally contains a form and a meaning."""
 
     def __init__(self, form=None, meaning=None):
-        self.__form = None
-        self.__meaning = None
+        self._form = None
+        self._meaning = None
         self.set_form(form)
         self.set_meaning(meaning)
     
     def set_form(self,form):
-        self.__form = form
+        self._form = form
     def get_form(self):
-        return self.__form
-    form=property(get_form, set_form)
+        return self._form
 
     def set_meaning(self, meaning: Meaning):
-        self.__meaning = meaning
+        self._meaning = meaning
     def get_meaning(self) -> Meaning:
-        return self.__meaning
-    meaning=property(get_meaning, set_meaning)
+        return self._meaning
 
     @abstractmethod
     def yaml_rep(self):
@@ -56,10 +54,9 @@ class Language:
     def set_expressions(self, expressions: list[Expression]):
         if not expressions:
             raise ValueError("list of Expressions must not be empty.")        
-        self.__expressions = expressions
+        self._expressions = expressions
     def get_expressions(self):
-        return self.__expressions
-    expressions=property(get_expressions, set_expressions)
+        return self._expressions
 
     def has_expression(self, expression: Expression) -> bool:
         """Whether the language has the expression"""
@@ -87,10 +84,9 @@ class Language:
         raise NotImplementedError
 
     def get_universe(self) -> Universe:
-        return self.__universe
+        return self._universe
     def set_universe(self, universe: Universe):
-        self.__universe = universe
-    universe=property(get_universe, set_universe)
+        self._universe = universe
 
     @abstractmethod
     def __str__(self) -> str:

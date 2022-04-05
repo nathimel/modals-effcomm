@@ -24,13 +24,11 @@ class EffComm_Analyzer:
         
 
     def set_languages(self, langs: list[Language]):
-        self.__languages = langs
+        self._languages = langs
     def get_languages(self) -> list[Language]:
-        return self.__languages
-    languages=property(get_languages, set_languages)
+        return self._languages
 
     def set_dominating_languages(self, doms: list[Language]):
-        self.__dominating_languages = doms
+        self._dominating_languages = doms
     def get_dominating_languages(self) -> list[Language]:
-        return self.__dominating_languages
-    dominating_languages=property(get_dominating_languages, set_dominating_languages)
+        return self._dominating_languages

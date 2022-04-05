@@ -23,13 +23,13 @@ class Universe:
     """The universe is the set of possible referent objects for a meaning."""
 
     def __init__(self, objects):
-        self.__objects = set()
+        self._objects = set()
         self.set_objects(objects)
 
     def set_objects(self, objects):
-        self.__objects = objects
+        self._objects = objects
     def get_objects(self):
-        return self.__objects
+        return self._objects
     universe=property(get_objects, set_objects)
 
     def __str__(self):
@@ -62,16 +62,14 @@ class Meaning:
     """
 
     def set_universe(self, universe: Universe):
-        self.__universe = universe
+        self._universe = universe
     def get_universe(self):
-        return self.__universe
-    universe=property(get_universe, set_universe)
+        return self._universe
     
     def get_objects(self):
-        return self.__objects
+        return self._objects
     def set_objects(self, objects):
-        self.__objects = objects
-    objects=property(get_objects, set_objects)
+        self._objects = objects
     
     @abstractmethod
     def __str__(self) -> str:

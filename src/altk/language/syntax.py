@@ -23,13 +23,13 @@ class Form:
     """By default a form contains the empty string."""
 
     def __init__(self, form=None):
-        self.__form = str()
+        self._form = str()
         self.set_form(form)
     
     def set_form(self, form):
-        self.__form = form
+        self._form = form
     def get_form(self, form):
-        return self.__form
+        return self._form
     form=property(get_form, set_form)
 
     @abstractmethod
