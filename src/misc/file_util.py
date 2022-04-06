@@ -1,6 +1,17 @@
 import yaml
+import random
+import numpy as np
 from modals.modal_meaning import ModalMeaningSpace, ModalMeaning
 from modals.modal_language import ModalExpression, ModalLanguage
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Psuedo random
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def set_seed(seed: int) -> None:
+    """Sets various random seeds. """
+    random.seed(seed)
+    np.random.seed(seed)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs
@@ -11,6 +22,16 @@ def load_configs(fn: str)->dict:
     with open(fn, "r") as stream:
         configs = yaml.safe_load(stream)
     return configs
+
+"""preferred usage:
+
+    # get command-line arguments
+    args = util.get_args()
+
+    # set random seed
+    util.set_seed(args.seed)
+
+"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Modal Meaning Space

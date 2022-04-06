@@ -11,7 +11,7 @@ from modals.modal_language import ModalExpression
 from modals.modal_meaning import ModalMeaning
 from modals.modal_language import ModalLanguage
 from modals.modal_language import is_iff
-from misc.file_util import load_languages
+from misc.file_util import load_languages, set_seed
 
 def main():
     if len(sys.argv) != 4:
@@ -27,6 +27,7 @@ def main():
 
     # Load configs
     configs = load_configs(config_fn)
+    set_seed(configs['random_seed'])
 
     evolutionary_alg_configs = configs['evolutionary_alg']
     sample_size = evolutionary_alg_configs['generation_size']
