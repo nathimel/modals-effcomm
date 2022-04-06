@@ -7,8 +7,7 @@ from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeas
 from modal_effcomm_analyzer import Modal_EffComm_Analyzer
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_meaning import ModalMeaningSpace
-from misc.file_util import load_space
-from misc.file_util import save_languages
+from misc.file_util import set_seed, load_space, save_languages
 
 def main():
     if len(sys.argv) != 8:
@@ -28,7 +27,7 @@ def main():
     plot_fn = sys.argv[7]
     configs = load_configs(config_fn)
     space = load_space(space_fn)
-
+    set_seed(configs['random_seed'])
 
     # load languages
     sampled_languages = load_languages(sampled_languages_fn)

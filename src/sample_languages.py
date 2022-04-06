@@ -10,7 +10,7 @@ import random
 import numpy as np
 from tqdm import tqdm
 from modals.modal_language import ModalExpression, ModalLanguage, is_iff
-from misc.file_util import load_configs, load_expressions, save_languages
+from misc.file_util import set_seed, load_configs, load_expressions, save_languages
 from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
 from math import comb
 from itertools import combinations
@@ -172,6 +172,8 @@ def main():
     configs = load_configs(config_fn)
     lang_size = configs['lang_size']
     sample_size = configs['sample_size']    
+
+    set_seed(configs['random_seed'])
 
     # Turn the knob on iff
     expressions = load_expressions(expression_save_fn)
