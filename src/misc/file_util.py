@@ -23,16 +23,6 @@ def load_configs(fn: str)->dict:
         configs = yaml.safe_load(stream)
     return configs
 
-"""preferred usage:
-
-    # get command-line arguments
-    args = util.get_args()
-
-    # set random seed
-    util.set_seed(args.seed)
-
-"""
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Modal Meaning Space
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

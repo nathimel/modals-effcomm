@@ -3,11 +3,7 @@
 Every possible modal meaning that can be expressed by a language is given exactly one expression. This expression is chosen based on a the shortest formula in a language of thought (LoT), which is estimated by a boolean algebra formula minimization heuristic.
 """
 
-from ast import operator
 import sys
-import yaml
-import itertools
-import numpy as np
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import ModalExpression
