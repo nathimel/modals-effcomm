@@ -37,8 +37,8 @@ class InformativityMeasure:
 def communicative_success(
     meanings: list[Meaning], 
     expressions: list[Expression], 
-    speaker: LiteralSpeaker,
-    listener: LiteralListener,
+    speaker: LiteralSpeaker.probability_of_expression,
+    listener: LiteralListener.probability_of_meaning,
     prior: dict,
     utility
     ) -> float:
@@ -81,5 +81,8 @@ def communicative_success(
 
     success = meaning_rewards
     if success <= 0 or success > 1:
-        raise ValueError("communicative success must be in [0,1]. Num expressions: {0}.  Expressions received: {1}".format(len(expressions), expressions))
+        raise ValueError("communicative success must be in [0,1]. Communicative success: {0}. Num expressions: {1}.  Expressions received: {2}.".format(
+            success,
+            len(expressions), 
+            [str(e) for e in expressions]))
     return success   
