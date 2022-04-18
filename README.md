@@ -27,12 +27,12 @@ Measuring of languages
 - Optimality wrt a pareto frontier
   
 
-# Requirements  
+## Requirements  
 
 Get the required packages by running `conda env create -f environment.yml`
   
   
-# Replicating the experimental results  
+## Replicating the experimental results  
 The main experimental results can be reproduced by running the script `scripts/main_results.sh`. This performs the following steps:
   
   
