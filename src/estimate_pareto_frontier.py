@@ -65,9 +65,8 @@ def main():
     for expression in expressions:
         points_ = expression.get_meaning().get_points()
         if len(points_) == 1:
-            point, = points_
             vocab.append(expression)
-    assert len(vocab) == len(points)
+    assert len(vocab) == len(points) # 1:1 map from expressions to meanings
     lang = ModalLanguage(vocab)
     lang.set_name('Sanity_Check')
     explored_langs.append(lang)
