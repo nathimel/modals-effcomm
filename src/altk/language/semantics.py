@@ -70,7 +70,7 @@ class Meaning:
         return self._objects
     def set_objects(self, objects):
         self._objects = objects
-    
+
     @abstractmethod
     def __str__(self) -> str:
         pass

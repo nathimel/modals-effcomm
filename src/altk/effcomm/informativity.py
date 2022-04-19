@@ -1,10 +1,11 @@
 """Functions for measuring informativity in efficient communication analyses of languages."""
 
 from abc import abstractmethod
+from typing import Callable
 from altk.language.language import Language
 from altk.language.language import Expression
 from altk.language.semantics import Meaning
-from altk.effcomm.agent import LiteralListener, LiteralSpeaker
+from altk.effcomm.agent import Speaker, Listener
 
 ##############################################################################
 # Classes
@@ -35,12 +36,12 @@ class InformativityMeasure:
 ##############################################################################
 
 def communicative_success(
-    meanings: list[Meaning], 
-    expressions: list[Expression], 
-    speaker: LiteralSpeaker.probability_of_expression,
-    listener: LiteralListener.probability_of_meaning,
+    # meanings: list[Meaning], 
+    # expressions: list[Expression], 
+    speaker: Speaker,
+    listener: Listener,
     prior: dict,
-    utility
+    utility: Callable[[Meaning, Meaning], float]
     ) -> float:
     """Helper function to compute the literal informativity of a language.
 
@@ -59,6 +60,8 @@ def communicative_success(
 
         - utility: a function u(m, m') representing similarity of meanings.
     """
+    meanings = speaker.get_language().get_universe().get_objects()
+    expressions = speaker.get_language().get_expressions()
     meaning_rewards = 0
     for meaning in meanings:
         meaning_reward = prior[meaning]
@@ -66,12 +69,16 @@ def communicative_success(
         speaker_rewards = 0
         # probability a speaker chooses the expression
         for expression in expressions:
-            speaker_reward = speaker(expression, meaning)
+            speaker_reward = speaker.probability_of_expression_given_meaning(
+                expression, meaning
+                )
 
             # probability a listener recovers the meaning
             listener_reward = 0
             for meaning_ in expression.get_meaning().get_objects():
-                reward = listener(meaning_, expression)
+                reward = listener.probability_of_meaning_given_expression(
+                    meaning, expression
+                    )
                 reward *= utility(meaning, meaning_)
                 listener_reward += reward
             speaker_reward *= listener_reward
@@ -81,8 +88,6 @@ def communicative_success(
 
     success = meaning_rewards
     if success <= 0 or success > 1:
-        raise ValueError("communicative success must be in [0,1]. Communicative success: {0}. Num expressions: {1}.  Expressions received: {2}.".format(
-            success,
-            len(expressions), 
-            [str(e) for e in expressions]))
+        [print(e) for e in expressions]
+        raise ValueError("communicative success must be in [0,1]. Communicative success: {success}")
     return success   
