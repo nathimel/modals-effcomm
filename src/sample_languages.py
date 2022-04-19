@@ -46,9 +46,7 @@ def generate_languages(
         # If sample size > all possible languages, sample from latter.
         if sample_size > comb(total_word_amount, word_amount):
             subsets = list(combinations(expressions_indices, word_amount))
-            print(
-                f"Enumerating {len(subsets)} languages of word amount {word_amount}"
-            )
+            print(f"Enumerating {len(subsets)} languages of word amount {word_amount}")
 
             # Construct the languages
             for subset in subsets:
