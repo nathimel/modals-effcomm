@@ -64,16 +64,16 @@ def get_force_flavor_names(num_forces: int, num_flavors: int, force_names=None, 
     return (force_names, flavor_names)
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/build_meaning_space.py path_to_config_file path_to_save_meaning_space")
+        print("Usage: python3 src/build_meaning_space.py path_to_config_file")
         raise TypeError() #TODO: create an actual error class for the package
 
     print("Building modal meaning space ...", sep=' ')
 
     config_fn = sys.argv[1]
-    path_to_save_meaning_space = sys.argv[2]
     configs = load_configs(config_fn)
+    path_to_save_meaning_space = configs['file_paths']['meaning_space']
     
     forces, flavors = get_force_flavor_names(
         configs['num_forces'],

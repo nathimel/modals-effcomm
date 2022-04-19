@@ -10,9 +10,9 @@ from modals.modal_language import ModalExpression
 from misc.file_util import load_space, load_configs, save_expressions
 
 def generate_expressions(space: ModalMeaningSpace, configs: dict):
-    """Short description.
+    """Generate and measure complexity of all possible expressions for a meaning space.
     
-    Generate all possible meanings specified by the modal meaning space. For each meaning find an appropriate form. Store this information in a modal expression.
+    Enumerate all possible meanings specified by the modal meaning space. For each meaning find an appropriate form. Store this information in a modal expression.
 
     Args:
         - space: a Modal Meaning Space constraining the set of possible meanings to generate expressions for.
@@ -33,19 +33,21 @@ def generate_expressions(space: ModalMeaningSpace, configs: dict):
 
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 2:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/generat_expressions.py path_to_config_file path_to_save_meaning_space path_to_save_expresions")
+        print("Usage: python3 src/generate_expressions.py path_to_config_file")
         raise TypeError() #TODO: create an actual error class for the package
 
     # TODO: probably use tqdm in generate_expressions function
     print("Generating expressions ...", sep=' ')
 
+    # Load parameters for expression generation
     config_fn = sys.argv[1]
-    meaning_space_fn = sys.argv[2]
-    expression_save_fn = sys.argv[3]
-
     configs = load_configs(config_fn)
+    meaning_space_fn = configs['file_paths']['meaning_space']
+    expression_save_fn = configs['file_paths']['expressions']
+
+    # Generate expressions, measure them, and save
     space = load_space(meaning_space_fn)
     expressions = generate_expressions(space, configs)
     save_expressions(expression_save_fn, expressions)

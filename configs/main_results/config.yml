@@ -22,3 +22,13 @@ evolutionary_alg:
   max_mutations: 5
   num_processes: 6
   maximum_lang_size: 6
+
+# outputs etc
+file_paths:
+  meaning_space: outputs/main_results/meaning_space.yml
+  expressions: outputs/main_results/expressions.yml
+  artificial_languages: outputs/main_results/languages/artificial.yml
+  natural_languages: outputs/main_results/languages/natural.yml
+  dominant_languages: outputs/main_results/languages/dominant.yml # Pareto
+  dataframe: outputs/main_results/dataframe.csv
+  plot: outputs/main_results/plot.png
