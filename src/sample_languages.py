@@ -158,21 +158,22 @@ def split_expressions(expressions, criterion) -> tuple:
     return (good, bad)
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 2:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/sample_languages.py path_to_config_file  path_to_save_expresions path_to_save_artificial_languages")
+        print("Usage: python3 src/sample_languages.py path_to_config_file")
         raise TypeError() #TODO: create an actual error class for the package
 
     print("Sampling languages ...", sep=' ')
 
+    # Load expressions and save path
     config_fn = sys.argv[1]
-    expression_save_fn = sys.argv[2]
-    lang_save_fn = sys.argv[3]
-
     configs = load_configs(config_fn)
-    lang_size = configs['lang_size']
-    sample_size = configs['sample_size']    
+    expression_save_fn = configs['file_paths']['expressions']
+    lang_save_fn = configs['file_paths']['artificial_languages']
 
+    # Load parameters for languages
+    lang_size = configs['lang_size']
+    sample_size = configs['sample_size']
     set_seed(configs['random_seed'])
 
     # Turn the knob on iff

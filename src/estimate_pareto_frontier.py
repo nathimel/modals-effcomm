@@ -14,21 +14,19 @@ from modals.modal_language import is_iff
 from misc.file_util import load_languages, set_seed
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 2:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file path_to_expressions_file path_to_artificial_languages")
+        print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file")
         raise TypeError() #TODO: create an actual error class for the package
 
     print("Estimating pareto frontier ...", sep=' ')
 
     config_fn = sys.argv[1]
-    expressions_fn = sys.argv[2]    
-    save_all_langs_fn = sys.argv[3]
-
-    # Load configs
     configs = load_configs(config_fn)
-    set_seed(configs['random_seed'])
+    expressions_fn = configs['file_paths']['expressions']
+    save_all_langs_fn = configs['file_paths']['artificial_languages']
 
+    # Load optimization params
     evolutionary_alg_configs = configs['evolutionary_alg']
     sample_size = evolutionary_alg_configs['generation_size']
     max_mutations = evolutionary_alg_configs['max_mutations']
@@ -36,16 +34,19 @@ def main():
     processes = evolutionary_alg_configs['num_processes']
     lang_size = evolutionary_alg_configs['maximum_lang_size']
 
-    # Set parameters for evolutionary algorithm optimizer
+    set_seed(configs['random_seed'])
 
+    # Create the first generation of languages
     expressions = load_expressions(expressions_fn)
     seed_population = generate_languages(expressions, lang_size, sample_size)
 
+    # Construct a measure of informativity
     space = expressions[0].get_meaning().get_meaning_space()
     complexity_measure = ModalComplexityMeasure(
         ModalLOT(space, configs['language_of_thought']))
     informativity_measure = ModalInformativityMeasure()
 
+    # Initialize optimizer and run algorithm
     optimizer = Modal_Evolutionary_Optimizer(
         comp_measure=complexity_measure,
         inf_measure=informativity_measure,
@@ -56,11 +57,9 @@ def main():
         lang_size=lang_size,
         processes=processes
     )
-
-    # Run the algorithm
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
 
-    # Sanity check: create a perfectly informative language.
+    # Sanity check for debugging: create a perfectly informative language.
     vocab = []
     points = space.get_objects()
     for expression in expressions:

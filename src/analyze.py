@@ -10,36 +10,38 @@ from modals.modal_meaning import ModalMeaningSpace
 from misc.file_util import set_seed, load_space, save_languages
 
 def main():
-    if len(sys.argv) != 8:
+    if len(sys.argv) != 2:
         print("Incorrect number of arguments.")
-        print("Usage: python3 src/analyze.py path_to_config path_to_space path_to_artificial_languages path_to_natural_languages path_to_dominant_languages path_to_save_dataframe path_to_save_plot")
-        print("got argv: ", sys.argv)
+        print("Usage: python3 src/analyze.py path_to_config")
         raise TypeError() #TODO: create an actual error class for the package
 
     print("Analyzing ...", sep=' ')
 
+    # Load the experimental data and paths to save results
     config_fn = sys.argv[1]
-    space_fn = sys.argv[2]
-    sampled_languages_fn = sys.argv[3]
-    natural_languages_fn = sys.argv[4]
-    dominant_languages_fn = sys.argv[5]
-    df_fn = sys.argv[6]
-    plot_fn = sys.argv[7]
     configs = load_configs(config_fn)
-    space = load_space(space_fn)
+
+    paths = configs['file_paths']
+    space_fn = paths['meaning_space']
+    sampled_languages_fn = paths['artificial_languages']
+    natural_languages_fn = paths['natural_languages']
+    dominant_languages_fn = paths['dominant_languages']
+    df_fn = paths['dataframe']
+    plot_fn = paths['plot']
+
     set_seed(configs['random_seed'])
 
-    # load languages
+    # load languages and unique
     sampled_languages = load_languages(sampled_languages_fn)
     # natural_languages = load_languages(natural_languages_fn)
     langs = list(set(sampled_languages))
-    langs = sampled_languages
     print("{} total langs...".format(len(langs)), sep=' ')
 
     ##########################################################################
     # Analysis
     ##########################################################################  
 
+    space = load_space(space_fn)
     comp_measure = ModalComplexityMeasure(
         ModalLOT(
             space,
