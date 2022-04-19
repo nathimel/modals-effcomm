@@ -32,6 +32,7 @@ def main():
     set_seed(configs['random_seed'])
 
     # load languages and unique
+    print("Loading all languages ...", sep=' ')
     sampled_languages = load_languages(sampled_languages_fn)
     # natural_languages = load_languages(natural_languages_fn)
     langs = list(set(sampled_languages))
@@ -49,6 +50,7 @@ def main():
             ))
     inf_measure = ModalInformativityMeasure()
 
+    print("Measuring languages ...", sep=' ')
     analyzer = Modal_EffComm_Analyzer(langs, comp_measure, inf_measure)
     langs, dom_langs = analyzer.measure_languages()
 
@@ -57,13 +59,11 @@ def main():
 
     # Estimate pareto frontier curve
     df, plot = analyzer.get_results()
+    print("done.")    
 
     # write results
     df.to_csv(df_fn, index=False)
     plot.save(plot_fn, width=10, height=10, dpi=300)
-    
-
-    print("done.")
 
 if __name__ == "__main__":
     main()
