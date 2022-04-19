@@ -1,4 +1,5 @@
-import numpy as np
+from collections import Counter
+from copy import copy, deepcopy
 from itertools import product
 from altk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
@@ -87,8 +88,34 @@ class ModalLanguage(Language):
         self.set_optimality(None)
         self.set_iff(None)
 
+    def rename_synonyms(self, expressions: list[ModalExpression]) -> list[ModalExpression]:
+        """Give any expressions with exactly the same meanings different forms.
+        
+        This is necessary at least because a speaker and listener need to be able to distinguish them.
+        """
+        synonyms = {
+            item: count 
+            for item, count in Counter(expressions).items() if count > 1
+            }
+        
+        # create a stack of names for each synonym
+        synonyms = {item: [f"{item}_{idx}" for idx in range(synonyms[item])] for item in synonyms}
+
+        expressions_ = deepcopy(expressions)
+        for expression in expressions_:
+            if expression in synonyms:
+                new_form = synonyms[expression].pop()
+                expression.set_form(new_form)
+        
+        return expressions_
+
+    def set_expressions(self, expressions: list[Expression]):
+        if not expressions:
+            raise ValueError("list of Expressions must not be empty.") 
+        self._expressions = self.rename_synonyms(expressions)
+
     def __str__(self) -> str:
-        return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.expressions]))
+        return "Modal_Language: [\n{}\n]".format("\n".join([str(e) for e in self.get_expressions()]))
 
     def __hash__(self) -> int:
         return hash(tuple(self.get_expressions()))

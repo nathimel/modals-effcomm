@@ -1,7 +1,7 @@
 import yaml
 import random
 import numpy as np
-from modals.modal_meaning import ModalMeaningSpace, ModalMeaning
+from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language import ModalExpression, ModalLanguage
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

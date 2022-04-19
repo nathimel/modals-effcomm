@@ -1,9 +1,8 @@
 """Functions for measuring informativity in efficient communication analyses of languages."""
-
+import sys
 from abc import abstractmethod
 from typing import Callable
 from altk.language.language import Language
-from altk.language.language import Expression
 from altk.language.semantics import Meaning
 from altk.effcomm.agent import Speaker, Listener
 
@@ -11,8 +10,8 @@ from altk.effcomm.agent import Speaker, Listener
 # Classes
 ##############################################################################
 
-class InformativityMeasure:
 
+class InformativityMeasure:
     def __init__(self):
         raise NotImplementedError()
 
@@ -26,23 +25,23 @@ class InformativityMeasure:
 
     @abstractmethod
     def language_informativity(self, language: Language) -> float:
-        """Measure the informativity of a single language.
-        """
+        """Measure the informativity of a single language."""
         pass
- 
+
 
 ##############################################################################
 # Functions
 ##############################################################################
 
+
 def communicative_success(
-    # meanings: list[Meaning], 
-    # expressions: list[Expression], 
+    # meanings: list[Meaning],
+    # expressions: list[Expression],
     speaker: Speaker,
     listener: Listener,
     prior: dict,
-    utility: Callable[[Meaning, Meaning], float]
-    ) -> float:
+    utility: Callable[[Meaning, Meaning], float],
+) -> float:
     """Helper function to compute the literal informativity of a language.
 
         $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
@@ -64,30 +63,27 @@ def communicative_success(
     expressions = speaker.get_language().get_expressions()
     meaning_rewards = 0
     for meaning in meanings:
-        meaning_reward = prior[meaning]
-        
-        speaker_rewards = 0
-        # probability a speaker chooses the expression
-        for expression in expressions:
-            speaker_reward = speaker.probability_of_expression_given_meaning(
-                expression, meaning
+        prob_m = prior[meaning]
+        for meaning_ in meanings:
+            utility_m_m_pair = utility(meaning, meaning_)
+            # compute P(m, m') = sum_expr speaker(expr | m) * listener(m' | expr)
+            prob_m_m_pair = 0.0
+            for expression in expressions:
+                speaker_prob = speaker.probability_of_expression_given_meaning(
+                    expression, meaning
                 )
+                listener_prob = listener.probability_of_meaning_given_expression(
+                    meaning_, expression
+                )
+                prob_m_m_pair += speaker_prob * listener_prob
 
-            # probability a listener recovers the meaning
-            listener_reward = 0
-            for meaning_ in expression.get_meaning().get_objects():
-                reward = listener.probability_of_meaning_given_expression(
-                    meaning, expression
-                    )
-                reward *= utility(meaning, meaning_)
-                listener_reward += reward
-            speaker_reward *= listener_reward
-            speaker_rewards += speaker_reward
-        meaning_reward *= speaker_rewards
-        meaning_rewards += meaning_reward
+            reward_m_m_pair = prob_m_m_pair * prob_m * utility_m_m_pair
+            meaning_rewards += reward_m_m_pair
 
     success = meaning_rewards
     if success <= 0 or success > 1:
         [print(e) for e in expressions]
-        raise ValueError("communicative success must be in [0,1]. Communicative success: {success}")
-    return success   
+        raise ValueError(
+        f"communicative success must be in [0,1]. Communicative success: {success}"
+        )
+    return success
