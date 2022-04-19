@@ -72,7 +72,7 @@ class Evolutionary_Optimizer:
         batch_complexity = self.comp_measure.batch_complexity
         batch_comm_cost = self.inf_measure.batch_communicative_cost
 
-        pool = ProcessPool(nodes=self.processes)
+        pool = ProcessPool(nodes=self.processes) # TODO: remove until you need it
 
         languages = seed_population
         explored_languages = []
@@ -86,7 +86,7 @@ class Evolutionary_Optimizer:
             comm_cost = batch_comm_cost(languages)
 
             # measurements = [(cost, comp) for cost, comp in zip(comm_cost, complexity)]
-            explored_languages.extend(languages)
+            explored_languages.extend(copy.deepcopy(languages))
 
             # Calculate dominating individuals
             dominating_indices = non_dominated_front_2d(
@@ -140,6 +140,8 @@ class Evolutionary_Optimizer:
 ##############################################################################
 
     """Classes for defining mutations used by an Evolutionary_Optimizer."""
+
+# Mutation = Callable[[Language, list[Expression], Language]
 
 class Mutation:
 

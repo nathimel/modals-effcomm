@@ -1,6 +1,5 @@
 """Classes and functinos to analyze the simplicity/informativeness trade-off for modals."""
 
-import sys
 import pygmo
 import numpy as np
 import plotnine as pn
@@ -12,16 +11,15 @@ from altk.effcomm.analysis import EffComm_Analyzer
 from modals.modal_language import ModalLanguage, degree_iff
 from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
 
-class Modal_EffComm_Analyzer(EffComm_Analyzer):
 
+class Modal_EffComm_Analyzer(EffComm_Analyzer):
     def __init__(
         self,
-        languages: list[ModalLanguage], 
-        comp_measure: ModalComplexityMeasure, 
-        inf_measure: ModalInformativityMeasure
+        languages: list[ModalLanguage],
+        comp_measure: ModalComplexityMeasure,
+        inf_measure: ModalInformativityMeasure,
     ):
         super().__init__(languages, comp_measure, inf_measure)
-
 
     def measure_languages(self) -> list[ModalLanguage]:
         """Measure a list of languages and return a pair of (all languages, dominant_languages).
@@ -34,37 +32,34 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         langs = self.get_languages()
         # measure simplicity, informativity, and semantic universals
         for lang in langs:
-            lang.set_complexity(
-                self.comp_measure.language_complexity(lang)
-                )
-            lang.set_informativity(
-                self.inf_measure.language_informativity(lang)
-                )
+            lang.set_complexity(self.comp_measure.language_complexity(lang))
+            lang.set_informativity(self.inf_measure.language_informativity(lang))
             lang.set_iff(degree_iff(lang))
 
         # measure relative pareto optimality
         dominating_indices = pygmo.non_dominated_front_2d(
-            list(zip(
-                [1 - lang.get_informativity() for lang in langs],
-                [lang.get_complexity() for lang in langs]
+            list(
+                zip(
+                    [1 - lang.get_informativity() for lang in langs],
+                    [lang.get_complexity() for lang in langs],
                 )
-            ))
+            )
+        )
 
         dominating_languages = [langs[i] for i in dominating_indices]
         self.set_languages(langs)
         self.set_dominating_languages(dominating_languages)
-        self.measure_closeness(self.interpolate_data())  
+        self.measure_closeness(self.interpolate_data())
         return (self.get_languages(), self.get_dominating_languages())
 
     def get_results(self) -> tuple:
-        """Get the main plot, dataframe, report of semantic univeral correlation with optimality.
-        """
+        """Get the main plot, dataframe, report of semantic univeral correlation with optimality."""
         return [self.get_df(self.get_languages()), self.get_plot()]
 
     def get_plot(self) -> pn.ggplot:
         """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
-        Returns: 
+        Returns:
             - plot: a plotnine 2D plot of the trade-off.
         """
         data = self.get_df(self.get_languages())
@@ -83,46 +78,53 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
             + pn.geom_line(size=1, data=pareto_df)
             + pn.xlab("Communicative cost of languages")
             + pn.ylab("Complexity of languages")
-            + pn.scale_color_cmap("cividis"))
+            + pn.scale_color_cmap("cividis")
+        )
         return plot
 
     def get_df(self, languages) -> pd.DataFrame:
         """Get a pandas DataFrame for a list of languages containing efficient communication data.
-        
+
         Args:
             - languages: the list of languages for which to get efficient communication dataframe.
 
         Returns:
-            - data: a pandas DataFrame with rows as individual languages, with the columns specifying their 
+            - data: a pandas DataFrame with rows as individual languages, with the columns specifying their
                 - communicative cost
                 - cognitive complexity
                 - satisfaction of the iff universal
                 - Language type (natural or artificial)
         """
-        data = np.array([
-                (1 - lang.get_informativity(),
-                lang.get_complexity(),
-                lang.get_iff(),
-                'natural' if lang.is_natural() else 'artificial'
-                ) for lang in languages
-            ])
+        data = np.array(
+            [
+                (
+                    1 - lang.get_informativity(),
+                    lang.get_complexity(),
+                    lang.get_iff(),
+                    "natural" if lang.is_natural() else "artificial",
+                )
+                for lang in languages
+            ]
+        )
         data = pd.DataFrame(
-            data=data, 
+            data=data,
             columns=[
-            'comm_cost', 
-            'complexity',
-            'iff',
-            'Language',
-            ])
+                "comm_cost",
+                "complexity",
+                "iff",
+                "Language",
+            ],
+        )
 
         # Pandas confused by mixed types int and string, so convert back.
-        data[['comm_cost', 'complexity', 'iff']] = data[['comm_cost', 'complexity', 'iff']].apply(pd.to_numeric)
+        data[["comm_cost", "complexity", "iff"]] = data[
+            ["comm_cost", "complexity", "iff"]
+        ].apply(pd.to_numeric)
 
         return data
 
     def measure_closeness(self, pareto_points: list):
-        """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier.
-        """
+        """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier."""
         langs = self.get_languages()
         comm_cost = []
         comp = []
@@ -141,8 +143,7 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         self.set_languages(langs)
 
     def interpolate_data(self) -> np.ndarray:
-        """Interpoloate the points yielded by the pareto optimal languages into a continuous (though not necessarily smooth) curve.
-        """
+        """Interpoloate the points yielded by the pareto optimal languages into a continuous (though not necessarily smooth) curve."""
         dom_cc = []
         dom_comp = []
         for lang in self.get_dominating_languages():
@@ -152,7 +153,9 @@ class Modal_EffComm_Analyzer(EffComm_Analyzer):
         values = list(set(zip(dom_cc, dom_comp)))
         pareto_x, pareto_y = list(zip(*values))
 
-        interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
+        interpolated = interpolate.interp1d(
+            pareto_x, pareto_y, fill_value="extrapolate"
+        )
         pareto_costs = np.linspace(0, 1.0, num=5000)
         pareto_complexities = interpolated(pareto_costs)
         pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))

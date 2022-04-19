@@ -4,7 +4,6 @@
 import random
 import numpy as np
 from tqdm import tqdm
-from modals.modal_language import ModalLanguage
 
 
 class Quasi_Natural_Vocabulary_Sampler:

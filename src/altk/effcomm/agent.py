@@ -18,12 +18,12 @@ class Communicative_Agent:
     def get_language(self) -> Language:
         return self._language
 
-    def set_distribution(self, dist: dict):
+    def set_distribution(self, dist: dict[dict]):
         self._distribution = dist
     def get_distribution(self):
         return self._distribution
 
-    def set_communicative_need(self, distribution: dict):
+    def set_communicative_need(self, distribution: dict[dict]):
         self._communicative_need = distribution
     def get_communicative_need(self):
         return self._communicative_need
@@ -54,7 +54,7 @@ class LiteralSpeaker(Speaker):
     def __init__(self, language: Language):
         super().__init__(language)
         # initialize uniform distribution
-        self.dist = self.uniform()
+        self.set_distribution(self.uniform())
 
     def uniform(self) -> dict[dict]:
         """Assume that for a particular meaning, every expression that can denote it is equiprobable.
@@ -81,12 +81,21 @@ class LiteralSpeaker(Speaker):
                 for e in dist[m]:
                     if e.can_express(m):
                         dist[m][e] = 1/total
+
+            # make sure not greater than 1
+            diff = sum([dist[m][e] for e in dist[m]]) - 1.0
+            tolerance = 1e-5
+            if diff > tolerance:
+                print("over tolerance: ")
+                print(sum([dist[m][e] for e in dist[m]]))
+                print([dist[m][e] for e in dist[m]])
+                assert False
         
         return dist
 
     def probability_of_expression_given_meaning(self, expression: Expression, meaning: Meaning) -> float:
         # P(expression | meaning)
-        return self.dist[meaning][expression]
+        return self.get_distribution()[meaning][expression]
 
 class LiteralListener(Listener):
     """A naive literal listener interprets utterances without any reasoning about other agents. """
@@ -94,7 +103,7 @@ class LiteralListener(Listener):
     def __init__(self, language: Language):
         super().__init__(language)
         # initialize uniform distribution
-        self.dist = self.uniform()
+        self.set_distribution(self.uniform())
     
     def uniform(self) -> dict[dict]:
         """Assume the probability of each expressible meaning point in an expression is equal. All inexpressible meanings have probability 0.
@@ -122,11 +131,20 @@ class LiteralListener(Listener):
                     if e.can_express(m):
                         dist[e][m] = 1/total
 
+            # make sure not greater than 1
+            diff = sum([dist[e][m] for m in dist[e]]) - 1.0
+            tolerance = 1e-5
+            if diff > tolerance:
+                print("over tolerance: ")
+                print(sum([dist[e][m] for m in dist[e]]))
+                print([dist[e][m] for m in dist[e]])
+                assert False
+
         return dist
 
     def probability_of_meaning_given_expression(self, meaning: Meaning, expression: Expression) -> float:
         # P(meaning | expression)
-        return self.dist[expression][meaning]
+        return self.get_distribution()[expression][meaning]
 
 class PragmaticSpeaker(LiteralListener):
     """A pragmatic speaker chooses utterances based on how a naive, literal listener would interpret them."""

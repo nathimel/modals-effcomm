@@ -18,17 +18,12 @@ class Add_Modal(Mutation):
     def __init__(self):
         super().__init__()
     
-    def mutate(self, language: ModalLanguage, expressions: list[ModalExpression]) -> Language:
-        while True:
+    def mutate(self, language: ModalLanguage, expressions: list[ModalExpression]) -> Language:        
+        new_expression = random.choice(expressions)        
+        # TODO: synonymy ?
+        while language.has_expression(new_expression):
             new_expression = random.choice(expressions)
-
-            # TODO: delete the below line to allow for synonymy
-            language.has_expression(new_expression)
-
-            if language.has_expression(new_expression):
-                continue
-            language.add_expression(new_expression)
-            break
+        language.add_expression(new_expression)
         return language
 
 class Remove_Modal(Mutation):
@@ -56,13 +51,16 @@ class Remove_Bit(Mutation):
         Should increase informativeness.
         """
         # randomly select a modal
-        for index in range(language.size()):
+        # for index in range(language.size()): # right now, this always selects first modal
+        while True:
+            index = random.randint(0, language.size()-1)
             arr = language.get_expressions().copy()[index].get_meaning().to_array()
 
             if np.count_nonzero(arr) == 0:
                 raise ValueError('Array to replace in remove_bit cannot be all 0.')
 
             # randomly remove a bit
+            # shouldn't apply when language has perfect inf, or when lang has only one meaning point
             argw = list(np.argwhere(arr))
             if len(argw) == 0:
                 continue
@@ -80,7 +78,7 @@ class Remove_Bit(Mutation):
 
                 # replace
                 language.add_expression(new_expression)
-                language.pop(index -1 )
+                language.pop(index)
                 break
         return language        
 
@@ -130,11 +128,14 @@ class Modal_Evolutionary_Optimizer(Evolutionary_Optimizer):
         self.remove_bit = Remove_Bit().mutate
     
     def mutate(self, language: ModalLanguage, expressions: list[ModalExpression]) -> ModalLanguage:
-        possible_mutations = [self.interchange, self.remove_bit]
+        possible_mutations = [self.interchange]
         if language.size() < self.lang_size:
             possible_mutations.append(self.add)
         if language.size() > 1:
             possible_mutations.append(self.remove)
+        # make more elegant
+        if any([len(e.get_meaning().get_objects()) > 1 for e in language.get_expressions()]):
+            possible_mutations.append(self.remove_bit)
 
         mutation = random.choice(possible_mutations)
         return mutation(language, expressions)
