@@ -28,6 +28,11 @@ class Expression:
     def get_meaning(self) -> Meaning:
         return self._meaning
 
+    def can_express(self, m: Meaning) -> bool:
+        """Return True if the expression can express the input single meaning point and false otherwise.
+        """
+        return m in self.get_meaning().get_objects()
+
     @abstractmethod
     def yaml_rep(self):
         pass
@@ -55,7 +60,7 @@ class Language:
         if not expressions:
             raise ValueError("list of Expressions must not be empty.")        
         self._expressions = expressions
-    def get_expressions(self):
+    def get_expressions(self) -> list[Expression]:
         return self._expressions
 
     def has_expression(self, expression: Expression) -> bool:

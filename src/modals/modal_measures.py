@@ -88,14 +88,8 @@ class ModalInformativityMeasure(InformativityMeasure):
 
         $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
         """
-        expressions = language.get_expressions()
-
-        if not expressions:
+        if not language.get_expressions():
             raise ValueError("language empty: {}".format(language))
-
-
-        space = language.get_meaning_space()
-        meanings = space.get_objects()
 
         speaker = ModalSpeaker(language)
         listener = ModalListener(language)
@@ -104,10 +98,8 @@ class ModalInformativityMeasure(InformativityMeasure):
         utility = lambda m, m_: m == m_
 
         return communicative_success(
-            meanings,
-            expressions,
-            speaker.probability_of_expression,
-            listener.probability_of_meaning,
+            speaker,
+            listener,
             prior,
             utility
             )
