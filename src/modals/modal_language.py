@@ -99,7 +99,7 @@ class ModalLanguage(Language):
             }
         
         # create a stack of names for each synonym
-        synonyms = {item: [f"{item}_{idx}" for idx in range(synonyms[item])] for item in synonyms}
+        synonyms = {item: [f"{item.get_form()}_{idx}" for idx in range(synonyms[item])] for item in synonyms}
 
         expressions_ = deepcopy(expressions)
         for expression in expressions_:
