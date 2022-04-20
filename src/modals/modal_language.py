@@ -86,7 +86,7 @@ class ModalLanguage(Language):
         self.set_complexity(None)
         self.set_informativity(None)
         self.set_optimality(None)
-        self.set_iff(None)
+        self.set_naturalness(None)
 
     def rename_synonyms(self, expressions: list[ModalExpression]) -> list[ModalExpression]:
         """Give any expressions with exactly the same meanings different forms.
@@ -141,11 +141,6 @@ class ModalLanguage(Language):
     def get_optimality(self) -> float:
         return self._optimality
 
-    def set_iff(self, iff: float):
-        self._iff = iff
-    def get_iff(self):
-        return self._iff
-
     def yaml_rep(self) -> tuple:
         """Get a data structure for safe compact saving in a .yml file.
         
@@ -158,7 +153,7 @@ class ModalLanguage(Language):
                      'complexity': self.get_complexity(),
                     'informativity': self.get_informativity(),
                     'optimality': self.get_optimality(),
-                    'iff': self.get_iff(),
+                    'iff': self.get_naturalness(),
                 }
             }
         )
@@ -190,8 +185,14 @@ class ModalLanguage(Language):
         lang.set_complexity(complexity)
         lang.set_informativity(informativity)
         lang.set_optimality(optimality)
-        lang.set_iff(iff)
+        lang.set_naturalness(iff)
         return lang
+
+    def get_naturalness(self) -> float:
+        """Degree of quasi-naturalness, as measured by the SAV or IFF universals."""
+        return self._naturalness
+    def set_naturalness(self, naturalness: float):
+        self._naturalness = naturalness
 
     """Natural languages have meaningful names."""
     def set_name(self, name):

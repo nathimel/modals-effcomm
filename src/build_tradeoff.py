@@ -8,6 +8,8 @@ from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeas
 from modal_effcomm_analyzer import Modal_EffComm_Analyzer
 from modals.modal_language_of_thought import ModalLOT
 from misc.file_util import set_seed, load_space, save_languages
+from modals.modal_language import degree_iff
+from src.altk.effcomm.tradeoff import Tradeoff
 
 
 def main():
@@ -50,19 +52,22 @@ def main():
     inf_measure = ModalInformativityMeasure()
 
     print("Measuring languages ...", sep=" ")
-    analyzer = Modal_EffComm_Analyzer(langs, comp_measure, inf_measure)
-    langs, dom_langs = analyzer.measure_languages()
+    tradeoff = Tradeoff(langs, comp_measure, inf_measure, degree_iff)
+    langs, dom_langs = tradeoff.measure_languages()
 
     save_languages(sampled_languages_fn, langs)
     save_languages(dominant_languages_fn, dom_langs)
 
     # Estimate pareto frontier curve
-    df, plot = analyzer.get_results()
+    df = tradeoff.get_dataframe()
+    plot = tradeoff.get_tradeoff_plot()
+
     print("done.")
 
     # write results
     df.to_csv(df_fn, index=False)
     plot.save(plot_fn, width=10, height=10, dpi=300)
+
 
 
 if __name__ == "__main__":

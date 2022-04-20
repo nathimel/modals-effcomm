@@ -7,10 +7,10 @@ Every possible modal meaning that can be expressed by a language is given exactl
 
 import sys
 from itertools import combinations
+from altk.effcomm.sampling import generate_quasi_natural_sample
 from modals.modal_language import ModalExpression, ModalLanguage, is_iff
 from misc.file_util import *
 from math import comb
-from tqdm import tqdm
 
 
 def generate_languages(
@@ -28,8 +28,6 @@ def generate_languages(
 
         - configs: the configurations dictionary loaded from .yml file.
     """
-    # TODO: how to abstract this whole process?
-
     # split the expressions based on satisfaction with the semantic universal
     iffs = []
     non_iffs = []
@@ -63,64 +61,10 @@ def generate_languages(
         else:
             print("Sampling {0} languages of size {1}".format(sample_size, word_amount))
             rlangs = generate_quasi_natural_sample(
-                iffs, non_iffs, word_amount, sample_size
+                ModalLanguage, iffs, non_iffs, word_amount, sample_size
             )
             languages.extend(rlangs)
 
-    return languages
-
-
-def generate_quasi_natural_sample(
-    natural_terms: list[ModalExpression],
-    unnatural_terms: list[ModalExpression],
-    lang_size,
-    sample_size,
-) -> list[ModalLanguage]:
-    """Like random_combinations, but turn the knob on degree quasi-naturalness for a sample of random combinations languages.
-
-    Args:
-        natural_terms: expressions satisfying some criteria of quasi-naturalness, e.g, a semantic universal.
-
-        unnatural_terms: expressions not satisfying the criteria.
-
-        lang_size: the exact number of expressions a language must have.
-
-        sample_size: how many languages to sample.
-
-    """
-    indices_list = []
-    languages = []
-
-    # there are lang_size + 1 degrees of naturalness
-    samples = np.resize(np.arange(lang_size + 1), sample_size)
-
-    for num_natural in tqdm(samples):
-        while True:
-            natural_indices = sorted(
-                random.sample(range(len(natural_terms)), num_natural)
-            )
-            unnatural_indices = sorted(
-                random.sample(range(len(unnatural_terms)), lang_size - num_natural)
-            )
-            indices = (natural_indices, unnatural_indices)
-            if indices not in indices_list:
-                # keep track of languages chosen
-                indices_list.append(indices)
-
-                # Add language
-                natural_expressions = [natural_terms[idx] for idx in natural_indices]
-                unnatural_expressions = [
-                    unnatural_terms[idx] for idx in unnatural_indices
-                ]
-                expressions = natural_expressions + unnatural_expressions
-
-                language = ModalLanguage(
-                    expressions,
-                    name="dummy_lang_{}".format(len(languages)),
-                )
-                languages.append(language)
-                break
-    assert len(languages) == len(set(languages))
     return languages
 
 

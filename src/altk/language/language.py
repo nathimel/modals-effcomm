@@ -35,17 +35,17 @@ class Expression:
 
     @abstractmethod
     def yaml_rep(self):
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def __str__(self) -> str:
-        pass
+        raise NotImplementedError()
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
-        pass
+        raise NotImplementedError()
     @abstractmethod
     def __hash__(self) -> int:
-        pass
+        raise NotImplementedError()
 
 
 class Language:
@@ -93,13 +93,43 @@ class Language:
     def set_universe(self, universe: Universe):
         self._universe = universe
 
+    # EffComm specific functions
+    @abstractmethod
+    def get_naturalness(self) -> float:
+        """Degree of naturalness for a language."""
+        raise NotImplementedError
+    @abstractmethod
+    def set_naturalness(self, naturalness: float):
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_complexity(self, complexity: float):
+        raise NotImplementedError
+    @abstractmethod        
+    def get_complexity(self) -> float:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_informativity(self, informativity: float):
+        raise NotImplementedError
+    @abstractmethod        
+    def get_informativity(self) -> float:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_optimality(self, optimality: float):
+        raise NotImplementedError
+    @abstractmethod        
+    def get_optimality(self) -> float:
+        raise NotImplementedError
+
     @abstractmethod
     def __str__(self) -> str:
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
-        pass
+        raise NotImplementedError()
     
     @abstractmethod
     def __hash__(self) -> int:
