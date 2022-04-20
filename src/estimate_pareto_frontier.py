@@ -58,16 +58,16 @@ def main():
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
 
     # Sanity check for debugging: create a perfectly informative language.
-    vocab = []
-    points = space.get_objects()
-    for expression in expressions:
-        points_ = expression.get_meaning().get_points()
-        if len(points_) == 1:
-            vocab.append(expression)
-    assert len(vocab) == len(points)  # 1:1 map from expressions to meanings
-    lang = ModalLanguage(vocab)
-    lang.set_name("Sanity_Check")
-    explored_langs.append(lang)
+    # vocab = []
+    # points = space.get_objects()
+    # for expression in expressions:
+    #     points_ = expression.get_meaning().get_points()
+    #     if len(points_) == 1:
+    #         vocab.append(expression)
+    # assert len(vocab) == len(points)  # 1:1 map from expressions to meanings
+    # lang = ModalLanguage(vocab)
+    # lang.set_name("Sanity_Check")
+    # explored_langs.append(lang)
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)

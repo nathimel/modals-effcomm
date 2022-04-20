@@ -52,7 +52,7 @@ class Language:
 
     """Minimally contains Expression objects."""
 
-    def __init__(self, expressions: list[Expression]):
+    def __init__(self, expressions: list[Expression], **kwargs):
         self.set_expressions(expressions)
         self.set_universe(expressions[0].get_meaning().get_universe())
     
@@ -103,7 +103,7 @@ class Language:
     
     @abstractmethod
     def __hash__(self) -> int:
-        return self.get_expressions().__hash__()
+        return hash(tuple(self.get_expressions()))
 
     def __eq__(self, __o: object) -> bool:
         return self.get_expressions() == __o.get_expressions()
