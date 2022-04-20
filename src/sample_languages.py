@@ -6,14 +6,11 @@ Every possible modal meaning that can be expressed by a language is given exactl
 """
 
 import sys
-import random
-import numpy as np
-from tqdm import tqdm
-from modals.modal_language import ModalExpression, ModalLanguage, is_iff
-from misc.file_util import set_seed, load_configs, load_expressions, save_languages
-from altk.effcomm.sampling import Quasi_Natural_Vocabulary_Sampler
-from math import comb
 from itertools import combinations
+from modals.modal_language import ModalExpression, ModalLanguage, is_iff
+from misc.file_util import *
+from math import comb
+from tqdm import tqdm
 
 
 def generate_languages(
@@ -31,7 +28,13 @@ def generate_languages(
 
         - configs: the configurations dictionary loaded from .yml file.
     """
-    iffs, non_iffs = split_expressions(expressions, is_iff)
+    # TODO: how to abstract this whole process?
+
+    # split the expressions based on satisfaction with the semantic universal
+    iffs = []
+    non_iffs = []
+    for x in expressions:
+        iffs.append(x) if is_iff(x) else non_iffs.append(x)
 
     word_amounts = [lang_size] if fixed_wordcount else range(1, lang_size + 1)
     total_word_amount = len(expressions)
@@ -58,56 +61,40 @@ def generate_languages(
 
         # Otherwise, take random sample
         else:
-            # TODO: call the altk sampler
             print("Sampling {0} languages of size {1}".format(sample_size, word_amount))
-            # rlangs = random_combinations(expressions, sample_size, word_amount)
-            rlangs = quasi_natural_sample(iffs, non_iffs, word_amount, sample_size)
+            rlangs = generate_quasi_natural_sample(
+                iffs, non_iffs, word_amount, sample_size
+            )
             languages.extend(rlangs)
 
     return languages
 
 
-def random_combinations(expressions, sample_size, lang_size):
-    """Sample unique languages by generating unique random combinations of expressions.
+def generate_quasi_natural_sample(
+    natural_terms: list[ModalExpression],
+    unnatural_terms: list[ModalExpression],
+    lang_size,
+    sample_size,
+) -> list[ModalLanguage]:
+    """Like random_combinations, but turn the knob on degree quasi-naturalness for a sample of random combinations languages.
 
     Args:
-        - expressions: the list of total possible expressions to sample from.
+        natural_terms: expressions satisfying some criteria of quasi-naturalness, e.g, a semantic universal.
+
+        unnatural_terms: expressions not satisfying the criteria.
+
+        lang_size: the exact number of expressions a language must have.
+
+        sample_size: how many languages to sample.
 
     """
     indices_list = []
-    pool = tuple(expressions)
-    n = len(pool)
-    languages = []
-
-    for i in tqdm(range(sample_size)):
-        while True:
-            indices = sorted(random.sample(range(n), lang_size))
-            if indices not in indices_list:
-                # keep track of languages chosen
-                indices_list.append(indices)
-
-                # Add language
-                bag = [pool[idx] for idx in indices]
-                language = ModalLanguage(
-                    bag,
-                    name="dummy_lang_{}".format(len(languages)),
-                )
-                languages.append(language)
-                break
-    return languages
-
-
-def quasi_natural_sample(natural_terms, unnatural_terms, lang_size, sample_size):
-    """Turn the knob on degree quasi-naturalness for a sample of random combinations languages."""
-    indices_list = []
-    natural_terms = tuple(natural_terms)
-    unnatural_terms = tuple(unnatural_terms)
     languages = []
 
     # there are lang_size + 1 degrees of naturalness
     samples = np.resize(np.arange(lang_size + 1), sample_size)
 
-    for num_natural in samples:
+    for num_natural in tqdm(samples):
         while True:
             natural_indices = sorted(
                 random.sample(range(len(natural_terms)), num_natural)
@@ -134,30 +121,7 @@ def quasi_natural_sample(natural_terms, unnatural_terms, lang_size, sample_size)
                 languages.append(language)
                 break
     assert len(languages) == len(set(languages))
-
     return languages
-
-
-def split_expressions(expressions, criterion) -> tuple:
-    """Split a list of expressions into two groups based on a criterion.
-
-    The criterion is satisfaction with a semantic universal.
-
-    Args:
-        - expressions: a list of Modal_Expressions.
-
-        - criterion: a boolean function returning True only if an expression satisfies a criterion, e.g. a semantic universal such as the Independence of Force and Flavors, or Single-Axis of Variability.
-
-    Returns:
-        - good: the expressions satisfying the criterion.
-
-        - bad: the expressions not satisfying the criterion.
-    """
-    good = []
-    bad = []
-    for x in expressions:
-        good.append(x) if criterion(x) else bad.append(x)
-    return (good, bad)
 
 
 def main():
@@ -183,11 +147,9 @@ def main():
     expressions = load_expressions(expression_save_fn)
     languages = generate_languages(expressions, lang_size, sample_size)
 
-    # iffs, non_iffs = split_expressions(expressions, is_iff)
-    # languages.extend(generate_languages(iffs, lang_size, sample_size))
-
+    # unique and save langs
+    languages = list(set(languages))
     save_languages(lang_save_fn, languages)
-
     print("done.")
 
 

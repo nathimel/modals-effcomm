@@ -7,7 +7,7 @@ This repo has the following structure:
 The _src_ folder contains the primary source code of the project.  
 The _scripts_ folder contains the main running scripts invoked from the command line (including a script to reproduce the main paper results).  
 The _configs_ folder contains parameter configurations for running different experiments.  
-The _data_ folder contains the data consumed by the project.  
+The _data_ folder contains natural language modal data, sourced from [this database](https://github.com/CLMBRs/modal-typology).
 The _outputs_ folder contains outputs from scripts, including artificial language data, plots, etc.  
 
 ## Structure of this codebase

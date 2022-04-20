@@ -1,5 +1,6 @@
 """Script for analyzing the results of the trade-off."""
 
+from random import sample
 import sys
 from misc.file_util import load_configs
 from misc.file_util import load_languages
@@ -31,11 +32,11 @@ def main():
 
     set_seed(configs["random_seed"])
 
-    # load languages and unique
+    # load languages
     print("Loading all languages ...", sep=" ")
     sampled_languages = load_languages(sampled_languages_fn)
-    # natural_languages = load_languages(natural_languages_fn)
-    langs = list(set(sampled_languages))
+    natural_languages = load_languages(natural_languages_fn)
+    langs = sampled_languages + natural_languages
     print("{} total langs...".format(len(langs)), sep=" ")
 
     ##########################################################################
