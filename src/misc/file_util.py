@@ -1,3 +1,4 @@
+import os
 import yaml
 import random
 import numpy as np
@@ -12,6 +13,17 @@ def set_seed(seed: int) -> None:
     """Sets various random seeds. """
     random.seed(seed)
     np.random.seed(seed)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Setup
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def make_path(fn: str) -> None:
+    """Creates the path recursively if it does not exist.
+    """
+    dirname = os.path.dirname(fn)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs

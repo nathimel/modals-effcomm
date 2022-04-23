@@ -1,0 +1,401 @@
+expressions:
+- form: dummy_form_0
+  lot: (* (strong ) (circumstantial ))
+  meaning: !!set
+    strong+circumstantial: null
+- form: dummy_form_1
+  lot: (* (strong ) (deontic ))
+  meaning: !!set
+    strong+deontic: null
+- form: dummy_form_2
+  lot: (* (strong ) (+ (deontic ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+- form: dummy_form_3
+  lot: (* (strong ) (epistemic ))
+  meaning: !!set
+    strong+epistemic: null
+- form: dummy_form_4
+  lot: (* (strong ) (+ (epistemic ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+- form: dummy_form_5
+  lot: (* (strong ) (+ (epistemic ) (deontic )))
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+- form: dummy_form_6
+  lot: (strong )
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+- form: dummy_form_7
+  lot: (* (weak ) (circumstantial ))
+  meaning: !!set
+    weak+circumstantial: null
+- form: dummy_form_8
+  lot: (circumstantial )
+  meaning: !!set
+    strong+circumstantial: null
+    weak+circumstantial: null
+- form: dummy_form_9
+  lot: (+ (* (weak ) (circumstantial )) (* (strong ) (deontic )))
+  meaning: !!set
+    strong+deontic: null
+    weak+circumstantial: null
+- form: dummy_form_10
+  lot: (+ (circumstantial ) (* (strong ) (deontic )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+circumstantial: null
+- form: dummy_form_11
+  lot: (+ (* (weak ) (circumstantial )) (* (strong ) (epistemic )))
+  meaning: !!set
+    strong+epistemic: null
+    weak+circumstantial: null
+- form: dummy_form_12
+  lot: (+ (circumstantial ) (* (strong ) (epistemic )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+circumstantial: null
+- form: dummy_form_13
+  lot: "(+\n  (* (strong ) (+ (epistemic ) (deontic )))\n  (* (weak ) (circumstantial\
+    \ )))"
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+- form: dummy_form_14
+  lot: (+ (strong ) (* (weak ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+- form: dummy_form_15
+  lot: (* (weak ) (deontic ))
+  meaning: !!set
+    weak+deontic: null
+- form: dummy_form_16
+  lot: (+ (* (weak ) (deontic )) (* (strong ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_17
+  lot: (deontic )
+  meaning: !!set
+    strong+deontic: null
+    weak+deontic: null
+- form: dummy_form_18
+  lot: (+ (deontic ) (* (strong ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+deontic: null
+- form: dummy_form_19
+  lot: (+ (* (weak ) (deontic )) (* (strong ) (epistemic )))
+  meaning: !!set
+    strong+epistemic: null
+    weak+deontic: null
+- form: dummy_form_20
+  lot: "(+\n  (* (strong ) (+ (epistemic ) (circumstantial )))\n  (* (weak ) (deontic\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+deontic: null
+- form: dummy_form_21
+  lot: (+ (deontic ) (* (strong ) (epistemic )))
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+deontic: null
+- form: dummy_form_22
+  lot: (+ (strong ) (* (weak ) (deontic )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+deontic: null
+- form: dummy_form_23
+  lot: (* (weak ) (+ (deontic ) (circumstantial )))
+  meaning: !!set
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_24
+  lot: (+ (circumstantial ) (* (weak ) (deontic )))
+  meaning: !!set
+    strong+circumstantial: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_25
+  lot: (+ (deontic ) (* (weak ) (circumstantial )))
+  meaning: !!set
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_26
+  lot: (+ (circumstantial ) (deontic ))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_27
+  lot: "(+\n  (* (weak ) (+ (deontic ) (circumstantial )))\n  (* (strong ) (epistemic\
+    \ )))"
+  meaning: !!set
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_28
+  lot: "(+\n  (circumstantial )\n  (* (weak ) (deontic ))\n  (* (strong ) (epistemic\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_29
+  lot: "(+\n  (deontic )\n  (* (weak ) (circumstantial ))\n  (* (strong ) (epistemic\
+    \ )))"
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_30
+  lot: (+ (strong ) (* (weak ) (+ (deontic ) (circumstantial ))))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+- form: dummy_form_31
+  lot: (* (weak ) (epistemic ))
+  meaning: !!set
+    weak+epistemic: null
+- form: dummy_form_32
+  lot: (+ (* (weak ) (epistemic )) (* (strong ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_33
+  lot: (+ (* (weak ) (epistemic )) (* (strong ) (deontic )))
+  meaning: !!set
+    strong+deontic: null
+    weak+epistemic: null
+- form: dummy_form_34
+  lot: "(+\n  (* (strong ) (+ (deontic ) (circumstantial )))\n  (* (weak ) (epistemic\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+epistemic: null
+- form: dummy_form_35
+  lot: (epistemic )
+  meaning: !!set
+    strong+epistemic: null
+    weak+epistemic: null
+- form: dummy_form_36
+  lot: (+ (epistemic ) (* (strong ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+epistemic: null
+- form: dummy_form_37
+  lot: (+ (epistemic ) (* (strong ) (deontic )))
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+epistemic: null
+- form: dummy_form_38
+  lot: (+ (strong ) (* (weak ) (epistemic )))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+epistemic: null
+- form: dummy_form_39
+  lot: (* (weak ) (+ (epistemic ) (circumstantial )))
+  meaning: !!set
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_40
+  lot: (+ (circumstantial ) (* (weak ) (epistemic )))
+  meaning: !!set
+    strong+circumstantial: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_41
+  lot: "(+\n  (* (weak ) (+ (epistemic ) (circumstantial )))\n  (* (strong ) (deontic\
+    \ )))"
+  meaning: !!set
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_42
+  lot: "(+\n  (circumstantial )\n  (* (weak ) (epistemic ))\n  (* (strong ) (deontic\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_43
+  lot: (+ (epistemic ) (* (weak ) (circumstantial )))
+  meaning: !!set
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_44
+  lot: (+ (circumstantial ) (epistemic ))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_45
+  lot: "(+\n  (epistemic )\n  (* (weak ) (circumstantial ))\n  (* (strong ) (deontic\
+    \ )))"
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_46
+  lot: (+ (strong ) (* (weak ) (+ (epistemic ) (circumstantial ))))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+epistemic: null
+- form: dummy_form_47
+  lot: (* (weak ) (+ (epistemic ) (deontic )))
+  meaning: !!set
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_48
+  lot: "(+\n  (* (weak ) (+ (epistemic ) (deontic )))\n  (* (strong ) (circumstantial\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_49
+  lot: (+ (deontic ) (* (weak ) (epistemic )))
+  meaning: !!set
+    strong+deontic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_50
+  lot: "(+\n  (deontic )\n  (* (weak ) (epistemic ))\n  (* (strong ) (circumstantial\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_51
+  lot: (+ (epistemic ) (* (weak ) (deontic )))
+  meaning: !!set
+    strong+epistemic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_52
+  lot: "(+\n  (epistemic )\n  (* (weak ) (deontic ))\n  (* (strong ) (circumstantial\
+    \ )))"
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_53
+  lot: (+ (deontic ) (epistemic ))
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_54
+  lot: (+ (strong ) (* (weak ) (+ (epistemic ) (deontic ))))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_55
+  lot: (weak )
+  meaning: !!set
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_56
+  lot: (+ (weak ) (* (strong ) (circumstantial )))
+  meaning: !!set
+    strong+circumstantial: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_57
+  lot: (+ (weak ) (* (strong ) (deontic )))
+  meaning: !!set
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_58
+  lot: (+ (* (strong ) (+ (deontic ) (circumstantial ))) (weak ))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_59
+  lot: (+ (weak ) (* (strong ) (epistemic )))
+  meaning: !!set
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_60
+  lot: (+ (* (strong ) (+ (epistemic ) (circumstantial ))) (weak ))
+  meaning: !!set
+    strong+circumstantial: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_61
+  lot: (+ (* (strong ) (+ (epistemic ) (deontic ))) (weak ))
+  meaning: !!set
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+- form: dummy_form_62
+  lot: (1 )
+  meaning: !!set
+    strong+circumstantial: null
+    strong+deontic: null
+    strong+epistemic: null
+    weak+circumstantial: null
+    weak+deontic: null
+    weak+epistemic: null
+flavors:
+- epistemic
+- deontic
+- circumstantial
+forces:
+- weak
+- strong
