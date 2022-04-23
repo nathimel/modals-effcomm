@@ -30,22 +30,19 @@ def cond_prob_matrix(language: Language, agent: str) -> np.ndarray:
     len_e = len(expressions)
     len_m = len(meanings)
 
-    # mat = np.array([[e.can_express(m) for e in expressions] for m in meanings])
     mat = np.zeros((len_m, len_e))
-
-    # TODO: numpy way to do this
     for i, m in enumerate(meanings):
         for j, e in enumerate(expressions):
             mat[i, j] = float(e.can_express(m))
 
-    # p(e | intended m) must be in [0,1]
+    # The sum of p(e | intended m) must be in [0,1]
     if agent == "speaker":
         for i in range(len_m):
             # Sometimes a language cannot express a particular meaning at all, resulting in a row sum of 0.
             if mat[i].sum():
                 mat[i] = mat[i] / mat[i].sum()
 
-    # p(m | heard e) must be in [0,1]
+    # The sum of p(m | heard e) must be 1
     elif agent == "listener":
         mat = mat.T
         for i in range(len_e):

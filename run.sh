@@ -3,6 +3,7 @@
 source ~/miniforge3/etc/profile.d/conda.sh
 conda activate modals-effcomm
 
-./scripts/main_results.sh configs/main_results/config.yml
+./scripts/run_full_experiment.sh configs/dev.yml
+./scripts/run_full_experiment.sh configs/main_results.yml
 
 conda deactivate
