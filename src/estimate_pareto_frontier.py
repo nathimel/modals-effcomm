@@ -1,13 +1,14 @@
 """Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off."""
 
 import sys
+from altk.effcomm.optimization import Evolutionary_Optimizer
 from misc.file_util import load_configs, load_expressions, save_languages
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
-from modals.modal_optimizer import Modal_Evolutionary_Optimizer
+from modals.modal_measures import ModalComplexityMeasure
 from sample_languages import generate_languages
-from modals.modal_language import ModalLanguage
 from misc.file_util import load_languages, set_seed
+from modals.modal_mutations import *
+from altk.effcomm.informativity import *
 
 
 def main():
@@ -37,18 +38,31 @@ def main():
     expressions = load_expressions(expressions_fn)
     seed_population = generate_languages(expressions, lang_size, sample_size)
 
-    # Construct a measure of informativity
-    space = expressions[0].get_meaning().get_meaning_space()
+    # construct measures of complexity and informativity
+    space = expressions[0].get_meaning().get_universe()
     complexity_measure = ModalComplexityMeasure(
         ModalLOT(space, configs["language_of_thought"])
     )
-    informativity_measure = ModalInformativityMeasure()
+    informativity_measure = SST_Informativity_Measure(
+        prior=uniform_prior(space),
+        utility=build_utility_matrix(space, indicator),
+    )
+
+    # Load modals-specifc mutations
+    mutations = [
+        Add_Modal(),
+        Remove_Modal(),
+        # Remove_Point(),
+        # Add_Point(),
+        # Interchange_Modal(),
+    ]
 
     # Initialize optimizer and run algorithm
-    optimizer = Modal_Evolutionary_Optimizer(
+    optimizer = Evolutionary_Optimizer(
         comp_measure=complexity_measure,
         inf_measure=informativity_measure,
         expressions=expressions,
+        mutations=mutations,
         sample_size=sample_size,
         max_mutations=max_mutations,
         generations=generations,
@@ -56,18 +70,6 @@ def main():
         processes=processes,
     )
     (_, explored_langs) = optimizer.fit(seed_population=seed_population)
-
-    # Sanity check for debugging: create a perfectly informative language.
-    # vocab = []
-    # points = space.get_objects()
-    # for expression in expressions:
-    #     points_ = expression.get_meaning().get_points()
-    #     if len(points_) == 1:
-    #         vocab.append(expression)
-    # assert len(vocab) == len(points)  # 1:1 map from expressions to meanings
-    # lang = ModalLanguage(vocab)
-    # lang.set_name("Sanity_Check")
-    # explored_langs.append(lang)
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)

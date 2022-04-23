@@ -39,9 +39,6 @@ class Tradeoff:
 
         Measure the pareto optimality, with respect to a non-dominated front optimizing simplicity and informativeness, of a list of languages. This involves setting all the necessary data for the full efficient communication analysis.
         """
-
-        # TODO: use tqdm.
-
         langs = self.get_languages()
         # measure simplicity, informativity, and semantic universals
         for lang in langs:

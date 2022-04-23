@@ -4,12 +4,12 @@ from random import sample
 import sys
 from misc.file_util import load_configs
 from misc.file_util import load_languages
-from modals.modal_measures import ModalComplexityMeasure, ModalInformativityMeasure
-from modal_effcomm_analyzer import Modal_EffComm_Analyzer
+from modals.modal_measures import ModalComplexityMeasure
 from modals.modal_language_of_thought import ModalLOT
 from misc.file_util import set_seed, load_space, save_languages
 from modals.modal_language import degree_iff
-from src.altk.effcomm.tradeoff import Tradeoff
+from altk.effcomm.informativity import *
+from altk.effcomm.tradeoff import Tradeoff
 
 
 def main():
@@ -49,7 +49,10 @@ def main():
     comp_measure = ModalComplexityMeasure(
         ModalLOT(space, configs["language_of_thought"])
     )
-    inf_measure = ModalInformativityMeasure()
+    inf_measure = SST_Informativity_Measure(
+        prior=uniform_prior(space),
+        utility=build_utility_matrix(space, indicator),
+    )
 
     print("Measuring languages ...", sep=" ")
     tradeoff = Tradeoff(langs, comp_measure, inf_measure, degree_iff)
@@ -59,7 +62,7 @@ def main():
     save_languages(dominant_languages_fn, dom_langs)
 
     # Estimate pareto frontier curve
-    df = tradeoff.get_dataframe()
+    df = tradeoff.get_dataframe(langs)
     plot = tradeoff.get_tradeoff_plot()
 
     print("done.")
@@ -67,7 +70,6 @@ def main():
     # write results
     df.to_csv(df_fn, index=False)
     plot.save(plot_fn, width=10, height=10, dpi=300)
-
 
 
 if __name__ == "__main__":
