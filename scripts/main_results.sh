@@ -17,10 +17,10 @@ python3 src/generate_expressions.py $CONFIG
 
 python3 src/sample_languages.py $CONFIG
 
-# python3 src/add_natural_languages.py $CONFIG
+python3 src/add_natural_languages.py $CONFIG
 
-# python3 src/estimate_pareto_frontier.py $CONFIG
+python3 src/estimate_pareto_frontier.py $CONFIG
 
-# python3 src/
+python3 src/build_tradeoff.py $CONFIG
 
 # python3 src/analyze.py $CONFIG

@@ -7,7 +7,8 @@ from abc import abstractmethod
 
 from altk.language.semantics import Universe
 from altk.language.semantics import Meaning
-    
+
+
 class Expression:
 
     """Minimally contains a form and a meaning."""
@@ -17,20 +18,21 @@ class Expression:
         self._meaning = None
         self.set_form(form)
         self.set_meaning(meaning)
-    
-    def set_form(self,form):
+
+    def set_form(self, form):
         self._form = form
+
     def get_form(self):
         return self._form
 
     def set_meaning(self, meaning: Meaning):
         self._meaning = meaning
+
     def get_meaning(self) -> Meaning:
         return self._meaning
 
     def can_express(self, m: Meaning) -> bool:
-        """Return True if the expression can express the input single meaning point and false otherwise.
-        """
+        """Return True if the expression can express the input single meaning point and false otherwise."""
         return m in self.get_meaning().get_objects()
 
     @abstractmethod
@@ -40,9 +42,11 @@ class Expression:
     @abstractmethod
     def __str__(self) -> str:
         raise NotImplementedError()
+
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
         raise NotImplementedError()
+
     @abstractmethod
     def __hash__(self) -> int:
         raise NotImplementedError()
@@ -55,11 +59,12 @@ class Language:
     def __init__(self, expressions: list[Expression], **kwargs):
         self.set_expressions(expressions)
         self.set_universe(expressions[0].get_meaning().get_universe())
-    
+
     def set_expressions(self, expressions: list[Expression]):
         if not expressions:
-            raise ValueError("list of Expressions must not be empty.")        
+            raise ValueError("list of Expressions must not be empty.")
         self._expressions = expressions
+
     def get_expressions(self) -> list[Expression]:
         return self._expressions
 
@@ -83,13 +88,14 @@ class Language:
         popped = expressions.pop(index)
         self.set_expressions(expressions)
         return popped
-    
+
     def is_natural(self) -> bool:
         """Whether a language represents a human natural language."""
         raise NotImplementedError
 
     def get_universe(self) -> Universe:
         return self._universe
+
     def set_universe(self, universe: Universe):
         self._universe = universe
 
@@ -98,6 +104,7 @@ class Language:
     def get_naturalness(self) -> float:
         """Degree of naturalness for a language."""
         raise NotImplementedError
+
     @abstractmethod
     def set_naturalness(self, naturalness: float):
         raise NotImplementedError
@@ -105,21 +112,24 @@ class Language:
     @abstractmethod
     def set_complexity(self, complexity: float):
         raise NotImplementedError
-    @abstractmethod        
+
+    @abstractmethod
     def get_complexity(self) -> float:
         raise NotImplementedError
 
     @abstractmethod
     def set_informativity(self, informativity: float):
         raise NotImplementedError
-    @abstractmethod        
+
+    @abstractmethod
     def get_informativity(self) -> float:
         raise NotImplementedError
 
     @abstractmethod
     def set_optimality(self, optimality: float):
         raise NotImplementedError
-    @abstractmethod        
+
+    @abstractmethod
     def get_optimality(self) -> float:
         raise NotImplementedError
 
@@ -130,7 +140,7 @@ class Language:
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
         raise NotImplementedError()
-    
+
     @abstractmethod
     def __hash__(self) -> int:
         return hash(tuple(self.get_expressions()))
