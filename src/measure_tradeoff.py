@@ -9,8 +9,8 @@ from modals.modal_language_of_thought import ModalLOT
 from misc.file_util import set_seed, load_space, save_languages
 from modals.modal_language import degree_iff
 from altk.effcomm.informativity import *
-from altk.effcomm.tradeoff import Tradeoff
-
+from altk.effcomm.tradeoff import tradeoff
+from altk.effcomm.analysis import get_dataframe, get_tradeoff_plot
 
 def main():
     if len(sys.argv) != 2:
@@ -41,10 +41,7 @@ def main():
     langs = sampled_languages + natural_languages
     print("{} total langs...".format(len(langs)), sep=" ")
 
-    ##########################################################################
-    # Analysis
-    ##########################################################################
-
+    # Load trade-off criteria
     space = load_space(space_fn)
     comp_measure = ModalComplexityMeasure(
         ModalLOT(space, configs["language_of_thought"])
@@ -54,16 +51,20 @@ def main():
         utility=build_utility_matrix(space, indicator),
     )
 
+    # Get trade-off results
     print("Measuring languages ...", sep=" ")
-    tradeoff = Tradeoff(langs, comp_measure, inf_measure, degree_iff)
-    langs, dom_langs = tradeoff.measure_languages()
+    langs, dom_langs = tradeoff(
+        languages=langs,
+        comp_measure=comp_measure,
+        inf_measure=inf_measure,
+        degree_naturalness=degree_iff
+    )
 
     save_languages(sampled_languages_fn, langs)
     save_languages(dominant_languages_fn, dom_langs)
 
-    # Estimate pareto frontier curve
-    df = tradeoff.get_dataframe(langs)
-    plot = tradeoff.get_tradeoff_plot()
+    df = get_dataframe(langs)
+    plot = get_tradeoff_plot(langs, dom_langs)
 
     print("done.")
 

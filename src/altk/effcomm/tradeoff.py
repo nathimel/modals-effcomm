@@ -1,4 +1,4 @@
-"""A class for constructing an efficient communication analysis from a pool of languages."""
+"""Functions for constructing an efficient communication analysis by measuring the simplicity/informativeness trade-off languages and formatting results as a dataframe or a plot."""
 
 import numpy as np
 import plotnine as pn
@@ -13,165 +13,106 @@ from typing import Callable
 from scipy import interpolate
 from scipy.spatial.distance import cdist
 
+##############################################################################
+# Helper measurement functions
+##############################################################################
 
-class Tradeoff:
-    """Class for building a final efficient communication analysis of languages.
+def pareto_optimal_languages(languages: list[Language]) -> list[Language]:
+    """Use pygmo.non_dominated_front_2d to compute the Pareto languages."""
+    dominating_indices = non_dominated_front_2d(
+        list(
+            zip(
+                [1 - lang.get_informativity() for lang in languages],
+                [lang.get_complexity() for lang in languages],
+            )
+        )
+    )
+    dominating_languages = [languages[i] for i in dominating_indices]
+    return dominating_languages
 
-    A set of languages, measures of informativity and simplicity (complexity) fully define the efficient communication results, which is the relative (near) Pareto optimality of each language. Sometimes we want to measure degrees of natualness, or a categorical analogue of naturalness, as e.g. satisfaction with a semantic universal. 
-    
-    This class contains functions for measuring the languages and formatting results as a dataframe or a plot.
+
+def pareto_min_distances(languages: list[Language], pareto_points: list):
+    """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier."""
+    comm_cost = []
+    comp = []
+    for lang in languages:
+        comm_cost.append(1 - lang.get_informativity())
+        comp.append(lang.get_complexity())
+    points = np.array(list(zip(comm_cost, comp)))
+
+    # Measure closeness of each language to any frontier point
+    distances = cdist(points, pareto_points)
+    min_distances = np.min(distances, axis=1)
+    return min_distances
+
+
+def interpolate_data(dominating_languages: list[Language]) -> np.ndarray:
+    """Interpolate the points yielded by the pareto optimal languages into a continuous (though not necessarily smooth) curve.
+
+    Args:
+        dominating_languages: the list of Language objects representing the Pareto frontier.
     """
-    def __init__(
-        self,
-        languages: list[Language],
-        comp_measure: ComplexityMeasure,
-        inf_measure: InformativityMeasure,
-        degree_naturalness: Callable,
-    ):
-        self.comp_measure = comp_measure
-        self.inf_measure = inf_measure
-        self.degree_naturalness = degree_naturalness
+    dom_cc = []
+    dom_comp = []
+    for lang in dominating_languages:
+        dom_cc.append(1 - lang.get_informativity())
+        dom_comp.append(lang.get_complexity())
 
-        self.set_languages(languages)
+    values = list(set(zip(dom_cc, dom_comp)))
+    pareto_x, pareto_y = list(zip(*values))
 
-    def measure_languages(self) -> list[Language]:
-        """Measure a list of languages and return a pair of (all languages, dominant_languages).
+    interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
+    pareto_costs = np.linspace(0, 1.0, num=5000)
+    pareto_complexities = interpolated(pareto_costs)
+    pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
+    return pareto_points
 
-        Measure the pareto optimality, with respect to a non-dominated front optimizing simplicity and informativeness, of a list of languages. This involves setting all the necessary data for the full efficient communication analysis.
-        """
-        langs = self.get_languages()
-        # measure simplicity, informativity, and semantic universals
-        for lang in langs:
-            lang.set_complexity(self.comp_measure.language_complexity(lang))
-            lang.set_informativity(self.inf_measure.language_informativity(lang))
-            lang.set_naturalness(self.degree_naturalness(lang))
+##############################################################################
+# Main tradeoff function
+##############################################################################
 
-        # measure relative pareto optimality
-        dominating_indices = non_dominated_front_2d(
-            list(
-                zip(
-                    [1 - lang.get_informativity() for lang in langs],
-                    [lang.get_complexity() for lang in langs],
-                )
-            )
-        )
+def tradeoff(
+    languages: list[Language],
+    comp_measure: ComplexityMeasure,
+    inf_measure: InformativityMeasure,
+    degree_naturalness: Callable,
+):
+    """Builds a final efficient communication analysis of languages.
 
-        dominating_languages = [langs[i] for i in dominating_indices]
-        self.set_languages(langs)
-        self.set_dominating_languages(dominating_languages)
-        self.measure_closeness(self.interpolate_data())
-        return (self.get_languages(), self.get_dominating_languages())
+    A set of languages, measures of informativity and simplicity (complexity) fully define the efficient communication results, which is the relative (near) Pareto optimality of each language. Measure degrees of natualness, or a categorical analogue of naturalness, as e.g. satisfaction with a semantic universal.
 
-    def measure_closeness(self, pareto_points: list):
-        """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier."""
-        langs = self.get_languages()
-        comm_cost = []
-        comp = []
-        for lang in langs:
-            comm_cost.append(1 - lang.get_informativity())
-            comp.append(lang.get_complexity())
-        points = np.array(list(zip(comm_cost, comp)))
+    This function does the following:
+    Measure a list of languages, update their internal data, and return a pair of (all languages, dominant_languages).
 
-        # Measure closeness of each language to any frontier point
-        distances = cdist(points, pareto_points)
-        min_distances = np.min(distances, axis=1)
+    Args:
+        languages: A list representing the pool of all languages to be measured for an efficient communication analysis.
 
-        for i, lang in enumerate(langs):
-            # warning: yaml that saves lang must use float, not numpy.float64 !
-            lang.set_optimality(1 - float(min_distances[i]))
-        self.set_languages(langs)
+        comp_measure: the complexity measure to use for the trade-off.
 
-    def interpolate_data(self) -> np.ndarray:
-        """Interpoloate the points yielded by the pareto optimal languages into a continuous (though not necessarily smooth) curve."""
-        dom_cc = []
-        dom_comp = []
-        for lang in self.get_dominating_languages():
-            dom_cc.append(1 - lang.get_informativity())
-            dom_comp.append(lang.get_complexity())
+        inf_measure: the informativity measure to use for the trade-off.
 
-        values = list(set(zip(dom_cc, dom_comp)))
-        pareto_x, pareto_y = list(zip(*values))
+        degree_naturalness: the function to measure the degree of (quasi) naturalness for any languages.
 
-        interpolated = interpolate.interp1d(
-            pareto_x, pareto_y, fill_value="extrapolate"
-        )
-        pareto_costs = np.linspace(0, 1.0, num=5000)
-        pareto_complexities = interpolated(pareto_costs)
-        pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
-        return pareto_points
+    Returns:
+        languages: the same list of languages, with their internal efficient communication data updated.
 
-    def get_dataframe(self, languages: list[Language]) -> pd.DataFrame:
-        """Get a pandas DataFrame for a list of languages containing efficient communication data.
+        dominating_languages: a list of the Pareto optimal languages in the simplicity/informativeness tradeoff.
+    """
+    # langs = self.get_languages()
+    # measure simplicity, informativity, and semantic universals
+    for lang in languages:
+        lang.set_complexity(comp_measure.language_complexity(lang))
+        lang.set_informativity(inf_measure.language_informativity(lang))
+        lang.set_naturalness(degree_naturalness(lang))
 
-        Args:
-            - languages: the list of languages for which to get efficient communication dataframe.
+    dominating_languages = pareto_optimal_languages(languages)
+    min_distances = pareto_min_distances(
+        languages, interpolate_data(dominating_languages)
+    )
 
-        Returns:
-            - data: a pandas DataFrame with rows as individual languages, with the columns specifying their
-                - communicative cost
-                - cognitive complexity
-                - satisfaction of the iff universal
-                - Language type (natural or artificial)
-        """
-        data = []
-        for lang in languages:
-            point = (1 - lang.get_informativity(),
-                    lang.get_complexity(),
-                    lang.get_naturalness(),
-                    "natural" if lang.is_natural() else "artificial")
-            data.append(point)
+    # TODO: is optimality ever not min_distance?
+    for i, lang in enumerate(languages):
+        # warning: yaml that saves lang must use float, not numpy.float64 !
+        lang.set_optimality(1 - float(min_distances[i]))
 
-        data = pd.DataFrame(
-            data=data,
-            columns=[
-                "comm_cost",
-                "complexity",
-                "naturalness",
-                "Language",
-            ],
-        )
-
-        # Pandas confused by mixed types int and string, so convert back.
-        data[["comm_cost", "complexity", "naturalness"]] = data[
-            ["comm_cost", "complexity", "naturalness"]
-        ].apply(pd.to_numeric)
-
-        return data
-
-    def get_tradeoff_plot(self) -> pn.ggplot:
-        """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
-
-        Returns:
-            - plot: a plotnine 2D plot of the trade-off.
-        """
-        data = self.get_dataframe(self.get_languages())
-        pareto_df = self.get_dataframe(self.get_dominating_languages())
-        plot = (
-            pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
-            + pn.scale_x_continuous(limits=[0, 1])
-            + pn.geom_jitter(
-                stroke=0,
-                alpha=1,
-                width=0.00,
-                height=0.00,
-                # mapping=pn.aes(size="Language", shape="Language", fill="Language"),
-                mapping=pn.aes(size="Language", shape="Language", color="naturalness"),
-            )
-            + pn.geom_line(size=1, data=pareto_df)
-            + pn.xlab("Communicative cost of languages")
-            + pn.ylab("Complexity of languages")
-            + pn.scale_color_cmap("cividis")
-        )
-        return plot
-
-    def set_languages(self, langs: list[Language]):
-        self._languages = langs
-
-    def get_languages(self) -> list[Language]:
-        return self._languages
-
-    def set_dominating_languages(self, doms: list[Language]):
-        self._dominating_languages = doms
-
-    def get_dominating_languages(self) -> list[Language]:
-        return self._dominating_languages
+    return languages, dominating_languages
