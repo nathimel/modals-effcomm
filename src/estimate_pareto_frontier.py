@@ -9,6 +9,7 @@ from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import *
 from altk.effcomm.informativity import *
+from modals.modal_language import ModalLanguage
 
 
 def main():
@@ -69,7 +70,31 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    (_, explored_langs) = optimizer.fit(seed_population=seed_population)
+    _, explored_langs = optimizer.fit(seed_population=seed_population)
+
+    # Sanity checks
+    vocab = []
+    points = space.get_objects()
+
+    # create a perfectly informative language.
+    for expression in expressions:
+        points_ = expression.get_meaning().get_objects()
+        if len(points_) == 1:
+            vocab.append(expression)
+    assert len(vocab) == len(points)
+    lang = ModalLanguage(vocab, "Sanity_Check_1_inf")
+    explored_langs.append(lang)
+
+    # create a minimally informative language, e.g. inf=prior
+    vocab = []
+    for expression in expressions:
+        points_ = expression.get_meaning().get_objects()
+        if len(points_) == 1:
+            vocab.append(expression)
+            break
+    assert len(vocab) == 1
+    lang = ModalLanguage(vocab, "Sanity_Check_min_inf")
+    explored_langs.append(lang)
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
