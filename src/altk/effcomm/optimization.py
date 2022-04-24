@@ -1,6 +1,6 @@
 """Classes and functions for generating languages that optimize the simplicity/informativeness trade-off, e.g. via an iterative evolutionary algorithm."""
 
-from abc import abstractclassmethod, abstractmethod
+from abc import abstractmethod
 import copy
 import random
 import math
@@ -119,7 +119,6 @@ class Evolutionary_Optimizer:
             complexity = batch_complexity(languages)
             comm_cost = batch_comm_cost(languages)
 
-            # measurements = [(cost, comp) for cost, comp in zip(comm_cost, complexity)]
             explored_languages.extend(copy.deepcopy(languages))
 
             # Calculate dominating individuals
