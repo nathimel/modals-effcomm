@@ -11,7 +11,7 @@ from altk.effcomm.agent import LiteralListener, LiteralSpeaker
 from altk.language.semantics import Universe
 
 ##############################################################################
-# Classes
+# Informativity Classes
 ##############################################################################
 
 
@@ -63,7 +63,7 @@ class SST_Informativity_Measure(InformativityMeasure):
 
         The Sender can be thought of as a conditional distribution over expressions given meanings. The Receiver is likewise a conditional distribution over meanings given expressions. The communicative need, or cognitive source, is a prior probability over meanings representing how frequently agents need to use certain meanings in communication. The utility function represents the similarity, or appropriateness, of the Receiver's guess m' about the Sender's intended meaning m.
 
-        For the case of modals, the informativity of a language $L$ with meaning space $M$ is:
+        The informativity of a language $L$ with meaning space $M$ is defined:
 
         $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
         """
@@ -84,7 +84,7 @@ class SST_Informativity_Measure(InformativityMeasure):
 
 
 ##############################################################################
-# Functions
+# Main and utility functions for informativity calculation
 ##############################################################################
 
 
@@ -184,4 +184,4 @@ def vectorized_communicative_success(
 
         - utility: a function u(m, m') representing similarity of meanings, or pair-wise usefulness of listener guesses about speaker meanings.
     """
-    return float(np.trace(np.diag(prior) @ speaker.mat @ listener.mat * utility))
+    return float(np.trace(np.diag(prior) @ speaker.S @ listener.R * utility))
