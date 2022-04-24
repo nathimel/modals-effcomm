@@ -34,7 +34,7 @@ class Universe:
 
     def __str__(self):
         objects = ",\n".join([str(point) for point in self.get_objects()])
-        return "Universe: {}".format(str(objects))
+        return f"Universe: {objects}"
 
     def __eq__(self, __o: object) -> bool:
         """Returns true if the two universes are the same set."""

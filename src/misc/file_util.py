@@ -109,7 +109,7 @@ def save_languages(fn, languages: list[ModalLanguage]):
     with open(fn, 'w') as outfile:
         yaml.safe_dump(data, outfile)
 
-    print("Saved {} languages".format(len(langs)))
+    print(f"Saved {len(langs)} languages")
 
 def load_languages(fn) -> list[ModalLanguage]:
     """Loads a list of modal languages from a .yml file."""

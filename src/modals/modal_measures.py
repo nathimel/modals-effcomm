@@ -22,15 +22,8 @@ class ModalComplexityMeasure(ComplexityMeasure):
         complexity_measure: a string representing the kind of complexity measure. Specified from the configs file. Default is minimum description length in a modal language of thought. Future work will explore informations rate as complexity measure.
     """
 
-    def __init__(self, mlot: ModalLOT = None):
-        self.set_lot(mlot)
-
-    def set_lot(self, mlot: ModalLOT):
-        """Set the Modal Language of Thought for the complexity measure."""
-        self.__mlot = mlot
-
-    def get_lot(self):
-        return self.__mlot
+    def __init__(self, mlot):
+        self.mlot = mlot
 
     def batch_complexity(self, langs: list[ModalLanguage]) -> list[float]:
         return super().batch_complexity(langs)
@@ -38,7 +31,7 @@ class ModalComplexityMeasure(ComplexityMeasure):
     def language_complexity(self, language: ModalLanguage) -> float:
         """Sum of the language's item complexities.
 
-        For information-theoretic measures, summing the individual items may not be the correct measure of a language's total complexity. In general we can also consider an average, instead of a sum.
+        For information-theoretic measures, summing the individual items may not be the correct measure of a language's total complexity. For example, we can also take an average.
         """
         return sum([self.item_complexity(e) for e in language.get_expressions()])
 
@@ -47,7 +40,6 @@ class ModalComplexityMeasure(ComplexityMeasure):
 
         Necessary when the complexity metric is  minimum description length.
         """
-        mlot = self.get_lot()
-        return mlot.expression_complexity(
+        return self.mlot.expression_complexity(
             ExpressionTree.from_string(item.get_lot_expression())
         )

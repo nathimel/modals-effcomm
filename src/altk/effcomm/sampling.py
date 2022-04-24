@@ -59,7 +59,7 @@ def generate_quasi_natural_sample(
 
                 language = language_class(
                     expressions,
-                    name="dummy_lang_{}".format(len(languages)),
+                    name=f"dummy_lang_{len(languages)}"
                 )
                 languages.append(language)
                 break
@@ -99,7 +99,7 @@ def random_combinations_sample(
                 words = [expressions[idx] for idx in indices]
                 language = language_class(
                     words,
-                    name="dummy_lang_{}".format(len(languages)),
+                    name=f"dummy_lang_{len(languages)}"
                 )
                 languages.append(language)
                 break

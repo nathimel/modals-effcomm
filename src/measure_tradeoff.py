@@ -1,6 +1,5 @@
 """Script for analyzing the results of the trade-off."""
 
-from random import sample
 import sys
 from misc.file_util import load_configs
 from misc.file_util import load_languages
@@ -39,7 +38,7 @@ def main():
     sampled_languages = load_languages(sampled_languages_fn)
     natural_languages = load_languages(natural_languages_fn)
     langs = sampled_languages + natural_languages
-    print("{} total langs...".format(len(langs)), sep=" ")
+    print(f"{len(langs)} total langs...")
 
     # Load trade-off criteria
     space = load_space(space_fn)
