@@ -110,7 +110,7 @@ class Add_Point(Mutation):
 
 class Remove_Point(Mutation):
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
-        """Only apply when language is not perfectly informative, or when it can express more than one meaning point"""
+        """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
 
         # Is not already perfectly informative
         inf_measure = kwargs["inf_measure"]
@@ -120,12 +120,11 @@ class Remove_Point(Mutation):
 
         # Can express more than one point
         expressions = language.get_expressions()
-        meanings = 0
         for expression in expressions:
             points = expression.get_meaning().get_objects()
-            if points:
-                meanings += len(points)
-        return meanings > 1
+            if len(points) > 1:
+                return True
+        return False
 
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
@@ -134,28 +133,28 @@ class Remove_Point(Mutation):
 
         Should increase informativeness.
         """
-        # randomly select a modal
-        while True:
-            index = random.randint(0, language.size() - 1)
-            points = list(
-                language.get_expressions().copy()[index].get_meaning().get_objects()
-            )
+        # randomly select an modal with more than one meaning
+        vocab = language.get_expressions().copy()
+        random.shuffle(vocab)
 
-            # randomly remove a bit
-            point = random.choice(points)
-            points.remove(point)
-
-            # replace the modal
-            if points:
-                # Search for the correct expression
-                for e in expressions:
-                    points_ = e.get_meaning().get_objects()
-                    if set(points) == set(points_):
-                        new_expression = e
-                # replace
-                language.add_expression(new_expression)
-                language.pop(index)
+        for index, expression in enumerate(vocab):
+            points = list(expression.get_meaning().get_objects())
+            if len(points) > 1:
                 break
+
+        # randomly remove a meaning point
+        point = random.choice(points)
+        points.remove(point)
+
+        # Search for the correct expression
+        for e in expressions:
+            points_ = e.get_meaning().get_objects()
+            if set(points) == set(points_):
+                new_expression = e
+                break
+
+        language.add_expression(new_expression)
+        language.pop(index)
         return language
 
 
