@@ -87,8 +87,8 @@ class SST_Informativity_Measure(InformativityMeasure):
 
         inf = vectorized_communicative_success(speaker, listener, self.prior, self.utility)
         
-        n, _ = self.utility.shape # square matrix
-        if np.array_equal(self.utility, np.eye(n)):
+        m, _ = self.utility.shape # square matrix
+        if np.array_equal(self.utility, np.eye(m)):
             if isclose(inf, 0.0):
                 raise ValueError(f"Informativity must be nonzero for indicator utility reward function, but was: {inf}")
         
