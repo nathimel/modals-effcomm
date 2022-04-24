@@ -68,7 +68,7 @@ class SST_Informativity_Measure(InformativityMeasure):
         $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
         """
         if not language.get_expressions():
-            raise ValueError("language empty: {}".format(language))
+            raise ValueError(f"language empty: {language}")
 
         if self.kind == "literal":
             speaker = LiteralSpeaker(language)

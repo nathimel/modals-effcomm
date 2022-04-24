@@ -26,7 +26,7 @@ def generate_expressions(space: ModalMeaningSpace, configs: dict):
     lot_expressions = mlot.minimum_lot_descriptions(meanings)
     modal_expressions = [
         ModalExpression(
-            form="dummy_form_{}".format(i),
+            form=f"dummy_form_{i}",
             meaning=meaning,
             lot_expression=lot_expressions[i],
         )

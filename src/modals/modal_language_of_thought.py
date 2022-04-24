@@ -38,21 +38,18 @@ class ExpressionTree:
         # Addition is at least binary
         if node == Nonterminal("+"):
             if len(children) < 1:
-                raise ValueError("Addition must have at least two operands: children={}"
-                .format(children))
+                raise ValueError(f"Addition must have at least two operands: children={children}")
             elif len(children) == 1:
                 self.tree_ = self.unwrap_singleton_sum(children)
                 return
 
         # Multiplication is binary
         if node == Nonterminal("*") and len(children) != 2:
-            raise ValueError("Multiplication must have exactly two operands: children={}"
-            .format(children))
+            raise ValueError(f"Multiplication must have exactly two operands: children={children}")
 
         # Negation is unary
         if node == Nonterminal("-") and len(children) != 1:
-            raise ValueError("Negation must have exactly one operand: children={}"
-            .format(children))
+            raise ValueError(f"Negation must have exactly one operand: children={children}")
 
         if isinstance(node, Tree):
             # children doesn't make sense

@@ -61,15 +61,12 @@ def get_force_flavor_names(
 
     if num_forces != len(force_names):
         raise ValueError(
-            "The list of force names must be equal in size to the number of expressible modal forces, or else empty. num_forces={0}, len(force_names)={1}".format(
-                num_forces, len(force_names)
-            )
+            f"The list of force names must be equal in size to the number of expressible modal forces, or else empty. num_forces={num_forces}, len(force_names)={len(force_names)}"
         )
+
     if num_flavors != len(flavor_names):
         raise ValueError(
-            "The list of flavor names must be equal in size to the number of expressible modal flavors, or else empty. num_flavors={0}, len(flavor_names)={1}".format(
-                num_flavors, len(flavor_names)
-            )
+            f"The list of flavor names must be equal in size to the number of expressible modal flavors, or else empty. num_flavors={num_flavors}, len(flavor_names)={len(flavor_names)}"
         )
 
     return (force_names, flavor_names)

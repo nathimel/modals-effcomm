@@ -53,13 +53,13 @@ def generate_languages(
             for subset in subsets:
                 bag = [expressions[idx] for idx in subset]
                 language = ModalLanguage(
-                    bag, name="dummy_lang_{}".format(len(languages))
+                    bag, name=f"dummy_lang_{len(languages)}"
                 )
                 languages.append(language)
 
         # Otherwise, take random sample
         else:
-            print("Sampling {0} languages of size {1}".format(sample_size, word_amount))
+            print(f"Sampling {sample_size} languages of size {word_amount}")
             rlangs = generate_quasi_natural_sample(
                 ModalLanguage, iffs, non_iffs, word_amount, sample_size
             )
