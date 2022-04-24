@@ -2,6 +2,7 @@
 
 import numpy as np
 from abc import abstractmethod
+from cmath import isclose
 from typing import Callable, Iterable
 from altk.language.language import Language
 from altk.language.semantics import Meaning
@@ -60,11 +61,18 @@ class SST_Informativity_Measure(InformativityMeasure):
     def language_informativity(self, language: Language) -> float:
         """The informativity of a language is based on the successful communication between a Sender and a Receiver.
 
-        The Sender can be thought of as a conditional distribution over expressions given meanings. The Receiver is likewise a conditional distribution over meanings given expressions. The communicative need, or cognitive source, is a prior probability over meanings representing how frequently agents need to use certain meanings in communication. The utility function represents the similarity, or appropriateness, of the Receiver's guess m' about the Sender's intended meaning m.
+        _Concepts_
+            The Sender can be thought of as a conditional distribution over expressions given meanings. The Receiver is likewise a conditional distribution over meanings given expressions. The communicative need, or cognitive source, is a prior probability over meanings representing how frequently agents need to use certain meanings in communication. The utility function represents the similarity, or appropriateness, of the Receiver's guess m' about the Sender's intended meaning m.
 
-        The informativity of a language $L$ with meaning space $M$ is defined:
+        _Formula_
+            The informativity of a language $L$ with meaning space $M$ is defined:
 
-        $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
+            $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
+
+        _Bounds_
+            A perfectly informative (=1.0) language can be constructed with a exactly one expression for each meaning.
+
+            For u() = indicator(), every language has nonzero informativity because a language must contain at least one expression, and an expression must contain at least one meaning.
         """
         if not language.get_expressions():
             raise ValueError(f"language empty: {language}")
@@ -77,9 +85,14 @@ class SST_Informativity_Measure(InformativityMeasure):
         else:
             raise ValueError("kind must be either 'literal' or 'pragmatic.")
 
-        return vectorized_communicative_success(
-            speaker, listener, self.prior, self.utility
-        )
+        inf = vectorized_communicative_success(speaker, listener, self.prior, self.utility)
+        
+        n, _ = self.utility.shape # square matrix
+        if np.array_equal(self.utility, np.eye(n)):
+            if isclose(inf, 0.0):
+                raise ValueError(f"Informativity must be nonzero for indicator utility reward function, but was: {inf}")
+        
+        return inf
 
 
 ##############################################################################

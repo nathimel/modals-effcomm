@@ -90,7 +90,7 @@ class Evolutionary_Optimizer:
         self.dominating_languages = None
         self.explored_languages = None
 
-    def fit(self, seed_population: list[Language]) -> tuple:
+    def fit(self, seed_population: list[Language]) -> tuple[list[Language]]:
         """Computes the Pareto frontier, a set languages which cannot be both more simple and more informative.
 
         Uses pygmo's nondominated_front method for computing a population's best solutions to a multi-objective optimization problem.

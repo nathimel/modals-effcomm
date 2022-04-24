@@ -128,10 +128,10 @@ class ModalLanguage(Language):
         return f"Modal_Language: [\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        return hash(tuple(self.get_expressions()))
+        return hash(tuple([self.get_name()] + self.get_expressions()))
 
     def __eq__(self, __o: object) -> bool:
-        return self.get_expressions() == __o.get_expressions()
+        return hash(self) == hash(__o)
 
     def get_meaning_space(self) -> ModalMeaningSpace:
         return self.get_universe()
