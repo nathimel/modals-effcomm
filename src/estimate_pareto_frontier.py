@@ -54,8 +54,8 @@ def main():
         Add_Modal(),
         Remove_Modal(),
         Remove_Point(),
-        # Add_Point(),
-        # Interchange_Modal(),
+        Add_Point(),
+        Interchange_Modal(),
     ]
 
     # Initialize optimizer and run algorithm
