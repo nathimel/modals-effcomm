@@ -1,6 +1,5 @@
 """Functions for measuring informativity in efficient communication analyses of languages."""
 
-import sys
 import numpy as np
 from abc import abstractmethod
 from typing import Callable, Iterable

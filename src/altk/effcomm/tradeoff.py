@@ -1,8 +1,6 @@
 """Functions for constructing an efficient communication analysis by measuring the simplicity/informativeness trade-off languages and formatting results as a dataframe or a plot."""
 
 import numpy as np
-import plotnine as pn
-import pandas as pd
 
 from altk.language.language import Language
 from altk.effcomm.complexity import ComplexityMeasure
@@ -16,6 +14,7 @@ from scipy.spatial.distance import cdist
 ##############################################################################
 # Helper measurement functions
 ##############################################################################
+
 
 def pareto_optimal_languages(languages: list[Language]) -> list[Language]:
     """Use pygmo.non_dominated_front_2d to compute the Pareto languages."""
@@ -67,9 +66,11 @@ def interpolate_data(dominating_languages: list[Language]) -> np.ndarray:
     pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
     return pareto_points
 
+
 ##############################################################################
 # Main tradeoff function
 ##############################################################################
+
 
 def tradeoff(
     languages: list[Language],
@@ -98,7 +99,6 @@ def tradeoff(
 
         dominating_languages: a list of the Pareto optimal languages in the simplicity/informativeness tradeoff.
     """
-    # langs = self.get_languages()
     # measure simplicity, informativity, and semantic universals
     for lang in languages:
         lang.set_complexity(comp_measure.language_complexity(lang))
