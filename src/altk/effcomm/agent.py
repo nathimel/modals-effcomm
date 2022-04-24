@@ -116,7 +116,7 @@ class LiteralSpeaker(Speaker):
         super().__init__(language)
         # initialize uniform distribution
         # self.set_distribution(self.uniform())
-        self.mat = cond_prob_matrix(language, "speaker")
+        self.S = cond_prob_matrix(language, "speaker")
 
     def uniform(self) -> dict[dict]:
         """Assume that for a particular meaning, every expression that can denote it is equiprobable.
@@ -167,8 +167,8 @@ class LiteralListener(Listener):
     def __init__(self, language: Language):
         super().__init__(language)
         # initialize uniform distribution
-        self.set_distribution(self.uniform())
-        self.mat = cond_prob_matrix(language, "listener")
+        # self.set_distribution(self.uniform())
+        self.R = cond_prob_matrix(language, "listener")
 
     def uniform(self) -> dict[dict]:
         """Assume the probability of each expressible meaning point in an expression is equal. All inexpressible meanings have probability 0.
