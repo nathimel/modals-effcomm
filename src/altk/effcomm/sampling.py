@@ -8,7 +8,7 @@ from typing import Type
 from tqdm import tqdm
 
 
-def generate_quasi_natural_sample(
+def quasi_natural_sample(
     language_class: Type,
     natural_terms: list[Expression],
     unnatural_terms: list[Expression],
@@ -68,7 +68,7 @@ def generate_quasi_natural_sample(
 
 
 def random_combinations_sample(
-    language_class: object,
+    language_class: Type,
     expressions: list[Expression],
     lang_size,
     sample_size,
@@ -76,6 +76,8 @@ def random_combinations_sample(
     """Get a sample of random combinations languages for a specific language size.
 
     Args:
+        language_class: a Language class
+
         expressions: list of expressions to sample from.
 
         lang_size: the exact number of expressions a language must have.

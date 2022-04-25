@@ -84,7 +84,7 @@ class SST_Informativity_Measure(InformativityMeasure):
             raise NotImplementedError
         else:
             raise ValueError("kind must be either 'literal' or 'pragmatic.")
-
+        
         inf = vectorized_communicative_success(speaker, listener, self.prior, self.utility)
         
         m, _ = self.utility.shape # square matrix
@@ -123,6 +123,11 @@ def build_utility_matrix(
         ]
     )
 
+def compute_sparsity(mat: np.ndarray) -> float:
+    """Number of 0s / number of elements in matrix."""
+    total = mat.shape[0] * mat.shape[1]
+    zeros = np.count_nonzero(mat==0)
+    return float(zeros/total)
 
 def communicative_success(
     speaker: Speaker,
