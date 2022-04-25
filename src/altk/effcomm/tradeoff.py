@@ -7,6 +7,7 @@ from altk.effcomm.complexity import ComplexityMeasure
 from altk.effcomm.informativity import InformativityMeasure
 from pygmo import non_dominated_front_2d
 from typing import Callable
+from tqdm import tqdm
 
 from scipy import interpolate
 from scipy.spatial.distance import cdist
@@ -34,7 +35,8 @@ def pareto_min_distances(languages: list[Language], pareto_points: list):
     """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier."""
     comm_cost = []
     comp = []
-    for lang in languages:
+    print("Measuring min distance to frontier ...", sep=" ")
+    for lang in tqdm(languages):
         comm_cost.append(1 - lang.get_informativity())
         comp.append(lang.get_complexity())
     points = np.array(list(zip(comm_cost, comp)))
@@ -42,6 +44,7 @@ def pareto_min_distances(languages: list[Language], pareto_points: list):
     # Measure closeness of each language to any frontier point
     distances = cdist(points, pareto_points)
     min_distances = np.min(distances, axis=1)
+    min_distances = min_distances / np.sqrt(2) # max distance is sqrt(1 + 1)
     return min_distances
 
 
@@ -100,7 +103,8 @@ def tradeoff(
         dominating_languages: a list of the Pareto optimal languages in the simplicity/informativeness tradeoff.
     """
     # measure simplicity, informativity, and semantic universals
-    for lang in languages:
+    print("Measuring languages for simplicity and informativeness...", sep=" ")    
+    for lang in tqdm(languages):
         lang.set_complexity(comp_measure.language_complexity(lang))
         lang.set_informativity(inf_measure.language_informativity(lang))
         lang.set_naturalness(degree_naturalness(lang))
@@ -111,7 +115,8 @@ def tradeoff(
     )
 
     # TODO: is optimality ever not min_distance?
-    for i, lang in enumerate(languages):
+    print("Setting optimality ...", sep=" ")
+    for i, lang in enumerate(tqdm(languages)):
         # warning: yaml that saves lang must use float, not numpy.float64 !
         lang.set_optimality(1 - float(min_distances[i]))
 

@@ -36,8 +36,9 @@ def main():
     # load languages
     print("Loading all languages ...", sep=" ")
     sampled_languages = load_languages(sampled_languages_fn)
+    dominant_languages = load_languages(dominant_languages_fn)
     natural_languages = load_languages(natural_languages_fn)
-    langs = sampled_languages + natural_languages
+    langs = sampled_languages + dominant_languages + natural_languages
     print(f"{len(langs)} total langs...")
 
     # Load trade-off criteria
@@ -51,7 +52,6 @@ def main():
     )
 
     # Get trade-off results
-    print("Measuring languages ...", sep=" ")
     langs, dom_langs = tradeoff(
         languages=langs,
         comp_measure=comp_measure,
@@ -59,8 +59,12 @@ def main():
         degree_naturalness=degree_iff
     )
 
+    # retrieve natural langs
+    nat_langs = [lang for lang in langs if lang.is_natural()]
+
     save_languages(sampled_languages_fn, langs)
     save_languages(dominant_languages_fn, dom_langs)
+    save_languages(natural_languages_fn, natural_languages)
 
     df = get_dataframe(langs)
     plot = get_tradeoff_plot(langs, dom_langs)

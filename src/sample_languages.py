@@ -1,13 +1,8 @@
 """Script for sampling languages."""
 
-"""A program to generate modal expressions for an efficient communication experiment.
-
-Every possible modal meaning that can be expressed by a language is given exactly one expression. This expression is chosen based on a the shortest formula in a language of thought (LoT), which is estimated by a boolean algebra formula minimization heuristic.
-"""
-
 import sys
 from itertools import combinations
-from altk.effcomm.sampling import generate_quasi_natural_sample
+from altk.effcomm.sampling import quasi_natural_sample
 from modals.modal_language import ModalExpression, ModalLanguage, is_iff
 from misc.file_util import *
 from math import comb
@@ -60,7 +55,7 @@ def generate_languages(
         # Otherwise, take random sample
         else:
             print(f"Sampling {sample_size} languages of size {word_amount}")
-            rlangs = generate_quasi_natural_sample(
+            rlangs = quasi_natural_sample(
                 ModalLanguage, iffs, non_iffs, word_amount, sample_size
             )
             languages.extend(rlangs)
