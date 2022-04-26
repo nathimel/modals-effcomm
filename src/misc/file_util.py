@@ -1,12 +1,14 @@
 import os
+from typing import Callable
 import yaml
 import random
 import numpy as np
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language import ModalExpression, ModalLanguage
+from modals.modal_measures import half_credit, indicator
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Psuedo random
+# Pseudo random
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def set_seed(seed: int) -> None:
@@ -34,6 +36,18 @@ def load_configs(fn: str)->dict:
     with open(fn, "r") as stream:
         configs = yaml.safe_load(stream)
     return configs
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Measures
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def load_utility(name: str) -> Callable:
+    """Loads the utility function for the experiment."""
+    if name == "indicator":
+        return indicator
+    elif name == "half_credit":
+        return half_credit
+    raise ValueError(f"No utility function named {name}.")
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Modal Meaning Space
@@ -114,12 +128,10 @@ def save_languages(fn, languages: list[ModalLanguage]):
 def load_languages(fn) -> list[ModalLanguage]:
     """Loads a list of modal languages from a .yml file."""
 
-    # TODO: use tqdm 
-
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
-
     space = ModalMeaningSpace(d['forces'], d['flavors'])
+
     languages = d['languages']
     return [
         ModalLanguage.from_yaml_rep(

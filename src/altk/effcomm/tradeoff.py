@@ -45,7 +45,7 @@ def pareto_min_distances(languages: list[Language], pareto_points: list):
     # Measure closeness of each language to any frontier point
     distances = cdist(points, pareto_points)
     min_distances = np.min(distances, axis=1)
-    min_distances = min_distances / np.sqrt(2) # max distance is sqrt(1 + 1)
+    min_distances = min_distances / np.sqrt(2)  # max distance is sqrt(1 + 1)
     return min_distances
 
 
@@ -61,21 +61,13 @@ def interpolate_data(dominating_languages: list[Language]) -> np.ndarray:
         dom_cc.append(1 - lang.get_informativity())
         dom_comp.append(lang.get_complexity())
 
-    print("NUM DOM LANGS", len(dominating_languages))
-    print("NUM UNIQUE DOM LANGS: ", len(set(dominating_languages)))
-
     values = list(set(zip(dom_cc, dom_comp)))
     pareto_x, pareto_y = list(zip(*values))
 
-    print("PARETO X: ", pareto_x)
-    print("PARETO Y: ", pareto_y)
-    if len(values) < 2:
-        pareto_points = np.array(values)
-    else:
-        interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
-        pareto_costs = np.linspace(0, 1.0, num=5000)
-        pareto_complexities = interpolated(pareto_costs)
-        pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
+    interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
+    pareto_costs = np.linspace(0, 1.0, num=5000)
+    pareto_complexities = interpolated(pareto_costs)
+    pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
     return pareto_points
 
 
@@ -112,7 +104,7 @@ def tradeoff(
         dominating_languages: a list of the Pareto optimal languages in the simplicity/informativeness tradeoff.
     """
     # measure simplicity, informativity, and semantic universals
-    print("Measuring languages for simplicity and informativeness...", sep=" ")    
+    print("Measuring languages for simplicity and informativeness...", sep=" ")
     for lang in tqdm(languages):
         lang.set_complexity(comp_measure.language_complexity(lang))
         lang.set_informativity(inf_measure.language_informativity(lang))
