@@ -36,7 +36,7 @@ class ModalMeaningSpace(Universe):
         super().__init__(
             {f"{force}+{flavor}" for force in forces for flavor in flavors}
         )
-        self.arr = self.arr = np.zeros((len(forces), len(flavors)))
+        self.arr = np.zeros((len(forces), len(flavors)))
 
     def force_to_index(self, force: str):
         """Converts a force name to a table row index.
@@ -97,7 +97,7 @@ class ModalMeaningSpace(Universe):
         shape = (len(self.forces), len(self.flavors))
         arrs = [
             np.array(i).reshape(shape)
-            for i in product([0, 1], repeat=len(self.get_objects()))
+            for i in product([0, 1], repeat=len(self.objects))
         ]
         arrs = arrs[1:]  # remove the empty array meaning to prevent div by 0
         meanings = [ModalMeaning(self.array_to_points(arr), self) for arr in arrs]
@@ -122,7 +122,7 @@ class ModalMeaningSpace(Universe):
         }
 
     def __str__(self):
-        return str(self.arr())
+        return str(self.arr)
 
 
 class ModalMeaning(Meaning):
@@ -139,23 +139,14 @@ class ModalMeaning(Meaning):
     """
 
     def __init__(self, points: set, meaning_space: ModalMeaningSpace):
-        self.set_points(points)
-        self.set_universe(meaning_space)
-
-    def set_points(self, points: set):
-        self.set_objects(points)
-
-    def get_points(self):
-        return self.get_objects()
-
-    def get_meaning_space(self):
-        return self.get_universe()
+        self.objects = points
+        self.universe = meaning_space
 
     def to_distribution(self) -> dict:
         """Convert the set of points into a dict representing a uniform distribution over meaning points."""
-        can_express = {k: len(self.get_points()) for k, v in self.get_points()}
+        can_express = {k: len(self.objects) for k, v in self.objects}
         space = {
-            k: 0 for k in self.get_meaning_space().get_objects() if k not in can_express
+            k: 0 for k in self.universe.objects if k not in can_express
         }
         return can_express | space
 
@@ -165,19 +156,19 @@ class ModalMeaning(Meaning):
         Example usage:
 
             m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
-            m.points_to_array()
+            m.to_array()
             [[1 1 0],
              [1 0 0]]
 
         Returns:
             np.ndarray: the array representation of the points instantiated on the modal table of variation
         """
-        a = np.array(self.get_meaning_space().arr)
-        for point in self.get_points():
+        a = np.array(self.universe.arr)
+        for point in self.objects:
             force, flavor = point.split("+")
             indices = (
-                self.get_meaning_space().force_to_index(force),
-                self.get_meaning_space().flavor_to_index(flavor),
+                self.universe.force_to_index(force),
+                self.universe.flavor_to_index(flavor),
             )
             a[indices] = 1
         return a
@@ -188,7 +179,7 @@ class ModalMeaning(Meaning):
         Example usage:
 
             m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
-            m.points_to_df()
+            m.to_df()
                     epistemic  deontic  circumstantial
             weak            1        1               0
             strong          1        0               0
@@ -198,8 +189,8 @@ class ModalMeaning(Meaning):
         """
         return pd.DataFrame(
             data=self.to_array(),
-            index=self.get_meaning_space().forces,
-            columns=self.get_meaning_space().flavors,
+            index=self.universe.forces,
+            columns=self.universe.flavors,
         )
 
     def __str__(self) -> str:
@@ -207,7 +198,8 @@ class ModalMeaning(Meaning):
         return str(self.to_array())
 
     def __hash__(self) -> int:
-        return hash(tuple(self.get_points()))
+        return hash(tuple(self.objects))
 
     def __eq__(self, __o: object) -> bool:
-        return self.get_points() == __o.get_points()
+        # return self.get_points() == __o.get_points()
+        return self.objects == __o.objects

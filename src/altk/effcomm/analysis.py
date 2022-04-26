@@ -26,9 +26,9 @@ def get_dataframe(languages: list[Language]) -> pd.DataFrame:
     data = []
     for lang in languages:
         point = (
-            1 - lang.get_informativity(),
-            lang.get_complexity(),
-            lang.get_naturalness(),
+            1 - lang.informativity,
+            lang.complexity,
+            lang.naturalness,
             "natural" if lang.is_natural() else "artificial",
         )
         data.append(point)
