@@ -137,7 +137,7 @@ def communicative_success(
 
              = \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')
 
-             = trace(diag(p)SR * u)
+             = sum(diag(p)SR * u)
 
     Args:
         - speaker: a literal or pragmatic speaker, containing a matrix S for P(e | m)
@@ -148,4 +148,4 @@ def communicative_success(
 
         - utility: a function u(m, m') representing similarity of meanings, or pair-wise usefulness of listener guesses about speaker meanings.
     """
-    return float(np.trace(np.diag(prior) @ speaker.S @ listener.R * utility))
+    return float(np.sum(np.diag(prior) @ speaker.S @ listener.R * utility))

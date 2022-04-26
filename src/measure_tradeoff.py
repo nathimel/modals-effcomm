@@ -35,10 +35,10 @@ def main():
     set_seed(configs["random_seed"])
 
     # load languages
-    print("Loading all languages ...", end=" ")
-    print("sampled...", end=" ")
+    print("Loading all languages ...")
+    print("sampled...")
     sampled_languages = load_languages(sampled_languages_fn)
-    print("dominant...", end=" ")    
+    print("dominant...")
     dominant_languages = load_languages(dominant_languages_fn)
     print("natural...")
     natural_languages = load_languages(natural_languages_fn)

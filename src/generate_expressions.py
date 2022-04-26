@@ -20,7 +20,7 @@ def generate_expressions(space: ModalMeaningSpace, configs: dict):
     Returns:
         - expressions: a list of Modal_Expressions
     """
-
+    print("Generating expressions...")
     mlot = ModalLOT(space, configs["language_of_thought"])
     meanings = [x for x in space.generate_meanings()]
     lot_expressions = mlot.minimum_lot_descriptions(meanings)
@@ -40,9 +40,6 @@ def main():
         print("Incorrect number of arguments.")
         print("Usage: python3 src/generate_expressions.py path_to_config_file")
         raise TypeError()  # TODO: create an actual error class for the package
-
-    # TODO: probably use tqdm in generate_expressions function
-    print("Generating expressions ...", end=" ")
 
     # Load parameters for expression generation
     config_fn = sys.argv[1]
