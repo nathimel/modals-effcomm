@@ -2,14 +2,13 @@
 
 import sys
 from altk.effcomm.optimization import Evolutionary_Optimizer
-from misc.file_util import load_configs, load_expressions, save_languages
+from misc.file_util import *
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_measures import ModalComplexityMeasure
+from modals.modal_measures import ModalComplexityMeasure, indicator, half_credit
 from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import *
 from altk.effcomm.informativity import *
-from modals.modal_language import ModalLanguage
 
 
 def main():
@@ -23,11 +22,12 @@ def main():
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
     expressions_fn = configs["file_paths"]["expressions"]
+    space_fn = configs["file_paths"]["meaning_space"]
     save_all_langs_fn = configs["file_paths"]["artificial_languages"]
 
     # Load optimization params
     evolutionary_alg_configs = configs["evolutionary_alg"]
-    agent_type = configs['agent_type']
+    agent_type = configs["agent_type"]
     sample_size = evolutionary_alg_configs["generation_size"]
     max_mutations = evolutionary_alg_configs["max_mutations"]
     generations = evolutionary_alg_configs["num_generations"]
@@ -41,14 +41,14 @@ def main():
     seed_population = generate_languages(expressions, lang_size, sample_size)
 
     # construct measures of complexity and informativity
-    space = expressions[0].get_meaning().get_universe()
+    space = load_space(space_fn)
     complexity_measure = ModalComplexityMeasure(
         ModalLOT(space, configs["language_of_thought"])
     )
     informativity_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
-        utility=build_utility_matrix(space, indicator),
-        agent_type=agent_type
+        utility=build_utility_matrix(space, load_utility(configs['utility'])),
+        agent_type=agent_type,
     )
 
     # Load modals-specifc mutations

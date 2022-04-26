@@ -10,6 +10,7 @@ from modals.modal_language import degree_iff
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
 from altk.effcomm.analysis import get_dataframe, get_tradeoff_plot
+from misc.file_util import load_utility
 
 def main():
     if len(sys.argv) != 2:
@@ -35,8 +36,11 @@ def main():
 
     # load languages
     print("Loading all languages ...", sep=" ")
+    print("sampled...", sep=" ")
     sampled_languages = load_languages(sampled_languages_fn)
+    print("dominant...", sep=" ")    
     dominant_languages = load_languages(dominant_languages_fn)
+    print("natural...", sep=" ")    
     natural_languages = load_languages(natural_languages_fn)
     langs = sampled_languages + dominant_languages + natural_languages
     print(f"{len(langs)} total langs...")
@@ -48,7 +52,7 @@ def main():
     )
     inf_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
-        utility=build_utility_matrix(space, indicator),
+        utility=build_utility_matrix(space, load_utility(configs["utility"])),
         agent_type=configs['agent_type']
     )
 
