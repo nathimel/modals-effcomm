@@ -9,11 +9,11 @@ This representation language is a hypothesis about how to measure the cognitive 
 """
 
 
-import sys
 import numpy as np
 from nltk.tree import *
 from nltk.grammar import *
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
+from tqdm import tqdm
 
 ##############################################################################
 # ExpressionTree
@@ -139,7 +139,7 @@ class ModalLOT:
             descriptions: a list of descriptions of each meaning in the lot
         """
         arrs = [meaning.to_array() for meaning in meanings]
-        r = [str(self.__joint_heuristic(arr)) for arr in arrs]
+        r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]
         return r
 
     def expression_complexity(self, ET: ExpressionTree)->int:

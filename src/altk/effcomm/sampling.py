@@ -31,9 +31,10 @@ def quasi_natural_sample(
     languages = []
 
     # there are lang_size + 1 degrees of naturalness
-    samples = np.resize(np.arange(lang_size + 1), sample_size)
+    degrees = np.resize(np.arange(lang_size + 1), sample_size)
 
-    for num_natural in tqdm(samples):
+    for num_natural in tqdm(degrees):
+        # TODO: check for num unique langs < requested num langs at each degree
         while True:
             natural_indices = sorted(
                 random.sample(range(len(natural_terms)), num_natural)
@@ -58,8 +59,7 @@ def quasi_natural_sample(
                 expressions = natural_expressions + unnatural_expressions
 
                 language = language_class(
-                    expressions,
-                    name=f"dummy_lang_{len(languages)}"
+                    expressions, name=f"dummy_lang_{len(languages)}"
                 )
                 languages.append(language)
                 break
@@ -99,10 +99,7 @@ def random_combinations_sample(
 
                 # add language
                 words = [expressions[idx] for idx in indices]
-                language = language_class(
-                    words,
-                    name=f"dummy_lang_{len(languages)}"
-                )
+                language = language_class(words, name=f"dummy_lang_{len(languages)}")
                 languages.append(language)
                 break
     assert len(languages) == len(set(languages))
