@@ -17,7 +17,7 @@ def main():
         print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file")
         raise TypeError()  # TODO: create an actual error class for the package
 
-    print("Estimating pareto frontier ...", sep=" ")
+    print("Estimating pareto frontier ...")
 
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
