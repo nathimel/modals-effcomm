@@ -42,7 +42,7 @@ def main():
         raise TypeError()  # TODO: create an actual error class for the package
 
     # TODO: probably use tqdm in generate_expressions function
-    print("Generating expressions ...", sep=" ")
+    print("Generating expressions ...", end=" ")
 
     # Load parameters for expression generation
     config_fn = sys.argv[1]

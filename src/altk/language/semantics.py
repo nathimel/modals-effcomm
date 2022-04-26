@@ -6,12 +6,12 @@
 
     Typical usage example:
 
-        >>> from altk.language.syntax import Form
-        >>> from altk.language.language import Expression, Language
-        >>> form = Form('blue')
-        >>> meaning = Color_Meaning() # some default meaning
-        >>> expression = Expression(form, meaning)
-        >>> lang = Language([expression])
+        from altk.language.syntax import Form
+        from altk.language.language import Expression, Language
+        form = Form('blue')
+        meaning = Color_Meaning() # some default meaning
+        expression = Expression(form, meaning)
+        lang = Language([expression])
 
 """
 
@@ -51,7 +51,7 @@ class Meaning:
     
     On some efficient communication analysis models, we use the concept of meaning to be a more general mapping of forms to objects of reference.
 
-    A literal meaning is always only one atomic object of the universe, though an expression may itself be underspecified: that is, the expression can be used to express different literal meanings. Sometimes these different literal meanings are not equally likely, in which it can be helpful to define a meaning as a distribution over objects in the universe.
+    A meaning is always a subset of the universe, because an expression may itself be underspecified: that is, the expression can be used to express different meanings. Sometimes these different literal meanings are not equally likely, in which it can be helpful to define a meaning as a distribution over objects in the universe.
 
     Typical usage example:
 
@@ -73,8 +73,8 @@ class Meaning:
 
     @abstractmethod
     def __str__(self) -> str:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
-        pass
+        raise NotImplementedError

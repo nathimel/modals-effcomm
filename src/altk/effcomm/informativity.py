@@ -18,7 +18,7 @@ from altk.effcomm.agent import PragmaticListener, PragmaticSpeaker
 
 class InformativityMeasure:
     def __init__(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def batch_communicative_cost(self, langs: list[Language]) -> list[float]:
         """Measure the (1 - informativity) of a list of languages."""
@@ -31,7 +31,7 @@ class InformativityMeasure:
     @abstractmethod
     def language_informativity(self, language: Language) -> float:
         """Measure the informativity of a single language."""
-        pass
+        raise NotImplementedError
 
 
 class SST_Informativity_Measure(InformativityMeasure):
@@ -51,12 +51,6 @@ class SST_Informativity_Measure(InformativityMeasure):
         self.prior = prior
         self.utility = utility
         self.agent_type = agent_type
-
-    def batch_communicative_cost(self, langs: list[Language]) -> list[float]:
-        return super().batch_communicative_cost(langs)
-
-    def batch_informativity(self, langs: list[Language]) -> list[float]:
-        return super().batch_informativity(langs)
 
     def language_informativity(self, language: Language) -> float:
         """The informativity of a language is based on the successful communication between a Sender and a Receiver.
@@ -111,12 +105,6 @@ def uniform_prior(space: Universe) -> np.ndarray:
     return np.array(
         [1 / len(space.get_objects()) for _ in range(len(space.get_objects()))]
     )
-
-
-def indicator(m, m_) -> int:
-    """Utility function that rewards only perfect recovery of meanings."""
-    return int(m == m_)
-
 
 def build_utility_matrix(
     space: Universe, utility: Callable[[Meaning, Meaning], float]

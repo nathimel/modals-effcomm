@@ -6,12 +6,12 @@
 
     Typical usage example:
 
-        >>> from altk.language.syntax import Form
-        >>> from altk.language.language import Expression, Language
-        >>> form = Form('blue')
-        >>> meaning = Color_Meaning() # some default meaning
-        >>> expression = Expression(form, meaning)
-        >>> lang = Language([expression])
+        from altk.language.syntax import Form
+        from altk.language.language import Expression, Language
+        form = Form('blue')
+        meaning = Color_Meaning() # some default meaning
+        expression = Expression(form, meaning)
+        lang = Language([expression])
 
 """
 
@@ -33,8 +33,8 @@ class Form:
 
     @abstractmethod
     def __str__(self) -> str:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def __eq__(self, __o: object) -> bool:
-        pass
+        raise NotImplementedError

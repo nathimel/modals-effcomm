@@ -18,7 +18,7 @@ def main():
         print("Usage: python3 src/analyze.py path_to_config")
         raise TypeError()  # TODO: create an actual error class for the package
 
-    print("Analyzing ...", sep=" ")
+    print("Measuring tradeoff ...")
 
     # Load the experimental data and paths to save results
     config_fn = sys.argv[1]
@@ -35,15 +35,15 @@ def main():
     set_seed(configs["random_seed"])
 
     # load languages
-    print("Loading all languages ...", sep=" ")
-    print("sampled...", sep=" ")
+    print("Loading all languages ...", end=" ")
+    print("sampled...", end=" ")
     sampled_languages = load_languages(sampled_languages_fn)
-    print("dominant...", sep=" ")    
+    print("dominant...", end=" ")    
     dominant_languages = load_languages(dominant_languages_fn)
-    print("natural...", sep=" ")    
+    print("natural...")
     natural_languages = load_languages(natural_languages_fn)
     langs = sampled_languages + dominant_languages + natural_languages
-    print(f"{len(langs)} total langs...")
+    print(f"{len(langs)} total langs.")
 
     # Load trade-off criteria
     space = load_space(space_fn)

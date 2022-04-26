@@ -23,9 +23,8 @@ class Add_Modal(Mutation):
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
     ) -> ModalLanguage:
-        """Add a random new modal to the language. Currently the new modal must not exist in the language already, e.g. this function will not add a synonym."""
+        """Add a random new modal to the language."""
         new_expression = random.choice(expressions)
-        # TODO: synonymy ?
         while language.has_expression(new_expression):
             new_expression = random.choice(expressions)
         language.add_expression(new_expression)
@@ -85,7 +84,9 @@ class Add_Point(Mutation):
             raise ValueError("new meaning not found in set of possible meanings")
 
         if new_expression in language.get_expressions():
-            raise ValueError("AddPoint should not add synonyms but new expression to add alredy in vocabulary.")
+            raise ValueError(
+                "AddPoint should not add synonyms but new expression to add alredy in vocabulary."
+            )
 
         # Add it
         language.add_expression(new_expression)
@@ -115,8 +116,7 @@ class Remove_Point(Mutation):
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
     ) -> ModalLanguage:
-        """Choose a random modal from the langauge and replace it with a modal that deletes one of the meaning points a language expresses.
-        """
+        """Choose a random modal from the langauge and replace it with a modal that deletes one of the meaning points a language expresses."""
         # randomly select an modal with more than one meaning
         vocab = language.get_expressions().copy()
         random.shuffle(vocab)
@@ -161,9 +161,9 @@ class Interchange_Modal(Mutation):
         remove = Remove_Modal()
         return remove.mutate(add.mutate(language, expressions), expressions)
 
+
 def uncovered_points(language: ModalLanguage) -> set[ModalMeaning]:
-    """Helper function for AddPoint to get the list of meanings not expressible in a language.
-    """
+    """Helper function for AddPoint to get the list of meanings not expressible in a language."""
     # Check for any points not expressed
     points = [
         point
