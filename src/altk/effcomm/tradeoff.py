@@ -19,6 +19,7 @@ from scipy.spatial.distance import cdist
 
 def pareto_optimal_languages(languages: list[Language]) -> list[Language]:
     """Use pygmo.non_dominated_front_2d to compute the Pareto languages."""
+    # TODO: refactor
     dominating_indices = non_dominated_front_2d(
         list(
             zip(
@@ -28,7 +29,7 @@ def pareto_optimal_languages(languages: list[Language]) -> list[Language]:
         )
     )
     dominating_languages = [languages[i] for i in dominating_indices]
-    return dominating_languages
+    return list(set(dominating_languages))
 
 
 def pareto_min_distances(languages: list[Language], pareto_points: list):
@@ -60,13 +61,21 @@ def interpolate_data(dominating_languages: list[Language]) -> np.ndarray:
         dom_cc.append(1 - lang.get_informativity())
         dom_comp.append(lang.get_complexity())
 
+    print("NUM DOM LANGS", len(dominating_languages))
+    print("NUM UNIQUE DOM LANGS: ", len(set(dominating_languages)))
+
     values = list(set(zip(dom_cc, dom_comp)))
     pareto_x, pareto_y = list(zip(*values))
 
-    interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
-    pareto_costs = np.linspace(0, 1.0, num=5000)
-    pareto_complexities = interpolated(pareto_costs)
-    pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
+    print("PARETO X: ", pareto_x)
+    print("PARETO Y: ", pareto_y)
+    if len(values) < 2:
+        pareto_points = np.array(values)
+    else:
+        interpolated = interpolate.interp1d(pareto_x, pareto_y, fill_value="extrapolate")
+        pareto_costs = np.linspace(0, 1.0, num=5000)
+        pareto_complexities = interpolated(pareto_costs)
+        pareto_points = np.array(list(zip(pareto_costs, pareto_complexities)))
     return pareto_points
 
 

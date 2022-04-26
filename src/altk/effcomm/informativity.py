@@ -9,6 +9,7 @@ from altk.language.semantics import Meaning
 from altk.effcomm.agent import Speaker, Listener
 from altk.effcomm.agent import LiteralListener, LiteralSpeaker
 from altk.language.semantics import Universe
+from altk.effcomm.agent import PragmaticListener, PragmaticSpeaker
 
 ##############################################################################
 # Informativity Classes
@@ -37,7 +38,7 @@ class SST_Informativity_Measure(InformativityMeasure):
 
     """Class for computing the measure of informativeness for a language based on the communicative success of speakers and listeners as described in Steinert-Threlkeld (2021)."""
 
-    def __init__(self, prior: Iterable, utility: np.ndarray, kind="literal"):
+    def __init__(self, prior: Iterable, utility: np.ndarray, agent_type="literal"):
         """Initialize the informativity measure with a utility function and prior.
 
         Args:
@@ -47,10 +48,9 @@ class SST_Informativity_Measure(InformativityMeasure):
 
             kind: Whether to measure informativity using literal or pragmatic agents, as canonically described in the Rational Speech Act framework.
         """
-
         self.prior = prior
         self.utility = utility
-        self.kind = kind
+        self.agent_type = agent_type
 
     def batch_communicative_cost(self, langs: list[Language]) -> list[float]:
         return super().batch_communicative_cost(langs)
@@ -77,21 +77,27 @@ class SST_Informativity_Measure(InformativityMeasure):
         if not language.get_expressions():
             raise ValueError(f"language empty: {language}")
 
-        if self.kind == "literal":
-            speaker = LiteralSpeaker(language)
-            listener = LiteralListener(language)
-        elif self.kind == "pragmatic":
-            raise NotImplementedError
+        speaker = LiteralSpeaker(language)
+        listener = LiteralListener(language)
+
+        if self.agent_type == "literal":
+            pass
+        elif self.agent_type == "pragmatic":
+            speaker = PragmaticSpeaker(language, listener)
+            listener = PragmaticListener(language, speaker, np.diag(self.prior))
         else:
-            raise ValueError("kind must be either 'literal' or 'pragmatic.")
-        
-        inf = vectorized_communicative_success(speaker, listener, self.prior, self.utility)
-        
-        m, _ = self.utility.shape # square matrix
+            raise ValueError(f"agent_type must be either 'literal' or 'pragmatic'. Received: {self.agent_type}.")
+
+        inf = communicative_success(speaker, listener, self.prior, self.utility)
+
+        # Check informativity > 0 
+        m, _ = self.utility.shape  # square matrix
         if np.array_equal(self.utility, np.eye(m)):
             if isclose(inf, 0.0):
-                raise ValueError(f"Informativity must be nonzero for indicator utility reward function, but was: {inf}")
-        
+                raise ValueError(
+                    f"Informativity must be nonzero for indicator utility reward function, but was: {inf}"
+                )
+
         return inf
 
 
@@ -123,62 +129,15 @@ def build_utility_matrix(
         ]
     )
 
+
 def compute_sparsity(mat: np.ndarray) -> float:
     """Number of 0s / number of elements in matrix."""
     total = mat.shape[0] * mat.shape[1]
-    zeros = np.count_nonzero(mat==0)
-    return float(zeros/total)
+    zeros = np.count_nonzero(mat == 0)
+    return float(zeros / total)
+
 
 def communicative_success(
-    speaker: Speaker,
-    listener: Listener,
-    prior: dict,
-    utility: np.ndarray,
-) -> float:
-    """Helper function to compute the literal informativity of a language.
-
-        $I(L) := \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')$
-
-    Args:
-        - speaker: an encoder-like object, representing a map from meanings to expressions. Is a literal speaker in terms of the RSA framework.
-
-        - listener: an decoder-like object, representing map from expressions to meanings. Is a literal listener in terms of the RSA framework.
-
-        - prior: p(m), distribution over meanings representing communicative need
-
-        - utility: a matrix specifying the function u(m, m') representing usefulness of listener guesses about speaker meanings.
-    """
-    meanings = speaker.get_language().get_universe().get_objects()
-    expressions = speaker.get_language().get_expressions()
-    meaning_rewards = 0
-    for meaning in meanings:
-        prob_m = prior[meaning]
-        for meaning_ in meanings:
-            utility_m_m_pair = utility(meaning, meaning_)
-            # compute P(m, m') = sum_expr speaker(expr | m) * listener(m' | expr)
-            prob_m_m_pair = 0.0
-            for expression in expressions:
-                speaker_prob = speaker.probability_of_expression_given_meaning(
-                    expression, meaning
-                )
-                listener_prob = listener.probability_of_meaning_given_expression(
-                    meaning_, expression
-                )
-                prob_m_m_pair += speaker_prob * listener_prob
-
-            reward_m_m_pair = prob_m_m_pair * prob_m * utility_m_m_pair
-            meaning_rewards += reward_m_m_pair
-
-    success = meaning_rewards
-    if success <= 0 or success > 1:
-        [print(e) for e in expressions]
-        raise ValueError(
-            f"communicative success must be in [0,1]. Communicative success: {success}"
-        )
-    return success
-
-
-def vectorized_communicative_success(
     speaker: Speaker,
     listener: Listener,
     prior: np.ndarray,
@@ -190,12 +149,12 @@ def vectorized_communicative_success(
 
              = \sum_{m \in M} p(m) \sum_{i \in L} p(i|m) \sum_{m' \in i} p(m'|i) * u(m, m')
 
-             = trace(diag(p)SR)
+             = trace(diag(p)SR * u)
 
     Args:
-        - speaker: an encoder-like object, containing a matrix S for P(e | m)
+        - speaker: a literal or pragmatic speaker, containing a matrix S for P(e | m)
 
-        - listener: an decoder-like object, containing a matrix R for P(m | e)
+        - listener: a literal or pragmatic listener, containing a matrix R for P(m | e)
 
         - prior: p(m), distribution over meanings representing communicative need
 

@@ -9,20 +9,22 @@ flavor_names:
   - deontic
   - circumstantial
 
-utility_function: 'half-credit'
+# measures
+literal_utility: indicator
+agent_type: literal
 language_of_thought:
   - negation: True
 
 # other experiment parameters
-random_seed: 1
+random_seed: 42
 sample_size: 2000
-lang_size: 10
+lang_size: 6
 evolutionary_alg:
   generation_size: 200
-  num_generations: 200
+  num_generations: 20
   max_mutations: 5
   num_processes: 6
-  maximum_lang_size: 10
+  maximum_lang_size: 6
 
 # outputs etc
 file_paths:
