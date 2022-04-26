@@ -76,7 +76,7 @@ def random_combinations_sample(
     """Get a sample of random combinations languages for a specific language size.
 
     Args:
-        language_class: a Language class
+        language_class: a Language class.
 
         expressions: list of expressions to sample from.
 

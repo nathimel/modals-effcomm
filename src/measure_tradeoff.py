@@ -49,6 +49,7 @@ def main():
     inf_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
         utility=build_utility_matrix(space, indicator),
+        agent_type=configs['agent_type']
     )
 
     # Get trade-off results
@@ -58,9 +59,6 @@ def main():
         inf_measure=inf_measure,
         degree_naturalness=degree_iff
     )
-
-    # retrieve natural langs
-    nat_langs = [lang for lang in langs if lang.is_natural()]
 
     save_languages(sampled_languages_fn, langs)
     save_languages(dominant_languages_fn, dom_langs)

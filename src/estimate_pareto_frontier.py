@@ -27,6 +27,7 @@ def main():
 
     # Load optimization params
     evolutionary_alg_configs = configs["evolutionary_alg"]
+    agent_type = configs['agent_type']
     sample_size = evolutionary_alg_configs["generation_size"]
     max_mutations = evolutionary_alg_configs["max_mutations"]
     generations = evolutionary_alg_configs["num_generations"]
@@ -47,6 +48,7 @@ def main():
     informativity_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
         utility=build_utility_matrix(space, indicator),
+        agent_type=agent_type
     )
 
     # Load modals-specifc mutations
