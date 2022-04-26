@@ -82,9 +82,9 @@ def main():
 
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
-                if expression.get_meaning() == meaning:
+                if expression.meaning == meaning:
                     experiment_modal = ModalExpression(
-                        form, meaning, expression.get_lot_expression()
+                        form, meaning, expression.lot_expression
                     )
                     experiment_vocabulary.append(experiment_modal)
         experiment_languages.append(ModalLanguage(experiment_vocabulary, language_name))

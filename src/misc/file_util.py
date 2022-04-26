@@ -77,11 +77,11 @@ def save_expressions(fn, expressions: list[ModalExpression]):
     if not expressions:
         raise ValueError("Cannot save an empty list of modal expressions.")
 
-    space = expressions[0].get_meaning().get_meaning_space()
+    space = expressions[0].meaning.universe
     expressions = [{
-        'form': e.get_form(),
-        'meaning': e.get_meaning().get_points(),
-        'lot': e.get_lot_expression(),
+        'form': e.form,
+        'meaning': e.meaning.objects,
+        'lot': e.lot_expression,
         }
          for e in expressions]
     data = {
@@ -109,7 +109,7 @@ def load_expressions(fn) -> list[ModalExpression]:
 
 def save_languages(fn, languages: list[ModalLanguage]):
     """Saves a list of modal languages to a .yml file."""
-    space = languages[0].get_expressions()[0].get_meaning().get_meaning_space()
+    space = languages[0].expressions[0].meaning.universe
 
     # Do not use a dict, which will lose data from the yaml representation
     langs = list(lang.yaml_rep() for lang in languages)

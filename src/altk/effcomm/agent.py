@@ -14,13 +14,7 @@ class Communicative_Agent:
 
         By default initialize to uniform communicative need distribution.
         """
-        self.set_language(language)
-
-    def set_language(self, language: Language):
-        self._language = language
-
-    def get_language(self) -> Language:
-        return self._language
+        self.language = language
 
 
 class Speaker(Communicative_Agent):
@@ -41,7 +35,7 @@ class LiteralSpeaker(Speaker):
 
     def __init__(self, language: Language):
         super().__init__(language)
-        self.S = naive_matrix(language, self)
+        self.S = naive_matrix(self)
 
 
 class LiteralListener(Listener):
@@ -49,7 +43,7 @@ class LiteralListener(Listener):
 
     def __init__(self, language: Language):
         super().__init__(language)
-        self.R = naive_matrix(language, self)
+        self.R = naive_matrix(self)
 
 
 class PragmaticSpeaker(Speaker):
@@ -113,7 +107,7 @@ class PragmaticListener(Listener):
 ##############################################################################
 
 
-def naive_matrix(language: Language, agent: Communicative_Agent) -> np.ndarray:
+def naive_matrix(agent: Communicative_Agent) -> np.ndarray:
     """Create and return the matrix representing the conditional distribution relevant to the agent.
 
     _Sender_
@@ -132,8 +126,8 @@ def naive_matrix(language: Language, agent: Communicative_Agent) -> np.ndarray:
     Returns:
         mat: the matrix representing the conditional distribution.
     """
-    expressions = tuple(language.get_expressions())
-    meanings = tuple(language.get_universe().get_objects())
+    expressions = tuple(agent.language.expressions)
+    meanings = tuple(agent.language.universe.objects)
 
     len_e = len(expressions)
     len_m = len(meanings)

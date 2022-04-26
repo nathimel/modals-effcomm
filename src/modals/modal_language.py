@@ -1,5 +1,5 @@
 from collections import Counter
-from copy import copy, deepcopy
+from copy import deepcopy
 from itertools import product
 from altk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
@@ -20,37 +20,31 @@ class ModalExpression(Expression):
 
     def __init__(self, form, meaning, lot_expression):
         super().__init__(form, meaning)
-        self.set_lot_expression(lot_expression)
-
-    def set_lot_expression(self, e):
-        self._lot_expression = e
-
-    def get_lot_expression(self):
-        return self._lot_expression
+        self.lot_expression = lot_expression
 
     def __hash__(self) -> int:
         return (
-            hash(self.get_form())
-            + hash(self.get_meaning())
-            + hash(self.get_lot_expression())
+            hash(self.form)
+            + hash(self.meaning)
+            + hash(self.lot_expression)
         )
 
     def __eq__(self, __o: object) -> bool:
         return (
-            self.get_form() == __o.get_form()
-            and self.get_meaning() == __o.get_meaning()
-            and self.get_lot_expression() == __o.get_lot_expression()
+            self.form == __o.form
+            and self.meaning == __o.meaning
+            and self.lot_expression == __o.lot_expression
         )
 
     def __str__(self) -> str:
-        return f"Modal_Expression: [\nform={self.get_form()}\nmeaning={self.get_meaning()}\nlot_expression={self.get_lot_expression()}]"
+        return f"Modal_Expression: [\nform={self.form}\nmeaning={self.meaning}\nlot_expression={self.lot_expression}]"
 
     def yaml_rep(self) -> dict:
         """Convert to a dictionary representation of the expression for compact saving to .yml files."""
         return {
-            "form": self.get_form(),
-            "meaning": list(self.get_meaning().get_points()),
-            "lot": self.get_lot_expression(),
+            "form": self.form,
+            "meaning": list(self.meaning.objects),
+            "lot": self.lot_expression,
         }
 
     @classmethod
@@ -80,18 +74,18 @@ class ModalLanguage(Language):
     Example usage:
 
         language = Modal_Language(expressions)
-        c = language.get_complexity()
+        c = language.complexity
     """
 
     def __init__(self, expressions: list[ModalExpression], name=None):
         super().__init__(expressions)
-        self.set_name(name)
+        self.name = name # natural languages have especially important names
 
-        # initialize all other attributes to None
-        self.set_complexity(None)
-        self.set_informativity(None)
-        self.set_optimality(None)
-        self.set_naturalness(None)
+        # initialize all effcomm data
+        self.complexity = None
+        self.informativity = None
+        self.optimality = None
+        self.naturalness = None
 
     def rename_synonyms(
         self, expressions: list[ModalExpression]
@@ -106,7 +100,7 @@ class ModalLanguage(Language):
 
         # create a stack of names for each synonym
         synonyms = {
-            item: [f"{item.get_form()}_{idx}" for idx in range(synonyms[item])]
+            item: [f"{item.form}_{idx}" for idx in range(synonyms[item])]
             for item in synonyms
         }
 
@@ -114,45 +108,29 @@ class ModalLanguage(Language):
         for expression in expressions_:
             if expression in synonyms:
                 new_form = synonyms[expression].pop()
-                expression.set_form(new_form)
+                expression.form = new_form
 
         return expressions_
 
-    def set_expressions(self, expressions: list[Expression]):
-        if not expressions:
-            raise ValueError("list of Expressions must not be empty.")
-        self._expressions = self.rename_synonyms(expressions)
+    @property
+    def expressions(self) -> list[Expression]:
+        return super().expressions
+    
+    @expressions.setter
+    def expressions(self, val) -> None:
+        if not val:
+            raise ValueError("list of ModalExpressions must not be empty.")
+        self._expressions = self.rename_synonyms(val)
 
     def __str__(self) -> str:
-        expressions_str = "\n".join([str(e) for e in self.get_expressions()])
+        expressions_str = "\n".join([str(e) for e in self.expressions])
         return f"Modal_Language: [\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        return hash(tuple([self.get_name()] + self.get_expressions()))
+        return hash(tuple([self.name] + self.expressions))
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
-
-    def get_meaning_space(self) -> ModalMeaningSpace:
-        return self.get_universe()
-
-    def set_complexity(self, complexity: float):
-        self._complexity = complexity
-
-    def get_complexity(self) -> float:
-        return self._complexity
-
-    def set_informativity(self, informativity: float):
-        self._informativity = informativity
-
-    def get_informativity(self) -> float:
-        return self._informativity
-
-    def set_optimality(self, optimality: float):
-        self._optimality = optimality
-
-    def get_optimality(self) -> float:
-        return self._optimality
 
     def yaml_rep(self) -> tuple:
         """Get a data structure for safe compact saving in a .yml file.
@@ -160,14 +138,14 @@ class ModalLanguage(Language):
         A tuple of the language name, and nested dict of list of the expressions, and trade-off data for compact saving in a .yml file.
         """
         data = (
-            self.get_name(),
+            self.name,
             {
-                "expressions": [e.yaml_rep() for e in self.get_expressions()],
+                "expressions": [e.yaml_rep() for e in self.expressions],
                 "measurements": {
-                    "complexity": self.get_complexity(),
-                    "informativity": self.get_informativity(),
-                    "optimality": self.get_optimality(),
-                    "iff": self.get_naturalness(),
+                    "complexity": self.complexity,
+                    "informativity": self.informativity,
+                    "optimality": self.optimality,
+                    "iff": self.naturalness,
                 },
             },
         )
@@ -194,32 +172,16 @@ class ModalLanguage(Language):
 
         expressions = [ModalExpression.from_yaml_rep(x, space) for x in expressions]
         lang = cls(expressions, name)
-        lang.set_complexity(complexity)
-        lang.set_informativity(informativity)
-        lang.set_optimality(optimality)
-        lang.set_naturalness(iff)
+        lang.complexity = complexity
+        lang.informativity = informativity
+        lang.optimality = optimality
+        lang.naturalness = iff
+
         return lang
-
-    def get_naturalness(self) -> float:
-        """Degree of quasi-naturalness, as measured by the SAV or IFF universals."""
-        return self._naturalness
-
-    def set_naturalness(self, naturalness: float):
-        self._naturalness = naturalness
-
-    """Natural languages have meaningful names."""
-
-    def set_name(self, name):
-        self._name = name
-
-    def get_name(self):
-        return self._name
-
-    name = property(get_name, set_name)
 
     def is_natural(self) -> bool:
         """Whether a Modal Language represents a natural language constructed from typological data."""
-        return not "dummy_lang" in self.get_name()
+        return not "dummy_lang" in self.name
 
 
 ##############################################################################
@@ -232,7 +194,7 @@ def is_iff(e: ModalExpression) -> bool:
 
     The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
     """
-    points = e.get_meaning().get_points()
+    points = e.meaning.objects
     forces = set()
     flavors = set()
     for point in points:
@@ -249,5 +211,5 @@ def is_iff(e: ModalExpression) -> bool:
 
 def degree_iff(language: ModalLanguage) -> float:
     """The fraction of a modal language satisfying the IFF semantic univeral."""
-    iff_items = sum([is_iff(item) for item in language.get_expressions()])
+    iff_items = sum([is_iff(item) for item in language.expressions])
     return iff_items / language.size()

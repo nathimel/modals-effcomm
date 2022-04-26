@@ -76,14 +76,14 @@ class Add_Point(Mutation):
         new_meaning = [point]
         new_expression = None
         for e in expressions:
-            points_ = e.get_meaning().get_objects()
+            points_ = e.meaning.objects
             if set(points_) == set(new_meaning):
                 new_expression = e
 
         if new_expression is None:
             raise ValueError("new meaning not found in set of possible meanings")
 
-        if new_expression in language.get_expressions():
+        if new_expression in language.expressions:
             raise ValueError(
                 "AddPoint should not add synonyms but new expression to add alredy in vocabulary."
             )
@@ -106,9 +106,9 @@ class Remove_Point(Mutation):
             return False
 
         # Can express more than one point
-        expressions = language.get_expressions()
+        expressions = language.expressions
         for expression in expressions:
-            points = expression.get_meaning().get_objects()
+            points = expression.meaning.objects
             if len(points) > 1:
                 return True
         return False
@@ -118,11 +118,11 @@ class Remove_Point(Mutation):
     ) -> ModalLanguage:
         """Choose a random modal from the langauge and replace it with a modal that deletes one of the meaning points a language expresses."""
         # randomly select an modal with more than one meaning
-        vocab = language.get_expressions().copy()
+        vocab = language.expressions.copy()
         random.shuffle(vocab)
 
         for index, expression in enumerate(vocab):
-            points = list(expression.get_meaning().get_objects())
+            points = list(expression.meaning.objects)
             if len(points) > 1:
                 break
 
@@ -132,7 +132,7 @@ class Remove_Point(Mutation):
 
         # Search for the correct expression
         for e in expressions:
-            points_ = e.get_meaning().get_objects()
+            points_ = e.meaning.objects
             if set(points) == set(points_):
                 new_expression = e
                 break
@@ -167,8 +167,8 @@ def uncovered_points(language: ModalLanguage) -> set[ModalMeaning]:
     # Check for any points not expressed
     points = [
         point
-        for e in language.get_expressions()
-        for point in e.get_meaning().get_objects()
+        for e in language.expressions
+        for point in e.meaning.objects
     ]
-    space = language.get_meaning_space().get_objects()
+    space = language.universe.objects
     return set(space) - set(points)

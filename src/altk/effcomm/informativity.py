@@ -5,11 +5,9 @@ from abc import abstractmethod
 from cmath import isclose
 from typing import Callable, Iterable
 from altk.language.language import Language
-from altk.language.semantics import Meaning
-from altk.effcomm.agent import Speaker, Listener
-from altk.effcomm.agent import LiteralListener, LiteralSpeaker
-from altk.language.semantics import Universe
-from altk.effcomm.agent import PragmaticListener, PragmaticSpeaker
+from altk.language.semantics import Meaning, Universe
+from altk.effcomm.agent import *
+
 
 ##############################################################################
 # Informativity Classes
@@ -68,7 +66,7 @@ class SST_Informativity_Measure(InformativityMeasure):
 
             For u() = indicator(), every language has nonzero informativity because a language must contain at least one expression, and an expression must contain at least one meaning.
         """
-        if not language.get_expressions():
+        if not language.expressions:
             raise ValueError(f"language empty: {language}")
 
         speaker = LiteralSpeaker(language)
@@ -80,11 +78,13 @@ class SST_Informativity_Measure(InformativityMeasure):
             speaker = PragmaticSpeaker(language, listener)
             listener = PragmaticListener(language, speaker, np.diag(self.prior))
         else:
-            raise ValueError(f"agent_type must be either 'literal' or 'pragmatic'. Received: {self.agent_type}.")
+            raise ValueError(
+                f"agent_type must be either 'literal' or 'pragmatic'. Received: {self.agent_type}."
+            )
 
         inf = communicative_success(speaker, listener, self.prior, self.utility)
 
-        # Check informativity > 0 
+        # Check informativity > 0
         m, _ = self.utility.shape  # square matrix
         if np.array_equal(self.utility, np.eye(m)):
             if isclose(inf, 0.0):
@@ -102,9 +102,8 @@ class SST_Informativity_Measure(InformativityMeasure):
 
 def uniform_prior(space: Universe) -> np.ndarray:
     """Return a 1-D numpy array of size |space| reprsenting uniform distribution."""
-    return np.array(
-        [1 / len(space.get_objects()) for _ in range(len(space.get_objects()))]
-    )
+    return np.array([1 / len(space.objects) for _ in range(len(space.objects))])
+
 
 def build_utility_matrix(
     space: Universe, utility: Callable[[Meaning, Meaning], float]
@@ -112,8 +111,8 @@ def build_utility_matrix(
     """Construct the square matrix specifying the utility function defined for pairs of meanings."""
     return np.array(
         [
-            [utility(meaning, meaning_) for meaning_ in space.get_objects()]
-            for meaning in space.get_objects()
+            [utility(meaning, meaning_) for meaning_ in space.objects]
+            for meaning in space.objects
         ]
     )
 

@@ -1,17 +1,8 @@
 """Classes and functions for measuring the simplicity and informativeness of modal languages."""
 
-from typing import Callable
-import numpy as np
-
 from altk.effcomm.complexity import ComplexityMeasure
-from altk.effcomm.informativity import InformativityMeasure
 from modals.modal_language import ModalExpression, ModalLanguage
-from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language_of_thought import ExpressionTree
-from modals.modal_meaning import ModalMeaningSpace
-from modals.modal_meaning import ModalMeaning
-from altk.effcomm.informativity import communicative_success
-from altk.effcomm.agent import LiteralListener, LiteralSpeaker
 
 
 class ModalComplexityMeasure(ComplexityMeasure):
@@ -30,7 +21,7 @@ class ModalComplexityMeasure(ComplexityMeasure):
 
         For information-theoretic measures, summing the individual items may not be the correct measure of a language's total complexity. For example, we can also take an average.
         """
-        return sum([self.item_complexity(e) for e in language.get_expressions()])
+        return sum([self.item_complexity(e) for e in language.expressions])
 
     def item_complexity(self, item: ModalExpression) -> int:
         """Measure the complexity of a single item.
@@ -38,7 +29,7 @@ class ModalComplexityMeasure(ComplexityMeasure):
         Necessary when the complexity metric is  minimum description length.
         """
         return self.mlot.expression_complexity(
-            ExpressionTree.from_string(item.get_lot_expression())
+            ExpressionTree.from_string(item.lot_expression)
         )
 
 ##############################################################################

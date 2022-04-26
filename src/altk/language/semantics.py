@@ -23,22 +23,15 @@ class Universe:
     """The universe is the set of possible referent objects for a meaning."""
 
     def __init__(self, objects):
-        self._objects = set()
-        self.set_objects(objects)
-
-    def set_objects(self, objects):
-        self._objects = objects
-    def get_objects(self):
-        return self._objects
-    universe=property(get_objects, set_objects)
+        self.objects = objects
 
     def __str__(self):
-        objects = ",\n".join([str(point) for point in self.get_objects()])
-        return f"Universe: {objects}"
+        objects_str = ",\n".join([str(point) for point in self.objects])
+        return f"Universe: {objects_str}"
 
     def __eq__(self, __o: object) -> bool:
         """Returns true if the two universes are the same set."""
-        return self.get_objects() == __o.get_objects()
+        return self.objects == __o.objects
 
 
 class Meaning:
@@ -60,16 +53,6 @@ class Meaning:
         precise_meaning = Meaning({1}) # picks out one object
         vague_meaning = Meaning({1,6}) # can pick out more than one object
     """
-
-    def set_universe(self, universe: Universe):
-        self._universe = universe
-    def get_universe(self):
-        return self._universe
-    
-    def get_objects(self):
-        return self._objects
-    def set_objects(self, objects):
-        self._objects = objects
 
     @abstractmethod
     def __str__(self) -> str:

@@ -23,8 +23,8 @@ def pareto_optimal_languages(languages: list[Language]) -> list[Language]:
     dominating_indices = non_dominated_front_2d(
         list(
             zip(
-                [1 - lang.get_informativity() for lang in languages],
-                [lang.get_complexity() for lang in languages],
+                [1 - lang.informativity for lang in languages],
+                [lang.complexity for lang in languages],
             )
         )
     )
@@ -38,8 +38,8 @@ def pareto_min_distances(languages: list[Language], pareto_points: list):
     comp = []
     print("Measuring min distance to frontier ...", end=" ")
     for lang in tqdm(languages):
-        comm_cost.append(1 - lang.get_informativity())
-        comp.append(lang.get_complexity())
+        comm_cost.append(1 - lang.informativity)
+        comp.append(lang.complexity)
     points = np.array(list(zip(comm_cost, comp)))
 
     # Measure closeness of each language to any frontier point
@@ -58,8 +58,8 @@ def interpolate_data(dominating_languages: list[Language]) -> np.ndarray:
     dom_cc = []
     dom_comp = []
     for lang in dominating_languages:
-        dom_cc.append(1 - lang.get_informativity())
-        dom_comp.append(lang.get_complexity())
+        dom_cc.append(1 - lang.informativity)
+        dom_comp.append(lang.complexity)
 
     values = list(set(zip(dom_cc, dom_comp)))
     pareto_x, pareto_y = list(zip(*values))
@@ -106,9 +106,9 @@ def tradeoff(
     # measure simplicity, informativity, and semantic universals
     print("Measuring languages for simplicity and informativeness...", end=" ")
     for lang in tqdm(languages):
-        lang.set_complexity(comp_measure.language_complexity(lang))
-        lang.set_informativity(inf_measure.language_informativity(lang))
-        lang.set_naturalness(degree_naturalness(lang))
+        lang.complexity = comp_measure.language_complexity(lang)
+        lang.informativity = inf_measure.language_informativity(lang)
+        lang.naturalness = degree_naturalness(lang)
 
     dominating_languages = pareto_optimal_languages(languages)
     min_distances = pareto_min_distances(
@@ -119,6 +119,6 @@ def tradeoff(
     print("Setting optimality ...", end=" ")
     for i, lang in enumerate(tqdm(languages)):
         # warning: yaml that saves lang must use float, not numpy.float64 !
-        lang.set_optimality(1 - float(min_distances[i]))
+        lang.optimality = 1 - float(min_distances[i])
 
     return languages, dominating_languages
