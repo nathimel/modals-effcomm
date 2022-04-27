@@ -181,7 +181,7 @@ class ModalLanguage(Language):
 
     def is_natural(self) -> bool:
         """Whether a Modal Language represents a natural language constructed from typological data."""
-        return not "dummy_lang" in self.name
+        return not "sample_lang" in self.name
 
 
 ##############################################################################

@@ -4,7 +4,7 @@ import sys
 from altk.effcomm.optimization import Evolutionary_Optimizer
 from misc.file_util import *
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_measures import ModalComplexityMeasure, indicator, half_credit
+from modals.modal_measures import ModalComplexityMeasure
 from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import *
@@ -37,8 +37,15 @@ def main():
     set_seed(configs["random_seed"])
 
     # Create the first generation of languages
+    print("Sampling seed generation...")
     expressions = load_expressions(expressions_fn)
-    seed_population = generate_languages(expressions, lang_size, sample_size)
+    seed_population = generate_languages(
+        ModalLanguage,
+        expressions,        
+        lang_size,
+        sample_size,
+        # verbose=True,
+    )
 
     # construct measures of complexity and informativity
     space = load_space(space_fn)

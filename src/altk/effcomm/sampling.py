@@ -10,8 +10,8 @@ from itertools import combinations
 from tqdm import tqdm
 
 def generate_languages(
-    expressions: list[Expression],
     language_class: Type,
+    expressions: list[Expression],
     lang_size: int,
     sample_size: int,
     criterion: Callable=lambda *_: True,
@@ -50,20 +50,14 @@ def generate_languages(
 
     # For each language size
     for word_amount in word_amounts:
-
         # If sample size > all possible languages (of any degree), just generate the latter.
         if word_amt_sample_size > comb(total_word_amount, word_amount):
-            subsets = list(combinations(expressions_indices, word_amount))
-            if verbose:
-                print(f"Enumerating {len(subsets)} languages of word amount {word_amount}")
-
-            # Construct the languages
-            for subset in subsets:
-                bag = [expressions[idx] for idx in subset]
-                language = language_class(
-                    bag, name=f"sampled_lang_{len(languages)}"
-                )
-                languages.append(language)
+            languages = extend_languages_by_enumeration(
+                language_class,
+                languages,
+                expressions_indices,
+                word_amount,
+            )
 
         # Otherwise, take random sample
         else:
@@ -121,14 +115,25 @@ def quasi_natural_sample(
     natural_indices = list(range(len(natural_terms)))
     unnatural_indices = list(range(len(unnatural_terms)))
 
+    # By default, do not split vocab 
+    # num_degrees = lang_size    
+    # num_unnatural = 0
 
-    # including 0, there are lang_size + 1 degrees of naturalness
-    degrees = list(range(lang_size + 1))
+    # including 0, there are lang_size + 1 degrees of naturalness    
+    # if unnatural_terms:
+        # num_degrees += 1
+
+    # by default, expresions:= natural_terms
+    degrees = [1 for _ in range(lang_size + 1)]
+    if unnatural_terms:
+        degrees = list(range(lang_size + 1))
     degree_sample_size = int(np.floor(sample_size / len(degrees)))
 
     # For each fraction of the lang size
     for num_natural in tqdm(degrees):
-        num_unnatural = lang_size - num_natural
+        num_unnatural = 0
+        if unnatural_terms:
+            num_unnatural = lang_size - num_natural
         
         # If sample size > possible languages, just generate the latter.
         possible_langs = comb(len(natural_terms), num_natural) * comb(len(unnatural_terms), num_unnatural)
