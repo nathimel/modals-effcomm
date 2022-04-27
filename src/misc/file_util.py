@@ -80,7 +80,7 @@ def save_expressions(fn, expressions: list[ModalExpression]):
     space = expressions[0].meaning.universe
     expressions = [{
         'form': e.form,
-        'meaning': e.meaning.objects,
+        'meaning': list(e.meaning.objects),
         'lot': e.lot_expression,
         }
          for e in expressions]
