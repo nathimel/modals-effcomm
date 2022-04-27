@@ -1,4 +1,5 @@
 from itertools import product
+from typing import Iterable
 import numpy as np
 import pandas as pd
 from altk.language.semantics import Universe, Meaning
@@ -21,7 +22,7 @@ class ModalMeaningSpace(Universe):
 
     """
 
-    def __init__(self, forces: set, flavors: set):
+    def __init__(self, forces: Iterable, flavors: Iterable):
         """Construct a meaning space for modals, using two axes of variation.
 
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
@@ -128,18 +129,16 @@ class ModalMeaningSpace(Universe):
 class ModalMeaning(Meaning):
     """ "A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
 
-    TODO: Design to be immutable.
-
     Attributes:
-        - points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
+        objects: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
 
     Example usage:
 
         m = Modal_Meaning({'weak+epistemic'}, space)
     """
 
-    def __init__(self, points: set, meaning_space: ModalMeaningSpace):
-        self.objects = points
+    def __init__(self, points: Iterable, meaning_space: ModalMeaningSpace):
+        self.objects = list(points)
         self.universe = meaning_space
 
     def to_distribution(self) -> dict:
@@ -194,12 +193,10 @@ class ModalMeaning(Meaning):
         )
 
     def __str__(self) -> str:
-        # return str(self.to_df())
         return str(self.to_array())
 
     def __hash__(self) -> int:
         return hash(tuple(self.objects))
 
     def __eq__(self, __o: object) -> bool:
-        # return self.get_points() == __o.get_points()
         return self.objects == __o.objects
