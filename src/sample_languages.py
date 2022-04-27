@@ -28,8 +28,8 @@ def main():
     # Turn the knob on iff
     expressions = load_expressions(expression_save_fn)
     languages = generate_languages(
+        ModalLanguage,        
         expressions,
-        ModalLanguage,
         lang_size,
         sample_size,
         is_iff,
