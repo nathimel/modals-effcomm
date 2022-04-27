@@ -24,6 +24,7 @@ def main():
     expressions_fn = configs["file_paths"]["expressions"]
     space_fn = configs["file_paths"]["meaning_space"]
     save_all_langs_fn = configs["file_paths"]["artificial_languages"]
+    dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
     # Load optimization params
     evolutionary_alg_configs = configs["evolutionary_alg"]
@@ -79,7 +80,9 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    _, explored_langs = optimizer.fit(seed_population=seed_population)
+    dominant_langs, explored_langs = optimizer.fit(
+        seed_population=seed_population
+        )
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
@@ -87,6 +90,7 @@ def main():
     pool = list(set(pool))
 
     save_languages(save_all_langs_fn, pool)
+    save_languages(dom_langs_fn, dominant_langs)
 
     print("done.")
 
