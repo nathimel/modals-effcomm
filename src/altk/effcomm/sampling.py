@@ -63,7 +63,7 @@ def generate_languages(
         else:
             if verbose:
                 print(f"Generating {word_amt_sample_size} languages of size {word_amount}")
-            rlangs = quasi_natural_sample(
+            rlangs = sample_quasi_natural(
                 language_class, 
                 natural_terms, 
                 unnatural_terms, 
@@ -78,7 +78,8 @@ def generate_languages(
     word_amount = random.choice(word_amounts)
     if verbose:
         print(f"Filling remaining languages by sampling {additional_sample} languages of size {word_amount}")
-    rlangs = quasi_natural_sample(
+
+    rlangs = sample_quasi_natural(
         language_class,
         natural_terms,
         unnatural_terms,
@@ -90,8 +91,38 @@ def generate_languages(
 
     return languages
 
+##############################################################################
+# Different sampling methods
+##############################################################################
 
-def quasi_natural_sample(
+def sample_lang_size(
+    language_class: Type,
+    expressions: list[Expression],
+    lang_size,
+    sample_size,
+    verbose=False,
+) -> list[Language]:
+    """Get a sample of languages each of exactly lang_size.
+    
+    Args:
+        language_class: 
+
+        expressions: 
+
+        lang_size:
+
+        sample_size:
+    """
+    return sample_quasi_natural(
+        language_class=language_class,
+        natural_terms=expressions,
+        unnatural_terms=[],
+        lang_size=lang_size,
+        sample_size=sample_size,
+        verbose=verbose,
+    )
+
+def sample_quasi_natural(
     language_class: Type,
     natural_terms: list[Expression],
     unnatural_terms: list[Expression],
@@ -99,7 +130,7 @@ def quasi_natural_sample(
     sample_size,
     verbose=False,
 ) -> list[Language]:
-    """Turn the knob on degree quasi-naturalness for a sample of random combinations languages.
+    """Turn the knob on degree quasi-naturalness for a sample of languages, either by enumerating or randomly sampling unique subsets of all possible combinations.
 
     Args:
         natural_terms: expressions satisfying some criteria of quasi-naturalness, e.g, a semantic universal.
@@ -114,14 +145,6 @@ def quasi_natural_sample(
 
     natural_indices = list(range(len(natural_terms)))
     unnatural_indices = list(range(len(unnatural_terms)))
-
-    # By default, do not split vocab 
-    # num_degrees = lang_size    
-    # num_unnatural = 0
-
-    # including 0, there are lang_size + 1 degrees of naturalness    
-    # if unnatural_terms:
-        # num_degrees += 1
 
     # by default, expresions:= natural_terms
     degrees = [1 for _ in range(lang_size + 1)]
@@ -270,78 +293,3 @@ def random_combination_vocabulary(
         vocabulary = [natural_terms[idx] for idx in nat_sample_indices] + [unnatural_terms[idx] for idx in unnat_sample_indices]
         break
     return vocabulary
-
-
-    # degrees = np.resize(np.arange(lang_size + 1), sample_size)
-
-    # for num_natural in tqdm(degrees):
-    #     # TODO: check for num unique langs < requested num langs at each degree
-    #     while True:
-    #         natural_indices = sorted(
-    #             random.sample(range(len(natural_terms)), num_natural)
-    #         )
-
-    #         if unnatural_terms:
-    #             unnatural_indices = sorted(
-    #                 random.sample(range(len(unnatural_terms)), lang_size - num_natural)
-    #             )
-    #         else:
-    #             unnatural_indices = []
-    #         indices = (natural_indices, unnatural_indices)
-    #         if indices not in indices_list:
-    #             # keep track of languages chosen
-    #             indices_list.append(indices)
-
-    #             # Add language
-    #             natural_expressions = [natural_terms[idx] for idx in natural_indices]
-    #             unnatural_expressions = [
-    #                 unnatural_terms[idx] for idx in unnatural_indices
-    #             ]
-    #             expressions = natural_expressions + unnatural_expressions
-
-    #             language = language_class(
-    #                 expressions, name=f"dummy_lang_{len(languages)}"
-    #             )
-    #             languages.append(language)
-    #             break
-    # assert len(languages) == len(set(languages))
-    return languages
-
-
-def random_combinations_sample(
-    language_class: Type,
-    expressions: list[Expression],
-    lang_size,
-    sample_size,
-) -> list[Language]:
-    """Get a sample of random combinations languages for a specific language size.
-
-    Args:
-        language_class: a Language class.
-
-        expressions: list of expressions to sample from.
-
-        lang_size: the exact number of expressions a language must have.
-
-        sample_size: how many languages to sample.
-
-    Returns:
-        a list of languages representing the sample
-    """
-    indices_list = []
-    languages = []
-
-    for i in tqdm(range(sample_size)):
-        while True:
-            indices = sorted(random.sample(range(len(expressions)), lang_size))
-            if indices not in indices_list:
-                # keep track of languages chosen
-                indices_list.append(indices)
-
-                # add language
-                words = [expressions[idx] for idx in indices]
-                language = language_class(words, name=f"dummy_lang_{len(languages)}")
-                languages.append(language)
-                break
-    assert len(languages) == len(set(languages))
-    return languages
