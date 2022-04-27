@@ -19,17 +19,17 @@ from tqdm import tqdm
 # ExpressionTree
 ##############################################################################
 
-class ExpressionTree:
 
+class ExpressionTree:
     def __init__(self, node, children=[]):
-        """Construct an expression tree (E.T.). 
-        
-        This class is a wrapper for nltk Tree, which works better with a modal LoT. 
-        
+        """Construct an expression tree (E.T.).
+
+        This class is a wrapper for nltk Tree, which works better with a modal LoT.
+
             The following are valid expression trees:
             - (Atom)
             - (Operator (E.T.) (E.T.))
-        
+
         Args:
             - node: an nltk.tree Tree, Nonterminal or a string to recursively repackage into an ExpressionTree.
             - children: list of nltk.tree or Nonterminal objects.
@@ -38,27 +38,35 @@ class ExpressionTree:
         # Addition is at least binary
         if node == Nonterminal("+"):
             if len(children) < 1:
-                raise ValueError(f"Addition must have at least two operands: children={children}")
+                raise ValueError(
+                    f"Addition must have at least two operands: children={children}"
+                )
             elif len(children) == 1:
                 self.tree_ = self.unwrap_singleton_sum(children)
                 return
 
         # Multiplication is binary
         if node == Nonterminal("*") and len(children) != 2:
-            raise ValueError(f"Multiplication must have exactly two operands: children={children}")
+            raise ValueError(
+                f"Multiplication must have exactly two operands: children={children}"
+            )
 
         # Negation is unary
         if node == Nonterminal("-") and len(children) != 1:
-            raise ValueError(f"Negation must have exactly one operand: children={children}")
+            raise ValueError(
+                f"Negation must have exactly one operand: children={children}"
+            )
 
         if isinstance(node, Tree):
             # children doesn't make sense
             self.tree_ = node
             return
 
-        children_ = [child.tree() if isinstance(child, ExpressionTree)
-                    else child for child in children]
-        
+        children_ = [
+            child.tree() if isinstance(child, ExpressionTree) else child
+            for child in children
+        ]
+
         self.tree_ = Tree(node=node, children=children_)
 
     @classmethod
@@ -76,27 +84,27 @@ class ExpressionTree:
         t = Tree.fromstring(s)
         return cls(t)
 
-    def unwrap_singleton_sum(self, children)->Tree:
+    def unwrap_singleton_sum(self, children) -> Tree:
         """
         Addition is a n-ary for n >= 2. If n == 1, remove the addition
         operator, e.g.
             (+ (* (A ) (c ))) => (* (A ) (c ))
         """
-        e, = children
+        (e,) = children
         if isinstance(e, Tree):
             return e
         elif isinstance(e, ExpressionTree):
             return e.tree()
         else:
-            return Tree(e, [])        
-  
-    def tree(self)->Tree:
+            return Tree(e, [])
+
+    def tree(self) -> Tree:
         return self.tree_
-    
+
     def __str__(self) -> str:
         return str(self.tree())
-    
-    def __eq__(self, other)->bool:
+
+    def __eq__(self, other) -> bool:
         return str(self.tree()) == str(other.tree())
 
 
@@ -112,22 +120,21 @@ class ExpressionTree:
     expressions = mlot.minimum_descriptions(meanings)
 """
 
-class ModalLOT:
 
-    def __init__(self, meaning_space: ModalMeaningSpace, lot_configs: dict):
+class ModalLOT:
+    def __init__(self, meaning_space: ModalMeaningSpace, lot_configs: dict[str, bool]):
         """Initialize the LoT, which depends on the number of forces and flavors.
 
         Args:
             meaning_space: the modal meaning space
 
-            operators: a list of strings representing the operators to use in the LoT. E.g., ['negation']
+            lot_configs: a dicts of strings and boolean values representing the operators to use in the LoT. E.g., {'negation': True}
         """
         self.forces = meaning_space.forces
         self.flavors = meaning_space.flavors
-        self.contains_negation = bool('negation' in lot_configs)
+        self.contains_negation = "negation" in lot_configs
 
-
-    def minimum_lot_descriptions(self, meanings: list[ModalMeaning])->list:
+    def minimum_lot_descriptions(self, meanings: list[ModalMeaning]) -> list:
         """Runs a heuristic to estimate the shortest length description of modal meanings in a language of thought.
 
         This is useful for measuring the complexity of modals, and the langauges containing them.
@@ -142,7 +149,7 @@ class ModalLOT:
         r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]
         return r
 
-    def expression_complexity(self, ET: ExpressionTree)->int:
+    def expression_complexity(self, ET: ExpressionTree) -> int:
         """
         Returns the number of atoms in the expression,
         thus ignoring the complexity of operators and
@@ -153,14 +160,21 @@ class ModalLOT:
             if self.__is_id(ET, "1") or self.__is_id(ET, "0"):
                 return 1
             return 2
-        return sum([self.expression_complexity(ExpressionTree(child)) for child in ET.tree()])
+        return sum(
+            [self.expression_complexity(ExpressionTree(child)) for child in ET.tree()]
+        )
 
     #################################################################
     # Heuristic
     #################################################################
 
-    def __heuristic(self, e: ExpressionTree, simple_operations: list, relative_operations: list,
-            complement=False)->ExpressionTree:
+    def __heuristic(
+        self,
+        e: ExpressionTree,
+        simple_operations: list,
+        relative_operations: list,
+        complement=False,
+    ) -> ExpressionTree:
         """A breadth first tree search of possible boolean formula reductions.
 
         Args:
@@ -170,16 +184,20 @@ class ModalLOT:
 
             relative_operations: a list of functions from ExpressionTree to ExpressionTree, parametrized by an atom.
 
-        Returns: 
+        Returns:
             shortest: the ExpressionTree representing the shortest expression found.
         """
 
-        atoms = [ExpressionTree("0"), ExpressionTree("1")] + [ExpressionTree(x) for x in self.forces] + [ExpressionTree(x) for x in self.flavors]
+        atoms = (
+            [ExpressionTree("0"), ExpressionTree("1")]
+            + [ExpressionTree(x) for x in self.forces]
+            + [ExpressionTree(x) for x in self.flavors]
+        )
 
         to_visit = [e]
         shortest = e
         it = 0
-        hard_ceiling = 2000 # Best solutions are likely before 1000 iterations
+        hard_ceiling = 2500  # Best solutions are likely before 1000 iterations
 
         while to_visit:
             if it == hard_ceiling:
@@ -187,7 +205,11 @@ class ModalLOT:
             next = to_visit.pop(0)
 
             children = [operation(next) for operation in simple_operations]
-            children.extend(operation(next, atom) for operation in relative_operations for atom in atoms)
+            children.extend(
+                operation(next, atom)
+                for operation in relative_operations
+                for atom in atoms
+            )
 
             to_visit.extend([child for child in children if child != next])
             it += 1
@@ -200,7 +222,7 @@ class ModalLOT:
 
         return shortest
 
-    def __joint_heuristic(self, arr: np.ndarray)->ExpressionTree:
+    def __joint_heuristic(self, arr: np.ndarray) -> ExpressionTree:
         """
         Calls the boolean expression minimization heuristic twice, once
         to count 0s and once to count 1s. Returns the shorter result.
@@ -208,26 +230,29 @@ class ModalLOT:
         Args:
             arr: a numpy array representing the meaning points a modal can express.
 
-        Returns: 
+        Returns:
             result: the ExpressionTree representing the shortest lot description
         """
         e = self.__array_to_dnf(arr)
         simple_operations = [
-            self.__identity_a, 
-            self.__identity_m, 
-            self.__flavor_cover, 
-            self.__force_cover
-            ]
+            self.__identity_a,
+            self.__identity_m,
+            self.__flavor_cover,
+            self.__force_cover,
+        ]
         relative_operations = [self.__distr_m_over_a]
 
         if self.contains_negation:
-            e_c = self.__array_to_dnf(arr, complement=True)        
+            e_c = self.__array_to_dnf(arr, complement=True)
             simple_operations.append(self.__sum_complement)
             results = [
                 self.__heuristic(e, simple_operations, relative_operations),
-                self.__heuristic(e_c, simple_operations, relative_operations, complement=True)]
+                self.__heuristic(
+                    e_c, simple_operations, relative_operations, complement=True
+                ),
+            ]
             complexities = [self.expression_complexity(r) for r in results]
-            
+
             result = results[np.argmin(complexities)]
 
         else:
@@ -235,26 +260,24 @@ class ModalLOT:
 
         return result
 
-
     ##########################################################################
     # Utility functions
     #########################################################################
 
-
-    def __array_to_dnf(self, arr: np.ndarray, complement=False)->ExpressionTree:
+    def __array_to_dnf(self, arr: np.ndarray, complement=False) -> ExpressionTree:
         """
-        Creates a Disjunctive Normal Form (Sum of Products) ExpressionTree of nonzero array entries. 
+        Creates a Disjunctive Normal Form (Sum of Products) ExpressionTree of nonzero array entries.
 
         The followin is an illustration
             [[1,1,1],
             [1,1,1]]
             =>
             (+ (
-                * Q_1 f_1) 
-                (* Q_1 f_2) 
-                (* Q_1 f_3) 
-                (* Q_2 f_1) 
-                (* Q_2 f_2) 
+                * Q_1 f_1)
+                (* Q_1 f_2)
+                (* Q_1 f_3)
+                (* Q_2 f_1)
+                (* Q_2 f_2)
                 (* Q_2 f_3)
                 )
         """
@@ -266,31 +289,40 @@ class ModalLOT:
 
         if not complement:
             argw = np.argwhere(arr)
-            products = [ExpressionTree(
-                node=Nonterminal("*"),
-                children=[
-                    ExpressionTree(self.forces[pair[0]]),
-                    ExpressionTree(self.flavors[pair[1]])
-                ])
-            for pair in argw]
+            products = [
+                ExpressionTree(
+                    node=Nonterminal("*"),
+                    children=[
+                        ExpressionTree(self.forces[pair[0]]),
+                        ExpressionTree(self.flavors[pair[1]]),
+                    ],
+                )
+                for pair in argw
+            ]
             return ExpressionTree(node=Nonterminal("+"), children=products)
-        
+
         else:
-            argw = np.argwhere(arr==0)
-            products = [ExpressionTree(
-                node=Nonterminal("*"), 
-                children=[
-                    ExpressionTree(self.forces[pair[0]]), 
-                    ExpressionTree(self.flavors[pair[1]])])
-            for pair in argw]
+            argw = np.argwhere(arr == 0)
+            products = [
+                ExpressionTree(
+                    node=Nonterminal("*"),
+                    children=[
+                        ExpressionTree(self.forces[pair[0]]),
+                        ExpressionTree(self.flavors[pair[1]]),
+                    ],
+                )
+                for pair in argw
+            ]
             negated_products = [
                 ExpressionTree(
                     node=Nonterminal("-"),
                     children=[product],
-                ) for product in products]
+                )
+                for product in products
+            ]
             return ExpressionTree(node=Nonterminal("+"), children=products)
 
-    def __is_atom(self, ET: ExpressionTree)->bool:
+    def __is_atom(self, ET: ExpressionTree) -> bool:
         """
         Returns True if the input is a single atomic symbol, e.g. (x )
         """
@@ -300,14 +332,14 @@ class ModalLOT:
             and not [child for child in ET.tree()]
         )
 
-    def __is_flavor_atom(self, ET: ExpressionTree)->bool:
+    def __is_flavor_atom(self, ET: ExpressionTree) -> bool:
         """
         Returns True if the input is a single flavor symbol, e.g.
         if flavors=['e', 'd', 'c'] and ET= ('e' )
         """
         return self.__is_atom(ET) and ET.tree().label() in self.flavors
 
-    def __contains_id(self, ET: ExpressionTree, id: str)->bool:
+    def __contains_id(self, ET: ExpressionTree, id: str) -> bool:
         """
         Returns true if the identity ("1" or "0") or ExpressionTree wrapper
         is in the input ExpressionTree.
@@ -318,31 +350,29 @@ class ModalLOT:
                 return True
         return False
 
-    def __is_id(self, child, id: str)->bool:
+    def __is_id(self, child, id: str) -> bool:
         """
         Checks if input is any of the identity versions.
         Buffer function to prevent '==' overload incompatibility.
         """
         # if isinstance(child, str) and child == id:
-            # return True
+        # return True
         if isinstance(child, ExpressionTree) and ExpressionTree(id) == child:
             return True
         if isinstance(child, Tree) and Tree(id, []) == child:
             return True
         return False
 
-    def __is_product_or_singleton(self, child)->bool:
+    def __is_product_or_singleton(self, child) -> bool:
         """
         Buffer to check if input is a Tree with multiplication as root,
         or a Tree containing a string as root and nothing else,
         or simply an atom.
         """
-        return (
-            (isinstance(child, Tree) and child.label() != Nonterminal("+"))
-            or ((isinstance(child, ExpressionTree)) 
-                and child.tree().label() != Nonterminal("+"))
+        return (isinstance(child, Tree) and child.label() != Nonterminal("+")) or (
+            (isinstance(child, ExpressionTree))
+            and child.tree().label() != Nonterminal("+")
         )
-
 
     ##########################################################################
     # Logical Inferences
@@ -350,15 +380,15 @@ class ModalLOT:
 
     ##########################################################################
     # Multiplication
-    # 
+    #
     # Binary branching. This is because multiplication is a
-    # binary operator, and iterated multiplication of more than 2 atoms is 
+    # binary operator, and iterated multiplication of more than 2 atoms is
     # either redundant (idempotence) or results in 0, e.g.
     #     xyz = 0
     #     xxy = xy
     ##########################################################################
 
-    def __identity_m(self, ET: ExpressionTree)->ExpressionTree:
+    def __identity_m(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies multiplicative identity.
             (* a b ... 1 ... c) => (* a b c)
@@ -375,13 +405,17 @@ class ModalLOT:
 
         # Recursive
         if [child for child in ET.tree()]:
-            return ExpressionTree(node=ET.tree().label(), children=[
-                # child if isinstance(child, str)
-                self.__identity_m(ExpressionTree(child)) for child in ET.tree()]
+            return ExpressionTree(
+                node=ET.tree().label(),
+                children=[
+                    # child if isinstance(child, str)
+                    self.__identity_m(ExpressionTree(child))
+                    for child in ET.tree()
+                ],
             )
         return ET
 
-    def __annihalator_m(ET: ExpressionTree)->ExpressionTree:
+    def __annihalator_m(ET: ExpressionTree) -> ExpressionTree:
         """
         Applies multiplicative annihalation.
             (* a b ... 0 ...) => (0)
@@ -395,11 +429,11 @@ class ModalLOT:
 
     ##########################################################################
     # Addition
-    # 
-    # At least binary branching. Will have at most the number of terms in 
+    #
+    # At least binary branching. Will have at most the number of terms in
     # the DNF of the array representation.
     ##########################################################################
-    def __identity_a(self, ET: ExpressionTree)->ExpressionTree:
+    def __identity_a(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies additive identity law.
             (+ a b ... 0 ... c) => (+ a b c)
@@ -407,8 +441,9 @@ class ModalLOT:
             (+ 0) => (0)
         """
         if ET.tree().label() == Nonterminal("+") and self.__contains_id(ET, "0"):
-            children = [child for child in ET.tree() if 
-                        child not in ["0", ExpressionTree("0")]]
+            children = [
+                child for child in ET.tree() if child not in ["0", ExpressionTree("0")]
+            ]
             if children == []:
                 return ExpressionTree(node="0", children=[])
             else:
@@ -416,13 +451,17 @@ class ModalLOT:
 
         # Recursive
         if [child for child in ET.tree()]:
-            return ExpressionTree(node=ET.tree().label(), children=[
-                # child if isinstance(child, str)
-                self.__identity_a(ExpressionTree(child)) for child in ET.tree()]
+            return ExpressionTree(
+                node=ET.tree().label(),
+                children=[
+                    # child if isinstance(child, str)
+                    self.__identity_a(ExpressionTree(child))
+                    for child in ET.tree()
+                ],
             )
         return ET
 
-    def __annihalator_a(ET: ExpressionTree)->ExpressionTree:
+    def __annihalator_a(ET: ExpressionTree) -> ExpressionTree:
         """
         Applies additive annihalation. Holds in boolean algebra generally.
             (+ a b ... 1 ... c) => (1)
@@ -433,7 +472,7 @@ class ModalLOT:
         if "1" in ET.tree():
             return ExpressionTree(node="1", children=[])
 
-    def __flavor_cover(self, ET: ExpressionTree)->ExpressionTree:
+    def __flavor_cover(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Replace the sum of all flavors with multiplicative identity.
         If $n=$ num_flavors, and $f_i$ is the $i$-th flavor,
@@ -441,35 +480,49 @@ class ModalLOT:
             $\sum_{i=1}^{n}(f_i) = 1$
         """
         # Unwrap atoms and check for array cover.
-        if (ET.tree().label() == Nonterminal("+")
-            and set(self.flavors) == set([
-                ExpressionTree(child).tree().label() 
-                for child in ET.tree() if self.__is_atom(ExpressionTree(child))])):
+        if ET.tree().label() == Nonterminal("+") and set(self.flavors) == set(
+            [
+                ExpressionTree(child).tree().label()
+                for child in ET.tree()
+                if self.__is_atom(ExpressionTree(child))
+            ]
+        ):
             return ExpressionTree("1")
 
         # Recursive
         elif [child for child in ET.tree()]:
-            children = [child if self.__is_atom(child)
-                        else self.__flavor_cover(ExpressionTree(child)) for child in ET.tree()]
+            children = [
+                child
+                if self.__is_atom(child)
+                else self.__flavor_cover(ExpressionTree(child))
+                for child in ET.tree()
+            ]
             return ExpressionTree(node=ET.tree().label(), children=children)
 
         return ET
 
-    def __force_cover(self, ET: ExpressionTree)->ExpressionTree:
+    def __force_cover(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Replace the sum of all forces with multiplicative identity.
             \sum_{i=1}^{|forces|}(force_i) = 1
         """
-        if (ET.tree().label() == Nonterminal("+")
-            and set(self.forces) == set([
-                ExpressionTree(child).tree().label() 
-                for child in ET.tree() if self.__is_atom(ExpressionTree(child))])):
+        if ET.tree().label() == Nonterminal("+") and set(self.forces) == set(
+            [
+                ExpressionTree(child).tree().label()
+                for child in ET.tree()
+                if self.__is_atom(ExpressionTree(child))
+            ]
+        ):
             return ExpressionTree(node="1")
-        
+
         # Recursive
         elif [child for child in ET.tree()]:
-            children = [child if self.__is_atom(child)
-                        else self.__force_cover(ExpressionTree(child)) for child in ET.tree()]
+            children = [
+                child
+                if self.__is_atom(child)
+                else self.__force_cover(ExpressionTree(child))
+                for child in ET.tree()
+            ]
             return ExpressionTree(node=ET.tree().label(), children=children)
 
         return ET
@@ -499,8 +552,8 @@ class ModalLOT:
         """
         if ET.tree().label() != Nonterminal("+"):
             return ET
-        factored_terms = [] # list of atoms
-        remaining_terms = [] # list of trees
+        factored_terms = []  # list of atoms
+        remaining_terms = []  # list of trees
         for child in ET.tree():
             if self.__is_product_or_singleton(child):
                 if factor.tree() in child:
@@ -512,7 +565,9 @@ class ModalLOT:
             return ET
 
         factors_tree = ExpressionTree(node=Nonterminal("+"), children=factored_terms)
-        factored_tree = ExpressionTree(node=Nonterminal("*"), children=[factor, factors_tree])        
+        factored_tree = ExpressionTree(
+            node=Nonterminal("*"), children=[factor, factors_tree]
+        )
         if remaining_terms:
             children = [factored_tree] + remaining_terms
             return ExpressionTree(node=Nonterminal("+"), children=children)
@@ -523,7 +578,7 @@ class ModalLOT:
     # Complement
     #################################################################
 
-    def __negation(ET: ExpressionTree)->ExpressionTree:
+    def __negation(ET: ExpressionTree) -> ExpressionTree:
         """
         An operation, not an inference.
         Embed an expression under a negation operator.
@@ -531,13 +586,15 @@ class ModalLOT:
         """
         return ExpressionTree(node=Nonterminal("-"), children=[ET])
 
-    def __shorten_expression(self, ET: ExpressionTree, atoms, others, atoms_c)->ExpressionTree:
+    def __shorten_expression(
+        self, ET: ExpressionTree, atoms, others, atoms_c
+    ) -> ExpressionTree:
         """
-        Helper function to sum complement. 
-        - atoms 
+        Helper function to sum complement.
+        - atoms
         a list of the expression tree's children that are atoms
         - others
-        the list of the expression tree's children that are not atoms.    
+        the list of the expression tree's children that are not atoms.
         - atoms_c is a set of atoms: 1 - atoms. Replaces atoms if is shorter.
         """
         if not atoms_c:
@@ -546,25 +603,21 @@ class ModalLOT:
 
         if len(atoms_c) < len(atoms):
             # if shortens expression, use new sum of wrapped atoms.
-            atoms = [ExpressionTree(atom)
-                if not isinstance(atom, ExpressionTree)
-                else atom for atom in atoms_c]
+            atoms = [
+                ExpressionTree(atom) if not isinstance(atom, ExpressionTree) else atom
+                for atom in atoms_c
+            ]
 
             comp = ExpressionTree(
                 node=Nonterminal("-"),
-                children=[ExpressionTree(
-                    node=Nonterminal("+"), 
-                    children=atoms)]
-                )
+                children=[ExpressionTree(node=Nonterminal("+"), children=atoms)],
+            )
             new_children = [comp] + others
 
-            return ExpressionTree(
-                node=ET.tree().label(),
-                children=new_children
-            )
+            return ExpressionTree(node=ET.tree().label(), children=new_children)
         return ET
 
-    def __sum_complement(self, ET: ExpressionTree)->ExpressionTree:
+    def __sum_complement(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Reduces a sum to its complement if the complement is shorter, e.g.
         flavors= e, d, c
@@ -578,8 +631,8 @@ class ModalLOT:
             return ET
 
         # Base case
-        if (ET.tree().label() == Nonterminal("+")):
-            
+        if ET.tree().label() == Nonterminal("+"):
+
             atoms = []
             others = []
             for child in children:
@@ -596,23 +649,23 @@ class ModalLOT:
                 return self.__shorten_expression(ET, atoms, others, atoms_c)
 
             new_children = [ExpressionTree(atom) for atom in atoms] + others
-            return ExpressionTree(
-                node=ET.tree().label(),
-                children=new_children
-            )
+            return ExpressionTree(node=ET.tree().label(), children=new_children)
 
         # Recurse
-        if ((ET.tree().label() != Nonterminal("+"))
-            or
-            (not [child for child in children if self.is_atom(child)])):
+        if (ET.tree().label() != Nonterminal("+")) or (
+            not [child for child in children if self.is_atom(child)]
+        ):
             return ExpressionTree(
                 node=ET.tree().label(),
-                children=[self.__sum_complement(ExpressionTree(child)) for child in children]
+                children=[
+                    self.__sum_complement(ExpressionTree(child)) for child in children
+                ],
             )
 
     #################################################################
     # End Logical Inferences
     #################################################################
+
 
 ##########################################################################
 # End Class Modal Language of Thought
