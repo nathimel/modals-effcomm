@@ -2,7 +2,7 @@
 
 from altk.effcomm.complexity import ComplexityMeasure
 from modals.modal_language import ModalExpression, ModalLanguage
-from modals.modal_language_of_thought import ExpressionTree
+from modals.modal_language_of_thought import ExpressionTree, ModalLOT
 
 
 class ModalComplexityMeasure(ComplexityMeasure):
@@ -10,7 +10,7 @@ class ModalComplexityMeasure(ComplexityMeasure):
     """Defines the complexity measures for measuring modals as minimum description length in a modal language of thought. Future work will explore informations rate as complexity measure.
     """
 
-    def __init__(self, mlot):
+    def __init__(self, mlot: ModalLOT):
         self.mlot = mlot
 
     def batch_complexity(self, langs: list[ModalLanguage]) -> list[float]:
