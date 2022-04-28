@@ -10,6 +10,16 @@ forces:
 languages:
 - - gitksan
   - expressions:
+    - form: "ima(\u2019a)"
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: gat
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
     - form: "da\u2019akhlxw"
       lot: (* (weak ) (circumstantial ))
       meaning:
@@ -19,10 +29,10 @@ languages:
       meaning:
       - weak+deontic
     measurements:
-      complexity: 8
+      complexity: 12
       iff: 1.0
-      informativity: 0.3599999999960001
-      optimality: 0.8420784983993614
+      informativity: 0.4099999999520001
+      optimality: 0.8330736569211054
 - - javanese
   - expressions:
     - form: mesthi
@@ -45,9 +55,14 @@ languages:
       complexity: 16
       iff: 1.0
       informativity: 0.42999999993600013
-      optimality: 0.8132153951699269
+      optimality: 0.8091307886981475
 - - lillooet
   - expressions:
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
     - form: -an'
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -57,10 +72,10 @@ languages:
       meaning:
       - strong+epistemic
     measurements:
-      complexity: 8
+      complexity: 10
       iff: 1.0
-      informativity: 0.3500000000000001
-      optimality: 0.8350079780709568
+      informativity: 0.38552036195404826
+      optimality: 0.8159899205132024
 - - logoori
   - expressions:
     - form: haondi
@@ -75,7 +90,7 @@ languages:
       complexity: 8
       iff: 1.0
       informativity: 0.3500000000000001
-      optimality: 0.8350079780709568
+      optimality: 0.7950955176445169
 - - tlingit
   - expressions:
     - form: "gw\xE1l"
@@ -101,5 +116,5 @@ languages:
     measurements:
       complexity: 20
       iff: 1.0
-      informativity: 0.4019230768777942
-      optimality: 0.7246597204198709
+      informativity: 0.40192307687779416
+      optimality: 0.7246597204198708
