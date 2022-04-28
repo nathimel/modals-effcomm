@@ -134,7 +134,7 @@ class ModalLOT:
         self.flavors = meaning_space.flavors
         self.contains_negation = "negation" in lot_configs
 
-    def minimum_lot_descriptions(self, meanings: list[ModalMeaning]) -> list:
+    def minimum_lot_description(self, meaning: ModalMeaning) -> list:
         """Runs a heuristic to estimate the shortest length description of modal meanings in a language of thought.
 
         This is useful for measuring the complexity of modals, and the langauges containing them.
@@ -146,8 +146,10 @@ class ModalLOT:
             descriptions: a list of descriptions of each meaning in the lot
         """
         # TODO: figure out how to use Pool() to play nice with Python objects
-        arrs = [meaning.to_array() for meaning in meanings]
-        r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]
+        # arrs = [meaning.to_array() for meaning in meanings]
+        # r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]        
+        arr = meaning.to_array()
+        r = str(self.__joint_heuristic(arr))
         return r
 
     def expression_complexity(self, ET: ExpressionTree) -> int:
