@@ -1,0 +1,54 @@
+# modals specific parameters
+num_forces: 4
+force_names:
+  - weak
+  - strong
+  - Q3
+  - Q4
+num_flavors: 4
+flavor_names:
+  - epistemic
+  - deontic
+  - circumstantial
+  - teleological
+
+# measures
+utility: half_credit # half_credit or indicator
+agent_type: pragmatic # literal or pragmatic
+language_of_thought:
+  negation: True
+
+# other experiment parameters
+random_seed: 42
+sample_size: 2000
+lang_size: 6
+evolutionary_alg:
+  generation_size: 200
+  num_generations: 20
+  max_mutations: 5
+  num_processes: 6
+  maximum_lang_size: 6
+
+# outputs etc
+file_paths:
+  meaning_space: outputs/dev_4_4/meaning_space.yml
+  expressions: outputs/dev_4_4/expressions.yml
+  data:
+    gitksan: data/natural_languages/Gitksan/modals.csv
+    javanese: data/natural_languages/Javanese-Paciran/modals.csv
+    lillooet: data/natural_languages/Lillooet-Salish/modals.csv
+    logoori: data/natural_languages/Logoori/modals.csv
+    tlingit: data/natural_languages/Tlingit/modals.csv
+  artificial_languages: outputs/dev_4_4/languages/artificial.yml
+  natural_languages: outputs/dev_4_4/languages/natural.yml
+  dominant_languages: outputs/dev_4_4/languages/dominant.yml # Pareto
+  dataframe: outputs/dev_4_4/dataframe.csv
+  plot: outputs/dev_4_4/plot.png
+
+# How to interpret the modal database can_express values as booleans
+can_express:
+  True:
+    - 1
+  False:
+    - "?" # the '?' must be enclosed in quotes
+    - 0

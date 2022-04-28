@@ -74,9 +74,8 @@ def get_force_flavor_names(
 
 def main():
     if len(sys.argv) != 2:
-        print("Incorrect number of arguments.")
         print("Usage: python3 src/build_meaning_space.py path_to_config_file")
-        raise TypeError()  # TODO: create an actual error class for the package
+        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
     print("Building modal meaning space ...", sep=" ")
 

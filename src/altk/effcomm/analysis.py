@@ -70,8 +70,8 @@ def get_tradeoff_plot(
             alpha=1,
             width=0.00,
             height=0.00,
-            mapping=pn.aes(size="Language", shape="Language", fill="Language"),
-            # mapping=pn.aes(size="Language", shape="Language", color="naturalness"),
+            # mapping=pn.aes(size="Language", shape="Language", fill="Language"),
+            mapping=pn.aes(size="Language", shape="Language", color="naturalness"),
         )
         + pn.geom_line(size=1, data=pareto_df)
         + pn.xlab("Communicative cost of languages")

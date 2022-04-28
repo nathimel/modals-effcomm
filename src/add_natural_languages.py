@@ -33,9 +33,8 @@ def process_can_express(val: Any, can_express: dict):
 
 def main():
     if len(sys.argv) != 2:
-        print("Incorrect number of arguments.")
         print("Usage: python3 src/add_natural_languages.py path_to_config_file")
-        raise TypeError()  # TODO: create an actual error class for the package
+        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
     # Load expressions and save path
     config_fn = sys.argv[1]

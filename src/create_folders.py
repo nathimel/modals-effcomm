@@ -5,9 +5,8 @@ from misc.file_util import load_configs, make_path
 
 def main():
     if len(sys.argv) != 2:
-        print("Incorrect number of arguments.")
         print("Usage: python3 src/create_folers.py path_to_config_file")
-        raise TypeError()  # TODO: create an actual error class for the package
+        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")        
 
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)

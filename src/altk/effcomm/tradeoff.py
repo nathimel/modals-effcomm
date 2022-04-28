@@ -36,7 +36,7 @@ def pareto_min_distances(languages: list[Language], pareto_points: list):
     """Measure the Pareto optimality of each language by measuring its Euclidean closeness to the frontier."""
     comm_cost = []
     comp = []
-    print("Measuring min distance to frontier ...", end=" ")
+    print("Measuring min distance to frontier ...")
     for lang in tqdm(languages):
         comm_cost.append(1 - lang.informativity)
         comp.append(lang.complexity)
@@ -104,7 +104,7 @@ def tradeoff(
         dominating_languages: a list of the Pareto optimal languages in the simplicity/informativeness tradeoff.
     """
     # measure simplicity, informativity, and semantic universals
-    print("Measuring languages for simplicity and informativeness...", end=" ")
+    print("Measuring languages for simplicity and informativeness...")
     for lang in tqdm(languages):
         lang.complexity = comp_measure.language_complexity(lang)
         lang.informativity = inf_measure.language_informativity(lang)
@@ -116,7 +116,7 @@ def tradeoff(
     )
 
     # TODO: is optimality ever not min_distance?
-    print("Setting optimality ...", end=" ")
+    print("Setting optimality ...")
     for i, lang in enumerate(tqdm(languages)):
         # warning: yaml that saves lang must use float, not numpy.float64 !
         lang.optimality = 1 - float(min_distances[i])
