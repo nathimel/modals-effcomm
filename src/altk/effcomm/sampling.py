@@ -18,6 +18,7 @@ def generate_languages(
     criterion: Callable = lambda *_: True,
     fixed_wordcount=False,
     dummy_name="sampled_lang_id",
+    exact_sample=True,
     verbose=False,
 ) -> list[Language]:
     """Generate languages by randomly sampling bags of expressions.
@@ -82,27 +83,30 @@ def generate_languages(
             )
             languages.extend(rlangs)
 
-    # Randomly choose a lang size and continue sampling until sample_size achieved
-    additional_sample = sample_size - len(languages)
-    while additional_sample > 0:
-
-        word_amount = random.choice(word_amounts)
-        if verbose:
-            print(
-                f"Filling remaining languages by sampling {additional_sample} languages of size {word_amount}"
-            )
-
-        rlangs = sample_quasi_natural(
-            language_class,
-            natural_terms,
-            unnatural_terms,
-            word_amount,
-            additional_sample,
-            dummy_name=dummy_name,
-            verbose=verbose,
-        )
-        languages.extend(rlangs)
+    if exact_sample:
+        # Randomly choose a lang size and continue sampling until sample_size achieveds
         additional_sample = sample_size - len(languages)
+        while additional_sample > 0:
+
+            word_amount = random.choice(word_amounts)
+            if verbose:
+                print(
+                    f"Filling remaining languages by sampling {additional_sample} languages of size {word_amount}"
+                )
+
+            rlangs = sample_quasi_natural(
+                language_class,
+                natural_terms,
+                unnatural_terms,
+                word_amount,
+                additional_sample,
+                dummy_name=dummy_name,
+                verbose=verbose,
+            )
+            languages.extend(rlangs)
+            additional_sample = sample_size - len(languages)
+        
+        languages = languages[:sample_size]
 
     return languages
 
