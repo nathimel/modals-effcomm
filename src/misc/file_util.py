@@ -26,6 +26,7 @@ def make_path(fn: str) -> None:
     dirname = os.path.dirname(fn)
     if not os.path.exists(dirname):
         os.makedirs(dirname)
+        print(f"Created folder {dirname}")
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs

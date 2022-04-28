@@ -149,12 +149,12 @@ class ModalMeaning(Meaning):
         }
         return can_express | space
 
-    def to_array(self):
+    def to_array(self) -> np.ndarray:
         """Converts the set of points to a numpy array.
 
         Example usage:
 
-            m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)
+            m = Modal_Meaning({'weak+epistemic', 'strong+epistemic', 'weak+deontic'}, space)\n
             m.to_array()
             [[1 1 0],
              [1 0 0]]
