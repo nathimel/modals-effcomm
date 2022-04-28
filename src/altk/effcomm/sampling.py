@@ -61,6 +61,7 @@ def generate_languages(
             languages = extend_languages_by_enumeration(
                 language_class,
                 languages,
+                expressions,
                 expressions_indices,
                 word_amount,
                 dummy_name=dummy_name,
@@ -85,22 +86,25 @@ def generate_languages(
 
     # Randomly choose a lang size and continue sampling until sample_size achieved
     additional_sample = sample_size - len(languages)
-    word_amount = random.choice(word_amounts)
-    if verbose:
-        print(
-            f"Filling remaining languages by sampling {additional_sample} languages of size {word_amount}"
-        )
+    while additional_sample > 0:
 
-    rlangs = sample_quasi_natural(
-        language_class,
-        natural_terms,
-        unnatural_terms,
-        word_amount,
-        additional_sample,
-        dummy_name=dummy_name,
-        verbose=verbose,
-    )
-    languages.extend(rlangs)
+        word_amount = random.choice(word_amounts)
+        if verbose:
+            print(
+                f"Filling remaining languages by sampling {additional_sample} languages of size {word_amount}"
+            )
+
+        rlangs = sample_quasi_natural(
+            language_class,
+            natural_terms,
+            unnatural_terms,
+            word_amount,
+            additional_sample,
+            dummy_name=dummy_name,
+            verbose=verbose,
+        )
+        languages.extend(rlangs)
+        additional_sample = sample_size - len(languages)
 
     return languages
 
