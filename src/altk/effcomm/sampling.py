@@ -31,8 +31,6 @@ def generate_languages(
 
         sample_size: the number of languages to generate.
 
-            TODO: make it not required to be unique, and decide how to create _exactly_ the num specified by sample_size.
-
         criterion: the predicate, (e.g. semantic universal) by which to split the expressions into those satisfying and those not, and then sample languages with degrees of naturalness based on the percentage from those satisfying. Must apply at the expression level.
 
         fixed_wordcount: whether to vary the language size from 1 to lang_size.
@@ -173,7 +171,7 @@ def sample_quasi_natural(
     degrees = [1 for _ in range(lang_size + 1)]
     if unnatural_terms:
         degrees = list(range(lang_size + 1))
-    degree_sample_size = int(np.floor(sample_size / len(degrees)))
+    degree_sample_size = int(np.ceil(sample_size / len(degrees)))
 
     # For each fraction of the lang size
     for num_natural in tqdm(degrees):
@@ -224,8 +222,7 @@ def sample_quasi_natural(
                     unnatural_terms,
                 )
                 language = language_class(
-                    vocabulary, 
-                    name=f"{dummy_name.replace('id', '')}{len(languages)}"
+                    vocabulary, name=f"{dummy_name.replace('id', '')}{len(languages)}"
                 )
                 languages.append(language)
 
@@ -284,8 +281,7 @@ def extend_languages_by_enumeration(
             ]
 
             language = language_class(
-                vocabulary, 
-                name=f"{dummy_name.replace('id', '')}{len(languages)}"
+                vocabulary, name=f"{dummy_name.replace('id', '')}{len(languages)}"
             )
             languages.append(language)
     return languages

@@ -145,6 +145,7 @@ class ModalLOT:
         Returns:
             descriptions: a list of descriptions of each meaning in the lot
         """
+        # TODO: figure out how to use Pool() to play nice with Python objects
         arrs = [meaning.to_array() for meaning in meanings]
         r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]
         return r

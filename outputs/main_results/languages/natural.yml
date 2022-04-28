@@ -22,10 +22,10 @@ languages:
       - strong+deontic
       - strong+circumstantial
     measurements:
-      complexity: null
-      iff: null
-      informativity: null
-      optimality: null
+      complexity: 12
+      iff: 1.0
+      informativity: 0.5833333333333333
+      optimality: 0.8233009145309537
 - - javanese
   - expressions:
     - form: mesthi
@@ -50,17 +50,17 @@ languages:
       - strong+deontic
       - strong+circumstantial
     measurements:
-      complexity: null
-      iff: null
-      informativity: null
-      optimality: null
+      complexity: 20
+      iff: 1.0
+      informativity: 0.9166666666666666
+      optimality: 0.9848332993740387
 - - lillooet
   - expressions:
-    - form: ka
-      lot: (deontic )
+    - form: ka-...-a
+      lot: (circumstantial )
       meaning:
-      - weak+deontic
-      - strong+deontic
+      - weak+circumstantial
+      - strong+circumstantial
     - form: -an'
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -70,12 +70,18 @@ languages:
       meaning:
       - strong+epistemic
     measurements:
-      complexity: null
-      iff: null
-      informativity: null
-      optimality: null
+      complexity: 10
+      iff: 1.0
+      informativity: 0.41666666666666663
+      optimality: 0.7494659635130168
 - - logoori
   - expressions:
+    - form: kunyala
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
     - form: haondi
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -84,11 +90,17 @@ languages:
       lot: (* (weak ) (epistemic ))
       meaning:
       - weak+epistemic
+    - form: kudoka
+      lot: (strong )
+      meaning:
+      - strong+epistemic
+      - strong+deontic
+      - strong+circumstantial
     measurements:
-      complexity: null
-      iff: null
-      informativity: null
-      optimality: null
+      complexity: 12
+      iff: 1.0
+      informativity: 0.7037037037037037
+      optimality: 0.9083782068168376
 - - tlingit
   - expressions:
     - form: "gw\xE1l"
@@ -112,7 +124,7 @@ languages:
       meaning:
       - weak+circumstantial
     measurements:
-      complexity: null
-      iff: null
-      informativity: null
-      optimality: null
+      complexity: 20
+      iff: 1.0
+      informativity: 0.5
+      optimality: 0.6977830988036156

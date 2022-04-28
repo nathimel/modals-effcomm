@@ -8,6 +8,8 @@ from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import ModalExpression
 from misc.file_util import load_space, load_configs, save_expressions
+from multiprocess import Pool
+from tqdm import tqdm
 
 
 def generate_expressions(space: ModalMeaningSpace, configs: dict):
@@ -37,9 +39,8 @@ def generate_expressions(space: ModalMeaningSpace, configs: dict):
 
 def main():
     if len(sys.argv) != 2:
-        print("Incorrect number of arguments.")
         print("Usage: python3 src/generate_expressions.py path_to_config_file")
-        raise TypeError()  # TODO: create an actual error class for the package
+        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
     # Load parameters for expression generation
     config_fn = sys.argv[1]
@@ -57,3 +58,38 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    # # Everything must be outside of main() otherwise Pool gets mad
+
+    # # Load parameters for expression generation
+    # config_fn = sys.argv[1]
+    # configs = load_configs(config_fn)
+    # meaning_space_fn = configs["file_paths"]["meaning_space"]
+    # expression_save_fn = configs["file_paths"]["expressions"] #TODO: consider checking if expressions already exist instead of regenerating every time
+
+    # # Generate expressions, measure them, and save
+    # space = load_space(meaning_space_fn)
+
+    # print("Generating expressions...")
+    # mlot = ModalLOT(space, configs["language_of_thought"])
+    # meanings = [x for x in space.generate_meanings()]
+
+    # with Pool(processes=6) as p:
+    #     # r = list(tqdm(p.imap(joint_heuristic, meanings), total=len(meanings)))
+    #     lot_expressions = list(
+    #         tqdm(p.imap(mlot.minimum_lot_descriptions, meanings), total=len(meanings))
+    #     )
+
+    # # lot_expressions = mlot.minimum_lot_descriptions(meanings)
+
+    # modal_expressions = [
+    #     ModalExpression(
+    #         form=f"dummy_form_{i}",
+    #         meaning=meaning,
+    #         lot_expression=lot_expressions[i],
+    #     )
+    #     for i, meaning in enumerate(meanings)
+    # ]
+
+    # save_expressions(expression_save_fn, modal_expressions)
+    # print("done.")

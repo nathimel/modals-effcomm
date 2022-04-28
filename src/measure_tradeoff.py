@@ -12,11 +12,11 @@ from altk.effcomm.tradeoff import tradeoff
 from altk.effcomm.analysis import get_dataframe, get_tradeoff_plot
 from misc.file_util import load_utility
 
+
 def main():
     if len(sys.argv) != 2:
-        print("Incorrect number of arguments.")
         print("Usage: python3 src/analyze.py path_to_config")
-        raise TypeError()  # TODO: create an actual error class for the package
+        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
     print("Measuring tradeoff ...")
 
@@ -53,7 +53,7 @@ def main():
     inf_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
         utility=build_utility_matrix(space, load_utility(configs["utility"])),
-        agent_type=configs['agent_type']
+        agent_type=configs["agent_type"],
     )
 
     # Get trade-off results
@@ -61,7 +61,7 @@ def main():
         languages=langs,
         comp_measure=comp_measure,
         inf_measure=inf_measure,
-        degree_naturalness=degree_iff
+        degree_naturalness=degree_iff,
     )
 
     save_languages(sampled_languages_fn, langs)
