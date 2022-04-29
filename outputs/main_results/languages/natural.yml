@@ -8,6 +8,16 @@ forces:
 languages:
 - - gitksan
   - expressions:
+    - form: "ima(\u2019a)"
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: gat
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
     - form: "da\u2019akhlxw"
       lot: (* (weak ) (circumstantial ))
       meaning:
@@ -19,13 +29,13 @@ languages:
     - form: sgi
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+deontic
       - strong+circumstantial
+      - strong+deontic
     measurements:
-      complexity: 12
+      complexity: 16
       iff: 1.0
-      informativity: 0.5833333333333333
-      optimality: 0.8233009145309537
+      informativity: 0.8333333333333333
+      optimality: 0.9852653601014966
 - - javanese
   - expressions:
     - form: mesthi
@@ -47,20 +57,25 @@ languages:
     - form: kudu1
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+deontic
       - strong+circumstantial
+      - strong+deontic
     measurements:
       complexity: 20
       iff: 1.0
       informativity: 0.9166666666666666
-      optimality: 0.9848332993740387
+      optimality: 0.9920783900748071
 - - lillooet
   - expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
     - form: ka-...-a
       lot: (circumstantial )
       meaning:
-      - weak+circumstantial
       - strong+circumstantial
+      - weak+circumstantial
     - form: -an'
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -70,18 +85,12 @@ languages:
       meaning:
       - strong+epistemic
     measurements:
-      complexity: 10
+      complexity: 12
       iff: 1.0
-      informativity: 0.41666666666666663
-      optimality: 0.7494659635130168
+      informativity: 0.5277777777777778
+      optimality: 0.7840697203377047
 - - logoori
   - expressions:
-    - form: kunyala
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+deontic
-      - weak+circumstantial
     - form: haondi
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -90,17 +99,11 @@ languages:
       lot: (* (weak ) (epistemic ))
       meaning:
       - weak+epistemic
-    - form: kudoka
-      lot: (strong )
-      meaning:
-      - strong+epistemic
-      - strong+deontic
-      - strong+circumstantial
     measurements:
-      complexity: 12
+      complexity: 8
       iff: 1.0
-      informativity: 0.7037037037037037
-      optimality: 0.9083782068168376
+      informativity: 0.16666666666666666
+      optimality: 0.6121298146930028
 - - tlingit
   - expressions:
     - form: "gw\xE1l"
@@ -127,4 +130,4 @@ languages:
       complexity: 20
       iff: 1.0
       informativity: 0.5
-      optimality: 0.6977830988036156
+      optimality: 0.7051832292853057
