@@ -1,0 +1,1161 @@
+flavors:
+- epistemic
+- deontic
+- circumstantial
+- teleological
+forces:
+- weak
+- strong
+- Q3
+- Q4
+languages:
+- - sampled_lang_322
+  - expressions:
+    - form: dummy_form_207
+      lot: (* (Q3 ) (- (circumstantial )))
+      meaning:
+      - Q3+epistemic
+      - Q3+teleological
+      - Q3+deontic
+    - form: dummy_form_545
+      lot: (* (circumstantial ) (- (weak )))
+      meaning:
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+    - form: dummy_form_16387
+      lot: (* (deontic ) (+ (weak ) (Q4 )))
+      meaning:
+      - weak+deontic
+      - Q4+deontic
+    - form: dummy_form_20479
+      lot: (* (weak ) (+ (deontic ) (teleological )))
+      meaning:
+      - weak+teleological
+      - weak+deontic
+    - form: dummy_form_56588
+      lot: (- (+ (* (circumstantial ) (- (Q3 ))) (Q3 )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    measurements:
+      complexity: 26
+      iff: 1.0
+      informativity: 0.5185239635056259
+      optimality: 0.989048349923279
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_29566
+      lot: (- (+ (* (epistemic ) (- (Q4 ))) (* (strong ) (deontic ))))
+      meaning:
+      - Q3+teleological
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    measurements:
+      complexity: 52
+      iff: 0.9166666666666666
+      informativity: 0.7799145246213302
+      optimality: 0.9972415793819462
+- - sampled_lang_239
+  - expressions:
+    - form: dummy_form_48058
+      lot: (- (deontic ))
+      meaning:
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+teleological
+      - Q4+teleological
+    - form: dummy_form_61694
+      lot: (- (strong ))
+      meaning:
+      - Q3+teleological
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - Q3+deontic
+      - Q4+teleological
+    measurements:
+      complexity: 4
+      iff: 1.0
+      informativity: 0.29687499977500004
+      optimality: 0.9992926756206085
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (Q4 ) (teleological ))
+      meaning:
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_255
+      lot: (* (strong ) (teleological ))
+      meaning:
+      - strong+teleological
+    - form: dummy_form_4095
+      lot: (* (weak ) (teleological ))
+      meaning:
+      - weak+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_31
+      lot: (* (Q3 ) (circumstantial ))
+      meaning:
+      - Q3+circumstantial
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    measurements:
+      complexity: 64
+      iff: 1.0
+      informativity: 0.9999999975999999
+      optimality: 0.999999927572375
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_29566
+      lot: (- (+ (* (epistemic ) (- (Q4 ))) (* (strong ) (deontic ))))
+      meaning:
+      - Q3+teleological
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 48
+      iff: 0.9090909090909091
+      informativity: 0.7426739870933333
+      optimality: 0.994336707224213
+- - sampled_lang_312
+  - expressions:
+    - form: dummy_form_8737
+      lot: (circumstantial )
+      meaning:
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+circumstantial
+    - form: dummy_form_45242
+      lot: (- (+ (* (deontic ) (- (strong ))) (strong )))
+      meaning:
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+teleological
+      - Q4+epistemic
+      - Q3+teleological
+      - Q4+teleological
+    - form: dummy_form_61439
+      lot: (weak )
+      meaning:
+      - weak+teleological
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    - form: dummy_form_65519
+      lot: (- (Q4 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q3+teleological
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - weak+teleological
+      - strong+teleological
+      - Q3+deontic
+    measurements:
+      complexity: 12
+      iff: 1.0
+      informativity: 0.42021075273092867
+      optimality: 0.9987440822363176
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.3222222216122798
+      optimality: 0.9985385672780158
+- - sampled_lang_307
+  - expressions:
+    - form: dummy_form_6
+      lot: (* (Q4 ) (- (epistemic )))
+      meaning:
+      - Q4+circumstantial
+      - Q4+teleological
+      - Q4+deontic
+    - form: dummy_form_34951
+      lot: (epistemic )
+      meaning:
+      - Q3+epistemic
+      - weak+epistemic
+      - strong+epistemic
+      - Q4+epistemic
+    - form: dummy_form_39320
+      lot: (+ (teleological ) (epistemic ))
+      meaning:
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+teleological
+      - Q4+teleological
+    - form: dummy_form_61165
+      lot: (- (teleological ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - Q4+epistemic
+      - Q3+deontic
+    - form: dummy_form_61439
+      lot: (weak )
+      meaning:
+      - weak+teleological
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    measurements:
+      complexity: 14
+      iff: 1.0
+      informativity: 0.5028244650336955
+      optimality: 0.9978767960174082
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.3222222216122798
+      optimality: 0.9985385672780158
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (Q4 ) (teleological ))
+      meaning:
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_255
+      lot: (* (strong ) (teleological ))
+      meaning:
+      - strong+teleological
+    - form: dummy_form_4095
+      lot: (* (weak ) (teleological ))
+      meaning:
+      - weak+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    measurements:
+      complexity: 60
+      iff: 1.0
+      informativity: 0.9062499980312498
+      optimality: 0.9976790256987694
+- - sampled_lang_272
+  - expressions:
+    - form: dummy_form_11
+      lot: (* (Q4 ) (+ (epistemic ) (deontic )))
+      meaning:
+      - Q4+deontic
+      - Q4+epistemic
+    - form: dummy_form_111
+      lot: (* (Q3 ) (- (epistemic )))
+      meaning:
+      - Q3+teleological
+      - Q3+deontic
+      - Q3+circumstantial
+    - form: dummy_form_2826
+      lot: (+ (* (Q4 ) (- (deontic ))) (* (strong ) (- (deontic ))))
+      meaning:
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    - form: dummy_form_4096
+      lot: (* (teleological ) (+ (weak ) (Q4 )))
+      meaning:
+      - weak+teleological
+      - Q4+teleological
+    - form: dummy_form_49151
+      lot: (* (weak ) (+ (epistemic ) (deontic )))
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+    - form: dummy_form_60942
+      lot: (- (+ (* (Q3 ) (- (teleological ))) (* (teleological ) (- (Q4 )))))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - Q4+epistemic
+      - Q4+teleological
+    measurements:
+      complexity: 38
+      iff: 0.8333333333333334
+      informativity: 0.5237257723171216
+      optimality: 0.9976725463782631
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_31
+      lot: (* (Q3 ) (circumstantial ))
+      meaning:
+      - Q3+circumstantial
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.32222222161227987
+      optimality: 0.9985385672780158
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (Q4 ) (teleological ))
+      meaning:
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_255
+      lot: (* (strong ) (teleological ))
+      meaning:
+      - strong+teleological
+    - form: dummy_form_4095
+      lot: (* (weak ) (teleological ))
+      meaning:
+      - weak+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_31
+      lot: (* (Q3 ) (circumstantial ))
+      meaning:
+      - Q3+circumstantial
+    measurements:
+      complexity: 60
+      iff: 1.0
+      informativity: 0.9062499980312498
+      optimality: 0.9976790256987694
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (Q4 ) (teleological ))
+      meaning:
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_255
+      lot: (* (strong ) (teleological ))
+      meaning:
+      - strong+teleological
+    - form: dummy_form_4095
+      lot: (* (weak ) (teleological ))
+      meaning:
+      - weak+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    measurements:
+      complexity: 60
+      iff: 1.0
+      informativity: 0.9062499980312498
+      optimality: 0.9976790256987694
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.3222222216122798
+      optimality: 0.9985385672780158
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_29566
+      lot: (- (+ (* (epistemic ) (- (Q4 ))) (* (strong ) (deontic ))))
+      meaning:
+      - Q3+teleological
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    measurements:
+      complexity: 44
+      iff: 0.9
+      informativity: 0.6846955076637765
+      optimality: 0.9979781885071456
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    - form: dummy_form_31
+      lot: (* (Q3 ) (circumstantial ))
+      meaning:
+      - Q3+circumstantial
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.32222222161227987
+      optimality: 0.9985385672780158
+- - sampled_lang_34
+  - expressions:
+    - form: dummy_form_65294
+      lot: (- (Q3 ))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q4+circumstantial
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    measurements:
+      complexity: 6
+      iff: 1.0
+      informativity: 0.32222222161227987
+      optimality: 0.9985385672780158
+- - sampled_lang_254
+  - expressions:
+    - form: dummy_form_3327
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+teleological
+      - strong+epistemic
+    - form: dummy_form_17471
+      lot: (* (deontic ) (- (Q4 )))
+      meaning:
+      - strong+deontic
+      - weak+deontic
+      - Q3+deontic
+    - form: dummy_form_65534
+      lot: (1 )
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q3+teleological
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    measurements:
+      complexity: 9
+      iff: 1.0
+      informativity: 0.38353518965984656
+      optimality: 0.9979757772466059
+- - sampled_lang_213
+  - expressions:
+    - form: dummy_form_65534
+      lot: (1 )
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q3+teleological
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    measurements:
+      complexity: 1
+      iff: 1.0
+      informativity: 0.25
+      optimality: 0.997736529398491
+- - sampled_lang_250
+  - expressions:
+    - form: dummy_form_65534
+      lot: (1 )
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q3+teleological
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    measurements:
+      complexity: 1
+      iff: 1.0
+      informativity: 0.25
+      optimality: 0.997736529398491
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_29566
+      lot: (- (+ (* (epistemic ) (- (Q4 ))) (* (strong ) (deontic ))))
+      meaning:
+      - Q3+teleological
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    measurements:
+      complexity: 56
+      iff: 0.9230769230769231
+      informativity: 0.8224358923938899
+      optimality: 0.9956585638429594
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_29566
+      lot: (- (+ (* (epistemic ) (- (Q4 ))) (* (strong ) (deontic ))))
+      meaning:
+      - Q3+teleological
+      - strong+circumstantial
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    measurements:
+      complexity: 40
+      iff: 0.8888888888888888
+      informativity: 0.6326566903294875
+      optimality: 0.9983073464080633
+- - sampled_lang_243
+  - expressions:
+    - form: dummy_form_65534
+      lot: (1 )
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - Q3+teleological
+      - Q4+circumstantial
+      - Q3+circumstantial
+      - strong+epistemic
+      - Q3+epistemic
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - Q4+deontic
+      - weak+teleological
+      - Q4+epistemic
+      - strong+teleological
+      - Q3+deontic
+      - Q4+teleological
+    measurements:
+      complexity: 1
+      iff: 1.0
+      informativity: 0.25
+      optimality: 0.997736529398491
+- - sampled_lang_18
+  - expressions:
+    - form: dummy_form_15
+      lot: (* (Q3 ) (teleological ))
+      meaning:
+      - Q3+teleological
+    - form: dummy_form_2047
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_8191
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (Q4 ) (teleological ))
+      meaning:
+      - Q4+teleological
+    - form: dummy_form_63
+      lot: (* (Q3 ) (deontic ))
+      meaning:
+      - Q3+deontic
+    - form: dummy_form_511
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_1023
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_16383
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_255
+      lot: (* (strong ) (teleological ))
+      meaning:
+      - strong+teleological
+    - form: dummy_form_4095
+      lot: (* (weak ) (teleological ))
+      meaning:
+      - weak+teleological
+    - form: dummy_form_127
+      lot: (* (Q3 ) (epistemic ))
+      meaning:
+      - Q3+epistemic
+    - form: dummy_form_7
+      lot: (* (Q4 ) (epistemic ))
+      meaning:
+      - Q4+epistemic
+    - form: dummy_form_32767
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1
+      lot: (* (Q4 ) (circumstantial ))
+      meaning:
+      - Q4+circumstantial
+    - form: dummy_form_3
+      lot: (* (Q4 ) (deontic ))
+      meaning:
+      - Q4+deontic
+    measurements:
+      complexity: 60
+      iff: 1.0
+      informativity: 0.9062499980312498
+      optimality: 0.9976790256987694
