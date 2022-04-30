@@ -5,5 +5,5 @@ error      = run.error
 log        = run.log
 notification = complete
 transfer_executable = false
-request_memory = 2*1024
+request_memory = 100*1024
 queue
