@@ -10,7 +10,7 @@ flavor_names:
   - circumstantial
 
 # measures
-utility: half_credit # half_credit or indicator
+utility: indicator # half_credit or indicator
 agent_type: pragmatic # literal or pragmatic
 language_of_thought:
   negation: True
@@ -29,19 +29,19 @@ evolutionary_alg:
 
 # outputs etc
 file_paths:
-  meaning_space: outputs/main_results/meaning_space.yml
-  expressions: outputs/main_results/expressions.yml
+  meaning_space: outputs/half_credit_pragmatic/meaning_space.yml
+  expressions: outputs/half_credit_pragmatic/expressions.yml
   data:
     gitksan: data/natural_languages/Gitksan/modals.csv
     javanese: data/natural_languages/Javanese-Paciran/modals.csv
     lillooet: data/natural_languages/Lillooet-Salish/modals.csv
     logoori: data/natural_languages/Logoori/modals.csv
     tlingit: data/natural_languages/Tlingit/modals.csv
-  artificial_languages: outputs/main_results/languages/artificial.yml
-  natural_languages: outputs/main_results/languages/natural.yml
-  dominant_languages: outputs/main_results/languages/dominant.yml # Pareto
-  dataframe: outputs/main_results/dataframe.csv
-  plot: outputs/main_results/plot.png
+  artificial_languages: outputs/half_credit_pragmatic/languages/artificial.yml
+  natural_languages: outputs/half_credit_pragmatic/languages/natural.yml
+  dominant_languages: outputs/half_credit_pragmatic/languages/dominant.yml # Pareto
+  dataframe: outputs/half_credit_pragmatic/dataframe.csv
+  plot: outputs/half_credit_pragmatic/plot.png
 
 # How to interpret the modal database can_express values as booleans
 can_express:

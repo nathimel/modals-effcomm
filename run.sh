@@ -10,6 +10,11 @@ conda activate modals-effcomm
 # ./scripts/run_full_experiment.sh configs/dev_2_5.yml
 # ./scripts/run_full_experiment.sh configs/dev_2_8.yml
 # ./scripts/run_full_experiment.sh configs/dev.yml
-./scripts/run_full_experiment.sh configs/main_results.yml
+# ./scripts/run_full_experiment.sh configs/main_results.yml
+
+./scripts/run_full_experiment.sh configs/indicator_literal.yml
+./scripts/run_full_experiment.sh configs/indicator_pragmatic.yml
+./scripts/run_full_experiment.sh configs/half_credit_literal.yml
+./scripts/run_full_experiment.sh configs/half_credit_pragmatic.yml
 
 conda deactivate
