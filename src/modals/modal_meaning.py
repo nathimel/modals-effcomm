@@ -193,10 +193,10 @@ class ModalMeaning(Meaning):
         )
 
     def __str__(self) -> str:
-        return str(self.to_array())
+        return str(self.objects)
 
     def __hash__(self) -> int:
         return hash(tuple(self.objects))
 
     def __eq__(self, __o: object) -> bool:
-        return self.objects == __o.objects
+        return set(self.objects) == set(__o.objects)
