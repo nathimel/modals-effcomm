@@ -36,21 +36,6 @@ def main():
         # verbose=True,
     )
 
-    # Add a minimally informative language by hand to complete pareto front
-    space = load_space(configs['file_paths']['meaning_space'])
-    max_comm_cost_lang = ModalLanguage(
-        expressions=[
-            ModalExpression(
-                form='dummy_form_cc',
-                meaning=ModalMeaning(space.objects, space),
-                lot_expression='(1 )',
-                )
-            ],
-        name='sampled_lang_cc',
-    )
-    languages.append(max_comm_cost_lang)
-
-
     # unique and save langs
     languages = list(set(languages))
     save_languages(lang_save_fn, languages)

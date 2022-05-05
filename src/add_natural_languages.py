@@ -56,9 +56,7 @@ def main():
     # Construct ModalLanguages for each natural language
     experiment_languages = []
     for language_name, df in dataframes.items():
-        print()
-        print(f"Constructing {language_name}")
-        print()
+        print(f"Adding {language_name}")
         vocabulary = {}
         # add each observation
         for _, row in df.iterrows():
@@ -81,26 +79,13 @@ def main():
         for modal in vocabulary:
             form = modal
             meaning = ModalMeaning(vocabulary[modal], space)
-            print()
-            print(f"Modal {modal} has meaning {meaning}")
-            print()
-
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
-
-                # debug
-                if expression.meaning != meaning and expression.meaning.objects == meaning.objects:
-                    print(meaning)
-                    print(expression)
-                    print(expression.meaning)
-                    assert False
-
                 if expression.meaning == meaning:
                     experiment_modal = ModalExpression(
                         form, meaning, expression.lot_expression
                     )
                     experiment_vocabulary.append(experiment_modal)
-                    print(f"Added {experiment_modal} to {language_name}")
                     break
         experiment_languages.append(ModalLanguage(experiment_vocabulary, language_name))
 
