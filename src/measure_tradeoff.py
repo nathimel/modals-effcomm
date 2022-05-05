@@ -1,6 +1,7 @@
 """Script for analyzing the results of the trade-off."""
 
 import sys
+import plotnine as pn
 from misc.file_util import load_configs
 from misc.file_util import load_languages
 from modals.modal_measures import ModalComplexityMeasure
@@ -9,8 +10,43 @@ from misc.file_util import set_seed, load_space, save_languages
 from modals.modal_language import degree_iff
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
-from altk.effcomm.analysis import get_dataframe, get_tradeoff_plot
+from altk.effcomm.analysis import get_dataframe
 from misc.file_util import load_utility
+
+def get_modals_plot(
+    languages: list[Language], dominating_languages: list[Language]
+) -> pn.ggplot:
+    """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
+
+    Returns:
+        - plot: a plotnine 2D plot of the trade-off.
+    """
+    # data = self.get_dataframe(self.get_languages())
+    data = get_dataframe(languages)
+    pareto_df = get_dataframe(dominating_languages)
+
+    natural_data = data[data['Language'] == 'natural']
+
+    plot = (
+        pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
+        + pn.scale_x_continuous(limits=[0, 1])
+        + pn.geom_point( # all data
+            stroke=0,
+            alpha=1,
+            mapping=pn.aes(color="naturalness"),
+        )
+        + pn.geom_point( # The natural languages
+            natural_data, 
+            color='red',
+            shape='x',
+            size=4,
+            )
+        + pn.geom_line(size=1, data=pareto_df)
+        + pn.xlab("Communicative cost of languages")
+        + pn.ylab("Complexity of languages")
+        + pn.scale_color_cmap("cividis")
+    )
+    return plot    
 
 
 def main():
@@ -69,7 +105,12 @@ def main():
     save_languages(natural_languages_fn, natural_languages)
 
     df = get_dataframe(langs)
-    plot = get_tradeoff_plot(langs, dom_langs)
+    # plot = get_tradeoff_plot(langs, dom_langs)
+
+    # Create modals-specific plot
+    plot = get_modals_plot(langs, dom_langs)
+
+
 
     print("done.")
 
