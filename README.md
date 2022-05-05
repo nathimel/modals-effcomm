@@ -4,11 +4,11 @@ This code accompanies XXX.
 
 This repo has the following structure:  
   
-The _src_ folder contains the primary source code of the project.  
-The _scripts_ folder contains the main running scripts invoked from the command line (including a script to reproduce the main paper results).  
-The _configs_ folder contains parameter configurations for running different experiments.  
-The _data_ folder contains natural language modal data, sourced from [this database](https://github.com/CLMBRs/modal-typology).
-The _outputs_ folder contains outputs from scripts, including artificial language data, plots, etc.  
+- The _src_ folder contains the primary source code of the project.  
+- The _scripts_ folder contains the main running scripts invoked from the command line (including a script to reproduce the main paper results).  
+- The _configs_ folder contains parameter configurations for running different experiments.  
+- The _data_ folder contains natural language modal data, sourced from [this database](https://github.com/CLMBRs/modal-typology).
+- The _outputs_ folder contains outputs from scripts, including artificial language data, plots, etc.  
 
 ## Structure of this codebase
   
@@ -18,9 +18,10 @@ Generation:
 - Sampling expresions into languages
 - Generating optimal languages using an evolutionary algorithm
   
-Loading natural language data:
+Adding natural language data:
 
 - Loading modal data from database stored at modal-typology
+- Constructing each natural language as a language that can be measured for the trade-off
   
 Measuring of languages
 
