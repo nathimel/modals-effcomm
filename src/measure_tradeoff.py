@@ -13,45 +13,10 @@ from altk.effcomm.tradeoff import tradeoff
 from altk.effcomm.analysis import get_dataframe
 from misc.file_util import load_utility
 
-def get_modals_plot(
-    languages: list[Language], dominating_languages: list[Language]
-) -> pn.ggplot:
-    """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
-
-    Returns:
-        - plot: a plotnine 2D plot of the trade-off.
-    """
-    # data = self.get_dataframe(self.get_languages())
-    data = get_dataframe(languages)
-    pareto_df = get_dataframe(dominating_languages)
-
-    natural_data = data[data['Language'] == 'natural']
-
-    plot = (
-        pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
-        + pn.scale_x_continuous(limits=[0, 1])
-        + pn.geom_point( # all data
-            stroke=0,
-            alpha=1,
-            mapping=pn.aes(color="naturalness"),
-        )
-        + pn.geom_point( # The natural languages
-            natural_data, 
-            color='red',
-            shape='x',
-            size=4,
-            )
-        + pn.geom_line(size=1, data=pareto_df)
-        + pn.xlab("Communicative cost of languages")
-        + pn.ylab("Complexity of languages")
-        + pn.scale_color_cmap("cividis")
-    )
-    return plot    
-
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python3 src/analyze.py path_to_config")
+        print("Usage: python3 src/measure_tradeoff.py path_to_config")
         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
     print("Measuring tradeoff ...")
@@ -65,8 +30,8 @@ def main():
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
-    df_fn = paths["dataframe"]
-    plot_fn = paths["plot"]
+    df_fn = paths["analysis"]["dataframe"]
+    plot_fn = paths["analysis"]["plot"]
 
     set_seed(configs["random_seed"])
 
@@ -78,7 +43,7 @@ def main():
     dominant_languages = load_languages(dominant_languages_fn)
     print("natural...")
     natural_languages = load_languages(natural_languages_fn)
-    langs = sampled_languages + dominant_languages + natural_languages
+    langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")
 
     # Load trade-off criteria
@@ -104,19 +69,14 @@ def main():
     save_languages(dominant_languages_fn, dom_langs)
     save_languages(natural_languages_fn, natural_languages)
 
-    df = get_dataframe(langs)
+    # df = get_dataframe(langs)
+    # df = get_modals_df(langs)
     # plot = get_tradeoff_plot(langs, dom_langs)
-
-    # Create modals-specific plot
-    plot = get_modals_plot(langs, dom_langs)
-
-
 
     print("done.")
 
     # write results
-    df.to_csv(df_fn, index=False)
-    plot.save(plot_fn, width=10, height=10, dpi=300)
+    # df.to_csv(df_fn, index=False)
 
 
 if __name__ == "__main__":
