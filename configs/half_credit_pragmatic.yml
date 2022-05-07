@@ -40,8 +40,11 @@ file_paths:
   artificial_languages: outputs/half_credit_pragmatic/languages/artificial.yml
   natural_languages: outputs/half_credit_pragmatic/languages/natural.yml
   dominant_languages: outputs/half_credit_pragmatic/languages/dominant.yml # Pareto
-  dataframe: outputs/half_credit_pragmatic/dataframe.csv
-  plot: outputs/half_credit_pragmatic/plot.png
+  analysis:
+    correlations: outputs/half_credit_pragmatic/analysis/correlations/property.csv # dummy property name
+    dataframe: outputs/half_credit_pragmatic/analysis/dataframe.csv
+    plot: outputs/half_credit_pragmatic/analysis/plot.png
+    natural_means: outputs/half_credit_pragmatic/analysis/natural_means.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:
