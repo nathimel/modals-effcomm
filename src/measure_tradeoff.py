@@ -65,9 +65,9 @@ def main():
         degree_naturalness=degree_iff,
     )
 
-    save_languages(sampled_languages_fn, langs)
-    save_languages(dominant_languages_fn, dom_langs)
-    save_languages(natural_languages_fn, natural_languages)
+    save_languages(sampled_languages_fn, langs, kind="sampled")
+    save_languages(dominant_languages_fn, dom_langs, kind="dominant")
+    save_languages(natural_languages_fn, natural_languages, kind="natural")
 
     # df = get_dataframe(langs)
     # df = get_modals_df(langs)

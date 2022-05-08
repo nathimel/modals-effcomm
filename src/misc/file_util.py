@@ -108,7 +108,7 @@ def load_expressions(fn) -> list[ModalExpression]:
 # Languages
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def save_languages(fn, languages: list[ModalLanguage]):
+def save_languages(fn, languages: list[ModalLanguage], kind=''):
     """Saves a list of modal languages to a .yml file."""
     space = languages[0].expressions[0].meaning.universe
 
@@ -124,7 +124,11 @@ def save_languages(fn, languages: list[ModalLanguage]):
     with open(fn, 'w') as outfile:
         yaml.safe_dump(data, outfile)
 
-    print(f"Saved {len(langs)} languages")
+    if kind:
+        kind = f" {kind} "
+    else:
+        kind == ' '
+    print(f"Saved {len(langs)}{kind}languages")
 
 def load_languages(fn) -> list[ModalLanguage]:
     """Loads a list of modal languages from a .yml file."""

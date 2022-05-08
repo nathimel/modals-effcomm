@@ -90,7 +90,7 @@ def main():
         experiment_languages.append(ModalLanguage(experiment_vocabulary, language_name))
 
     # save for analysis
-    save_languages(lang_save_fn, experiment_languages)
+    save_languages(lang_save_fn, experiment_languages, kind='natural')
 
 if __name__ == "__main__":
     main()
