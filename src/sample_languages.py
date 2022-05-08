@@ -38,7 +38,7 @@ def main():
 
     # unique and save langs
     languages = list(set(languages))
-    save_languages(lang_save_fn, languages)
+    save_languages(lang_save_fn, languages, kind="sampled")
     print("done.")
 
 
