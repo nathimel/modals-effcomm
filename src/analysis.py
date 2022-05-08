@@ -1,3 +1,4 @@
+from re import L
 import sys
 import scipy
 import numpy as np
@@ -25,8 +26,8 @@ def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
     data = []
     for lang in languages:
         point = (
-            lang.name,   
-            lang.naturalness,            
+            lang.name,
+            lang.naturalness,
             0,
             lang.informativity,
             lang.optimality,
@@ -40,13 +41,13 @@ def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
         data=data,
         columns=[
             "name",
-            "naturalness",            
+            "naturalness",
             "simplicity",
             "informativity",
-            "optimality",      
+            "optimality",
             "Language",
             "comm_cost",
-            "complexity",            
+            "complexity",
         ],
     )
 
@@ -136,46 +137,45 @@ def full_analysis(
     return r, confidence_intervals_df
 
 
-def means_and_t_test(data: pd.DataFrame, properties: list) -> str:
+def means(data: pd.DataFrame, properties: list) -> pd.DataFrame:
 
     # TODO: get a dataframe of the population, and the naturals.
-    # Then report the sim, inf, and opt of each natural, followed by the mean natural and the mean population. 
-
+    # Then report the sim, inf, and opt of each natural, followed by the mean natural and the mean population.
 
     # vanderklok
-    vks_df = data[data["Language"] == 'natural']
-    s_mean = np.mean(list(data["simplicity"]))
-    i_mean = np.mean(list(data["informativity"]))
-    # m_mean = np.mean(list(data["simplicity * informativity"]))
-    o_mean = np.mean(list(data["optimality"]))
+    # vks_df = data[data["Language"] == 'natural']
+    natural_data = data[data["Language"] == "natural"]
 
-    # population
-    res_sim = scipy.stats.ttest_1samp(vks_df["simplicity"], s_mean)
-    res_inf = scipy.stats.ttest_1samp(vks_df["informativity"], i_mean)
-    # res_m = scipy.stats.ttest_1samp(vks_df["simplicity * informativity"], m_mean)
-    res_o = scipy.stats.ttest_1samp(vks_df["optimality"], o_mean)
+    # population_mean = pd.DataFrame({
+    #    "name" : "population_mean",
+    #     "simplicity" : data["simplicity"].mean(),
+    #     "informativity" : data["informativity"].mean(),
+    #     "optimality" : data["optimality"].mean()
+    # })
 
-    means_data = {
-        "simplicity": [vks_df["simplicity"].mean(), s_mean],
-        "informativity": [vks_df["informativity"].mean(), i_mean],
-        "optimality": [vks_df["optimality"].mean(), o_mean],
-    }
+    # natural_mean = pd.DataFrame({
+    #     "name" : "natural_mean",
+    #     "simplicity" : natural_data["simplicity"].mean(),
+    #     "informativity" : natural_data["informativity"].mean(),
+    #     "optimality" : natural_data["optimality"].mean()
+    # })
 
-    means_data = pd.DataFrame(means_data, index=["natural", "population"])
-    print(means_data)
+    def get_means_dict(name: str, df: pd.DataFrame) -> dict[str, float]:
+        return {prop: [df[prop].mean()] for prop in properties} | {"name": [name]}
 
-    # report = "{0} natural, {1} total languages\n".format(
-    #     len(vks_df.index), len(data.index)
-    # )
-    # report += "*" * 90 + "\n"
-    # report += "T-TEST STATISTICS:\n"
-    # report += "simplicity: {:.2f}\n".format(res_sim.statistic)
-    # report += "informativity: {:.2f}\n".format(res_inf.statistic)
-    # # report += "simplicity * informativity: {:.2f}\n".format(res_m.statistic)
-    # report += "pareto optimality: {:.2f}\n".format(res_o.statistic)
-    # report += "*" * 90 + "\n"
-    # report += "\n"
-    # return report
+    natural_means = get_means_dict("natural_means", natural_data)
+    population_means = get_means_dict("population_means", data)
+    natural_languages = natural_data[
+        ["name", "simplicity", "informativity", "optimality"]
+    ]
+
+    return pd.concat(
+        [
+            natural_languages,
+            pd.DataFrame(natural_means),
+            pd.DataFrame(population_means),
+        ]
+    )
 
 
 def main():
@@ -198,6 +198,7 @@ if __name__ == "__main__":
     df_fn = analysis_fns["dataframe"]
     plot_fn = analysis_fns["plot"]
     correlations_fn = analysis_fns["correlations"]
+    means_fn = analysis_fns["means"]
 
     # Load languages
     langs = load_languages(langs_fn)
@@ -216,7 +217,7 @@ if __name__ == "__main__":
     data["informativity"] = 1 - data["comm_cost"]
     data.to_csv(df_fn)
     print(data[:10])
-    print(data[data['Language']=='natural'])
+    print(data[data["Language"] == "natural"])
 
     print("opt max and min")
     print(data["optimality"].max())
@@ -237,5 +238,6 @@ if __name__ == "__main__":
             f"{correlations_fn.replace('property', prop)}", index=False
         )
 
-    means = means_and_t_test(data, properties)
-    print(means)
+    df = means(data, properties)
+    print(df.reset_index().drop(columns=["index"]))
+    df.to_csv(means_fn, index=False)
