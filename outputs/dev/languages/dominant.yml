@@ -8,244 +8,114 @@ forces:
 languages:
 - - sampled_lang_32
   - expressions:
-    - form: dummy_form_31
-      lot: (* (weak ) (epistemic ))
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_35
+      lot: (epistemic )
       meaning:
       - weak+epistemic
+      - strong+epistemic
     - form: dummy_form_7
       lot: (* (weak ) (circumstantial ))
       meaning:
       - weak+circumstantial
-    - form: dummy_form_15
-      lot: (* (weak ) (deontic ))
+    - form: dummy_form_62
+      lot: (1 )
       meaning:
+      - weak+epistemic
       - weak+deontic
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
       - strong+circumstantial
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
+      - strong+epistemic
       - strong+deontic
+      - weak+circumstantial
     measurements:
-      complexity: 24
+      complexity: 9
       iff: 1.0
-      informativity: 0.9999999992999998
-      optimality: 0.9999999762360497
+      informativity: 0.6916666661597856
+      optimality: 0.9997604423518002
 - - sampled_lang_32
   - expressions:
     - form: dummy_form_62
       lot: (1 )
       meaning:
-      - strong+epistemic
       - weak+epistemic
-      - weak+circumstantial
-      - strong+deontic
+      - weak+deontic
       - strong+circumstantial
-      - weak+deontic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
+      - strong+epistemic
+      - strong+deontic
       - weak+circumstantial
-      - weak+deontic
-    measurements:
-      complexity: 3
-      iff: 1.0
-      informativity: 0.5416666663854166
-      optimality: 0.9997624143328845
-- - sampled_lang_32
-  - expressions:
     - form: dummy_form_6
       lot: (strong )
       meaning:
-      - strong+circumstantial
       - strong+epistemic
       - strong+deontic
-    - form: dummy_form_31
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    measurements:
-      complexity: 8
-      iff: 1.0
-      informativity: 0.7222222216703703
-      optimality: 0.9972926142377703
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_17
-      lot: (deontic )
-      meaning:
-      - strong+deontic
-      - weak+deontic
+      - strong+circumstantial
     - form: dummy_form_8
       lot: (circumstantial )
       meaning:
       - strong+circumstantial
       - weak+circumstantial
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_39
-      lot: (* (weak ) (- (deontic )))
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
     measurements:
-      complexity: 12
+      complexity: 5
       iff: 1.0
-      informativity: 0.8055555550138886
-      optimality: 0.9997170458410437
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_31
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: dummy_form_7
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: dummy_form_15
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    measurements:
-      complexity: 24
-      iff: 1.0
-      informativity: 0.9999999992999998
-      optimality: 0.9999999762360497
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_31
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: dummy_form_7
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: dummy_form_15
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    measurements:
-      complexity: 24
-      iff: 1.0
-      informativity: 0.9999999992999998
-      optimality: 0.9999999762360497
-- - gitksan
-  - expressions:
-    - form: "ima(\u2019a)"
-      lot: (epistemic )
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: gat
-      lot: (epistemic )
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: "da\u2019akhlxw"
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: anook(xw)
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: sgi
-      lot: (* (strong ) (- (epistemic )))
-      meaning:
-      - strong+deontic
-      - strong+circumstantial
-    measurements:
-      complexity: 16
-      iff: 1.0
-      informativity: 0.8333333327583332
-      optimality: 0.9991509601101288
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_6
-      lot: (strong )
-      meaning:
-      - strong+circumstantial
-      - strong+epistemic
-      - strong+deontic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    measurements:
-      complexity: 4
-      iff: 1.0
-      informativity: 0.6666666663666667
-      optimality: 0.9992397327062837
+      informativity: 0.6036036031597343
+      optimality: 0.9998782961345598
 - - sampled_lang_17
   - expressions:
     - form: dummy_form_62
       lot: (1 )
       meaning:
-      - strong+epistemic
       - weak+epistemic
-      - weak+circumstantial
-      - strong+deontic
-      - strong+circumstantial
       - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
     measurements:
       complexity: 1
       iff: 1.0
       informativity: 0.41666666666666674
-      optimality: 0.9998110324719257
+      optimality: 0.9999878558049566
 - - sampled_lang_32
   - expressions:
-    - form: dummy_form_55
-      lot: (weak )
+    - form: dummy_form_15_1
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
       meaning:
       - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
     - form: dummy_form_1
       lot: (* (strong ) (deontic ))
       meaning:
+      - strong+deontic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    measurements:
+      complexity: 24
+      iff: 1.0
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
       - strong+deontic
     - form: dummy_form_0
       lot: (* (strong ) (circumstantial ))
@@ -255,146 +125,480 @@ languages:
       lot: (* (strong ) (epistemic ))
       meaning:
       - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
     measurements:
-      complexity: 14
+      complexity: 18
       iff: 1.0
-      informativity: 0.8333333325666665
-      optimality: 0.9915122416624659
+      informativity: 0.9166666659833332
+      optimality: 0.9998181538630515
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_15
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 22
+      iff: 1.0
+      informativity: 0.9583333325979165
+      optimality: 0.9998727050561204
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    measurements:
+      complexity: 12
+      iff: 1.0
+      informativity: 0.8333333327499998
+      optimality: 0.9999333898974417
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
+    measurements:
+      complexity: 1
+      iff: 1.0
+      informativity: 0.41666666666666674
+      optimality: 0.9999878558049566
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
+    - form: dummy_form_55
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    - form: dummy_form_8
+      lot: (circumstantial )
+      meaning:
+      - strong+circumstantial
+      - weak+circumstantial
+    measurements:
+      complexity: 5
+      iff: 1.0
+      informativity: 0.6036036031597343
+      optimality: 0.9998782961345598
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 18
+      iff: 1.0
+      informativity: 0.9166666659833332
+      optimality: 0.9998181538630515
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_15
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    measurements:
+      complexity: 18
+      iff: 1.0
+      informativity: 0.9166666659833332
+      optimality: 0.9998181538630515
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_15_0_1
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    measurements:
+      complexity: 24
+      iff: 1.0
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_15_0_1
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 24
+      iff: 1.0
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
+    - form: dummy_form_55
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    measurements:
+      complexity: 3
+      iff: 1.0
+      informativity: 0.5416666663854166
+      optimality: 0.9999388166097591
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    measurements:
+      complexity: 16
+      iff: 1.0
+      informativity: 0.8749999993027776
+      optimality: 0.9998909122170963
 - - sampled_lang_22
   - expressions:
     - form: dummy_form_62
       lot: (1 )
       meaning:
-      - strong+epistemic
       - weak+epistemic
-      - weak+circumstantial
-      - strong+deontic
-      - strong+circumstantial
       - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
     measurements:
       complexity: 1
       iff: 1.0
       informativity: 0.41666666666666674
-      optimality: 0.9998110324719257
-- - sampled_lang_17
+      optimality: 0.9999878558049566
+- - sampled_lang_32
   - expressions:
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    measurements:
-      complexity: 14
-      iff: 1.0
-      informativity: 0.8333333325666665
-      optimality: 0.9915122416624659
-- - sampled_lang_17
-  - expressions:
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_31
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_15
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
     - form: dummy_form_7
       lot: (* (weak ) (circumstantial ))
       meaning:
       - weak+circumstantial
-    measurements:
-      complexity: 24
-      iff: 1.0
-      informativity: 0.9999999992999998
-      optimality: 0.9999999762360497
-- - sampled_lang_17
-  - expressions:
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_23
-      lot: (* (weak ) (- (epistemic )))
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
     - form: dummy_form_31
       lot: (* (weak ) (epistemic ))
       meaning:
       - weak+epistemic
+    - form: dummy_form_15_0
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
     - form: dummy_form_3
       lot: (* (strong ) (epistemic ))
       meaning:
       - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
     measurements:
-      complexity: 20
+      complexity: 24
       iff: 1.0
-      informativity: 0.9166666659833332
-      optimality: 0.9960385272985911
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
 - - sampled_lang_32
   - expressions:
-    - form: dummy_form_55
-      lot: (weak )
+    - form: dummy_form_35
+      lot: (epistemic )
       meaning:
       - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: dummy_form_17
-      lot: (deontic )
+      - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
       meaning:
+      - weak+circumstantial
+    - form: dummy_form_15
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
       - strong+deontic
+      - weak+circumstantial
+    measurements:
+      complexity: 11
+      iff: 1.0
+      informativity: 0.7188644680344229
+      optimality: 0.9999683048602674
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
+    - form: dummy_form_15
+      lot: (* (weak ) (deontic ))
+      meaning:
       - weak+deontic
     - form: dummy_form_8
       lot: (circumstantial )
       meaning:
       - strong+circumstantial
       - weak+circumstantial
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
     measurements:
-      complexity: 10
+      complexity: 7
       iff: 1.0
-      informativity: 0.7861111105722977
-      optimality: 0.9966454249590267
+      informativity: 0.6176470582551099
+      optimality: 0.999936676510316
 - - sampled_lang_32
   - expressions:
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_62
+      lot: (1 )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+circumstantial
     - form: dummy_form_55
       lot: (weak )
       meaning:
       - weak+epistemic
-      - weak+circumstantial
       - weak+deontic
+      - weak+circumstantial
+    measurements:
+      complexity: 5
+      iff: 1.0
+      informativity: 0.6036036031597343
+      optimality: 0.9998782961345598
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    measurements:
+      complexity: 16
+      iff: 1.0
+      informativity: 0.8749999993027776
+      optimality: 0.9998909122170963
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    measurements:
+      complexity: 12
+      iff: 1.0
+      informativity: 0.8333333327499998
+      optimality: 0.9999333898974417
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_15_0
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
     - form: dummy_form_3
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -403,10 +607,38 @@ languages:
       lot: (* (strong ) (circumstantial ))
       meaning:
       - strong+circumstantial
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
       meaning:
+      - weak+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    measurements:
+      complexity: 24
+      iff: 1.0
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
       - strong+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
     - form: dummy_form_7
       lot: (* (weak ) (circumstantial ))
       meaning:
@@ -414,141 +646,126 @@ languages:
     measurements:
       complexity: 18
       iff: 1.0
-      informativity: 0.8888888880837962
-      optimality: 0.9971699363451786
+      informativity: 0.9166666659833332
+      optimality: 0.9998181538630515
 - - sampled_lang_32
   - expressions:
-    - form: dummy_form_62
-      lot: (1 )
+    - form: dummy_form_17
+      lot: (deontic )
       meaning:
-      - strong+epistemic
-      - weak+epistemic
-      - weak+circumstantial
+      - weak+deontic
       - strong+deontic
-      - strong+circumstantial
-      - weak+deontic
-    measurements:
-      complexity: 1
-      iff: 1.0
-      informativity: 0.41666666666666674
-      optimality: 0.9998110324719257
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    measurements:
-      complexity: 14
-      iff: 1.0
-      informativity: 0.8333333325666665
-      optimality: 0.9915122416624659
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_1
-      lot: (* (strong ) (deontic ))
-      meaning:
-      - strong+deontic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: dummy_form_3
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: dummy_form_0
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    measurements:
-      complexity: 14
-      iff: 1.0
-      informativity: 0.8333333325666665
-      optimality: 0.9915122416624659
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: dummy_form_62
-      lot: (1 )
-      meaning:
-      - strong+epistemic
-      - weak+epistemic
-      - weak+circumstantial
-      - strong+deontic
-      - strong+circumstantial
-      - weak+deontic
-    measurements:
-      complexity: 3
-      iff: 1.0
-      informativity: 0.5416666663854166
-      optimality: 0.9997624143328845
-- - sampled_lang_32
-  - expressions:
-    - form: dummy_form_6
-      lot: (strong )
-      meaning:
-      - strong+circumstantial
-      - strong+epistemic
-      - strong+deontic
-    - form: dummy_form_55
-      lot: (weak )
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
     - form: dummy_form_35
       lot: (epistemic )
       meaning:
-      - strong+epistemic
       - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
     measurements:
-      complexity: 6
+      complexity: 8
       iff: 1.0
-      informativity: 0.6999999995576666
-      optimality: 0.997453571527796
+      informativity: 0.6726190473332058
+      optimality: 0.9999300085846006
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_17
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    measurements:
+      complexity: 8
+      iff: 1.0
+      informativity: 0.6726190473332058
+      optimality: 0.9999300085846006
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_31
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: dummy_form_15_0
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: dummy_form_3
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 24
+      iff: 1.0
+      informativity: 0.9999999992999998
+      optimality: 0.9999999984727851
 - - sampled_lang_32
   - expressions:
     - form: dummy_form_6
       lot: (strong )
       meaning:
-      - strong+circumstantial
       - strong+epistemic
       - strong+deontic
-    - form: dummy_form_55
-      lot: (weak )
+      - strong+circumstantial
+    - form: dummy_form_57
+      lot: (- (* (strong ) (- (deontic ))))
       meaning:
       - weak+epistemic
-      - weak+circumstantial
       - weak+deontic
-    - form: dummy_form_8
-      lot: (circumstantial )
-      meaning:
-      - strong+circumstantial
+      - strong+deontic
       - weak+circumstantial
     measurements:
       complexity: 6
+      iff: 0.5
+      informativity: 0.6111111108275463
+      optimality: 0.9999227278993178
+- - sampled_lang_32
+  - expressions:
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_0
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_15
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_1
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    measurements:
+      complexity: 18
       iff: 1.0
-      informativity: 0.6999999995576666
-      optimality: 0.997453571527796
+      informativity: 0.9166666659833332
+      optimality: 0.9998181538630515
