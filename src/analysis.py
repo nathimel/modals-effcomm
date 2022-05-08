@@ -8,6 +8,8 @@ from tqdm import tqdm
 from altk.effcomm.analysis import get_dataframe
 from misc.file_util import load_languages, load_configs
 from modals.modal_language import ModalLanguage
+from scipy.stats import ttest_1samp
+from typing import Any
 
 
 def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
@@ -28,7 +30,7 @@ def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
         point = (
             lang.name,
             lang.naturalness,
-            0,
+            0,  # dummy placeholder
             lang.informativity,
             lang.optimality,
             "natural" if lang.is_natural() else "artificial",
@@ -94,11 +96,22 @@ def get_modals_plot(
     return plot
 
 
-def full_analysis(
+def pearson_analysis(
     data, predictor: str, property: str, num_bootstrap_samples=100
-) -> str:
-    """Measures pearson correlation coefficient for nauze-ness, optimality.
-    Use nonparametric bootstrap for multiple confidence intervals."""
+) -> dict[str, Any]:
+    """Measures pearson correlation coefficient for naturalness with a property.
+
+    Use nonparametric bootstrap for confidence intervals.
+
+    Args:
+        data: a DataFrame representing the pool of measured languages
+
+        predictor: a string representing the column to measure pearson r with
+
+        property: a string representing a column to measure pearson r with the predictor column
+
+        num_bootstrap_samples: how many samples to bootstrap from the original data
+    """
     min_percent = 0.01  # must be > 2/ len(data)
     intervals = 5
     boots = [int(item * 100) for item in np.geomspace(min_percent, 1.0, intervals)]
@@ -132,49 +145,33 @@ def full_analysis(
         confidence_intervals_df.iloc[
             i, confidence_intervals_df.columns.get_loc("high")
         ] = interval[1]
-        # save_confidence_intervals(results_df, property)
 
-    return r, confidence_intervals_df
+    return {
+        "rho": r, 
+        "confidence_intervals": confidence_intervals_df
+        }
 
 
-def means(data: pd.DataFrame, properties: list) -> pd.DataFrame:
+def trade_off_means(name: str, df: pd.DataFrame, properties: list) -> pd.DataFrame:
+    """Get a dataframe with the population and natural mean tradeoff data."""
+    means_dict = {prop: [df[prop].mean()] for prop in properties} | {"name": name}
+    means_df = pd.DataFrame(data=means_dict)
+    return means_df
 
-    # TODO: get a dataframe of the population, and the naturals.
-    # Then report the sim, inf, and opt of each natural, followed by the mean natural and the mean population.
 
-    # vanderklok
-    # vks_df = data[data["Language"] == 'natural']
-    natural_data = data[data["Language"] == "natural"]
+def trade_off_ttest(
+    natural_data: pd.DataFrame, population_means: pd.DataFrame, properties: list
+) -> pd.DataFrame:
+    """Get a dataframe with the population and natural (mean) t-test results.
 
-    # population_mean = pd.DataFrame({
-    #    "name" : "population_mean",
-    #     "simplicity" : data["simplicity"].mean(),
-    #     "informativity" : data["informativity"].mean(),
-    #     "optimality" : data["optimality"].mean()
-    # })
-
-    # natural_mean = pd.DataFrame({
-    #     "name" : "natural_mean",
-    #     "simplicity" : natural_data["simplicity"].mean(),
-    #     "informativity" : natural_data["informativity"].mean(),
-    #     "optimality" : natural_data["optimality"].mean()
-    # })
-
-    def get_means_dict(name: str, df: pd.DataFrame) -> dict[str, float]:
-        return {prop: [df[prop].mean()] for prop in properties} | {"name": [name]}
-
-    natural_means = get_means_dict("natural_means", natural_data)
-    population_means = get_means_dict("population_means", data)
-    natural_languages = natural_data[
-        ["name", "simplicity", "informativity", "optimality"]
-    ]
-
-    return pd.concat(
-        [
-            natural_languages,
-            pd.DataFrame(natural_means),
-            pd.DataFrame(population_means),
-        ]
+    Since the property of 'being a natural language' is categorical, we use a single-samples T test.
+    """
+    return pd.DataFrame(
+        {
+            prop: [
+                ttest_1samp(natural_data[prop], population_means.iloc[0][prop]).statistic
+            ] for prop in properties
+        }
     )
 
 
@@ -183,9 +180,6 @@ def main():
         print("Usage: python3 src/analysis.py path_to_config")
         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
-
-if __name__ == "__main__":
-    main()
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
 
@@ -199,6 +193,7 @@ if __name__ == "__main__":
     plot_fn = analysis_fns["plot"]
     correlations_fn = analysis_fns["correlations"]
     means_fn = analysis_fns["means"]
+    ttest_fn = analysis_fns["ttest"]
 
     # Load languages
     langs = load_languages(langs_fn)
@@ -212,32 +207,65 @@ if __name__ == "__main__":
     data = get_modals_df(langs)
 
     # scale complexity and add columns
-    maxc = data["complexity"].max()
-    data["simplicity"] = 1 - data["complexity"] / maxc
+    data["simplicity"] = 1 - data["complexity"] / data["complexity"].max()
     data["informativity"] = 1 - data["comm_cost"]
-    data.to_csv(df_fn)
+    natural_data = data[data["Language"] == "natural"]
+
+    print("Some random sampled data: ")
     print(data[:10])
-    print(data[data["Language"] == "natural"])
+    print()
 
-    print("opt max and min")
-    print(data["optimality"].max())
-    print(data["optimality"].min())
+    print("the natural languages")
+    print(natural_data)
+    print()
 
-    properties = [
-        "simplicity",
-        "informativity",
-        "optimality",
+    # print(f"opt max={data['optimality'].max()} , min={data['optimality'].min()}")
+
+    # Run statistics on tradeoff properties
+    properties = ["simplicity", "informativity", "optimality"]
+
+    # Pearson correlations
+    rhos = []
+    confidence_intervals = []
+    for prop in properties:        
+        d = pearson_analysis(
+            data=data,
+            predictor="naturalness",
+            property=prop,         
+            )
+        rhos.append(d["rho"])
+        confidence_intervals.append(d["confidence_intervals"])
+
+    # Means and ttest for natural vs population
+    natural_means = trade_off_means("natural_means", natural_data, properties)
+    population_means = trade_off_means("population_means", data, properties)
+    means_df = pd.concat([natural_means, population_means]).set_index("name")
+    ttest_df = trade_off_ttest(natural_data, population_means, properties)
+
+    # visualize
+    print("IFF pearson correlations:")
+    [
+        print(f"{prop}: {rho}")
+        for rho, prop in zip(*[rhos, properties])
     ]
-    correlations = {
-        prop: full_analysis(data=data, predictor="naturalness", property=prop)
-        for prop in properties
-    }
-    for prop, analysis_pair in correlations.items():
-        print(f"IFF correlation with {prop}: {analysis_pair[0]}")
-        analysis_pair[1].to_csv(
-            f"{correlations_fn.replace('property', prop)}", index=False
-        )
 
-    df = means(data, properties)
-    print(df.reset_index().drop(columns=["index"]))
-    df.to_csv(means_fn, index=False)
+    print()
+    print("MEANS")
+    print(means_df)
+    print()
+
+    print("TTEST STATS")
+    print(ttest_df)
+    print()
+
+    # Save results
+    means_df.to_csv(means_fn)
+    ttest_df.to_csv(ttest_fn, index=False)
+    [intervals.to_csv(
+        f"{correlations_fn.replace('property', prop)}", index=False
+    ) for prop, intervals in zip(*[properties, confidence_intervals])]
+    data.to_csv(df_fn)
+
+
+if __name__ == "__main__":
+    main()
