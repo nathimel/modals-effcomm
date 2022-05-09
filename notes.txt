@@ -1,3 +1,32 @@
+ANALYSIS REPORT
+
+# modals specific parameters
+num_forces: 2
+force_names:
+  - weak
+  - strong
+num_flavors: 3
+flavor_names:
+  - epistemic
+  - deontic
+  - circumstantial
+
+# measures
+utility: half_credit # half_credit or indicator
+agent_type: pragmatic # literal or pragmatic
+language_of_thought:
+  negation: True
+
+# other experiment parameters
+sample_size: 2000
+lang_size: 10
+evolutionary_alg:
+  generation_size: 2000
+  num_generations: 200
+  max_mutations: 5
+  maximum_lang_size: 10
+  
+******************************************************************************
 N=100224
 
 the natural languages

@@ -40,8 +40,12 @@ file_paths:
   artificial_languages: outputs/main_results/languages/artificial.yml
   natural_languages: outputs/main_results/languages/natural.yml
   dominant_languages: outputs/main_results/languages/dominant.yml # Pareto
-  dataframe: outputs/main_results/dataframe.csv
-  plot: outputs/main_results/plot.png
+  analysis:
+    correlations: outputs/main_results/analysis/correlations/property.csv # dummy property name
+    dataframe: outputs/main_results/analysis/dataframe.csv
+    plot: outputs/main_results/analysis/plot.png
+    means: outputs/main_results/analysis/means.csv
+    ttest: outputs/main_results/analysis/ttest.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:
