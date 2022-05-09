@@ -1,0 +1,72 @@
+Created folder outputs/half_credit_literal/analysis/correlations
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling languages ...
+Saved 2000 sampled languages
+done.
+Adding gitksan
+Adding javanese
+Adding lillooet
+Adding logoori
+Adding tlingit
+Saved 5 natural languages
+Estimating pareto frontier ...
+Sampling seed generation...
+Saved 18188 sampled languages
+Saved 49 dominant languages
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+dominant...
+natural...
+18194 total langs.
+Measuring languages for simplicity and informativeness...
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 18194 sampled languages
+Saved 117 dominant languages
+Saved 5 natural languages
+done.
+Some random sampled data: 
+               name  naturalness  ...     comm_cost  complexity
+0   sampled_lang_14     0.750000  ...  4.560185e-01          15
+1   sampled_lang_14     0.000000  ...  5.416667e-01          16
+2   sampled_lang_14     0.800000  ...  2.291667e-01          20
+3   sampled_lang_14     1.000000  ...  6.250000e-02          22
+4   sampled_lang_14     1.000000  ...  1.110223e-16          28
+5   sampled_lang_14     0.500000  ...  5.916667e-01           8
+6  sampled_lang_149     1.000000  ...  5.347222e-01           5
+7   sampled_lang_14     0.666667  ...  4.861111e-01          12
+8   sampled_lang_14     0.800000  ...  4.861111e-01          16
+9   sampled_lang_15     0.000000  ...  7.222222e-01           6
+
+[10 rows x 8 columns]
+
+the natural languages
+           name  naturalness  simplicity  ...  Language  comm_cost complexity
+4048   javanese          1.0    0.729730  ...   natural   0.083333         20
+9322    gitksan          1.0    0.783784  ...   natural   0.166667         16
+11662   tlingit          1.0    0.729730  ...   natural   0.500000         20
+14730  lillooet          1.0    0.810811  ...   natural   0.222222         14
+16960   logoori          1.0    0.837838  ...   natural   0.296296         12
+
+[5 rows x 8 columns]
+
+IFF pearson correlations:
+simplicity: 0.06348932220834179
+informativity: 0.5401001070050718
+optimality: 0.1622331947542325
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.778378       0.746296    0.905906
+population_means    0.756182       0.547123   -0.375854
+
+TTEST STATS
+   simplicity  informativity  optimality
+0    1.026588       2.815769   23.782862
+
