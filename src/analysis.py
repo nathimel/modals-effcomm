@@ -166,13 +166,21 @@ def trade_off_ttest(
 
     Since the property of 'being a natural language' is categorical, we use a single-samples T test.
     """
-    return pd.DataFrame(
-        {
-            prop: [
-                ttest_1samp(natural_data[prop], population_means.iloc[0][prop]).statistic
-            ] for prop in properties
-        }
-    )
+    # return pd.DataFrame(
+    #     {
+    #         prop: [
+    #             ttest_1samp(natural_data[prop], population_means.iloc[0][prop]).statistic
+    #         ] for prop in properties
+    #     }
+    # )
+    data = {}
+    for prop in properties:
+        result = ttest_1samp(natural_data[prop], population_means.iloc[0][prop])
+        data[prop] = [result.statistic, result.pvalue]
+    
+    df = pd.DataFrame(data)
+    df["stat"] = ["t-statistic", "Two-sided p-value"]
+    return df.set_index("stat")
 
 
 def main():
@@ -218,8 +226,6 @@ def main():
     print("the natural languages")
     print(natural_data)
     print()
-
-    # print(f"opt max={data['optimality'].max()} , min={data['optimality'].min()}")
 
     # Run statistics on tradeoff properties
     properties = ["simplicity", "informativity", "optimality"]
