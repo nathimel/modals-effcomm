@@ -1,0 +1,71 @@
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling languages ...
+Saved 2000 sampled languages
+done.
+Adding gitksan
+Adding javanese
+Adding lillooet
+Adding logoori
+Adding tlingit
+Saved 5 natural languages
+Estimating pareto frontier ...
+Sampling seed generation...
+Saved 103368 sampled languages
+Saved 482 dominant languages
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+dominant...
+natural...
+103376 total langs.
+Measuring languages for simplicity and informativeness...
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 103376 sampled languages
+Saved 131 dominant languages
+Saved 5 natural languages
+done.
+Some random sampled data: 
+               name  naturalness  simplicity  ...    Language  comm_cost complexity
+0   sampled_lang_30     0.000000    0.756757  ...  artificial   0.510672         18
+1   sampled_lang_62     0.500000    0.891892  ...  artificial   0.550595          8
+2   sampled_lang_25     0.250000    0.743243  ...  artificial   0.531888         19
+3   sampled_lang_64     1.000000    0.864865  ...  artificial   0.333333         10
+4   sampled_lang_66     0.666667    0.783784  ...  artificial   0.490184         16
+5   sampled_lang_13     0.000000    0.864865  ...  artificial   0.474074         10
+6  sampled_lang_188     1.000000    0.837838  ...  artificial   0.404167         12
+7   sampled_lang_25     0.333333    0.810811  ...  artificial   0.516187         14
+8   sampled_lang_64     0.666667    0.783784  ...  artificial   0.555051         16
+9   sampled_lang_66     1.000000    0.837838  ...  artificial   0.421296         12
+
+[10 rows x 8 columns]
+
+the natural languages
+           name  naturalness  simplicity  ...  Language  comm_cost complexity
+13335   gitksan          1.0    0.783784  ...   natural   0.166667         16
+25891   tlingit          1.0    0.729730  ...   natural   0.449405         20
+31345   logoori          1.0    0.837838  ...   natural   0.266667         12
+75262  lillooet          1.0    0.810811  ...   natural   0.194444         14
+80000  javanese          1.0    0.729730  ...   natural   0.083333         20
+
+[5 rows x 8 columns]
+
+IFF pearson correlations:
+simplicity: 0.18192461417133332
+informativity: 0.4708940081633596
+optimality: 0.042615669579593854
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.778378       0.767897    0.918105
+population_means    0.808318       0.535717    0.523725
+
+TTEST STATS
+   simplicity  informativity  optimality
+0   -1.384729       3.760351    8.063158
+
