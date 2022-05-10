@@ -119,9 +119,10 @@ counts=False, ) -> pn.ggplot:
         + pn.geom_point(  # The natural languages
             natural_data,
             color="red",
-            shape="x",
+            shape="+",
             size=4,
         )
+        + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=0.005)
         + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Communicative cost of languages")
         + pn.ylab("Complexity of languages")
