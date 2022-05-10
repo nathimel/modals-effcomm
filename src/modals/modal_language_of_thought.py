@@ -334,6 +334,7 @@ class ModalLOT:
             and not [child for child in ET.tree()]
         )
 
+    # TODO: delete? never called...
     def __is_flavor_atom(self, ET: ExpressionTree) -> bool:
         """
         Returns True if the input is a single flavor symbol, e.g.
@@ -419,6 +420,7 @@ class ModalLOT:
             )
         return ET
 
+    # TODO: delete? never called
     def __annihalator_m(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies multiplicative annihalation.
@@ -465,6 +467,7 @@ class ModalLOT:
             )
         return ET
 
+    # TODO: delete? never called
     def __annihalator_a(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies additive annihalation. Holds in boolean algebra generally.
@@ -582,6 +585,7 @@ class ModalLOT:
     # Complement
     #################################################################
 
+    # TODO: delete? never called
     def __negation(self, ET: ExpressionTree) -> ExpressionTree:
         """
         An operation, not an inference.
