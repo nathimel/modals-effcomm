@@ -138,11 +138,11 @@ def load_languages(fn) -> list[ModalLanguage]:
     space = ModalMeaningSpace(d['forces'], d['flavors'])
 
     languages = d['languages']
-    return [
+    return list(set([
         ModalLanguage.from_yaml_rep(
             name, data, space) 
             for name, data in languages
-        ]
+        ]))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Analysis

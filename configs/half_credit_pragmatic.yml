@@ -21,7 +21,7 @@ random_seed: 42
 sample_size: 2000
 lang_size: 10
 evolutionary_alg:
-  generation_size: 2000
+  generation_size: 200
   num_generations: 200
   max_mutations: 5
   num_processes: 6
@@ -42,7 +42,8 @@ file_paths:
   dominant_languages: outputs/half_credit_pragmatic/languages/dominant.yml # Pareto
   analysis:
     correlations: outputs/half_credit_pragmatic/analysis/correlations/property.csv # dummy property name
-    dataframe: outputs/half_credit_pragmatic/analysis/dataframe.csv
+    data: outputs/half_credit_pragmatic/analysis/all_data.csv
+    pareto_data: outputs/half_credit_pragmatic/analysis/pareto_data.csv
     plot: outputs/half_credit_pragmatic/analysis/plot.png
     means: outputs/half_credit_pragmatic/analysis/means.csv
     ttest: outputs/half_credit_pragmatic/analysis/ttest.csv

@@ -6,20 +6,21 @@ import pandas as pd
 import plotnine as pn
 from tqdm import tqdm
 from altk.effcomm.analysis import get_dataframe
+from altk.effcomm.tradeoff import interpolate_data
 from misc.file_util import load_languages, load_configs
 from modals.modal_language import ModalLanguage
 from scipy.stats import ttest_1samp
 from typing import Any
 
 
-def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
+def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
     """Get a pandas DataFrame for a list of languages containing efficient communication data.
 
     Args:
-        - languages: the list of languages for which to get efficient communication dataframe.
+        languages: the list of languages for which to get efficient communication dataframe.
 
     Returns:
-        - data: a pandas DataFrame with rows as individual languages, with the columns specifying their
+        data: a pandas DataFrame with rows as individual languages, with the columns specifying their
             - communicative cost
             - cognitive complexity
             - satisfaction of the iff universal
@@ -30,11 +31,11 @@ def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
         point = (
             lang.name,
             lang.naturalness,
-            0,  # dummy placeholder
+            0.0,  # dummy simplicity placeholder
             lang.informativity,
             lang.optimality,
             "natural" if lang.is_natural() else "artificial",
-            1 - lang.informativity,
+            1.0 - lang.informativity,
             lang.complexity,
         )
         data.append(point)
@@ -54,25 +55,44 @@ def get_modals_df(languages: list[ModalLanguage]) -> pd.DataFrame:
     )
 
     # Pandas confused by mixed types int and string, so convert back.
-    data[["comm_cost", "complexity", "naturalness", "optimality"]] = data[
-        ["comm_cost", "complexity", "naturalness", "optimality"]
+    data[["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]] = data[
+        ["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]
     ].apply(pd.to_numeric)
 
+    data = data.round(3)
+    if repeats == 'drop':
+        data = data.drop_duplicates(subset=["complexity", "comm_cost"])
+    elif repeats == 'count':
+        vcs = data.value_counts(subset=["complexity", "comm_cost"])
+        data = data.drop_duplicates(subset=["complexity", "comm_cost"])
+        data = data.sort_values(by=["complexity", "comm_cost"])
+        data["counts"] = vcs.values
+    elif repeats is not None:
+        raise ValueError(f"the argument `repeats' must be either 'drop' or 'count'. Received: {repeats}")
     return data
 
 
 def get_modals_plot(
-    languages: list[ModalLanguage], dominating_languages: list[ModalLanguage]
+    data: pd.DataFrame, pareto_data: pd.DataFrame,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
-    Returns:
-        - plot: a plotnine 2D plot of the trade-off.
-    """
-    data = get_dataframe(languages)
-    pareto_df = get_dataframe(dominating_languages)
+    Args:
+        data: a DataFrame representing all the measurements of a tradeoff.
 
+        pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff.
+
+    Returns:
+        plot: a plotnine 2D plot of the trade-off.
+    """
     natural_data = data[data["Language"] == "natural"]
+
+    # smooth pareto curve
+    pareto_df = pareto_data[["comm_cost", "complexity"]]
+    pareto_df["complexity"] / data["complexity"].max()
+    pareto_points = pareto_df.to_records(index=False).tolist()
+    pareto_points = interpolate_data(list(set(pareto_points)))
+    pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
     plot = (
         pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
@@ -80,7 +100,7 @@ def get_modals_plot(
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
-            mapping=pn.aes(color="naturalness"),
+            mapping=pn.aes(color="naturalness", size="counts"),
         )
         + pn.geom_point(  # The natural languages
             natural_data,
@@ -88,7 +108,7 @@ def get_modals_plot(
             shape="x",
             size=4,
         )
-        + pn.geom_line(size=1, data=pareto_df)
+        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Communicative cost of languages")
         + pn.ylab("Complexity of languages")
         + pn.scale_color_cmap("cividis")
@@ -136,7 +156,7 @@ def pearson_analysis(
             except ValueError:
                 print("MINIMUM SIZE OF DATA: ", int(2 / min_percent))
                 print("SIZE OF DATA: ", len(data.index))
-                sys.exit(1)
+                assert False
             rhos.append(rho)
         interval = scipy.stats.scoreatpercentile(rhos, (2.5, 97.5))
         confidence_intervals_df.iloc[
@@ -166,13 +186,6 @@ def trade_off_ttest(
 
     Since the property of 'being a natural language' is categorical, we use a single-samples T test.
     """
-    # return pd.DataFrame(
-    #     {
-    #         prop: [
-    #             ttest_1samp(natural_data[prop], population_means.iloc[0][prop]).statistic
-    #         ] for prop in properties
-    #     }
-    # )
     data = {}
     for prop in properties:
         result = ttest_1samp(natural_data[prop], population_means.iloc[0][prop])
@@ -193,11 +206,13 @@ def main():
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
+    nat_langs_fn = configs["file_paths"]["natural_languages"]
     dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
     # Load analysis files
     analysis_fns = configs["file_paths"]["analysis"]
-    df_fn = analysis_fns["dataframe"]
+    df_fn = analysis_fns["data"]
+    pareto_df_fn = analysis_fns["pareto_data"]
     plot_fn = analysis_fns["plot"]
     correlations_fn = analysis_fns["correlations"]
     means_fn = analysis_fns["means"]
@@ -205,19 +220,24 @@ def main():
 
     # Load languages
     langs = load_languages(langs_fn)
+    nat_langs = load_languages(nat_langs_fn)
     dom_langs = load_languages(dom_langs_fn)
 
-    # Plot
-    plot = get_modals_plot(langs, dom_langs)
-    plot.save(plot_fn, width=10, height=10, dpi=300)
-
     # Main analysis
-    data = get_modals_df(langs)
+    data = get_modals_df(langs, repeats='count')
+    pareto_data = get_modals_df(dom_langs, repeats='count')
+    natural_data = get_modals_df(nat_langs)
+    print(f"Length of DataFrame: {len(data)}")
+
+    # Plot
+    plot = get_modals_plot(data, pareto_data)
+    plot.save(plot_fn, width=10, height=10, dpi=300)    
 
     # scale complexity and add columns
-    data["simplicity"] = 1 - data["complexity"] / data["complexity"].max()
-    data["informativity"] = 1 - data["comm_cost"]
-    natural_data = data[data["Language"] == "natural"]
+    max_complexity = data["complexity"].max()
+    simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
+    data["simplicity"] = simplicity(data)
+    natural_data["simplicity"] = simplicity(natural_data)
 
     print("Some random sampled data: ")
     print(data[:10])
@@ -228,7 +248,7 @@ def main():
     print()
 
     # Run statistics on tradeoff properties
-    properties = ["simplicity", "informativity", "optimality"]
+    properties = ["simplicity", "complexity", "informativity", "optimality"]
 
     # Pearson correlations
     rhos = []
@@ -271,6 +291,7 @@ def main():
         f"{correlations_fn.replace('property', prop)}", index=False
     ) for prop, intervals in zip(*[properties, confidence_intervals])]
     data.to_csv(df_fn)
+    pareto_data.to_csv(pareto_df_fn)
 
 
 if __name__ == "__main__":
