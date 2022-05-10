@@ -13,66 +13,66 @@ Adding tlingit
 Saved 5 natural languages
 Estimating pareto frontier ...
 Sampling seed generation...
-Saved 11860 sampled languages
-Saved 8 dominant languages
+Saved 12480 sampled languages
+Saved 22 dominant languages
 done.
 Measuring tradeoff ...
 Loading all languages ...
 sampled...
 dominant...
 natural...
-11865 total langs.
+12490 total langs.
 Measuring languages for simplicity and informativeness...
 Measuring min distance to frontier ...
 Setting optimality ...
-Saved 11865 sampled languages
+Saved 12490 sampled languages
 Saved 12 dominant languages
 Saved 5 natural languages
 done.
 Constructing dataframe...
 Constructing dataframe...
 Constructing dataframe...
-Length of DataFrame: 7100
+Length of DataFrame: 7495
 first 10 of sampled data: 
-                   name  naturalness  simplicity  ...  comm_cost  complexity counts
-11036   sampled_lang_62          1.0      0.9857  ...     0.5833           1   54.0
-1142    sampled_lang_17          1.0      0.9714  ...     0.5833           2   38.0
-1923     sampled_lang_5          1.0      0.9571  ...     0.4583           3   37.0
-8316     sampled_lang_5          1.0      0.9571  ...     0.4722           3   37.0
-597    sampled_lang_146          1.0      0.9571  ...     0.5278           3   36.0
-8940   sampled_lang_176          1.0      0.9429  ...     0.3333           4   36.0
-4051     sampled_lang_5          1.0      0.9429  ...     0.4167           4   33.0
-1991     sampled_lang_5          1.0      0.9429  ...     0.4722           4   30.0
-3128     sampled_lang_5          1.0      0.9429  ...     0.4749           4   30.0
-947    sampled_lang_163          1.0      0.9429  ...     0.4823           4   26.0
+                  name  naturalness  simplicity  ...  comm_cost  complexity counts
+9895   sampled_lang_62          1.0      0.9857  ...     0.5833           1   57.0
+1353   sampled_lang_26          1.0      0.9714  ...     0.5833           2   40.0
+3008    sampled_lang_5          1.0      0.9571  ...     0.4583           3   39.0
+905     sampled_lang_5          1.0      0.9571  ...     0.4722           3   36.0
+1013    sampled_lang_5          1.0      0.9571  ...     0.5278           3   35.0
+6066  sampled_lang_176          1.0      0.9429  ...     0.3333           4   34.0
+7387    sampled_lang_5          1.0      0.9429  ...     0.4167           4   34.0
+6250    sampled_lang_5          1.0      0.9429  ...     0.4722           4   31.0
+7342    sampled_lang_5          1.0      0.9429  ...     0.4749           4   27.0
+447     sampled_lang_5          1.0      0.9429  ...     0.4823           4   26.0
 
 [10 rows x 9 columns]
 
 the natural languages
        name  naturalness  simplicity  ...  Language  comm_cost complexity
-0  lillooet          1.0      0.8000  ...   natural     0.1944         14
+0   logoori          1.0      0.8286  ...   natural     0.2667         12
 1   gitksan          1.0      0.7714  ...   natural     0.1667         16
 2  javanese          1.0      0.7143  ...   natural     0.0833         20
-3   logoori          1.0      0.8286  ...   natural     0.2667         12
+3  lillooet          1.0      0.8000  ...   natural     0.1944         14
 4   tlingit          1.0      0.7143  ...   natural     0.4494         20
 
 [5 rows x 8 columns]
 
 IFF pearson correlations:
-simplicity: 0.22891891943280407
-complexity: -0.22891665053228005
-informativity: 0.6320705007485496
-optimality: 0.5650973304231034
+simplicity: 0.24918642455098025
+complexity: -0.24918415240571434
+informativity: 0.6299077622766831
+optimality: 0.5423844521716684
 
 MEANS
                   simplicity  complexity  informativity  optimality
 name                                                               
-natural_means       0.765720   16.400000       0.767900    0.956240
-population_means    0.683997   22.120282       0.602842    0.852227
+natural_means        0.76572   16.400000       0.767900    0.951140
+population_means     0.68585   21.990527       0.607897    0.847754
 
 TTEST STATS
                    simplicity  complexity  informativity  optimality
 stat                                                                
-t-statistic          3.575336   -3.575176       2.673088    3.283009
-Two-sided p-value    0.023264    0.023268       0.055627    0.030415
+t-statistic          3.494253   -3.494079       2.591219    3.379138
+Two-sided p-value    0.025026    0.025030       0.060606    0.027808
 
