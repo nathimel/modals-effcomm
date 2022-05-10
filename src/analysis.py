@@ -219,6 +219,8 @@ def main():
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
     set_seed(configs["random_seed"])
+    # tell pandas to output all columns
+    pd.set_option('display.max_columns', None)
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
