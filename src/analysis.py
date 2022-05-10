@@ -26,12 +26,13 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
             - satisfaction of the iff universal
             - Language type (natural or artificial)
     """
+    print("Constructing dataframe...")
     data = []
-    for lang in languages:
+    for lang in tqdm(languages):
         point = (
             lang.name,
             lang.naturalness,
-            0.0,  # dummy simplicity placeholder
+            None,  # dummy simplicity placeholder
             lang.informativity,
             lang.optimality,
             "natural" if lang.is_natural() else "artificial",
@@ -59,7 +60,7 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
         ["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]
     ].apply(pd.to_numeric)
 
-    data = data.round(3)
+    data = data.round(4)
 
     # drop duplicates without counting
     if repeats == 'drop':
@@ -92,12 +93,14 @@ counts=False, ) -> pn.ggplot:
         plot: a plotnine 2D plot of the trade-off.
     """
     natural_data = data[data["Language"] == "natural"]
+    max_complexity = data["complexity"].max()
+    # max_cost = data["comm_cost"].max()
 
     # smooth pareto curve
     pareto_df = pareto_data[["comm_cost", "complexity"]]
-    pareto_df["complexity"] / data["complexity"].max()
+    pareto_df["complexity"] / max_complexity
     pareto_points = pareto_df.to_records(index=False).tolist()
-    pareto_points = interpolate_data(list(set(pareto_points)))
+    pareto_points = interpolate_data(pareto_points)
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
     if counts:
@@ -236,14 +239,14 @@ def main():
     dom_langs = load_languages(dom_langs_fn)
 
     # Main analysis
-    data = get_modals_df(langs, repeats='drop')
-    pareto_data = get_modals_df(dom_langs, repeats='drop')
+    data = get_modals_df(langs, repeats='count')
+    pareto_data = get_modals_df(dom_langs, repeats='count')
     natural_data = get_modals_df(nat_langs)
     data = data.append(natural_data)
     print(f"Length of DataFrame: {len(data)}")
 
     # Plot
-    plot = get_modals_plot(data, pareto_data, counts=False)
+    plot = get_modals_plot(data, pareto_data, counts=True)
     plot.save(plot_fn, width=10, height=10, dpi=300)    
 
     # scale complexity to measure simplicity
@@ -251,9 +254,12 @@ def main():
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
     natural_data["simplicity"] = simplicity(natural_data)
+    data = data.round(4)
+    natural_data = natural_data.round(4)
+    pareto_data = pareto_data.round(4)
 
-    print("Some random sampled data: ")
-    print(data[:10])
+    print("first 10 of sampled data: ")
+    print(data.head(10))
     print()
 
     print("the natural languages")
