@@ -60,8 +60,8 @@ def main():
         languages=langs,
         comp_measure=comp_measure,
         inf_measure=inf_measure,
-        # degree_naturalness=degree_iff,
-        degree_naturalness=degree_sav
+        degree_naturalness=degree_iff,
+        # degree_naturalness=degree_sav
     )
 
     
