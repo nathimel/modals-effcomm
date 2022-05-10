@@ -33,7 +33,7 @@ def main():
         lang_size,
         sample_size,
         is_iff,
-        # verbose=True,
+        verbose=True,
     )
 
     # unique and save langs

@@ -60,21 +60,27 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
     ].apply(pd.to_numeric)
 
     data = data.round(3)
+
+    # drop duplicates without counting
     if repeats == 'drop':
         data = data.drop_duplicates(subset=["complexity", "comm_cost"])
+
+    # drop but count duplicates
     elif repeats == 'count':
         vcs = data.value_counts(subset=["complexity", "comm_cost"])
         data = data.drop_duplicates(subset=["complexity", "comm_cost"])
         data = data.sort_values(by=["complexity", "comm_cost"])
         data["counts"] = vcs.values
+
     elif repeats is not None:
         raise ValueError(f"the argument `repeats' must be either 'drop' or 'count'. Received: {repeats}")
+
     return data
 
 
 def get_modals_plot(
     data: pd.DataFrame, pareto_data: pd.DataFrame,
-) -> pn.ggplot:
+counts=False, ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
     Args:
@@ -94,13 +100,19 @@ def get_modals_plot(
     pareto_points = interpolate_data(list(set(pareto_points)))
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
+    if counts:
+        kwargs = {"color":"naturalness", "size":"counts"}
+    else:
+        kwargs = {"color":"naturalness"}
+
+
     plot = (
         pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
         + pn.scale_x_continuous(limits=[0, 1])
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
-            mapping=pn.aes(color="naturalness", size="counts"),
+            mapping=pn.aes(**kwargs),
         )
         + pn.geom_point(  # The natural languages
             natural_data,
@@ -224,16 +236,17 @@ def main():
     dom_langs = load_languages(dom_langs_fn)
 
     # Main analysis
-    data = get_modals_df(langs, repeats='count')
-    pareto_data = get_modals_df(dom_langs, repeats='count')
+    data = get_modals_df(langs, repeats='drop')
+    pareto_data = get_modals_df(dom_langs, repeats='drop')
     natural_data = get_modals_df(nat_langs)
+    data = data.append(natural_data)
     print(f"Length of DataFrame: {len(data)}")
 
     # Plot
-    plot = get_modals_plot(data, pareto_data)
+    plot = get_modals_plot(data, pareto_data, counts=False)
     plot.save(plot_fn, width=10, height=10, dpi=300)    
 
-    # scale complexity and add columns
+    # scale complexity to measure simplicity
     max_complexity = data["complexity"].max()
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)

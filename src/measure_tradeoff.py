@@ -29,7 +29,7 @@ def main():
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
-    df_fn = paths["analysis"]["dataframe"]
+    df_fn = paths["analysis"]["data"]
 
     set_seed(configs["random_seed"])
 
