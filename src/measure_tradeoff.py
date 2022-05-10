@@ -1,13 +1,12 @@
 """Script for analyzing the results of the trade-off."""
 
 import sys
-import plotnine as pn
 from misc.file_util import load_configs
 from misc.file_util import load_languages
 from modals.modal_measures import ModalComplexityMeasure
 from modals.modal_language_of_thought import ModalLOT
 from misc.file_util import set_seed, load_space, save_languages
-from modals.modal_language import degree_iff
+from modals.modal_language import degree_iff, degree_sav
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
 from altk.effcomm.analysis import get_dataframe
@@ -31,7 +30,6 @@ def main():
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
     df_fn = paths["analysis"]["dataframe"]
-    plot_fn = paths["analysis"]["plot"]
 
     set_seed(configs["random_seed"])
 
@@ -62,8 +60,11 @@ def main():
         languages=langs,
         comp_measure=comp_measure,
         inf_measure=inf_measure,
-        degree_naturalness=degree_iff,
+        # degree_naturalness=degree_iff,
+        degree_naturalness=degree_sav
     )
+
+    
 
     save_languages(sampled_languages_fn, langs, kind="sampled")
     save_languages(dominant_languages_fn, dom_langs, kind="dominant")

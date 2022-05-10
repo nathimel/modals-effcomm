@@ -87,6 +87,7 @@ def main():
     pool = load_languages(save_all_langs_fn)
     pool.extend(explored_langs)
     pool = list(set(pool))
+    dominant_langs = list(set(dominant_langs))
 
     save_languages(save_all_langs_fn, pool, kind="sampled")
     save_languages(dom_langs_fn, dominant_langs, kind="dominant")

@@ -28,6 +28,9 @@ class ModalExpression(Expression):
             + hash(self.meaning)
             + hash(self.lot_expression)
         )
+    
+    def __lt__(self, __o: object) -> bool:
+        return self.form < __o.form
 
     def __eq__(self, __o: object) -> bool:
         return (
@@ -127,7 +130,8 @@ class ModalLanguage(Language):
         return f"Modal_Language: [\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        return hash(tuple([self.name] + self.expressions))
+        # return hash(tuple([self.name] + self.expressions))
+        return hash(tuple(sorted(self.expressions)))
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
@@ -213,3 +217,22 @@ def degree_iff(language: ModalLanguage) -> float:
     """The fraction of a modal language satisfying the IFF semantic univeral."""
     iff_items = sum([is_iff(item) for item in language.expressions])
     return iff_items / language.size()
+
+def degree_sav(language: ModalLanguage) -> float:
+    """The fraction of a modal language satisfying the SAV semantic univeral."""
+    sav_items = sum([is_sav(item) for item in language.expressions])
+    return sav_items / language.size()
+
+def is_sav(e: ModalExpression) -> bool:
+    """Ambiguity across forces, or flavors, but not both."""
+    points = e.meaning.objects
+    forces = set()
+    flavors = set()
+    for point in points:
+        force, flavor = point.split("+")
+        forces.add(force)
+        flavors.add(flavor)
+
+    if len(forces) > 1 and len(flavors) > 1:
+        return False
+    return True
