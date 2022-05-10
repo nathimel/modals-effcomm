@@ -6,7 +6,7 @@ import pandas as pd
 import plotnine as pn
 from tqdm import tqdm
 from altk.effcomm.tradeoff import interpolate_data
-from misc.file_util import load_languages, load_configs
+from misc.file_util import load_languages, load_configs, set_seed
 from modals.modal_language import ModalLanguage
 from scipy.stats import ttest_1samp
 from typing import Any
@@ -217,6 +217,7 @@ def main():
 
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
+    set_seed(configs["random_seed"])
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
