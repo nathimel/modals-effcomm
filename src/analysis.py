@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import plotnine as pn
 from tqdm import tqdm
-from altk.effcomm.analysis import get_dataframe
 from altk.effcomm.tradeoff import interpolate_data
 from misc.file_util import load_languages, load_configs
 from modals.modal_language import ModalLanguage
