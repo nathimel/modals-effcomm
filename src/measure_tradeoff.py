@@ -9,7 +9,6 @@ from misc.file_util import set_seed, load_space, save_languages
 from modals.modal_language import degree_iff, degree_sav
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
-from altk.effcomm.analysis import get_dataframe
 from misc.file_util import load_utility
 
 
