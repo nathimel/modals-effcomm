@@ -10,10 +10,9 @@ This representation language is a hypothesis about how to measure the cognitive 
 
 
 import numpy as np
-from nltk.tree import *
-from nltk.grammar import *
+from nltk.tree import Tree
+from nltk.grammar import Nonterminal
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
-from tqdm import tqdm
 
 ##############################################################################
 # ExpressionTree
@@ -391,6 +390,8 @@ class ModalLOT:
     #     xxy = xy
     ##########################################################################
 
+    # TODO: see if these should be moved to ExpressionTree or elsewhere (just methods?)
+
     def __identity_m(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies multiplicative identity.
@@ -418,7 +419,7 @@ class ModalLOT:
             )
         return ET
 
-    def __annihalator_m(ET: ExpressionTree) -> ExpressionTree:
+    def __annihalator_m(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies multiplicative annihalation.
             (* a b ... 0 ...) => (0)
@@ -464,7 +465,7 @@ class ModalLOT:
             )
         return ET
 
-    def __annihalator_a(ET: ExpressionTree) -> ExpressionTree:
+    def __annihalator_a(self, ET: ExpressionTree) -> ExpressionTree:
         """
         Applies additive annihalation. Holds in boolean algebra generally.
             (+ a b ... 1 ... c) => (1)
@@ -581,7 +582,7 @@ class ModalLOT:
     # Complement
     #################################################################
 
-    def __negation(ET: ExpressionTree) -> ExpressionTree:
+    def __negation(self, ET: ExpressionTree) -> ExpressionTree:
         """
         An operation, not an inference.
         Embed an expression under a negation operator.
