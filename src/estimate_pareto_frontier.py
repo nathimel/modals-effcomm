@@ -63,7 +63,7 @@ def main():
         Add_Modal(),
         Remove_Modal(),
         Remove_Point(),
-        Add_Point(),
+        # Add_Point(),
         Interchange_Modal(),
     ]
 
