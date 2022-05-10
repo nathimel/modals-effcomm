@@ -2,9 +2,8 @@
 
 import sys
 from altk.effcomm.sampling import generate_languages
-from modals.modal_language import ModalExpression, ModalLanguage, is_iff
+from modals.modal_language import ModalLanguage, is_iff
 from misc.file_util import *
-from modals.modal_meaning import ModalMeaning
 
 
 def main():
