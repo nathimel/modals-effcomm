@@ -37,3 +37,8 @@ Get the required packages by running `conda env create -f environment.yml`
 ## Replicating the experimental results
 
 The main experimental results can be reproduced by running the script `scripts/main_results.sh`.
+
+# TODO
+
+- update configs with universal (iff vs sav)
+- read `TODO` comments in source, update `altk` accordingly
