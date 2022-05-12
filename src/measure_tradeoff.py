@@ -5,8 +5,8 @@ from misc.file_util import load_configs
 from misc.file_util import load_languages
 from modals.modal_measures import ModalComplexityMeasure
 from modals.modal_language_of_thought import ModalLOT
+from modals import modal_language
 from misc.file_util import set_seed, load_space, save_languages
-from modals.modal_language import degree_iff, degree_sav
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
 from misc.file_util import load_utility
@@ -55,11 +55,13 @@ def main():
     )
 
     # Get trade-off results
+    universal_property = getattr(modal_language, configs["universal_property"])
     langs, dom_langs = tradeoff(
         languages=langs,
         comp_measure=comp_measure,
         inf_measure=inf_measure,
-        degree_naturalness=degree_iff,
+        degree_naturalness = lambda language: modal_language.degree_property(language, universal_property)
+        # degree_naturalness=degree_iff,
         # degree_naturalness=degree_sav
     )
 
