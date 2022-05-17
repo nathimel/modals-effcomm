@@ -91,13 +91,12 @@ counts=False, ) -> pn.ggplot:
     Returns:
         plot: a plotnine 2D plot of the trade-off.
     """
-    natural_data = data[data["Language"] == "natural"]
-    max_complexity = data["complexity"].max()
+    # max_complexity = data["complexity"].max()
     # max_cost = data["comm_cost"].max()
+    natural_data = data[data["Language"] == "natural"]
 
     # smooth pareto curve
     pareto_df = pareto_data[["comm_cost", "complexity"]]
-    pareto_df["complexity"] / max_complexity
     pareto_points = pareto_df.to_records(index=False).tolist()
     pareto_points = interpolate_data(pareto_points)
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
@@ -125,6 +124,7 @@ counts=False, ) -> pn.ggplot:
         + pn.ylab("Communicative cost")
         + pn.xlab("Complexity")
         + pn.scale_color_cmap("cividis")
+        + pn.theme_classic()
     )
     return plot
 
