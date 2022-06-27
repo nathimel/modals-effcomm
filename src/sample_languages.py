@@ -2,9 +2,9 @@
 
 import sys
 from altk.effcomm.sampling import generate_languages
-from modals.modal_language import ModalExpression, ModalLanguage, is_iff
+from modals import modal_language
+from modals.modal_language import ModalLanguage
 from misc.file_util import *
-from modals.modal_meaning import ModalMeaning
 
 
 def main():
@@ -27,12 +27,13 @@ def main():
 
     # Turn the knob on iff
     expressions = load_expressions(expression_save_fn)
+    universal_property = getattr(modal_language, configs["universal_property"])
     languages = generate_languages(
         ModalLanguage,        
         expressions,
         lang_size,
         sample_size,
-        is_iff,
+        universal_property,
         # verbose=True,
     )
 

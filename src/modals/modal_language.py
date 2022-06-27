@@ -1,6 +1,8 @@
 from collections import Counter
 from copy import deepcopy
 from itertools import product
+from typing import Callable
+
 from altk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
 
@@ -193,7 +195,7 @@ class ModalLanguage(Language):
 ##############################################################################
 
 
-def is_iff(e: ModalExpression) -> bool:
+def iff(e: ModalExpression) -> bool:
     """Whether an expression satisfies the Independence of Forces and Flavors Universal.
 
     The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
@@ -213,17 +215,7 @@ def is_iff(e: ModalExpression) -> bool:
     return True
 
 
-def degree_iff(language: ModalLanguage) -> float:
-    """The fraction of a modal language satisfying the IFF semantic univeral."""
-    iff_items = sum([is_iff(item) for item in language.expressions])
-    return iff_items / language.size()
-
-def degree_sav(language: ModalLanguage) -> float:
-    """The fraction of a modal language satisfying the SAV semantic univeral."""
-    sav_items = sum([is_sav(item) for item in language.expressions])
-    return sav_items / language.size()
-
-def is_sav(e: ModalExpression) -> bool:
+def sav(e: ModalExpression) -> bool:
     """Ambiguity across forces, or flavors, but not both."""
     points = e.meaning.objects
     forces = set()
@@ -236,3 +228,10 @@ def is_sav(e: ModalExpression) -> bool:
     if len(forces) > 1 and len(flavors) > 1:
         return False
     return True
+
+
+# TODO: move this to altk.language!
+def degree_property(language: Language, property: Callable[[Expression], bool]) -> float:
+    """Count what percentage of expressions in a language have a given property."""
+    return sum([property(item) for item in language.expressions]) / language.size()
+    # TODO: once this is moved into altk, also update Language with __len__ and change this .size() to len()

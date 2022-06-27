@@ -91,26 +91,23 @@ counts=False, ) -> pn.ggplot:
     Returns:
         plot: a plotnine 2D plot of the trade-off.
     """
-    natural_data = data[data["Language"] == "natural"]
-    max_complexity = data["complexity"].max()
+    # max_complexity = data["complexity"].max()
     # max_cost = data["comm_cost"].max()
+    natural_data = data[data["Language"] == "natural"]
 
     # smooth pareto curve
     pareto_df = pareto_data[["comm_cost", "complexity"]]
-    pareto_df["complexity"] / max_complexity
     pareto_points = pareto_df.to_records(index=False).tolist()
     pareto_points = interpolate_data(pareto_points)
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
+    kwargs = {"color": "naturalness"}
     if counts:
-        kwargs = {"color":"naturalness", "size":"counts"}
-    else:
-        kwargs = {"color":"naturalness"}
-
+        kwargs["size"] = "counts"
 
     plot = (
-        pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
-        + pn.scale_x_continuous(limits=[0, 1])
+        pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
+        + pn.scale_y_continuous(limits=[0, 1])
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
@@ -119,13 +116,15 @@ counts=False, ) -> pn.ggplot:
         + pn.geom_point(  # The natural languages
             natural_data,
             color="red",
-            shape="x",
+            shape="+",
             size=4,
         )
+        + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
-        + pn.xlab("Communicative cost of languages")
-        + pn.ylab("Complexity of languages")
+        + pn.ylab("Communicative cost")
+        + pn.xlab("Complexity")
         + pn.scale_color_cmap("cividis")
+        + pn.theme_classic()
     )
     return plot
 
@@ -218,6 +217,8 @@ def main():
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
     set_seed(configs["random_seed"])
+    # tell pandas to output all columns
+    pd.set_option('display.max_columns', None)
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
