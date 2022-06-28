@@ -55,9 +55,8 @@ class Add_Point(Mutation):
         """Only apply when language is not perfectly informative and every point is not already expressible."""
 
         # Check informativity
-        inf_measure = kwargs["inf_measure"]
-        inf = inf_measure.language_informativity(language)
-        if np.isclose(inf, 1.0):
+        inf = language.measurements["informativity"]
+        if inf is None or np.isclose(inf, 1.0):        
             return False
 
         # Check if any inexpressible meanings
@@ -100,9 +99,8 @@ class Remove_Point(Mutation):
         """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
 
         # Is not already perfectly informative
-        inf_measure = kwargs["inf_measure"]
-        inf = inf_measure.language_informativity(language)
-        if np.isclose(inf, 1.0):
+        inf = language.measurements["informativity"]
+        if inf is None or np.isclose(inf, 1.0):
             return False
 
         # Can express more than one point

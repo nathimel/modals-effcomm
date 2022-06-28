@@ -22,7 +22,9 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
         data: a pandas DataFrame with rows as individual languages, with the columns specifying their
             - communicative cost
             - cognitive complexity
-            - satisfaction of the iff universal
+            - degree iff
+            - degree sav
+            - satisfies dlsav
             - Language type (natural or artificial)
     """
     print("Constructing dataframe...")
@@ -30,13 +32,15 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
     for lang in tqdm(languages):
         point = (
             lang.name,
-            lang.naturalness,
+            lang.measurements["sav"],
+            lang.measurements["iff"],
+            lang.measurements["dlsav"],
             None,  # dummy simplicity placeholder
-            lang.informativity,
-            lang.optimality,
+            lang.measurements["informativity"],
+            lang.measurements["optimality"],
             "natural" if lang.is_natural() else "artificial",
-            1.0 - lang.informativity,
-            lang.complexity,
+            lang.measurements["comm_cost"],
+            lang.measurements["complexity"],
         )
         data.append(point)
 
@@ -44,7 +48,9 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
         data=data,
         columns=[
             "name",
-            "naturalness",
+            "sav",
+            "iff",
+            "dlsav",
             "simplicity",
             "informativity",
             "optimality",
@@ -55,32 +61,35 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
     )
 
     # Pandas confused by mixed types int and string, so convert back.
-    data[["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]] = data[
-        ["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]
+    data[["sav", "iff", "simplicity", "comm_cost", "complexity", "optimality"]] = data[
+        ["sav", "iff", "simplicity", "comm_cost", "complexity", "optimality"]
     ].apply(pd.to_numeric)
 
-    # data = data.round(4)
-
     # drop duplicates without counting
-    if repeats == 'drop':
+    if repeats == "drop":
         data = data.drop_duplicates(subset=["complexity", "comm_cost"])
 
     # drop but count duplicates
-    elif repeats == 'count':
+    elif repeats == "count":
         vcs = data.value_counts(subset=["complexity", "comm_cost"])
         data = data.drop_duplicates(subset=["complexity", "comm_cost"])
         data = data.sort_values(by=["complexity", "comm_cost"])
         data["counts"] = vcs.values
 
     elif repeats is not None:
-        raise ValueError(f"the argument `repeats' must be either 'drop' or 'count'. Received: {repeats}")
+        raise ValueError(
+            f"the argument `repeats' must be either 'drop' or 'count'. Received: {repeats}"
+        )
 
     return data
 
 
 def get_modals_plot(
-    data: pd.DataFrame, pareto_data: pd.DataFrame,
-counts=False, ) -> pn.ggplot:
+    data: pd.DataFrame,
+    pareto_data: pd.DataFrame,
+    naturalness="iff",
+    counts=False,
+) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
     Args:
@@ -101,13 +110,17 @@ counts=False, ) -> pn.ggplot:
     pareto_points = interpolate_data(pareto_points)
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
-    kwargs = {"color": "naturalness"}
+    kwargs = {
+        "color": naturalness, 
+        "shape": "dlsav", 
+        "size": "dlsav",
+    }
     if counts:
         kwargs["size"] = "counts"
 
     plot = (
-        pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
-        + pn.scale_y_continuous(limits=[0, 1])
+        pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
+        + pn.scale_x_continuous(limits=[0, 1])
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
@@ -121,8 +134,8 @@ counts=False, ) -> pn.ggplot:
         )
         + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
-        + pn.ylab("Communicative cost")
-        + pn.xlab("Complexity")
+        + pn.xlab("Communicative cost")
+        + pn.ylab("Complexity")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
@@ -179,10 +192,7 @@ def pearson_analysis(
             i, confidence_intervals_df.columns.get_loc("high")
         ] = interval[1]
 
-    return {
-        "rho": r, 
-        "confidence_intervals": confidence_intervals_df
-        }
+    return {"rho": r, "confidence_intervals": confidence_intervals_df}
 
 
 def trade_off_means(name: str, df: pd.DataFrame, properties: list) -> pd.DataFrame:
@@ -203,7 +213,7 @@ def trade_off_ttest(
     for prop in properties:
         result = ttest_1samp(natural_data[prop], population_means.iloc[0][prop])
         data[prop] = [result.statistic, result.pvalue]
-    
+
     df = pd.DataFrame(data)
     df["stat"] = ["t-statistic", "Two-sided p-value"]
     return df.set_index("stat")
@@ -218,7 +228,7 @@ def main():
     configs = load_configs(config_fn)
     set_seed(configs["random_seed"])
     # tell pandas to output all columns
-    pd.set_option('display.max_columns', None)
+    pd.set_option("display.max_columns", None)
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
@@ -240,24 +250,22 @@ def main():
     dom_langs = load_languages(dom_langs_fn)
 
     # Main analysis
-    data = get_modals_df(langs, repeats='count')
-    pareto_data = get_modals_df(dom_langs, repeats='count')
+    data = get_modals_df(langs)
+    pareto_data = get_modals_df(dom_langs)
     natural_data = get_modals_df(nat_langs)
     data = data.append(natural_data)
     print(f"Length of DataFrame: {len(data)}")
 
     # Plot
-    plot = get_modals_plot(data, pareto_data, counts=True)
-    plot.save(plot_fn, width=10, height=10, dpi=300)    
+    naturalness = configs["universal_property"]
+    plot = get_modals_plot(data, pareto_data, naturalness=naturalness, counts=False)
+    plot.save(plot_fn, width=10, height=10, dpi=300)
 
     # scale complexity to measure simplicity
     max_complexity = data["complexity"].max()
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
     natural_data["simplicity"] = simplicity(natural_data)
-    # data = data.round(4)
-    # natural_data = natural_data.round(4)
-    # pareto_data = pareto_data.round(4)
 
     print("first 10 of sampled data: ")
     print(data.head(10))
@@ -273,12 +281,12 @@ def main():
     # Pearson correlations
     rhos = []
     confidence_intervals = []
-    for prop in properties:        
+    for prop in properties:
         d = pearson_analysis(
             data=data,
-            predictor="naturalness",
-            property=prop,         
-            )
+            predictor=naturalness,
+            property=prop,
+        )
         rhos.append(d["rho"])
         confidence_intervals.append(d["confidence_intervals"])
 
@@ -289,11 +297,8 @@ def main():
     ttest_df = trade_off_ttest(natural_data, population_means, properties)
 
     # visualize
-    print("Degree universal pearson correlations:")
-    [
-        print(f"{prop}: {rho}")
-        for rho, prop in zip(*[rhos, properties])
-    ]
+    print(f"Degree {naturalness} pearson correlations:")
+    [print(f"{prop}: {rho}") for rho, prop in zip(*[rhos, properties])]
 
     print()
     print("MEANS")
@@ -307,9 +312,10 @@ def main():
     # Save results
     means_df.to_csv(means_fn)
     ttest_df.to_csv(ttest_fn, index=False)
-    [intervals.to_csv(
-        f"{correlations_fn.replace('property', prop)}", index=False
-    ) for prop, intervals in zip(*[properties, confidence_intervals])]
+    [
+        intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
+        for prop, intervals in zip(*[properties, confidence_intervals])
+    ]
     data.to_csv(df_fn)
     pareto_data.to_csv(pareto_df_fn)
 

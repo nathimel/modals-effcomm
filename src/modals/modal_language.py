@@ -82,15 +82,23 @@ class ModalLanguage(Language):
         c = language.complexity
     """
 
-    def __init__(self, expressions: list[ModalExpression], name=None):
+    def __init__(self, expressions: list[ModalExpression], name=None, measurements=None):
         super().__init__(expressions)
         self.name = name # natural languages have especially important names
+        self.measurements = {
+                "complexity": None, 
+                "comm_cost": None,
+                "informativity": None, 
+                "optimality": None, 
+                "iff": None, 
+                "sav": None,
+            } if measurements is None else measurements
 
         # initialize all effcomm data
-        self.complexity = None
-        self.informativity = None
-        self.optimality = None
-        self.naturalness = None
+        # self.complexity = None
+        # self.informativity = None
+        # self.optimality = None
+        # self.naturalness = None
 
     def rename_synonyms(
         self, expressions: list[ModalExpression]
@@ -147,12 +155,13 @@ class ModalLanguage(Language):
             self.name,
             {
                 "expressions": [e.yaml_rep() for e in self.expressions],
-                "measurements": {
-                    "complexity": self.complexity,
-                    "informativity": self.informativity,
-                    "optimality": self.optimality,
-                    "iff": self.naturalness,
-                },
+                "measurements": self.measurements,
+                # {
+                #     "complexity": self.complexity,
+                #     "informativity": self.informativity,
+                #     "optimality": self.optimality,
+                #     "iff": self.naturalness,
+                # },
             },
         )
         return data
@@ -171,17 +180,18 @@ class ModalLanguage(Language):
         expressions = data["expressions"]
         measurements = data["measurements"]
 
-        complexity = measurements["complexity"]
-        informativity = measurements["informativity"]
-        optimality = measurements["optimality"]
-        iff = measurements["iff"]
+        # complexity = measurements["complexity"]
+        # informativity = measurements["informativity"]
+        # optimality = measurements["optimality"]
+        # iff = measurements["iff"]
 
         expressions = [ModalExpression.from_yaml_rep(x, space) for x in expressions]
-        lang = cls(expressions, name)
-        lang.complexity = complexity
-        lang.informativity = informativity
-        lang.optimality = optimality
-        lang.naturalness = iff
+        lang = cls(expressions, name=name, measurements=measurements)
+        # lang.complexity = complexity
+        # lang.informativity = informativity
+        # lang.optimality = optimality
+        # lang.naturalness = iff
+        # lang.measurements = measurements
 
         return lang
 
@@ -216,7 +226,8 @@ def iff(e: ModalExpression) -> bool:
 
 
 def sav(e: ModalExpression) -> bool:
-    """Ambiguity across forces, or flavors, but not both."""
+    """Single Axis of Variability universal: a modal expression may exhibit
+    ambiguity across forces, or flavors, but not both."""
     points = e.meaning.objects
     forces = set()
     flavors = set()
@@ -229,6 +240,37 @@ def sav(e: ModalExpression) -> bool:
         return False
     return True
 
+def dlsav(language: ModalLanguage) -> bool:
+    """Domain-Level Single Axis of Variability universal: modals may be ambiguous across force or flavor, within a single modal domain (root vs epistemic)."""
+    ambiguity_within_root = {"force": False, "flavor": False}
+    for expression in language.expressions:
+        # preliminary: dlsav is a refinement
+        if not sav(expression):
+            return False
+
+        points = expression.meaning.objects
+        # case 1: if modal is within the epistemic domain,
+        # the sav criterion is materially equivalent.
+
+        # case 2: if modal is in the root domain, 
+        # and is ambiguous along axis a, no other root modals may be ambiguous
+        # across axis b where a != b.
+        forces = set()
+        flavors = set()
+        for point in points:
+            force, flavor = point.split("+")
+            forces.add(force)
+            flavors.add(flavor)
+
+        if len(forces) > 1:
+            ambiguity_within_root["force"] = True
+        if len(flavors) > 1:
+            ambiguity_within_root["flavor"] = True
+
+    # check if case 2 was satisfied at the language level
+    if len(set(ambiguity_within_root.values())) > 1:
+        return False
+    return True
 
 # TODO: move this to altk.language!
 def degree_property(language: Language, property: Callable[[Expression], bool]) -> float:

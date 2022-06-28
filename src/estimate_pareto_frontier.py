@@ -41,22 +41,27 @@ def main():
     expressions = load_expressions(expressions_fn)
     seed_population = generate_languages(
         ModalLanguage,
-        expressions,        
+        expressions,
         lang_size,
         sample_size,
         # verbose=True,
     )
 
-    # construct measures of complexity and informativity
+    # construct measures of complexity and informativity as optimization objectives
     space = load_space(space_fn)
     complexity_measure = ModalComplexityMeasure(
         ModalLOT(space, configs["language_of_thought"])
     )
     informativity_measure = SST_Informativity_Measure(
         prior=uniform_prior(space),
-        utility=build_utility_matrix(space, load_utility(configs['utility'])),
+        utility=build_utility_matrix(space, load_utility(configs["utility"])),
         agent_type=agent_type,
     )
+    objectives = {
+        "comm_cost": lambda lang: 1
+        - informativity_measure.language_informativity(lang),
+        "complexity": complexity_measure.language_complexity,
+    }
 
     # Load modals-specifc mutations
     mutations = [
@@ -69,8 +74,7 @@ def main():
 
     # Initialize optimizer and run algorithm
     optimizer = Evolutionary_Optimizer(
-        comp_measure=complexity_measure,
-        inf_measure=informativity_measure,
+        objectives=objectives,
         expressions=expressions,
         mutations=mutations,
         sample_size=sample_size,
@@ -79,9 +83,7 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    dominant_langs, explored_langs = optimizer.fit(
-        seed_population=seed_population
-        )
+    dominant_langs, explored_langs = optimizer.fit(seed_population=seed_population)
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
