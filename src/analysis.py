@@ -59,7 +59,7 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
         ["simplicity", "comm_cost", "complexity", "naturalness", "optimality"]
     ].apply(pd.to_numeric)
 
-    data = data.round(4)
+    # data = data.round(4)
 
     # drop duplicates without counting
     if repeats == 'drop':
@@ -255,9 +255,9 @@ def main():
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
     natural_data["simplicity"] = simplicity(natural_data)
-    data = data.round(4)
-    natural_data = natural_data.round(4)
-    pareto_data = pareto_data.round(4)
+    # data = data.round(4)
+    # natural_data = natural_data.round(4)
+    # pareto_data = pareto_data.round(4)
 
     print("first 10 of sampled data: ")
     print(data.head(10))
@@ -289,7 +289,7 @@ def main():
     ttest_df = trade_off_ttest(natural_data, population_means, properties)
 
     # visualize
-    print("IFF pearson correlations:")
+    print("Degree universal pearson correlations:")
     [
         print(f"{prop}: {rho}")
         for rho, prop in zip(*[rhos, properties])

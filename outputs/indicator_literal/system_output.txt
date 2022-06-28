@@ -13,81 +13,81 @@ Adding tlingit
 Saved 5 natural languages
 Estimating pareto frontier ...
 Sampling seed generation...
-Saved 42455 sampled languages
-Saved 83 dominant languages
+Saved 42303 sampled languages
+Saved 136 dominant languages
 done.
 Measuring tradeoff ...
 Loading all languages ...
 sampled...
 dominant...
 natural...
-42462 total langs.
+42314 total langs.
 Measuring languages for simplicity and informativeness...
 Measuring min distance to frontier ...
 Setting optimality ...
-Saved 42462 sampled languages
-Saved 15 dominant languages
+Saved 42314 sampled languages
+Saved 19 dominant languages
 Saved 5 natural languages
 done.
 Constructing dataframe...
 Constructing dataframe...
 Constructing dataframe...
-Length of DataFrame: 7415
+Length of DataFrame: 8646
 first 10 of sampled data: 
                    name  naturalness  simplicity  informativity  optimality  \
-17763   sampled_lang_62          0.0      0.9861         0.1667      1.0000   
-370      sampled_lang_8          1.0      0.9722         0.1667      0.9912   
-3434    sampled_lang_62          0.5      0.9583         0.2222      1.0000   
-7350   sampled_lang_183          0.5      0.9583         0.2083      0.9956   
-23982   sampled_lang_62          0.0      0.9583         0.1944      0.9912   
-570    sampled_lang_428          1.0      0.9444         0.3333      1.0000   
-9038   sampled_lang_443          1.0      0.9444         0.2639      0.9939   
-7244    sampled_lang_62          0.0      0.9444         0.2500      0.9927   
-2       sampled_lang_62          0.5      0.9444         0.2361      0.9915   
-6920   sampled_lang_252          0.5      0.9444         0.2083      0.9868   
+25826   sampled_lang_62          0.0    0.986111       0.166667    1.000000   
+737     sampled_lang_35          1.0    0.972222       0.166667    0.991216   
+17370   sampled_lang_62          0.5    0.958333       0.222222    0.999965   
+16078   sampled_lang_62          0.5    0.958333       0.208333    0.995608   
+18217  sampled_lang_183          0.5    0.958333       0.208333    0.995608   
+1454    sampled_lang_62          0.0    0.958333       0.194444    0.991216   
+18796  sampled_lang_269          0.5    0.944444       0.333333    0.999976   
+9893   sampled_lang_412          1.0    0.944444       0.333333    0.999976   
+6478   sampled_lang_398          1.0    0.944444       0.263889    0.993909   
+3374    sampled_lang_62          0.0    0.944444       0.250000    0.992691   
 
          Language  comm_cost  complexity  counts  
-17763  artificial     0.8333           1   219.0  
-370    artificial     0.8333           2   212.0  
-3434   artificial     0.7778           3   191.0  
-7350   artificial     0.7917           3   174.0  
-23982  artificial     0.8056           3   166.0  
-570    artificial     0.6667           4   160.0  
-9038   artificial     0.7361           4   157.0  
-7244   artificial     0.7500           4   156.0  
-2      artificial     0.7639           4   155.0  
-6920   artificial     0.7917           4   143.0  
+25826  artificial   0.833333           1   189.0  
+737    artificial   0.833333           2   177.0  
+17370  artificial   0.777778           3   162.0  
+16078  artificial   0.791667           3   160.0  
+18217  artificial   0.791667           3   158.0  
+1454   artificial   0.805556           3   157.0  
+18796  artificial   0.666667           4   152.0  
+9893   artificial   0.666667           4   144.0  
+6478   artificial   0.736111           4   137.0  
+3374   artificial   0.750000           4   131.0  
 
 the natural languages
        name  naturalness  simplicity  informativity  optimality Language  \
-0   logoori          1.0      0.8333         0.4074      0.9311  natural   
-1   tlingit          1.0      0.7222         0.5000      0.8998  natural   
-2  javanese          1.0      0.7222         0.8333      0.9882  natural   
-3   gitksan          1.0      0.7778         0.6667      0.9837  natural   
-4  lillooet          1.0      0.8056         0.5556      0.9653  natural   
+0  javanese          1.0    0.722222       0.833333    0.988215  natural   
+1   tlingit          1.0    0.722222       0.500000    0.897463  natural   
+2   logoori          1.0    0.833333       0.407407    0.931113  natural   
+3  lillooet          1.0    0.805556       0.555556    0.963782  natural   
+4   gitksan          1.0    0.777778       0.666667    0.964864  natural   
 
    comm_cost  complexity  
-0     0.5926          12  
-1     0.5000          20  
-2     0.1667          20  
-3     0.3333          16  
-4     0.4444          14  
+0   0.166667          20  
+1   0.500000          20  
+2   0.592593          12  
+3   0.444444          14  
+4   0.333333          16  
 
-IFF pearson correlations:
-simplicity: 0.07993234946654701
-complexity: -0.07993021549849569
-informativity: 0.7440070621942316
-optimality: 0.2753668094936356
+Degree universal pearson correlations:
+simplicity: 0.06738152243205497
+complexity: -0.06738152243205459
+informativity: 0.7429833777888744
+optimality: 0.2505608425149444
 
 MEANS
                   simplicity  complexity  informativity  optimality
 name                                                               
-natural_means       0.772220   16.400000       0.592600    0.953620
-population_means    0.635765   26.224949       0.336289    0.799158
+natural_means       0.772222   16.400000       0.592593    0.949087
+population_means    0.646086   25.481841       0.338777    0.803846
 
 TTEST STATS
                    simplicity  complexity  informativity  optimality
 stat                                                                
-t-statistic          6.139379   -6.140593       3.493287    9.197442
-Two-sided p-value    0.003569    0.003566       0.025048    0.000776
+t-statistic          5.676151   -5.676151       3.459091    9.200612
+Two-sided p-value    0.004754    0.004754       0.025839    0.000775
 
