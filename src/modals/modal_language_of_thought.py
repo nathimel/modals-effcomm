@@ -220,7 +220,8 @@ class ModalLOT:
                 shortest = next
 
         if complement and self.expression_complexity(shortest) != 1:
-            return ExpressionTree(Nonterminal("-"), [shortest])
+            # return ExpressionTree(Nonterminal("-"), [shortest])
+            return self.__negation(shortest)
 
         return shortest
 
@@ -334,13 +335,6 @@ class ModalLOT:
             and not [child for child in ET.tree()]
         )
 
-    # TODO: delete? never called...
-    def __is_flavor_atom(self, ET: ExpressionTree) -> bool:
-        """
-        Returns True if the input is a single flavor symbol, e.g.
-        if flavors=['e', 'd', 'c'] and ET= ('e' )
-        """
-        return self.__is_atom(ET) and ET.tree().label() in self.flavors
 
     def __contains_id(self, ET: ExpressionTree, id: str) -> bool:
         """
@@ -420,18 +414,6 @@ class ModalLOT:
             )
         return ET
 
-    # TODO: delete? never called
-    def __annihalator_m(self, ET: ExpressionTree) -> ExpressionTree:
-        """
-        Applies multiplicative annihalation.
-            (* a b ... 0 ...) => (0)
-            (* 0) => 0
-        """
-
-        if ET.tree().label() != Nonterminal("*"):
-            return ET
-        if "0" in ET.tree():
-            return ExpressionTree(node="0", children=[])
 
     ##########################################################################
     # Addition
@@ -466,18 +448,6 @@ class ModalLOT:
                 ],
             )
         return ET
-
-    # TODO: delete? never called
-    def __annihalator_a(self, ET: ExpressionTree) -> ExpressionTree:
-        """
-        Applies additive annihalation. Holds in boolean algebra generally.
-            (+ a b ... 1 ... c) => (1)
-            (+ 1) => (1)
-        """
-        if ET.tree().label() != Nonterminal("+"):
-            return ET
-        if "1" in ET.tree():
-            return ExpressionTree(node="1", children=[])
 
     def __flavor_cover(self, ET: ExpressionTree) -> ExpressionTree:
         """

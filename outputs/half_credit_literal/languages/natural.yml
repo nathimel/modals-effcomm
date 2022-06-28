@@ -6,64 +6,33 @@ forces:
 - weak
 - strong
 languages:
-- - javanese
+- - logoori
   - expressions:
-    - form: mesthi
-      lot: (* (strong ) (epistemic ))
+    - form: kunyala
+      lot: (weak )
       meaning:
-      - strong+epistemic
-    - form: paleng
+      - weak+deontic
+      - weak+circumstantial
+      - weak+epistemic
+    - form: haondi
       lot: (* (weak ) (epistemic ))
       meaning:
       - weak+epistemic
-    - form: oleh
-      lot: (* (weak ) (deontic ))
+    - form: fwana
+      lot: (* (weak ) (epistemic ))
       meaning:
-      - weak+deontic
-    - form: iso
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: kudu1
-      lot: (* (strong ) (- (epistemic )))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    measurements:
-      complexity: 20
-      iff: 1.0
-      informativity: 0.9166666666666666
-      optimality: 0.982458826798308
-- - lillooet
-  - expressions:
-    - form: k'a
-      lot: (epistemic )
-      meaning:
-      - strong+epistemic
       - weak+epistemic
-    - form: ka-...-a
-      lot: (circumstantial )
+    - form: kudoka
+      lot: (strong )
       meaning:
-      - strong+circumstantial
-      - weak+circumstantial
-    - form: ka
-      lot: (deontic )
-      meaning:
-      - weak+deontic
       - strong+deontic
-    - form: -an'
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: -ku7
-      lot: (* (strong ) (epistemic ))
-      meaning:
+      - strong+circumstantial
       - strong+epistemic
     measurements:
-      complexity: 14
+      complexity: 12
       iff: 1.0
-      informativity: 0.7777777777777777
-      optimality: 0.9868970370712017
+      informativity: 0.7037037037037037
+      optimality: 0.9424421148842838
 - - gitksan
   - expressions:
     - form: "ima(\u2019a)"
@@ -87,13 +56,71 @@ languages:
     - form: sgi
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
+      - strong+circumstantial
     measurements:
       complexity: 16
       iff: 1.0
       informativity: 0.8333333333333333
-      optimality: 0.9883323249979488
+      optimality: 0.9912649128418319
+- - javanese
+  - expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: oleh
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    measurements:
+      complexity: 20
+      iff: 1.0
+      informativity: 0.9166666666666665
+      optimality: 0.9999868916697521
+- - lillooet
+  - expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
+      meaning:
+      - strong+circumstantial
+      - weak+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      complexity: 14
+      iff: 1.0
+      informativity: 0.7777777777777777
+      optimality: 0.9758704856004424
 - - tlingit
   - expressions:
     - form: "gw\xE1l"
@@ -121,30 +148,3 @@ languages:
       iff: 1.0
       informativity: 0.5
       optimality: 0.8390357831946049
-- - logoori
-  - expressions:
-    - form: kunyala
-      lot: (weak )
-      meaning:
-      - weak+deontic
-      - weak+circumstantial
-      - weak+epistemic
-    - form: haondi
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: fwana
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: kudoka
-      lot: (strong )
-      meaning:
-      - strong+circumstantial
-      - strong+epistemic
-      - strong+deontic
-    measurements:
-      complexity: 12
-      iff: 1.0
-      informativity: 0.7037037037037037
-      optimality: 0.9648111972250278
