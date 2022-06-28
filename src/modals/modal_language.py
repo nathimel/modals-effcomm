@@ -217,35 +217,17 @@ def iff(e: ModalExpression) -> bool:
 
 def sav(e: ModalExpression) -> bool:
     """Ambiguity across forces, or flavors, but not both."""
+    points = e.meaning.objects
+    forces = set()
+    flavors = set()
+    for point in points:
+        force, flavor = point.split("+")
+        forces.add(force)
+        flavors.add(flavor)
 
-
-    # points = e.meaning.objects
-    # forces = set()
-    # flavors = set()
-    # for point in points:
-    #     force, flavor = point.split("+")
-    #     forces.add(force)
-    #     flavors.add(flavor)
-
-    # if len(forces) > 1 and len(flavors) > 1:
-    #     return False
-    # return True
-
-    return nauze_ok(e.meaning.to_array())
-
-import numpy as np
-
-def nauze_ok(arr)->bool:
-    """This is the old code implementation!"""
-    argw = np.argwhere(arr)
-    if argw.size != 0:
-        # if all along row
-        if np.all(argw[:,0] == argw[0,0]):
-            return True
-        # if all along col
-        if np.all(argw[:,1] == argw[0,1]):
-            return True
-    return False
+    if len(forces) > 1 and len(flavors) > 1:
+        return False
+    return True
 
 
 # TODO: move this to altk.language!
