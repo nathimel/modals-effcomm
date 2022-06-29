@@ -217,6 +217,10 @@ def trade_off_ttest(
     return df.set_index("stat")
 
 
+##############################################################################
+# Main driver code
+##############################################################################
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python3 src/analysis.py path_to_config")
@@ -240,7 +244,8 @@ def main():
     plot_fn = analysis_fns["plot"]
     correlations_fn = analysis_fns["correlations"]
     means_fn = analysis_fns["means"]
-    ttest_fn = analysis_fns["ttest"]
+    ttest_natural_fn = analysis_fns["ttest_natural"]
+    ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
     # Load languages
     langs = load_languages(langs_fn)
@@ -289,10 +294,13 @@ def main():
         confidence_intervals.append(d["confidence_intervals"])
 
     # Means and ttest for natural, dlsav, population
+    dlsav_data = natural_data[natural_data["dlsav"] == True]
+    dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, population_means]).set_index("name")
-    ttest_df = trade_off_ttest(natural_data, population_means, properties)
+    means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index("name")
+    ttest_natural_df = trade_off_ttest(natural_data, population_means, properties)
+    ttest_dlsav_df = trade_off_ttest(dlsav_data, population_means, properties)
 
     # visualize
     print(f"Degree {naturalness} pearson correlations:")
@@ -304,12 +312,16 @@ def main():
     print()
 
     print("TTEST STATS")
-    print(ttest_df)
+    print("natural languages against population")
+    print(ttest_natural_df)
+    print()
+    print("dlsav languages against population")
+    print(ttest_dlsav_df)
     print()
 
     # Save results
     means_df.to_csv(means_fn)
-    ttest_df.to_csv(ttest_fn, index=False)
+    ttest_natural_df.to_csv(ttest_natural_fn, index=False)
     [
         intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
