@@ -34,7 +34,6 @@ def main():
         lang_size,
         sample_size,
         universal_property,
-        # verbose=True,
     )
 
     # unique and save langs

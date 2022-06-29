@@ -5,7 +5,6 @@ from misc.file_util import load_configs
 from misc.file_util import load_languages
 from modals.modal_measures import ModalComplexityMeasure
 from modals.modal_language_of_thought import ModalLOT
-from modals import modal_language
 from modals.modal_language import degree_property, iff, sav, dlsav
 from misc.file_util import set_seed, load_space, save_languages
 from altk.effcomm.informativity import *
@@ -70,28 +69,13 @@ def main():
         properties=properties_to_measure,
         x="comm_cost",
         y="complexity",        
-        # comp_measure=comp_measure,
-        # inf_measure=inf_measure,
-        # degree_naturalness = lambda language: modal_language.degree_property(language, universal_property),
-        # categorical_property= lambda language: modal_language.dlsav(language),
-        # degree_naturalness=degree_iff,
-        # degree_naturalness=degree_sav
     )
-
-    
 
     save_languages(sampled_languages_fn, langs, kind="sampled")
     save_languages(dominant_languages_fn, dom_langs, kind="dominant")
     save_languages(natural_languages_fn, natural_languages, kind="natural")
 
-    # df = get_dataframe(langs)
-    # df = get_modals_df(langs)
-    # plot = get_tradeoff_plot(langs, dom_langs)
-
     print("done.")
-
-    # write results
-    # df.to_csv(df_fn, index=False)
 
 
 if __name__ == "__main__":

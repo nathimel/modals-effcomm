@@ -322,6 +322,7 @@ def main():
     # Save results
     means_df.to_csv(means_fn)
     ttest_natural_df.to_csv(ttest_natural_fn, index=False)
+    ttest_dlsav_df.to_csv(ttest_dlsav_fn, index=False)
     [
         intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
