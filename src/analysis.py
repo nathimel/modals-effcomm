@@ -100,11 +100,9 @@ def get_modals_plot(
     Returns:
         plot: a plotnine 2D plot of the trade-off.
     """
-    # max_complexity = data["complexity"].max()
-    # max_cost = data["comm_cost"].max()
     natural_data = data[data["Language"] == "natural"]
 
-    # smooth pareto curve
+    # smooth pareto curve again
     pareto_df = pareto_data[["comm_cost", "complexity"]]
     pareto_points = pareto_df.to_records(index=False).tolist()
     pareto_points = interpolate_data(pareto_points)
@@ -290,7 +288,7 @@ def main():
         rhos.append(d["rho"])
         confidence_intervals.append(d["confidence_intervals"])
 
-    # Means and ttest for natural vs population
+    # Means and ttest for natural, dlsav, population
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
     means_df = pd.concat([natural_means, population_means]).set_index("name")
