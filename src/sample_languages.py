@@ -25,7 +25,7 @@ def main():
     sample_size = configs["sample_size"]
     set_seed(configs["random_seed"])
 
-    # Turn the knob on iff
+    # Turn the knob on universal property
     expressions = load_expressions(expression_save_fn)
     universal_property = getattr(modal_language, configs["universal_property"])
     languages = generate_languages(

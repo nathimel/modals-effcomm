@@ -85,6 +85,9 @@ def main():
     )
     dominant_langs, explored_langs = optimizer.fit(seed_population=seed_population)
 
+    # Explore additionally
+    _, explored_langs = optimizer.fit(explored_langs, explore=1.0)
+
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
     pool.extend(explored_langs)
