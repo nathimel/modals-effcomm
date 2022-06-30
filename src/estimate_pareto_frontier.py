@@ -68,7 +68,7 @@ def main():
         Add_Modal(),
         Remove_Modal(),
         Remove_Point(),
-        # Add_Point(),
+        Add_Point(),
         Interchange_Modal(),
     ]
 
@@ -83,16 +83,36 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    dominant_langs, explored_langs = optimizer.fit(seed_population=seed_population)
+    result = optimizer.fit(seed_population=seed_population)
+    dominant_langs = result["dominating_languages"]
+    explored_langs = result["explored_languages"]
 
     # Explore additionally
-    # _, explored_langs = optimizer.fit(explored_langs, explore=1.0)
+    # result = optimizer.fit(explored_langs, explore=1.0)
 
     # Add explored langs to the pool of sampled langs
     pool = load_languages(save_all_langs_fn)
     pool.extend(explored_langs)
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
+
+
+    # # sanity check: perfectly informative language
+    # vocab = []
+    # points = space.objects
+    # # Sanity check: create a perfectly informative language.
+    # for expression in expressions:
+    #     points_ = expression.meaning.objects
+    #     if len(points_) == 1:
+    #         vocab.append(expression)
+    # assert len(vocab) == len(points)
+    # lang = ModalLanguage(vocab)
+    # lang.name = 'Sanity_Check'
+    # # explored_langs.append(lang)
+    # dominant_langs.append(lang)
+
+    # print([str(lang) for lang in dominant_langs])
+
 
     save_languages(save_all_langs_fn, pool, kind="sampled")
     save_languages(dom_langs_fn, dominant_langs, kind="dominant")

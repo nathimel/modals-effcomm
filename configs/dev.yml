@@ -11,7 +11,7 @@ flavor_names:
 
 # measures
 utility: indicator # half_credit or indicator
-agent_type: literal # literal or pragmatic
+agent_type: pragmatic # literal or pragmatic
 language_of_thought:
   negation: True
 universal_property: sav # iff or sav
@@ -47,7 +47,8 @@ file_paths:
     pareto_data: outputs/dev/analysis/pareto_data.csv
     plot: outputs/dev/analysis/plot.png
     means: outputs/dev/analysis/means.csv
-    ttest: outputs/dev/analysis/ttest.csv
+    ttest_natural: outputs/dev/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/dev/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:

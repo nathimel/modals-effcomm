@@ -18,7 +18,7 @@ class Add_Modal(Mutation):
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
         """Only add a modal if the language size is not at maximum."""
         lang_size = kwargs["lang_size"]
-        return language.size() < lang_size
+        return len(language) < lang_size
 
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
@@ -36,14 +36,14 @@ class Remove_Modal(Mutation):
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
         """Only remove a modal if it does not remove the only modal in a language."""
-        return language.size() > 1
+        return len(language) > 1
 
     def mutate(self, language: ModalLanguage, expressions=None) -> ModalLanguage:
         """Removes a random modal from the list of expressions of a modal language.
 
         Dummy expressions argument to have the same function signature as super().mutate().
         """
-        index = random.randint(0, language.size() - 1)
+        index = random.randint(0, len(language) - 1)
         language.pop(index)
         return language
 
@@ -84,7 +84,7 @@ class Add_Point(Mutation):
 
         if new_expression in language.expressions:
             raise ValueError(
-                "AddPoint should not add synonyms but new expression to add alredy in vocabulary."
+                f"AddPoint tried to add {new_expression} but the language already contains it."
             )
 
         # Add it

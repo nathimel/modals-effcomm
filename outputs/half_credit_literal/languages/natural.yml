@@ -6,6 +6,39 @@ forces:
 - weak
 - strong
 languages:
+- - lillooet
+  - expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
+      meaning:
+      - weak+circumstantial
+      - strong+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    measurements:
+      comm_cost: 0.2222222222222222
+      complexity: 14
+      dlsav: false
+      iff: 1.0
+      informativity: 0.7777777777777778
+      optimality: 0.9865750522717491
+      sav: 1.0
 - - logoori
   - expressions:
     - form: kunyala
@@ -25,8 +58,8 @@ languages:
     - form: kudoka
       lot: (strong )
       meaning:
-      - strong+epistemic
       - strong+deontic
+      - strong+epistemic
       - strong+circumstantial
     measurements:
       comm_cost: 0.2962962962962963
@@ -34,7 +67,38 @@ languages:
       dlsav: false
       iff: 1.0
       informativity: 0.7037037037037037
-      optimality: 0.9486256588378941
+      optimality: 0.9624815502852828
+      sav: 1.0
+- - javanese
+  - expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: oleh
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    measurements:
+      comm_cost: 0.08333333333333337
+      complexity: 20
+      dlsav: false
+      iff: 1.0
+      informativity: 0.9166666666666666
+      optimality: 0.9999858332235514
       sav: 1.0
 - - gitksan
   - expressions:
@@ -67,71 +131,7 @@ languages:
       dlsav: true
       iff: 1.0
       informativity: 0.8333333333333333
-      optimality: 0.9998866657884111
-      sav: 1.0
-- - javanese
-  - expressions:
-    - form: mesthi
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: paleng
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: oleh
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: iso
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: kudu1
-      lot: (* (strong ) (- (epistemic )))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    measurements:
-      comm_cost: 0.08333333333333326
-      complexity: 20
-      dlsav: false
-      iff: 1.0
-      informativity: 0.9166666666666667
-      optimality: 0.9999858332235514
-      sav: 1.0
-- - lillooet
-  - expressions:
-    - form: k'a
-      lot: (epistemic )
-      meaning:
-      - strong+epistemic
-      - weak+epistemic
-    - form: ka-...-a
-      lot: (circumstantial )
-      meaning:
-      - weak+circumstantial
-      - strong+circumstantial
-    - form: ka
-      lot: (deontic )
-      meaning:
-      - strong+deontic
-      - weak+deontic
-    - form: -an'
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: -ku7
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    measurements:
-      comm_cost: 0.22222222222222232
-      complexity: 14
-      dlsav: false
-      iff: 1.0
-      informativity: 0.7777777777777777
-      optimality: 0.9782092135721115
+      optimality: 0.9882148315419611
       sav: 1.0
 - - tlingit
   - expressions:

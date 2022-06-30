@@ -1,7 +1,6 @@
 from collections import Counter
 from copy import deepcopy
 from itertools import product
-from typing import Callable
 
 from altk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
@@ -137,11 +136,10 @@ class ModalLanguage(Language):
 
     def __str__(self) -> str:
         expressions_str = "\n".join([str(e) for e in self.expressions])
-        return f"Modal_Language: [\n{expressions_str}\n]"
+        return f"Modal_Language: {self.name}\n[\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        # return hash(tuple([self.name] + self.expressions))
-        return hash(tuple(sorted(self.expressions)))
+        return hash(tuple([self.name] + sorted(self.expressions)))
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
@@ -156,12 +154,6 @@ class ModalLanguage(Language):
             {
                 "expressions": [e.yaml_rep() for e in self.expressions],
                 "measurements": self.measurements,
-                # {
-                #     "complexity": self.complexity,
-                #     "informativity": self.informativity,
-                #     "optimality": self.optimality,
-                #     "iff": self.naturalness,
-                # },
             },
         )
         return data
@@ -271,9 +263,3 @@ def dlsav(language: ModalLanguage) -> bool:
     if len(set(ambiguity_within_root.values())) > 1:
         return False
     return True
-
-# TODO: move this to altk.language!
-def degree_property(language: Language, property: Callable[[Expression], bool]) -> float:
-    """Count what percentage of expressions in a language have a given property."""
-    return sum([property(item) for item in language.expressions]) / language.size()
-    # TODO: once this is moved into altk, also update Language with __len__ and change this .size() to len()

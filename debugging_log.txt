@@ -1,0 +1,9 @@
+The purpose of this file is to track bugs that often recur, and document how they were resolved.
+
+6.29.22: incomplete looking plot
+The high informativity, low communicative cost languages don't seem to be getting explored after some updates, most recently to altk's optimization and agent modules. The space used to be fully explored. I have seen this problem before too. 
+Tried:
+    Looking into AddPoint:
+    - uncommenting AddPoint() as a mutation to increase informativity, because at some point previously it wasn't helping -- presumably because high informativity space was getting explored fine.
+    - looking into how informativity is measured in AddPoint. This doesn't matter so much as long as informativity isn't already recorded as 1.0, because it just searches the language for a point not yet covered, and then adds an expression to cover exactly that point.
+    - running optimization with only AddPoint as a mutation, but this doesn't work because apparently you need all mutations in order for there to be a possible mutation when sample_mutate() is called.

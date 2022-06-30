@@ -5,7 +5,7 @@ from misc.file_util import load_configs
 from misc.file_util import load_languages
 from modals.modal_measures import ModalComplexityMeasure
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_language import degree_property, iff, sav, dlsav
+from modals.modal_language import iff, sav, dlsav
 from misc.file_util import set_seed, load_space, save_languages
 from altk.effcomm.informativity import *
 from altk.effcomm.tradeoff import tradeoff
@@ -58,18 +58,20 @@ def main():
     properties_to_measure = {
         "complexity": comp_measure.language_complexity,
         "informativity": inf_measure.language_informativity,
-        "comm_cost": lambda l: 1 - inf_measure.language_informativity(l),
-        "iff": lambda l: degree_property(l, iff),
-        "sav": lambda l: degree_property(l, sav),
+        "comm_cost": lambda lang: 1 - inf_measure.language_informativity(lang),
+        "iff": lambda lang: lang.degree_property(iff),
+        "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav
     }
 
-    langs, dom_langs = tradeoff(
+    result = tradeoff(
         languages=langs,
         properties=properties_to_measure,
         x="comm_cost",
         y="complexity",        
     )
+    dom_langs = result["dominating_languages"]
+    langs = result["languages"]
 
     save_languages(sampled_languages_fn, langs, kind="sampled")
     save_languages(dominant_languages_fn, dom_langs, kind="dominant")

@@ -14,14 +14,15 @@ utility: half_credit # half_credit or indicator
 agent_type: pragmatic # literal or pragmatic
 language_of_thought:
   negation: True
+universal_property: sav # sav or iff  
 
 # other experiment parameters
 processes: 6
 random_seed: 42
-sample_size: 2000
+sample_size: 5000
 lang_size: 10
 evolutionary_alg:
-  generation_size: 200
+  generation_size: 2000
   num_generations: 200
   max_mutations: 5
   num_processes: 6
@@ -46,7 +47,8 @@ file_paths:
     pareto_data: outputs/half_credit_pragmatic/analysis/pareto_data.csv
     plot: outputs/half_credit_pragmatic/analysis/plot.png
     means: outputs/half_credit_pragmatic/analysis/means.csv
-    ttest: outputs/half_credit_pragmatic/analysis/ttest.csv
+    ttest_natural: outputs/half_credit_pragmatic/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/half_credit_pragmatic/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:
