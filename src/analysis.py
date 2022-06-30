@@ -78,7 +78,7 @@ def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
 
     elif repeats is not None:
         raise ValueError(
-            f"the argument `repeats' must be either 'drop' or 'count'. Received: {repeats}"
+            f"the argument `repeats` must be either 'drop' or 'count'. Received: {repeats}"
         )
 
     return data
@@ -251,7 +251,7 @@ def main():
     result_sampled = load_languages(langs_fn)
     result_natural = load_languages(nat_langs_fn)
     result_dominant = load_languages(dom_langs_fn)
-    langs, dom_langs, nat_langs = (
+    langs, nat_langs, dom_langs = (
         result_sampled["languages"],
         result_natural["languages"],
         result_dominant["languages"],

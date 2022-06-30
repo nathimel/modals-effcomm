@@ -22,7 +22,7 @@ def main():
     configs = load_configs(config_fn)
     expressions_fn = configs["file_paths"]["expressions"]
     space_fn = configs["file_paths"]["meaning_space"]
-    save_all_langs_fn = configs["file_paths"]["artificial_languages"]
+    artificial_langs_fn = configs["file_paths"]["artificial_languages"]
     dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
     # Load optimization params
@@ -38,7 +38,7 @@ def main():
 
     # Create the first generation of languages
 
-    result = load_languages(save_all_langs_fn)
+    result = load_languages(artificial_langs_fn)
     sampled_languages = result["languages"]
     id_start = result["id_start"]
 
@@ -80,19 +80,19 @@ def main():
         Interchange_Modal(),
     ]
 
-    # sanity check: perfectly informative language
-    vocab = []
-    points = space.objects
-    # Sanity check: create a perfectly informative language.
-    for expression in expressions:
-        points_ = expression.meaning.objects
-        if len(points_) == 1:
-            vocab.append(expression)
-    assert len(vocab) == len(points)
-    lang = ModalLanguage(vocab)
-    lang.name = 'Sanity_Check'
-    # explored_langs.append(lang)
-    seed_population.append(lang)
+    # # sanity check: perfectly informative language
+    # vocab = []
+    # points = space.objects
+    # # Sanity check: create a perfectly informative language.
+    # for expression in expressions:
+    #     points_ = expression.meaning.objects
+    #     if len(points_) == 1:
+    #         vocab.append(expression)
+    # assert len(vocab) == len(points)
+    # lang = ModalLanguage(vocab)
+    # lang.name = 'Sanity_Check'
+    # # explored_langs.append(lang)
+    # seed_population.append(lang)
 
 
     # Initialize optimizer and run algorithm
@@ -123,7 +123,7 @@ def main():
     # print([str(lang) for lang in dominant_langs])
 
 
-    save_languages(save_all_langs_fn, pool, id_start=id_start, kind="sampled")
+    save_languages(artificial_langs_fn, pool, id_start=id_start, kind="sampled")
     save_languages(dom_langs_fn, dominant_langs, id_start=id_start,  kind="dominant")
 
     print("done.")

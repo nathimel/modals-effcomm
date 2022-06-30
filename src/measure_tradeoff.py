@@ -67,14 +67,14 @@ def main():
         "comm_cost": lambda lang: 1 - inf_measure.language_informativity(lang),
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
-        "dlsav": dlsav
+        "dlsav": dlsav,
     }
 
     result = tradeoff(
         languages=langs,
         properties=properties_to_measure,
         x="comm_cost",
-        y="complexity",        
+        y="complexity",
     )
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
