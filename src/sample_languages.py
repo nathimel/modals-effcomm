@@ -28,17 +28,19 @@ def main():
     # Turn the knob on universal property
     expressions = load_expressions(expression_save_fn)
     universal_property = getattr(modal_language, configs["universal_property"])
-    languages = generate_languages(
+    result = generate_languages(
         ModalLanguage,        
         expressions,
         lang_size,
         sample_size,
         universal_property,
     )
+    languages = result["languages"]
+    id_start = result["id_start"]
 
     # unique and save langs
     languages = list(set(languages))
-    save_languages(lang_save_fn, languages, kind="sampled")
+    save_languages(lang_save_fn, languages, id_start, kind="sampled")
     print("done.")
 
 

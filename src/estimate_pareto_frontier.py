@@ -37,15 +37,23 @@ def main():
     set_seed(configs["random_seed"])
 
     # Create the first generation of languages
+
+    result = load_languages(save_all_langs_fn)
+    sampled_languages = result["languages"]
+    id_start = result["id_start"]
+
     print("Sampling seed generation...")
     expressions = load_expressions(expressions_fn)
-    seed_population = generate_languages(
+    seed_result = generate_languages(
         ModalLanguage,
         expressions,
         lang_size,
         sample_size,
+        id_start=id_start,
         # verbose=True,
     )
+    seed_population = seed_result["languages"]
+    id_start = seed_result["id_start"]
 
     # construct measures of complexity and informativity as optimization objectives
     space = load_space(space_fn)
@@ -67,10 +75,25 @@ def main():
     mutations = [
         Add_Modal(),
         Remove_Modal(),
-        Remove_Point(),
+        # Remove_Point(),
         Add_Point(),
         Interchange_Modal(),
     ]
+
+    # sanity check: perfectly informative language
+    vocab = []
+    points = space.objects
+    # Sanity check: create a perfectly informative language.
+    for expression in expressions:
+        points_ = expression.meaning.objects
+        if len(points_) == 1:
+            vocab.append(expression)
+    assert len(vocab) == len(points)
+    lang = ModalLanguage(vocab)
+    lang.name = 'Sanity_Check'
+    # explored_langs.append(lang)
+    seed_population.append(lang)
+
 
     # Initialize optimizer and run algorithm
     optimizer = Evolutionary_Optimizer(
@@ -83,39 +106,25 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    result = optimizer.fit(seed_population=seed_population)
+    result = optimizer.fit(seed_population, id_start)
     dominant_langs = result["dominating_languages"]
     explored_langs = result["explored_languages"]
+    id_start = result["id_start"]
 
     # Explore additionally
     # result = optimizer.fit(explored_langs, explore=1.0)
 
-    # Add explored langs to the pool of sampled langs
-    pool = load_languages(save_all_langs_fn)
-    pool.extend(explored_langs)
+    # Save all explored langs
+    pool = explored_langs + sampled_languages
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
 
-    # # sanity check: perfectly informative language
-    # vocab = []
-    # points = space.objects
-    # # Sanity check: create a perfectly informative language.
-    # for expression in expressions:
-    #     points_ = expression.meaning.objects
-    #     if len(points_) == 1:
-    #         vocab.append(expression)
-    # assert len(vocab) == len(points)
-    # lang = ModalLanguage(vocab)
-    # lang.name = 'Sanity_Check'
-    # # explored_langs.append(lang)
-    # dominant_langs.append(lang)
-
     # print([str(lang) for lang in dominant_langs])
 
 
-    save_languages(save_all_langs_fn, pool, kind="sampled")
-    save_languages(dom_langs_fn, dominant_langs, kind="dominant")
+    save_languages(save_all_langs_fn, pool, id_start=id_start, kind="sampled")
+    save_languages(dom_langs_fn, dominant_langs, id_start=id_start,  kind="dominant")
 
     print("done.")
 

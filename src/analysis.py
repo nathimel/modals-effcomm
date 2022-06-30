@@ -135,7 +135,7 @@ def get_modals_plot(
         + pn.xlab("Communicative cost")
         + pn.ylab("Complexity")
         + pn.scale_color_cmap("cividis")
-        + pn.theme_classic()
+        # + pn.theme_classic()
     )
     return plot
 
@@ -248,9 +248,15 @@ def main():
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
     # Load languages
-    langs = load_languages(langs_fn)
-    nat_langs = load_languages(nat_langs_fn)
-    dom_langs = load_languages(dom_langs_fn)
+    result_sampled = load_languages(langs_fn)
+    result_natural = load_languages(nat_langs_fn)
+    result_dominant = load_languages(dom_langs_fn)
+    langs, dom_langs, nat_langs = (
+        result_sampled["languages"],
+        result_natural["languages"],
+        result_dominant["languages"],
+    )
+
 
     # Main analysis
     data = get_modals_df(langs)

@@ -7,3 +7,7 @@ Tried:
     - uncommenting AddPoint() as a mutation to increase informativity, because at some point previously it wasn't helping -- presumably because high informativity space was getting explored fine.
     - looking into how informativity is measured in AddPoint. This doesn't matter so much as long as informativity isn't already recorded as 1.0, because it just searches the language for a point not yet covered, and then adds an expression to cover exactly that point.
     - running optimization with only AddPoint as a mutation, but this doesn't work because apparently you need all mutations in order for there to be a possible mutation when sample_mutate() is called.
+
+    Looking into the history of some of the plots on github:
+    - Looks like I had a similar issue when testing out various mutations, and found that RemovePoint was the culprit; apparently removing it as a possible mutation allowed the high informativity space to be explored. But it's possible that this wasn't the only cause, or at least something else may have motivated me to keep RemovePoint, because it still exists in the codebase.
+        - Sure enough, commenting it out didn't improve on dev setting or a full run on indicator_literal. 

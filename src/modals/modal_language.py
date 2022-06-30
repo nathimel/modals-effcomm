@@ -144,18 +144,18 @@ class ModalLanguage(Language):
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
 
-    def yaml_rep(self) -> tuple:
+    def yaml_rep(self) -> dict[str, dict]:
         """Get a data structure for safe compact saving in a .yml file.
 
-        A tuple of the language name, and nested dict of list of the expressions, and trade-off data for compact saving in a .yml file.
+        A dict of the language name and its data. This data is itself a dict of a list of the expressions, and other measurements.
         """
-        data = (
-            self.name,
+        data = {
+            self.name:
             {
                 "expressions": [e.yaml_rep() for e in self.expressions],
                 "measurements": self.measurements,
             },
-        )
+        }
         return data
 
     @classmethod
