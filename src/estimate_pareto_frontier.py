@@ -1,14 +1,23 @@
 """Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off."""
 
 import sys
-from altk.effcomm.optimization import Evolutionary_Optimizer
+from altk.effcomm.optimization import EvolutionaryOptimizer
 from misc.file_util import *
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_measures import ModalComplexityMeasure
+from modals.modal_measures import language_complexity
 from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
-from modals.modal_mutations import *
-from altk.effcomm.informativity import *
+from modals.modal_mutations import (
+    Add_Modal,
+    Remove_Modal,
+    Interchange_Modal,
+    Add_Point,
+)
+from altk.effcomm.informativity import (
+    informativity,
+    uniform_prior,
+    build_utility_matrix,
+)
 
 
 def main():
@@ -58,19 +67,22 @@ def main():
 
     # construct measures of complexity and informativity as optimization objectives
     space = load_space(space_fn)
-    complexity_measure = ModalComplexityMeasure(
-        ModalLOT(space, configs["language_of_thought"])
+
+    complexity_measure = lambda lang: language_complexity(
+        language=lang,
+        mlot=ModalLOT(space, configs["language_of_thought"]),
     )
-    informativity_measure = SST_Informativity_Measure(
+
+    informativity_measure = lambda lang: informativity(
+        language=lang,
         prior=uniform_prior(space),
         utility=build_utility_matrix(space, load_utility(configs["utility"])),
         agent_type=agent_type,
     )
     objectives = {
-        "comm_cost": lambda lang: 1
-        - informativity_measure.language_informativity(lang),
-        "informativity": informativity_measure.language_informativity,        
-        "complexity": complexity_measure.language_complexity,
+        "comm_cost": lambda lang: 1 - informativity_measure(lang),
+        "informativity": informativity_measure,
+        "complexity": complexity_measure,
     }
 
     # Load modals-specifc mutations
@@ -96,9 +108,8 @@ def main():
     # # explored_langs.append(lang)
     # seed_population.append(lang)
 
-
     # Initialize optimizer and run algorithm
-    optimizer = Evolutionary_Optimizer(
+    optimizer = EvolutionaryOptimizer(
         objectives=objectives,
         expressions=expressions,
         mutations=mutations,
@@ -121,12 +132,8 @@ def main():
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
-
-    # print([str(lang) for lang in dominant_langs])
-
-
     save_languages(artificial_langs_fn, pool, id_start=id_start, kind="sampled")
-    save_languages(dom_langs_fn, dominant_langs, id_start=id_start,  kind="dominant")
+    save_languages(dom_langs_fn, dominant_langs, id_start=id_start, kind="dominant")
 
     print("done.")
 

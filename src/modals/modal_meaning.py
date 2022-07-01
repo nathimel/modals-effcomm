@@ -125,6 +125,9 @@ class ModalMeaningSpace(Universe):
     def __str__(self):
         return str(self.arr)
 
+    def __hash__(self) -> int:
+        return hash((tuple(self.forces), tuple(self.flavors)))
+
 
 class ModalMeaning(Meaning):
     """ "A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.

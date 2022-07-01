@@ -25,7 +25,7 @@ class Add_Modal(Mutation):
     ) -> ModalLanguage:
         """Add a random new modal to the language."""
         new_expression = random.choice(expressions)
-        while language.has_expression(new_expression):
+        while new_expression in language:
             new_expression = random.choice(expressions)
         language.add_expression(new_expression)
         return language

@@ -3,11 +3,11 @@
 import sys
 from misc.file_util import load_configs
 from misc.file_util import load_languages
-from modals.modal_measures import ModalComplexityMeasure
+from modals.modal_measures import language_complexity
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import iff, sav, dlsav
 from misc.file_util import set_seed, load_space, save_languages
-from altk.effcomm.informativity import *
+from altk.effcomm.informativity import informativity, build_utility_matrix, uniform_prior
 from altk.effcomm.tradeoff import tradeoff
 from misc.file_util import load_utility
 
@@ -28,7 +28,6 @@ def main():
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
-    df_fn = paths["analysis"]["data"]
 
     set_seed(configs["random_seed"])
 
@@ -51,10 +50,14 @@ def main():
 
     # Load trade-off criteria
     space = load_space(space_fn)
-    comp_measure = ModalComplexityMeasure(
-        ModalLOT(space, configs["language_of_thought"])
+
+    comp_measure = lambda lang: language_complexity(
+        language=lang,
+        mlot=ModalLOT(space, configs["language_of_thought"])
     )
-    inf_measure = SST_Informativity_Measure(
+
+    inf_measure = lambda lang: informativity(
+        language=lang,
         prior=uniform_prior(space),
         utility=build_utility_matrix(space, load_utility(configs["utility"])),
         agent_type=configs["agent_type"],
@@ -62,9 +65,9 @@ def main():
 
     # Get trade-off results
     properties_to_measure = {
-        "complexity": comp_measure.language_complexity,
-        "informativity": inf_measure.language_informativity,
-        "comm_cost": lambda lang: 1 - inf_measure.language_informativity(lang),
+        "complexity": comp_measure,
+        "informativity": inf_measure,
+        "comm_cost": lambda lang: 1 - inf_measure(lang),
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav,

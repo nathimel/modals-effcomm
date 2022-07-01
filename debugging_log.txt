@@ -23,3 +23,7 @@ I have never seen deterministic behavior yet, but making the entry now. All scri
 
 I'm not particularly worried about removing the logic which prevented floats from being read as strings, because the statistics and data look the same with and without. For reference though, pandas was once confused about there being mixed data types and I had to us pd.to_numeric() to convert all the appropriate columns back to floats.
 
+7.1.22: strange plot with correct data but huge complexity limit at like 3e10
+
+This happened once right after deleting altk's complexity module for refactoring, but then I haven't been able to reproduce again.
+
