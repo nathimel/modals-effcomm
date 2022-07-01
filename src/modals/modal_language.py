@@ -81,17 +81,27 @@ class ModalLanguage(Language):
         c = language.complexity
     """
 
-    def __init__(self, expressions: list[ModalExpression], name=None, measurements=None):
+    def __init__(
+        self, 
+        expressions: list[ModalExpression], 
+        name: str = None, 
+        data=None
+        ):
         super().__init__(expressions)
-        self.name = name # natural languages have especially important names
-        self.measurements = {
+        self.data = {
                 "complexity": None, 
+                "simplicity": None,
                 "comm_cost": None,
                 "informativity": None, 
                 "optimality": None, 
                 "iff": None, 
                 "sav": None,
-            } if measurements is None else measurements
+                "name": name,
+                "Language": None,
+            } if data is None else data
+
+        # data must be initialized first
+        self.data["Language"] = "natural" if self.is_natural() else "artificial"
 
     def rename_synonyms(
         self, expressions: list[ModalExpression]
@@ -130,7 +140,7 @@ class ModalLanguage(Language):
 
     def __str__(self) -> str:
         expressions_str = "\n".join([str(e) for e in self.expressions])
-        return f"Modal_Language: {self.name}\n[\n{expressions_str}\n]"
+        return f"Modal_Language: {self.data['name']}\n[\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
         # requiring diff name is a strong requirement
@@ -142,39 +152,39 @@ class ModalLanguage(Language):
     def yaml_rep(self) -> dict[str, dict]:
         """Get a data structure for safe compact saving in a .yml file.
 
-        A dict of the language name and its data. This data is itself a dict of a list of the expressions, and other measurements.
+        A dict of the language name and its data. This data is itself a dict of a list of the expressions, and other data.
         """
         data = {
-            self.name:
+            self.data["name"]:
             {
                 "expressions": [e.yaml_rep() for e in self.expressions],
-                "measurements": self.measurements,
+                "data": self.data,
             },
         }
         return data
 
     @classmethod
-    def from_yaml_rep(cls, name: str, data: dict, space: ModalMeaningSpace):
+    def from_yaml_rep(cls, name: str, lang_dict: dict, space: ModalMeaningSpace):
         """Takes a yaml representation and returns the corresponding Modal Language.
 
         Args:
             - name: the name of the language
 
-            - data: a dictionary of the expressions and trade-off measurements
+            - data: a dictionary of the expressions and trade-off data
 
             - space: the modal meaning space being used by the language.
         """
-        expressions = data["expressions"]
-        measurements = data["measurements"]
+        expressions = lang_dict["expressions"]
+        data = lang_dict["data"]
 
         expressions = [ModalExpression.from_yaml_rep(x, space) for x in expressions]
-        lang = cls(expressions, name=name, measurements=measurements)
+        lang = cls(expressions, name=name, data=data)
 
         return lang
 
     def is_natural(self) -> bool:
         """Whether a Modal Language represents a natural language constructed from typological data."""
-        return not any([c for c in self.name if c.isdigit()])
+        return not any([c for c in self.data["name"] if c.isdigit()])
 
 
 ##############################################################################

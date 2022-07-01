@@ -92,7 +92,7 @@ def main():
     #         vocab.append(expression)
     # assert len(vocab) == len(points)
     # lang = ModalLanguage(vocab)
-    # lang.name = 'Sanity_Check'
+    # lang.data["name"] = 'Sanity_Check'
     # # explored_langs.append(lang)
     # seed_population.append(lang)
 

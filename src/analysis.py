@@ -1,4 +1,3 @@
-from re import L
 import sys
 import scipy
 import numpy as np
@@ -6,83 +5,11 @@ import pandas as pd
 import plotnine as pn
 from tqdm import tqdm
 from altk.effcomm.tradeoff import interpolate_data
+from altk.effcomm.analysis import get_dataframe
 from misc.file_util import load_languages, load_configs, set_seed
 from modals.modal_language import ModalLanguage
 from scipy.stats import ttest_1samp
 from typing import Any
-
-
-def get_modals_df(languages: list[ModalLanguage], repeats=None) -> pd.DataFrame:
-    """Get a pandas DataFrame for a list of languages containing efficient communication data.
-
-    Args:
-        languages: the list of languages for which to get efficient communication dataframe.
-
-    Returns:
-        data: a pandas DataFrame with rows as individual languages, with the columns specifying their
-            - communicative cost
-            - cognitive complexity
-            - degree iff
-            - degree sav
-            - satisfies dlsav
-            - Language type (natural or artificial)
-    """
-    print("Constructing dataframe...")
-    data = []
-    for lang in tqdm(languages):
-        point = (
-            lang.name,
-            lang.measurements["sav"],
-            lang.measurements["iff"],
-            lang.measurements["dlsav"],
-            None,  # dummy simplicity placeholder
-            lang.measurements["informativity"],
-            lang.measurements["optimality"],
-            "natural" if lang.is_natural() else "artificial",
-            lang.measurements["comm_cost"],
-            lang.measurements["complexity"],
-        )
-        data.append(point)
-
-    data = pd.DataFrame(
-        data=data,
-        columns=[
-            "name",
-            "sav",
-            "iff",
-            "dlsav",
-            "simplicity",
-            "informativity",
-            "optimality",
-            "Language",
-            "comm_cost",
-            "complexity",
-        ],
-    )
-
-    # Pandas confused by mixed types int and string, so convert back.
-    data[["sav", "iff", "simplicity", "comm_cost", "complexity", "optimality"]] = data[
-        ["sav", "iff", "simplicity", "comm_cost", "complexity", "optimality"]
-    ].apply(pd.to_numeric)
-
-    # drop duplicates without counting
-    if repeats == "drop":
-        data = data.drop_duplicates(subset=["complexity", "comm_cost"])
-
-    # drop but count duplicates
-    elif repeats == "count":
-        vcs = data.value_counts(subset=["complexity", "comm_cost"])
-        data = data.drop_duplicates(subset=["complexity", "comm_cost"])
-        data = data.sort_values(by=["complexity", "comm_cost"])
-        data["counts"] = vcs.values
-
-    elif repeats is not None:
-        raise ValueError(
-            f"the argument `repeats` must be either 'drop' or 'count'. Received: {repeats}"
-        )
-
-    return data
-
 
 def get_modals_plot(
     data: pd.DataFrame,
@@ -257,13 +184,11 @@ def main():
         result_dominant["languages"],
     )
 
-
     # Main analysis
-    data = get_modals_df(langs)
-    pareto_data = get_modals_df(dom_langs)
-    natural_data = get_modals_df(nat_langs)
+    data = get_dataframe(langs, subset=["complexity", "comm_cost"])
+    pareto_data = get_dataframe(dom_langs, subset=["complexity", "comm_cost"])
+    natural_data = get_dataframe(nat_langs, subset=["complexity", "comm_cost"])
     data = data.append(natural_data)
-    print(f"Length of DataFrame: {len(data)}")
 
     # Plot
     naturalness = configs["universal_property"]

@@ -18,3 +18,8 @@ Tried:
 I have never seen deterministic behavior yet, but making the entry now. All scripts call the set_seed() function, which updates the only two libraries I know of that I'm using that use randomness:
     - random
     - numpy
+
+7.1.22: pandas datatype confusion seems to not be a problem anymore. 
+
+I'm not particularly worried about removing the logic which prevented floats from being read as strings, because the statistics and data look the same with and without. For reference though, pandas was once confused about there being mixed data types and I had to us pd.to_numeric() to convert all the appropriate columns back to floats.
+
