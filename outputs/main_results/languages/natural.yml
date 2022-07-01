@@ -5,19 +5,30 @@ flavors:
 forces:
 - weak
 - strong
+id_start: null
 languages:
-- - gitksan
-  - expressions:
+- gitksan:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      iff: null
+      informativity: null
+      name: gitksan
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
     - form: "ima(\u2019a)"
       lot: (epistemic )
       meaning:
-      - weak+epistemic
       - strong+epistemic
+      - weak+epistemic
     - form: gat
       lot: (epistemic )
       meaning:
-      - weak+epistemic
       - strong+epistemic
+      - weak+epistemic
     - form: "da\u2019akhlxw"
       lot: (* (weak ) (circumstantial ))
       meaning:
@@ -29,15 +40,20 @@ languages:
     - form: sgi
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
-    measurements:
-      complexity: 16
-      iff: 1.0
-      informativity: 0.8333333327583332
-      optimality: 0.9705060174141502
-- - javanese
-  - expressions:
+      - strong+circumstantial
+- javanese:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      iff: null
+      informativity: null
+      name: javanese
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
     - form: mesthi
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -57,20 +73,25 @@ languages:
     - form: kudu1
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
-    measurements:
-      complexity: 20
-      iff: 1.0
-      informativity: 0.9166666659833332
-      optimality: 0.9840583657473826
-- - lillooet
-  - expressions:
+      - strong+circumstantial
+- lillooet:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      iff: null
+      informativity: null
+      name: lillooet
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
     - form: k'a
       lot: (epistemic )
       meaning:
-      - weak+epistemic
       - strong+epistemic
+      - weak+epistemic
     - form: ka-...-a
       lot: (circumstantial )
       meaning:
@@ -79,8 +100,8 @@ languages:
     - form: ka
       lot: (deontic )
       meaning:
-      - weak+deontic
       - strong+deontic
+      - weak+deontic
     - form: -an'
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -89,19 +110,24 @@ languages:
       lot: (* (strong ) (epistemic ))
       meaning:
       - strong+epistemic
-    measurements:
-      complexity: 14
-      iff: 1.0
-      informativity: 0.8055555547796296
-      optimality: 0.9656226418764988
-- - logoori
-  - expressions:
+- logoori:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      iff: null
+      informativity: null
+      name: logoori
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
     - form: kunyala
       lot: (weak )
       meaning:
       - weak+deontic
-      - weak+epistemic
       - weak+circumstantial
+      - weak+epistemic
     - form: haondi
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -113,16 +139,21 @@ languages:
     - form: kudoka
       lot: (strong )
       meaning:
+      - strong+deontic
       - strong+epistemic
       - strong+circumstantial
-      - strong+deontic
-    measurements:
-      complexity: 12
-      iff: 1.0
-      informativity: 0.7333333325091427
-      optimality: 0.92922954807098
-- - tlingit
-  - expressions:
+- tlingit:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      iff: null
+      informativity: null
+      name: tlingit
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
     - form: "gw\xE1l"
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -143,8 +174,3 @@ languages:
       lot: (* (weak ) (circumstantial ))
       meaning:
       - weak+circumstantial
-    measurements:
-      complexity: 20
-      iff: 1.0
-      informativity: 0.5505952379809382
-      optimality: 0.7263899474181075

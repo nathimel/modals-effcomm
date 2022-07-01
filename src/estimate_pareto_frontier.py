@@ -94,19 +94,27 @@ def main():
         Interchange_Modal(),
     ]
 
-    # # sanity check: perfectly informative language
-    # vocab = []
-    # points = space.objects
-    # # Sanity check: create a perfectly informative language.
-    # for expression in expressions:
-    #     points_ = expression.meaning.objects
-    #     if len(points_) == 1:
-    #         vocab.append(expression)
-    # assert len(vocab) == len(points)
-    # lang = ModalLanguage(vocab)
-    # lang.data["name"] = 'Sanity_Check'
-    # # explored_langs.append(lang)
-    # seed_population.append(lang)
+    # sanity check: perfectly informative language
+    vocab = []
+    points = space.objects
+    # Sanity check: create a perfectly informative language.
+    for expression in expressions:
+        points_ = expression.meaning.objects
+        if len(points_) == 1:
+            vocab.append(expression)
+    assert len(vocab) == len(points)
+    lang = ModalLanguage(vocab, name='Sanity_Check')
+
+    # perfect informativeness but synonymy
+    vocab1 = vocab
+    for expression in expressions:
+        points_ = expression.meaning.objects
+        if len(points_) == 1:
+            vocab1.append(expression) # add each synonym
+    lang1 = ModalLanguage(vocab1, name='Synonymy')
+    
+    seed_population.append(lang)
+    seed_population.append(lang1)
 
     # Initialize optimizer and run algorithm
     optimizer = EvolutionaryOptimizer(

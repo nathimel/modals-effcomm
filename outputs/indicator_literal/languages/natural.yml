@@ -7,6 +7,42 @@ forces:
 - strong
 id_start: null
 languages:
+- lillooet:
+    data:
+      Language: natural
+      comm_cost: 0.44444444444444453
+      complexity: 14
+      dlsav: false
+      iff: 1.0
+      informativity: 0.5555555555555555
+      name: lillooet
+      optimality: 0.9472953673801683
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
+      meaning:
+      - weak+circumstantial
+      - strong+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
 - gitksan:
     data:
       Language: natural
@@ -16,7 +52,7 @@ languages:
       iff: 1.0
       informativity: 0.6666666666666667
       name: gitksan
-      optimality: 0.9836569306068532
+      optimality: 0.9648635602876524
       sav: 1.0
       simplicity: null
     expressions:
@@ -41,44 +77,8 @@ languages:
     - form: sgi
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
-- lillooet:
-    data:
-      Language: natural
-      comm_cost: 0.44444444444444453
-      complexity: 14
-      dlsav: false
-      iff: 1.0
-      informativity: 0.5555555555555555
-      name: lillooet
-      optimality: 0.9722220971724886
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: k'a
-      lot: (epistemic )
-      meaning:
-      - strong+epistemic
-      - weak+epistemic
-    - form: ka-...-a
-      lot: (circumstantial )
-      meaning:
       - strong+circumstantial
-      - weak+circumstantial
-    - form: ka
-      lot: (deontic )
-      meaning:
-      - strong+deontic
-      - weak+deontic
-    - form: -an'
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: -ku7
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
 - logoori:
     data:
       Language: natural
@@ -95,9 +95,9 @@ languages:
     - form: kunyala
       lot: (weak )
       meaning:
-      - weak+epistemic
-      - weak+circumstantial
       - weak+deontic
+      - weak+circumstantial
+      - weak+epistemic
     - form: haondi
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -109,9 +109,9 @@ languages:
     - form: kudoka
       lot: (strong )
       meaning:
-      - strong+circumstantial
-      - strong+deontic
       - strong+epistemic
+      - strong+deontic
+      - strong+circumstantial
 - javanese:
     data:
       Language: natural
@@ -121,7 +121,7 @@ languages:
       iff: 1.0
       informativity: 0.8333333333333333
       name: javanese
-      optimality: 0.9808257850819573
+      optimality: 0.9824317801438261
       sav: 1.0
       simplicity: null
     expressions:
@@ -144,8 +144,8 @@ languages:
     - form: kudu1
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
+      - strong+circumstantial
 - tlingit:
     data:
       Language: natural
@@ -155,7 +155,7 @@ languages:
       iff: 1.0
       informativity: 0.5
       name: tlingit
-      optimality: 0.901778902706758
+      optimality: 0.877022533316314
       sav: 1.0
       simplicity: null
     expressions:
