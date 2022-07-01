@@ -96,7 +96,7 @@ class ModalLanguage(Language):
     def rename_synonyms(
         self, expressions: list[ModalExpression]
     ) -> list[ModalExpression]:
-        """Give any expressions with exactly the same meanings different forms.
+        """Give any expressions with exactly the same meanings (e.g., synonyms) different forms.
 
         This is necessary at least because a speaker and listener need to be able to distinguish them.
         """
@@ -167,24 +167,14 @@ class ModalLanguage(Language):
         expressions = data["expressions"]
         measurements = data["measurements"]
 
-        # complexity = measurements["complexity"]
-        # informativity = measurements["informativity"]
-        # optimality = measurements["optimality"]
-        # iff = measurements["iff"]
-
         expressions = [ModalExpression.from_yaml_rep(x, space) for x in expressions]
         lang = cls(expressions, name=name, measurements=measurements)
-        # lang.complexity = complexity
-        # lang.informativity = informativity
-        # lang.optimality = optimality
-        # lang.naturalness = iff
-        # lang.measurements = measurements
 
         return lang
 
     def is_natural(self) -> bool:
         """Whether a Modal Language represents a natural language constructed from typological data."""
-        return not "sampled_lang" in self.name
+        return not any([c for c in self.name if c.isdigit()])
 
 
 ##############################################################################

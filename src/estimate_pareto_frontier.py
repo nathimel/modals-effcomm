@@ -69,6 +69,7 @@ def main():
     objectives = {
         "comm_cost": lambda lang: 1
         - informativity_measure.language_informativity(lang),
+        "informativity": informativity_measure.language_informativity,        
         "complexity": complexity_measure.language_complexity,
     }
 

@@ -52,16 +52,9 @@ class Add_Point(Mutation):
     """Add a new modal expressing exactly one point the language does not already cover. Designed to increase informativity."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
-        """Only apply when language is not perfectly informative and every point is not already expressible."""
-
-        # Check informativity
-        inf = language.measurements["informativity"]
-        if inf is None or np.isclose(inf, 1.0):        
-            return False
-
+        """Only apply when every point is not already expressible."""
         # Check if any inexpressible meanings
-        to_add = uncovered_points(language)
-        return bool(to_add)
+        return bool(uncovered_points(language))
 
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression], **kwargs
@@ -99,7 +92,7 @@ class Remove_Point(Mutation):
         """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
 
         # Is not already perfectly informative
-        inf = language.measurements["informativity"]
+        inf = kwargs["objectives"]["informativity"](language)
         if inf is None or np.isclose(inf, 1.0):
             return False
 

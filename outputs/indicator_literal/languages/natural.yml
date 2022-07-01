@@ -5,70 +5,10 @@ flavors:
 forces:
 - weak
 - strong
+id_start: null
 languages:
-- - javanese
-  - expressions:
-    - form: mesthi
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: paleng
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: oleh
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: iso
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: kudu1
-      lot: (* (strong ) (- (epistemic )))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    measurements:
-      comm_cost: 0.16666666666666674
-      complexity: 20
-      dlsav: false
-      iff: 1.0
-      informativity: 0.8333333333333333
-      optimality: 0.9999751498302161
-      sav: 1.0
-- - logoori
-  - expressions:
-    - form: kunyala
-      lot: (weak )
-      meaning:
-      - weak+circumstantial
-      - weak+epistemic
-      - weak+deontic
-    - form: haondi
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: fwana
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: kudoka
-      lot: (strong )
-      meaning:
-      - strong+circumstantial
-      - strong+epistemic
-      - strong+deontic
-    measurements:
-      comm_cost: 0.5925925925925926
-      complexity: 12
-      dlsav: false
-      iff: 1.0
-      informativity: 0.40740740740740744
-      optimality: 0.9311125047743487
-      sav: 1.0
-- - tlingit
-  - expressions:
+- tlingit:
+    expressions:
     - form: "gw\xE1l"
       lot: (* (weak ) (epistemic ))
       meaning:
@@ -95,10 +35,43 @@ languages:
       dlsav: true
       iff: 1.0
       informativity: 0.5
-      optimality: 0.8956075429539386
+      optimality: 0.877022533316314
       sav: 1.0
-- - lillooet
-  - expressions:
+- gitksan:
+    expressions:
+    - form: "ima(\u2019a)"
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: gat
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: "da\u2019akhlxw"
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: anook(xw)
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: sgi
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    measurements:
+      comm_cost: 0.33333333333333326
+      complexity: 16
+      dlsav: true
+      iff: 1.0
+      informativity: 0.6666666666666667
+      optimality: 0.9836569306068532
+      sav: 1.0
+- lillooet:
+    expressions:
     - form: k'a
       lot: (epistemic )
       meaning:
@@ -128,38 +101,66 @@ languages:
       dlsav: false
       iff: 1.0
       informativity: 0.5555555555555556
-      optimality: 0.965912665699999
+      optimality: 0.9472953673801684
       sav: 1.0
-- - gitksan
-  - expressions:
-    - form: "ima(\u2019a)"
-      lot: (epistemic )
+- javanese:
+    expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
       meaning:
       - strong+epistemic
-      - weak+epistemic
-    - form: gat
-      lot: (epistemic )
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
       meaning:
-      - strong+epistemic
       - weak+epistemic
-    - form: "da\u2019akhlxw"
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: anook(xw)
+    - form: oleh
       lot: (* (weak ) (deontic ))
       meaning:
       - weak+deontic
-    - form: sgi
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+circumstantial
       - strong+deontic
+      - strong+circumstantial
     measurements:
-      comm_cost: 0.33333333333333326
-      complexity: 16
-      dlsav: true
+      comm_cost: 0.16666666666666674
+      complexity: 20
+      dlsav: false
       iff: 1.0
-      informativity: 0.6666666666666667
-      optimality: 0.9836569306068532
+      informativity: 0.8333333333333333
+      optimality: 0.9824317801438261
+      sav: 1.0
+- logoori:
+    expressions:
+    - form: kunyala
+      lot: (weak )
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: haondi
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: fwana
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: kudoka
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    measurements:
+      comm_cost: 0.5925925925925926
+      complexity: 12
+      dlsav: false
+      iff: 1.0
+      informativity: 0.40740740740740744
+      optimality: 0.9311125047743487
       sav: 1.0

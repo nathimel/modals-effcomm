@@ -3,7 +3,7 @@ done.
 Generating expressions...
 done.
 Sampling languages ...
-Saved 4555 sampled languages
+Saved 4519 sampled languages
 done.
 Adding gitksan
 Adding javanese
@@ -13,88 +13,88 @@ Adding tlingit
 Saved 5 natural languages
 Estimating pareto frontier ...
 Sampling seed generation...
-Saved 80777 sampled languages
-Saved 152 dominant languages
+Saved 7033 sampled languages
+Saved 13 dominant languages
 done.
 Measuring tradeoff ...
 Loading all languages ...
 sampled...
 dominant...
 natural...
-80790 total langs.
+7038 total langs.
 Measuring min distance to frontier ...
 Setting optimality ...
-Saved 80790 sampled languages
-Saved 154 dominant languages
+Saved 7038 sampled languages
+Saved 14 dominant languages
 Saved 5 natural languages
 done.
 Constructing dataframe...
 Constructing dataframe...
 Constructing dataframe...
-Length of DataFrame: 80795
+Length of DataFrame: 7043
 first 10 of sampled data: 
-               name       sav   iff  dlsav  simplicity  informativity  \
-0  sampled_lang_103  0.000000  0.00  False    0.833333       0.250000   
-1   sampled_lang_92  0.500000  0.50  False    0.833333       0.194444   
-2  sampled_lang_191  0.000000  0.00  False    0.861111       0.236111   
-3   sampled_lang_66  0.500000  0.75  False    0.791667       0.291667   
-4   sampled_lang_13  0.666667  1.00  False    0.875000       0.277778   
-5  sampled_lang_192  0.250000  0.50  False    0.791667       0.259259   
-6   sampled_lang_13  0.000000  0.00  False    0.694444       0.305556   
-7   sampled_lang_62  0.250000  0.50  False    0.736111       0.270833   
-8  sampled_lang_157  0.500000  0.50  False    0.888889       0.277778   
-9  sampled_lang_157  0.000000  0.50  False    0.875000       0.222222   
+                 name       sav       iff  dlsav  simplicity  informativity  \
+0   sampled_lang_7190  0.250000  0.250000  False    0.666667       0.312500   
+1   sampled_lang_2665  0.142857  0.285714  False    0.472222       0.315046   
+2    sampled_lang_637  0.000000  0.333333  False    0.805556       0.229167   
+3  sampled_lang_15570  1.000000  1.000000  False    0.888889       0.333333   
+4   sampled_lang_1025  1.000000  1.000000  False    0.861111       0.500000   
+5   sampled_lang_7284  0.400000  0.800000  False    0.763889       0.299769   
+6   sampled_lang_8216  0.000000  0.333333  False    0.847222       0.215278   
+7   sampled_lang_7709  0.000000  0.333333  False    0.791667       0.231481   
+8   sampled_lang_7058  0.250000  0.500000  False    0.694444       0.368056   
+9   sampled_lang_6611  0.000000  0.000000  False    0.805556       0.222222   
 
    optimality    Language  comm_cost  complexity  
-0    0.914730  artificial   0.750000          12  
-1    0.909447  artificial   0.805556          12  
-2    0.933003  artificial   0.763889          10  
-3    0.889150  artificial   0.708333          15  
-4    0.946402  artificial   0.722222           9  
-5    0.886307  artificial   0.740741          15  
-6    0.822399  artificial   0.694444          22  
-7    0.848342  artificial   0.729167          19  
-8    0.956147  artificial   0.722222           8  
-9    0.941529  artificial   0.777778           9  
+0    0.803832  artificial   0.687500          24  
+1    0.668506  artificial   0.684954          38  
+2    0.893413  artificial   0.770833          14  
+3    0.961251  artificial   0.666667           8  
+4    0.964864  artificial   0.500000          10  
+5    0.870370  artificial   0.700231          17  
+6    0.921430  artificial   0.784722          11  
+7    0.883871  artificial   0.768519          15  
+8    0.829665  artificial   0.631944          22  
+9    0.892804  artificial   0.777778          14  
 
 the natural languages
        name  sav  iff  dlsav  simplicity  informativity  optimality Language  \
-0   gitksan  1.0  1.0   True    0.777778       0.666667    0.983657  natural   
-1   tlingit  1.0  1.0   True    0.722222       0.500000    0.895608  natural   
-2  lillooet  1.0  1.0  False    0.805556       0.555556    0.965913  natural   
+0  javanese  1.0  1.0  False    0.722222       0.833333    0.982432  natural   
+1  lillooet  1.0  1.0  False    0.805556       0.555556    0.947295  natural   
+2   tlingit  1.0  1.0   True    0.722222       0.500000    0.877023  natural   
 3   logoori  1.0  1.0  False    0.833333       0.407407    0.931113  natural   
-4  javanese  1.0  1.0  False    0.722222       0.833333    0.999975  natural   
+4   gitksan  1.0  1.0   True    0.777778       0.666667    0.983657  natural   
 
    comm_cost  complexity  
-0   0.333333          16  
-1   0.500000          20  
-2   0.444444          14  
+0   0.166667          20  
+1   0.444444          14  
+2   0.500000          20  
 3   0.592593          12  
-4   0.166667          20  
+4   0.333333          16  
 
 Degree sav pearson correlations:
-simplicity: 0.143203069524163
-complexity: -0.14320306952416276
-informativity: 0.47195410755973566
-optimality: 0.23285976339261172
+simplicity: 0.11211094705108242
+complexity: -0.11211094705108243
+informativity: 0.695592836837506
+optimality: 0.24463803961696204
 
 MEANS
                   simplicity  complexity  informativity  optimality
 name                                                               
-natural_means       0.772222   16.400000       0.592593    0.955253
-dlsav_means         0.750000   18.000000       0.583333    0.939632
-population_means    0.801966   14.258432       0.268393    0.895415
+natural_means       0.772222   16.400000       0.592593    0.944304
+dlsav_means         0.750000   18.000000       0.583333    0.930340
+population_means    0.682399   22.867244       0.340357    0.826986
 
 TTEST STATS
 natural languages against population
                    simplicity  complexity  informativity  optimality
 stat                                                                
-t-statistic         -1.338480    1.338480       4.418315    3.184677
-Two-sided p-value    0.251753    0.251753       0.011526    0.033386
+t-statistic          4.042028   -4.042028       3.437554    5.974350
+Two-sided p-value    0.015578    0.015578       0.026353    0.003944
 
 dlsav languages against population
                    simplicity  complexity  informativity  optimality
 stat                                                                
-t-statistic         -1.870784    1.870784       3.779286    1.004378
-Two-sided p-value    0.312512    0.312512       0.164676    0.498609
+t-statistic          2.433622   -2.433622       2.915711    1.938465
+Two-sided p-value    0.248203    0.248203       0.210338    0.303199
 
