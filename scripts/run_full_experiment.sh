@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Example: ./scripts/main_results.sh configs/main_results/config.yml
+# Example: ./scripts/run_full_experiment.sh configs/main_results/config.yml
 
 if test $# -lt 1
 then

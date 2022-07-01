@@ -1,15 +1,9 @@
 import sys
-import scipy
-import numpy as np
 import pandas as pd
 import plotnine as pn
-from tqdm import tqdm
 from altk.effcomm.tradeoff import interpolate_data
-from altk.effcomm.analysis import get_dataframe
+from altk.effcomm.analysis import get_dataframe, pearson_analysis, trade_off_means, trade_off_ttest
 from misc.file_util import load_languages, load_configs, set_seed
-from modals.modal_language import ModalLanguage
-from scipy.stats import ttest_1samp
-from typing import Any
 
 def get_modals_plot(
     data: pd.DataFrame,
@@ -66,84 +60,6 @@ def get_modals_plot(
     )
     return plot
 
-
-def pearson_analysis(
-    data, predictor: str, property: str, num_bootstrap_samples=100
-) -> dict[str, Any]:
-    """Measures pearson correlation coefficient for naturalness with a property.
-
-    Use nonparametric bootstrap for confidence intervals.
-
-    Args:
-        data: a DataFrame representing the pool of measured languages
-
-        predictor: a string representing the column to measure pearson r with
-
-        property: a string representing a column to measure pearson r with the predictor column
-
-        num_bootstrap_samples: how many samples to bootstrap from the original data
-    """
-    min_percent = 0.01  # must be > 2/ len(data)
-    intervals = 5
-    boots = [int(item * 100) for item in np.geomspace(min_percent, 1.0, intervals)]
-    confidence_intervals_df = pd.DataFrame(
-        {"bootstrap_sample_percent": boots, "low": None, "high": None}
-    )
-
-    r, _ = scipy.stats.pearsonr(data[property], data[predictor])
-    for i, bootstrap_sample_percent in enumerate(
-        np.geomspace(min_percent, 1.0, num=intervals)
-    ):
-        rhos = []
-        for _ in range(num_bootstrap_samples):
-            bootstrap_sample = data.sample(
-                n=int(bootstrap_sample_percent * len(data)), replace=True
-            )
-            try:
-                rho, _ = scipy.stats.pearsonr(
-                    bootstrap_sample[property],
-                    bootstrap_sample[predictor],
-                )
-            except ValueError:
-                print("MINIMUM SIZE OF DATA: ", int(2 / min_percent))
-                print("SIZE OF DATA: ", len(data.index))
-                assert False
-            rhos.append(rho)
-        interval = scipy.stats.scoreatpercentile(rhos, (2.5, 97.5))
-        confidence_intervals_df.iloc[
-            i, confidence_intervals_df.columns.get_loc("low")
-        ] = interval[0]
-        confidence_intervals_df.iloc[
-            i, confidence_intervals_df.columns.get_loc("high")
-        ] = interval[1]
-
-    return {"rho": r, "confidence_intervals": confidence_intervals_df}
-
-
-def trade_off_means(name: str, df: pd.DataFrame, properties: list) -> pd.DataFrame:
-    """Get a dataframe with the population and natural mean tradeoff data."""
-    means_dict = {prop: [df[prop].mean()] for prop in properties} | {"name": name}
-    means_df = pd.DataFrame(data=means_dict)
-    return means_df
-
-
-def trade_off_ttest(
-    natural_data: pd.DataFrame, population_means: pd.DataFrame, properties: list
-) -> pd.DataFrame:
-    """Get a dataframe with the population and natural (mean) t-test results.
-
-    Since the property of 'being a natural language' is categorical, we use a single-samples T test.
-    """
-    data = {}
-    for prop in properties:
-        result = ttest_1samp(natural_data[prop], population_means.iloc[0][prop])
-        data[prop] = [result.statistic, result.pvalue]
-
-    df = pd.DataFrame(data)
-    df["stat"] = ["t-statistic", "Two-sided p-value"]
-    return df.set_index("stat")
-
-
 ##############################################################################
 # Main driver code
 ##############################################################################
@@ -184,7 +100,10 @@ def main():
         result_dominant["languages"],
     )
 
-    # Main analysis
+    ############################################################################
+    # Construct main dataframe and plot
+    ############################################################################
+
     data = get_dataframe(langs, subset=["complexity", "comm_cost"])
     pareto_data = get_dataframe(dom_langs, subset=["complexity", "comm_cost"])
     natural_data = get_dataframe(nat_langs, subset=["complexity", "comm_cost"])
@@ -195,21 +114,18 @@ def main():
     plot = get_modals_plot(data, pareto_data, naturalness=naturalness, counts=False)
     plot.save(plot_fn, width=10, height=10, dpi=300)
 
+
+    ############################################################################
+    # Statistics
+    ############################################################################
+
     # scale complexity to measure simplicity
     max_complexity = data["complexity"].max()
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
     natural_data["simplicity"] = simplicity(natural_data)
 
-    print("first 10 of sampled data: ")
-    print(data.head(10))
-    print()
-
-    print("the natural languages")
-    print(natural_data)
-    print()
-
-    # Run statistics on tradeoff properties
+    # tradeoff properties
     properties = ["simplicity", "complexity", "informativity", "optimality"]
 
     # Pearson correlations
@@ -230,8 +146,14 @@ def main():
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
     means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index("name")
-    ttest_natural_df = trade_off_ttest(natural_data, population_means, properties)
-    ttest_dlsav_df = trade_off_ttest(dlsav_data, population_means, properties)
+    pop_means_dict = population_means.iloc[0].to_dict()
+    ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
+    ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
+
+
+    ############################################################################
+    # Print report to stdout and save
+    ############################################################################
 
     # visualize
     print(f"Degree {naturalness} pearson correlations:")
