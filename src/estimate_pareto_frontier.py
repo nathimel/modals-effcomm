@@ -33,6 +33,7 @@ def main():
     generations = evolutionary_alg_configs["num_generations"]
     processes = evolutionary_alg_configs["num_processes"]
     lang_size = evolutionary_alg_configs["maximum_lang_size"]
+    explore = evolutionary_alg_configs["explore"]
 
     set_seed(configs["random_seed"])
 
@@ -106,7 +107,7 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    result = optimizer.fit(seed_population, id_start)
+    result = optimizer.fit(seed_population, id_start, explore=explore)
     dominant_langs = result["dominating_languages"]
     explored_langs = result["explored_languages"]
     id_start = result["id_start"]

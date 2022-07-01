@@ -1,6 +1,7 @@
 The purpose of this file is to track bugs that often recur, and document how they were resolved.
 
 6.29.22: incomplete looking plot
+
 The high informativity, low communicative cost languages don't seem to be getting explored after some updates, most recently to altk's optimization and agent modules. The space used to be fully explored. I have seen this problem before too. 
 Tried:
     Looking into AddPoint:
@@ -11,3 +12,9 @@ Tried:
     Looking into the history of some of the plots on github:
     - Looks like I had a similar issue when testing out various mutations, and found that RemovePoint was the culprit; apparently removing it as a possible mutation allowed the high informativity space to be explored. But it's possible that this wasn't the only cause, or at least something else may have motivated me to keep RemovePoint, because it still exists in the codebase.
         - Sure enough, commenting it out didn't improve on dev setting or a full run on indicator_literal. 
+
+6.29.22: random seed not producing deterministic behavior
+
+I have never seen deterministic behavior yet, but making the entry now. All scripts call the set_seed() function, which updates the only two libraries I know of that I'm using that use randomness:
+    - random
+    - numpy

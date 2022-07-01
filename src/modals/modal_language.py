@@ -93,12 +93,6 @@ class ModalLanguage(Language):
                 "sav": None,
             } if measurements is None else measurements
 
-        # initialize all effcomm data
-        # self.complexity = None
-        # self.informativity = None
-        # self.optimality = None
-        # self.naturalness = None
-
     def rename_synonyms(
         self, expressions: list[ModalExpression]
     ) -> list[ModalExpression]:
@@ -139,7 +133,8 @@ class ModalLanguage(Language):
         return f"Modal_Language: {self.name}\n[\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        return hash(tuple([self.name] + sorted(self.expressions)))
+        # requiring diff name is a strong requirement
+        return hash(tuple(sorted(self.expressions)))
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
