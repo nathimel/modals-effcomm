@@ -1,0 +1,56 @@
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling languages ...
+Saved 4320 sampled languages
+done.
+Adding gitksan
+Adding javanese
+Adding lillooet
+Adding logoori
+Adding tlingit
+Saved 5 natural languages
+Estimating pareto frontier ...
+Sampling seed generation...
+Saved 7630 sampled languages
+Saved 18 dominant languages
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+dominant...
+natural...
+7635 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 7635 sampled languages
+Saved 17 dominant languages
+Saved 5 natural languages
+done.
+Degree sav pearson correlations:
+simplicity: 0.0642306827785532
+complexity: -0.0642306827785531
+informativity: 0.7212602029123281
+optimality: 0.16389279851057326
+
+MEANS
+                  simplicity  complexity  informativity  optimality
+name                                                               
+natural_means       0.772222   16.400000       0.956111    0.862341
+dlsav_means         0.750000   18.000000       1.162500    0.776487
+population_means    0.666207   24.033115       0.697273    0.810431
+
+TTEST STATS
+natural languages against population
+                   simplicity  complexity  informativity  optimality
+stat                                                                
+t-statistic          4.770697   -4.770697       1.888408    0.911227
+Two-sided p-value    0.008836    0.008836       0.131993    0.413723
+
+dlsav languages against population
+                   simplicity  complexity  informativity  optimality
+stat                                                                
+t-statistic          3.016558   -3.016558       1.413349   -0.243750
+Two-sided p-value    0.203784    0.203784       0.392010    0.847792
+

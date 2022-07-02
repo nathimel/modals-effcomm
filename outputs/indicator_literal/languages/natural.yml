@@ -7,34 +7,101 @@ forces:
 - strong
 id_start: null
 languages:
+- javanese:
+    data:
+      Language: natural
+      comm_cost: 0.16666666666666674
+      complexity: 20
+      dlsav: false
+      iff: 1.0
+      informativity: 0.8333333333333333
+      name: javanese
+      optimality: 0.9882148315419611
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: oleh
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+- tlingit:
+    data:
+      Language: natural
+      comm_cost: 0.5
+      complexity: 20
+      dlsav: true
+      iff: 1.0
+      informativity: 0.5
+      name: tlingit
+      optimality: 0.9015201742303861
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "gw\xE1l"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: giwe
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: "sh\xE1kd\xE9"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: future mode
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: potential mode
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
 - lillooet:
     data:
       Language: natural
-      comm_cost: 0.44444444444444453
+      comm_cost: 0.4444444444444444
       complexity: 14
       dlsav: false
       iff: 1.0
-      informativity: 0.5555555555555555
+      informativity: 0.5555555555555556
       name: lillooet
-      optimality: 0.9472953673801683
+      optimality: 0.9708207819030531
       sav: 1.0
       simplicity: null
     expressions:
     - form: k'a
       lot: (epistemic )
       meaning:
-      - strong+epistemic
       - weak+epistemic
+      - strong+epistemic
     - form: ka-...-a
       lot: (circumstantial )
       meaning:
-      - weak+circumstantial
       - strong+circumstantial
+      - weak+circumstantial
     - form: ka
       lot: (deontic )
       meaning:
-      - strong+deontic
       - weak+deontic
+      - strong+deontic
     - form: -an'
       lot: (* (strong ) (epistemic ))
       meaning:
@@ -52,7 +119,7 @@ languages:
       iff: 1.0
       informativity: 0.6666666666666667
       name: gitksan
-      optimality: 0.9648635602876524
+      optimality: 0.9836569306068532
       sav: 1.0
       simplicity: null
     expressions:
@@ -77,8 +144,8 @@ languages:
     - form: sgi
       lot: (* (strong ) (- (epistemic )))
       meaning:
-      - strong+deontic
       - strong+circumstantial
+      - strong+deontic
 - logoori:
     data:
       Language: natural
@@ -109,73 +176,6 @@ languages:
     - form: kudoka
       lot: (strong )
       meaning:
+      - strong+circumstantial
       - strong+epistemic
       - strong+deontic
-      - strong+circumstantial
-- javanese:
-    data:
-      Language: natural
-      comm_cost: 0.16666666666666674
-      complexity: 20
-      dlsav: false
-      iff: 1.0
-      informativity: 0.8333333333333333
-      name: javanese
-      optimality: 0.9824317801438261
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: mesthi
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: paleng
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: oleh
-      lot: (* (weak ) (deontic ))
-      meaning:
-      - weak+deontic
-    - form: iso
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
-    - form: kudu1
-      lot: (* (strong ) (- (epistemic )))
-      meaning:
-      - strong+deontic
-      - strong+circumstantial
-- tlingit:
-    data:
-      Language: natural
-      comm_cost: 0.5
-      complexity: 20
-      dlsav: true
-      iff: 1.0
-      informativity: 0.5
-      name: tlingit
-      optimality: 0.877022533316314
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: "gw\xE1l"
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: giwe
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: "sh\xE1kd\xE9"
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: future mode
-      lot: (* (strong ) (circumstantial ))
-      meaning:
-      - strong+circumstantial
-    - form: potential mode
-      lot: (* (weak ) (circumstantial ))
-      meaning:
-      - weak+circumstantial
