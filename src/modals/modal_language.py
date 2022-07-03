@@ -1,3 +1,5 @@
+import numpy as np
+
 from collections import Counter
 from copy import deepcopy
 from itertools import product
@@ -228,33 +230,37 @@ def sav(e: ModalExpression) -> bool:
     return True
 
 def dlsav(language: ModalLanguage) -> bool:
-    """Domain-Level Single Axis of Variability universal: modals may be ambiguous across force or flavor, within a single modal domain (root vs epistemic)."""
-    ambiguity_within_root = {"force": False, "flavor": False}
+    """Domain-Level Single Axis of Variability universal: modals may be ambiguous across force or flavor, within a single modal domain (root vs epistemic).
+    
+    There is one main case to check for, after checking that the SAV universal holds of all expressions. 
+
+    Note: Epistemic modals never cause a violation.
+     - if modal is within the epistemic domain and satisfies sav, dlsav will not be violated (because there is only one flavor in this 'domain', and modals are allowed to span domains, e.g. English 'must'.)    
+
+    Case to check for: there aren't both kinds of ambiguity within the root domain.
+    - if the modal is in the root domain, and is ambiguous along axis a, no other root modals may be ambiguous across axis b where a != b. 
+    """
+    row_ambigs = False
+    col_ambigs = False
     for expression in language.expressions:
         # preliminary: dlsav is a refinement
         if not sav(expression):
             return False
 
-        points = expression.meaning.objects
-        # case 1: if modal is within the epistemic domain,
-        # the sav criterion is materially equivalent.
+        # get meanings
+        argw = np.argwhere(expression.meaning.to_array())
+        # has more than a single meaning
+        if argw.size != 0 and len(argw) != 1: 
+            # any meanings not the epistemic column
+            if np.any(argw[:,1]):
+                # check all values same along first axis
+                if np.all(argw[:,0] == argw[0,0]):
+                    row_ambigs = True
+                # check all values same along second axis
+                if np.all(argw[:,1] == argw[0,1]):
+                    col_ambigs = True
 
-        # case 2: if modal is in the root domain, 
-        # and is ambiguous along axis a, no other root modals may be ambiguous
-        # across axis b where a != b.
-        forces = set()
-        flavors = set()
-        for point in points:
-            force, flavor = point.split("+")
-            forces.add(force)
-            flavors.add(flavor)
-
-        if len(forces) > 1:
-            ambiguity_within_root["force"] = True
-        if len(flavors) > 1:
-            ambiguity_within_root["flavor"] = True
-
-    # check if case 2 was satisfied at the language level
-    if len(set(ambiguity_within_root.values())) > 1:
-        return False
-    return True
+    # if not both kinds of ambiguity / case 2 is true of entire language
+    if not (row_ambigs and col_ambigs):
+        return True
+    return False
