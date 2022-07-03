@@ -13,6 +13,8 @@ Tried:
     - Looks like I had a similar issue when testing out various mutations, and found that RemovePoint was the culprit; apparently removing it as a possible mutation allowed the high informativity space to be explored. But it's possible that this wasn't the only cause, or at least something else may have motivated me to keep RemovePoint, because it still exists in the codebase.
         - Sure enough, commenting it out didn't improve on dev setting or a full run on indicator_literal. 
 
+    - with the pragmatic settings, the effect is less dramatic, but there's still a surprising lack of exploration. I know this because I added a highly complex, but still perfectly informative language (one with many synonyms) and the points in between this and the perfect informative language with no synonyms were not found.
+
 6.29.22: random seed not producing deterministic behavior
 
 I have never seen deterministic behavior yet, but making the entry now. All scripts call the set_seed() function, which updates the only two libraries I know of that I'm using that use randomness:

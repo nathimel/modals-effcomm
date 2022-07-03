@@ -141,16 +141,18 @@ class ModalMeaning(Meaning):
     """
 
     def __init__(self, points: Iterable, meaning_space: ModalMeaningSpace):
-        self.objects = list(points)
-        self.universe = meaning_space
+        """
+        Args: 
+        """
+        self.objects = list(points) # the points in the meaning space with nonzero probability
 
-    def to_distribution(self) -> dict:
-        """Convert the set of points into a dict representing a uniform distribution over meaning points."""
-        can_express = {k: len(self.objects) for k, v in self.objects}
+        # Construct the probability distribution over points
+        can_express = {k: len(self.objects) for k in self.objects}
         space = {
-            k: 0 for k in self.universe.objects if k not in can_express
+            k: 0 for k in meaning_space.objects if k not in can_express
         }
-        return can_express | space
+        dist = can_express | space
+        super().__init__(dist=dist, universe=meaning_space)
 
     def to_array(self) -> np.ndarray:
         """Converts the set of points to a numpy array.
