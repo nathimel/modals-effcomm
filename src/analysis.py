@@ -8,7 +8,7 @@ from misc.file_util import load_languages, load_configs, set_seed
 def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
-    naturalness="iff",
+    naturalness: str,
     counts=False,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.

@@ -1,0 +1,121 @@
+>>> import pandas as pd
+>>> df = pd.read_csv("/Users/nathanielimel/clms/projects/modals-effcomm/outputs/half_credit_literal/dataframe.csv")
+>>> df
+       comm_cost  complexity  naturalness    Language
+0       0.344444          18     0.800000  artificial
+1       0.375000          14     0.750000  artificial
+2       0.425694          16     0.500000  artificial
+3       0.259259          30     0.714286  artificial
+4       0.416667          12     0.666667  artificial
+...          ...         ...          ...         ...
+21756   0.166667          16     1.000000     natural
+21757   0.083333          20     1.000000     natural
+21758   0.222222          14     1.000000     natural
+21759   0.296296          12     1.000000     natural
+21760   0.500000          20     1.000000     natural
+
+[21761 rows x 4 columns]
+>>> df_valuecounts = df.value_counts(subset=["complexity", "comm_cost"], sort=False)
+>>> df_valuecounts
+complexity  comm_cost
+1           0.583333     12
+2           0.666667      9
+            0.666667     23
+            0.750000     22
+3           0.520833      7
+                         ..
+68          0.533128      1
+70          0.488889      1
+            0.503472      1
+            0.518171      1
+74          0.515509      1
+Length: 7701, dtype: int64
+>>> df1 = df.drop_duplicates(subset=["complexity", "comm_cost"])
+>>> df1
+       comm_cost  complexity  naturalness    Language
+0       0.344444          18     0.800000  artificial
+1       0.375000          14     0.750000  artificial
+2       0.425694          16     0.500000  artificial
+3       0.259259          30     0.714286  artificial
+4       0.416667          12     0.666667  artificial
+...          ...         ...          ...         ...
+21714   0.184028          26     0.857143  artificial
+21717   0.371528          28     0.833333  artificial
+21725   0.416088          25     0.714286  artificial
+21731   0.340278          28     0.857143  artificial
+21759   0.296296          12     1.000000     natural
+
+[7701 rows x 4 columns]
+>>> df1.sort_values(by=["complexity", "comm_cost"])
+       comm_cost  complexity  naturalness    Language
+2749    0.583333           1          1.0  artificial
+336     0.666667           2          1.0  artificial
+755     0.666667           2          1.0  artificial
+36      0.750000           2          1.0  artificial
+3685    0.520833           3          1.0  artificial
+...          ...         ...          ...         ...
+15828   0.533128          68          0.1  artificial
+2033    0.488889          70          0.0  artificial
+21206   0.503472          70          0.0  artificial
+18692   0.518171          70          0.0  artificial
+8078    0.515509          74          0.0  artificial
+
+[7701 rows x 4 columns]
+>>> df1 = df1.sort_values(by=["complexity", "comm_cost"])
+>>> df1["counts"] = df_valuecounts
+Traceback (most recent call last):
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/frame.py", line 10988, in _reindex_for_setitem
+    reindexed_value = value.reindex(index)._values
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/series.py", line 4672, in reindex
+    return super().reindex(**kwargs)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/generic.py", line 4974, in reindex
+    return self._reindex_axes(
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/generic.py", line 4989, in _reindex_axes
+    new_index, indexer = ax.reindex(
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 4223, in reindex
+    target = self._wrap_reindex_result(target, indexer, preserve_names)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 2522, in _wrap_reindex_result
+    target = MultiIndex.from_tuples(target)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 204, in new_meth
+    return meth(self_or_cls, *args, **kwargs)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 559, in from_tuples
+    arrays = list(lib.tuples_to_object_array(tuples).T)
+  File "pandas/_libs/lib.pyx", line 2930, in pandas._libs.lib.tuples_to_object_array
+ValueError: Buffer dtype mismatch, expected 'Python object' but got 'long'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/frame.py", line 3655, in __setitem__
+    self._set_item(key, value)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/frame.py", line 3832, in _set_item
+    value = self._sanitize_column(value)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/frame.py", line 4526, in _sanitize_column
+    return _reindex_for_setitem(value, self.index)
+  File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/pandas/core/frame.py", line 10995, in _reindex_for_setitem
+    raise TypeError(
+TypeError: incompatible index of inserted column with frame index
+>>> df1["counts"] = df_valuecounts.values
+>>> df1
+       comm_cost  complexity  naturalness    Language  counts
+2749    0.583333           1          1.0  artificial      12
+336     0.666667           2          1.0  artificial       9
+755     0.666667           2          1.0  artificial      23
+36      0.750000           2          1.0  artificial      22
+3685    0.520833           3          1.0  artificial       7
+...          ...         ...          ...         ...     ...
+15828   0.533128          68          0.1  artificial       1
+2033    0.488889          70          0.0  artificial       1
+21206   0.503472          70          0.0  artificial       1
+18692   0.518171          70          0.0  artificial       1
+8078    0.515509          74          0.0  artificial       1
+
+[7701 rows x 5 columns]
+>>> import plotnine as pn
+>>> plot = pn.ggplot(df1) + pn.geom_point(pn.aes(x="naturalness", y="complexity", size="counts"))
+>>> print(plot)
+
+>>> "round first and redo"
+'round first and redo'
+>>> 

@@ -1,0 +1,432 @@
+The purpose of this file is to track bugs that often recur, and document how they were resolved.
+
+6.29.22: incomplete looking plot
+
+The high informativity, low communicative cost languages don't seem to be getting explored after some updates, most recently to altk's optimization and agent modules. The space used to be fully explored. I have seen this problem before too. 
+Tried:
+    Looking into AddPoint:
+    - uncommenting AddPoint() as a mutation to increase informativity, because at some point previously it wasn't helping -- presumably because high informativity space was getting explored fine.
+    - looking into how informativity is measured in AddPoint. This doesn't matter so much as long as informativity isn't already recorded as 1.0, because it just searches the language for a point not yet covered, and then adds an expression to cover exactly that point.
+    - running optimization with only AddPoint as a mutation, but this doesn't work because apparently you need all mutations in order for there to be a possible mutation when sample_mutate() is called.
+
+    Looking into the history of some of the plots on github:
+    - Looks like I had a similar issue when testing out various mutations, and found that RemovePoint was the culprit; apparently removing it as a possible mutation allowed the high informativity space to be explored. But it's possible that this wasn't the only cause, or at least something else may have motivated me to keep RemovePoint, because it still exists in the codebase.
+        - Sure enough, commenting it out didn't improve on dev setting or a full run on indicator_literal. 
+
+    - with the pragmatic settings, the effect is less dramatic, but there's still a surprising lack of exploration. I know this because I added a highly complex, but still perfectly informative language (one with many synonyms) and the points in between this and the perfect informative language with no synonyms were not found.
+
+
+6.29.22: random seed not producing deterministic behavior
+
+I have never seen deterministic behavior yet, but making the entry now. All scripts call the set_seed() function, which updates the only two libraries I know of that I'm using that use randomness:
+    - random
+    - numpy
+
+7.1.22: pandas datatype confusion seems to not be a problem anymore. 
+
+I'm not particularly worried about removing the logic which prevented floats from being read as strings, because the statistics and data look the same with and without. For reference though, pandas was once confused about there being mixed data types and I had to us pd.to_numeric() to convert all the appropriate columns back to floats.
+
+7.1.22: strange plot with correct data but huge complexity limit at like 3e10
+
+This happened once right after deleting altk's complexity module for refactoring, but then I haven't been able to reproduce again.
+
+
+7.3.22: Highly complex DLSAV languages
+
+    Looking into specific languages:
+    - This has been an issue ever since I added dlsav functionality, and I should have noticed it before, but I am now addressing it as part of the more general debugging process of aligning / comparing the new and old codebase results.
+    - There are far more vanderkok / dlsav languages with high complexity (> 35) in the new codebase than in the old one. So either I'm sampling in a very different way, or I'm measuring dlsav incorrectly. So I started inspecting the highest complexity, dlsav languages of the new codebase. Comparing half_credit_literal, I found 7 languages over 35 complexity that were dlsav, and all of them had complexity 36, except for the one highly synonymous language I added as a sanity check. Looking at the first one, `sampled_lang_1881` here were the meanings: 
+
+    >>> for e in lang.expressions:
+    ...     print(e.meaning)
+    ... 
+    ['strong+deontic']
+    ['strong+deontic', 'strong+circumstantial'] *
+    ['strong+epistemic']
+    ['strong+epistemic', 'strong+circumstantial']
+    ['weak+circumstantial']
+    ['weak+circumstantial', 'strong+circumstantial'] *
+    ['weak+deontic']
+    ['weak+deontic', 'weak+circumstantial']
+    ['weak+epistemic', 'strong+epistemic']
+    ['weak+epistemic', 'weak+circumstantial']
+
+    I then used their array representation to check whether the old codebase thinks this is a dlsav language. And sure enough! I found that two expressions were indeed violating the dlsav criterion, but had counted in the new codebase as passing the criterion. To see why, look at the two lists with asterisks * after them: we have two kinds of ambiguity within the root domain: one expression has fixed circumstantial flavor, but is variable-force, whereas another expression has strong force, but variable-flavor across circumstantial and deontic. 
+
+    I ported the numpy array logic from the old codebase instead of working with the more general meaning representation as a list of strings, and 
+    then the new and old codebases agreed that this language was not a dlsav language. After running the new code, the plot still looked dlsav languages were too complex -- or at least they weren't isolated to the frontier enough. This time there were only two languages with complexity > 35: `sampled_lang_1873` and `Synonymy`. Here's sampled_lang_1873:
+
+    ['strong+circumstantial']
+    ['strong+deontic']
+    ['strong+circumstantial', 'strong+deontic']
+    ['strong+circumstantial', 'strong+epistemic']
+    ['strong+circumstantial', 'strong+deontic', 'strong+epistemic']
+    ['weak+circumstantial']
+    ['weak+deontic']
+    ['weak+circumstantial', 'weak+deontic']
+    ['weak+epistemic', 'strong+epistemic']
+    ['weak+epistemic', 'weak+deontic'] 
+
+    There are no violations of dlsav with this language. So something may have gone wrong with the logic integrating numpy arrays with the new altk meanings, or sampling is weird. I checked with the old codebase, and sure enough it concurs that this is a vanderklok_ok language. I squinted at the plots again, and realized that the scale on the y-axis was different, which is what makes the difference in complexity look so dramatic. Because this language only has complexity 36, and sure enough the old codebase plot does indeed have a dlsav language of higher than 35 complexity.
+
+    Given this, there are actually some more serious problems, guided by the fact that the old plot has dlsav languages highly clustered along the frontier, _and_ all the very unnnatural (0 degree nauze) langs are at the high comm_cost side of the plot (around 0.8). In contrast, all of the unnatural (degree nauze) languages in the new codebase are at about 0.5 informativity. In the old codebase, 0.5 informativity has medium-naturalness, and the huge stack of dark blue languages don't start until about 0.75 and 0.8: furthermore, it looks like at least half of all the languages sampled / explored are in this high comm_cost region. This region is extremely unexplored in the new codebase. This _could_ be because of the sample size: in the new codebase, the same parameter settings result in 5659 total langs, whereas `67962` in old -- a factor of more than 10. 
+
+        - Ran with a (random, not generation) sample size of 15k, and increased generations from 200 to 400. Resulted in 16912 total langs. The trend looks the same: dark blue stack of langs are at 0.5, rather than 0.8.
+
+        - Okay, here's something worrying / reassuring: I printed out the dataframe of the old codebase to check out these high comm_cost languages. The simplicity measure is negative, which is a big logic error. It may still be that informativity was computed correctly, but it should be checked; after all, the we know the minimum informativity for literal speakers is exactly the prior (typically 0.1667 because I use uniform and a space of (2,3)).
+
+        - Here's the dataframe, sorted by comm_cost and duplicates dropped based on the subset of these 5 columns:
+
+            complexity  comm_cost  optimality  simplicity  informativeness
+        37131           2    0.93056    0.960774          -1          0.06944
+        62              1    0.93056    0.999667           0          0.06944
+        63814          16    0.92708    0.580238         -15          0.07292
+        29              8    0.92708    0.757405          -7          0.07292
+        61              4    0.92667    0.875317          -3          0.07333
+        ...           ...        ...         ...         ...              ...
+        60246          32    0.12500   -1.829808         -31          0.87500
+        63821          32    0.10417   -1.829386         -31          0.89583
+        60797          28    0.10417    0.926432         -27          0.89583
+        61673          26    0.10417    0.998619         -25          0.89583
+        44944          28    0.00000    1.000000         -27          1.00000
+        [35712 rows x 5 columns]
+
+        - A next step is to find out how I could have obtained an informativeness of 0.06944. I searched the json files, and found the two languages with these values: 
+
+        "62": {
+            "meanings": {
+            "0": {
+                "[[1 1 1]\n [1 1 1]]": "(1 )"
+            }
+            },
+            "complexity": 1,
+            "informativeness": 0.06944,
+            "nauze": 0.0,
+            "vanderklok": false,
+            "iff": 1.0,
+            "natural": false,
+            "name": null
+        },
+
+        "50296": {
+            "meanings": {
+            "0": {
+                "[[1 1 1]\n [1 1 1]]": "(1 )"
+            },
+            "1": {
+                "[[1 1 1]\n [1 1 1]]": "(1 )"
+            }
+            },
+            "complexity": 2,
+            "informativeness": 0.06944,
+            "nauze": 0.0,
+            "vanderklok": false,
+            "iff": 1.0,
+            "natural": false,
+            "name": null
+        }, 
+
+        - Intuitively, these languages should have informativity 0.167 for literal agents. I checked the half_credit_literal languages for this maximally ambiguous, "62" language, and got the following:
+
+        - sampled_lang_13537:
+            data:
+            Language: artificial
+            comm_cost: 0.5833333333333333
+            complexity: 1
+            dlsav: false
+            iff: 1.0
+            informativity: 0.4166666666666667
+            name: sampled_lang_13537
+            optimality: 0.9999611177526244
+            sav: 0.0
+            simplicity: null
+            expressions:
+            - form: dummy_form_62
+            lot: (1 )
+            meaning:
+            - strong+deontic
+            - strong+circumstantial
+            - weak+epistemic
+            - strong+epistemic
+            - weak+circumstantial
+            - weak+deontic
+
+        So my math was wrong (don't feel bad, Shane also forgot that we have to be careful when thinking about indicator vs half_credit: our slack thread:
+            "Perfect!! And thinking about u() in half credit: 1/6 of the time, u will be 1, 3/6 of the time it will be 0.5, and 2/6 of the time it will be 0. [So we have]
+
+            = 1/6 + 1/4 = 5/12 = 0.4166
+            
+            So your implementation is right :)"
+        )
+
+        - This means conclusively that the old modals codebase is incorrect, at least with respect to computing informativity for half_credit. It's also probably incorrect wrt literal, too. Unfortunately this buggy and misleading result is in the abstract we submitted, and it's on my website as the poster: but we still have time to correct the SALT version, and I'm happy to change the poster to the talk version from salt :) 
+
+7.3.22 Manually check some SAV / Nauze languages for old and new codebase.
+
+    In light of the progress I made in manually checking DLSAV / vanderklok languages, I will now check languages that seem to differ in their values and or position in the old vs new codebase, and see which implementation is right. 
+
+    - It's a bit hard to find a good distinguishing language to do this for. The main reason we're looking into this was the shockingly low correlation of the degree-universals with simplicity: often below 0.1, and sometimes right at 0.0. At this time, simplicity correlation seems to be higher for SAV, but it's hard to know how much this is just due to chance. (And sadly, since I don't know why my random seeding logic isn't producing deterministic behavior, these results may not be exactly reproducible.)
+
+    - One thing is that in the new codebase, there are two maximally comm_cost languages: one is a DLSAV language, and another looks like it has 0 degree SAV. It looks like they have the same comm_cost; the DLSAV one is right below it. Neither are at the frontier.
+    
+    In contrast, in the old codebase, the max comm_cost langs seem to be low-degree SAV languages, and they're very close to the frontier. Specifically, for the languages in this area on the frontier, the maximum comm cost language seems to be around 50% SAV, and the next most comm_cost languages are DLSAV ones. So, the strategy I think is to examine exactly these four languages, and check what their data ought to be.
+
+    New codebase:
+
+        - Here are the two languages (you have to drop duplicates first)
+
+
+            informativity  complexity  dlsav  sav                name
+        3821       0.166667           8  False  0.0  sampled_lang_13698
+        1290       0.166667           4   True  1.0  sampled_lang_13618
+
+        - As expected, informativity is minimized at 0.1667, the uniform prior probability. Note that this is DIFFERENT from the discussion above about the maximally ambiguous language's informativity value, which is 0.4166 -- maximally ambiguous does NOT mean highest communicative cost!! This is because a language could contain a single expression that is in fact _unambiguous_, but only covers a single meaning point. Then the informativity is just the probability of that meaning point, since:
+            inf = sum_m p(m) * sum_e p(e | m) sum_m p(m' | e) u(m, m')
+                = 1/6 + 0 + 0 + 0 + 0 + 0
+                = 0.1667
+
+        since the above values in the summation are 0 unless the m from the prior and the m' from guessing the expression are equal, which is just once. 
+
+        Here are those two languages as saved in the new codebase:
+
+        - sampled_lang_13698:
+            data:
+            Language: artificial
+            comm_cost: 0.8333333333333334
+            complexity: 8
+            dlsav: false
+            iff: 0.0
+            informativity: 0.16666666666666666
+            name: sampled_lang_13698
+            optimality: 0.8621938064171777
+            sav: 0.0
+            simplicity: null
+            expressions:
+            - form: dummy_form_19
+            lot: (+ (* (weak ) (deontic )) (* (strong ) (epistemic )))
+            meaning:
+            - weak+deontic
+            - strong+epistemic
+
+        - sampled_lang_13618:
+            data:
+            Language: artificial
+            comm_cost: 0.8333333333333334
+            complexity: 4
+            dlsav: true
+            iff: 1.0
+            informativity: 0.16666666666666666
+            name: sampled_lang_13618
+            optimality: 0.8989421084450748
+            sav: 1.0
+            simplicity: null
+            expressions:
+            - form: dummy_form_31
+            lot: (* (weak ) (epistemic ))
+            meaning:
+            - weak+epistemic
+
+        The first language has the array representation:
+        [[0., 1., 0.],
+         [1., 0., 0.]]
+        
+        The second language has the array representation:
+        [[1., 0., 0.],
+         [0., 0., 0.]]
+
+        So the SAV and DLSAV predictions are true for the new codebase. Furthermore, I checked the old codebase functions, and they agree. This means probably that wherever these two languages are (if they are on the the old codebase plot, they stand in the right relation to each other.
+
+    Old codebase:
+
+        Here are the first 3 most comm_cost languages. The first two I already discussed, but the third one is sticking out in the plot so I'm happy to look at it:
+
+            complexity  comm_cost  informativeness  optimality       SAV  DL-SAV
+    37131           2    0.93056          0.06944    0.960774  0.000000   False
+    62              1    0.93056          0.06944    0.999667  0.000000   False
+    63814          16    0.92708          0.07292    0.580238  0.000000   False
+
+    Taking a look at the json files:
+
+    "37131": {
+        "meanings": {
+        "0": {
+            "[[0 1 1]\n [0 0 0]]": "(* (Q_1 ) (+ (f_2 ) (f_3 )))" # comp 6
+        },
+        "1": {
+            "[[0 0 1]\n [0 0 0]]": "(* (Q_1 ) (f_3 ))" # comp 4
+        },
+        "2": {
+            "[[1 1 0]\n [1 0 0]]": "(+ (f_1 ) (* (Q_1 ) (f_2 )))" # comp 6
+        }
+        },
+        "complexity": 16,
+        "informativeness": 0.22454,
+        "nauze": 0.6666666666666666,
+        "vanderklok": false,
+        "iff": 0.6666666666666666,
+        "natural": false,
+        "name": null
+    },    
+
+    There is an error somewhere. The complexity recorded here looks good. But in the dataframe its 2! Furthermore, the informativity is not the same as in the dataframe -- 0.22454 vs 0.06944 !! 
+
+    Also, "nauze" is supposed to be EXACTLY what SAV is. It looks like however I'm converting the names is lossy and I'm losing important data. Unfortunately, "nauze" is not in the dataframe, and the languages saved to pickle format are deleted (because github always makes me). The prediction on DL-SAV looks correct though, given the expression "2" that is both variable force and variable flavor.
+
+    As far as the statistics goes, though, I'm confident that it's "nauze" being computed and not "SAV" because of these lines in the util_analyize code:
+
+        predictor = "nauze"
+        for prop in properties:
+            r, _ = scipy.stats.pearsonr(data[prop], data[predictor])
+    
+    where data is a DataFrame and properties is a list of strings.
+
+    Upshot: This data is getting messed up probably at multiple points in the code, but the complexity error seems serious, since it seems to be determining closeness to frontier in the plot at least.
+
+    The other languages:
+
+        "62": {
+            "meanings": {
+            "0": {
+                "[[1 1 1]\n [1 1 1]]": "(1 )"
+            }
+            },
+            "complexity": 1,
+            "informativeness": 0.06944,
+            "nauze": 0.0,
+            "vanderklok": false,
+            "iff": 1.0,
+            "natural": false,
+            "name": null
+        },
+
+    We've seen this language above before-- see the previous entry on informativity.
+
+        "63814": {
+            "meanings": {
+            "0": {
+                "[[0 0 0]\n [1 0 0]]": "(* (Q_2 ) (f_1 ))"
+            },
+            "1": {
+                "[[0 1 1]\n [0 1 1]]": "(+ (f_3 ) (f_2 ))"
+            },
+            "2": {
+                "[[0 0 0]\n [1 0 1]]": "(* (Q_2 ) (+ (f_1 ) (f_3 )))"
+            }
+            },
+            "complexity": 14,
+            "informativeness": 0.21875,
+            "nauze": 0.6666666666666666,
+            "vanderklok": false,
+            "iff": 1.0,
+            "natural": false,
+            "name": null
+        },
+    
+    Here the complexity seems correct, but clearly is getting lost by the time its put in the dataframe. The problem is, I don't know if I'm actually looking at the languages that I think I'm looking at in the plot. So I'm running the old code again. This took about 25 mins.
+        - But! I think I can avoid github yelling at me for large files now because it looks like I've successfully added all .pickle files to .gitignore: with **/*.pickle.
+
+        - Okay, in investigating some errors when trying to run this code, I'm noticing that I only seem to be using the json version of save languages for the dominant languages. I think this was probably because any pool of langs larger than this was too large for json, which is why I moved to pickle.
+            - CORRECTION: no, in the analysis step, it seems that all.json does get written to! In particular, it is written to early on, right after unpickling and turning into a dataframe: 
+
+                all_langs = random_langs + nauze_langs + dom_langs + evolutionary_path_langs # + natural_langs
+                all_langs = unique_languages_by_vocab(all_langs, loading_bar=True)
+                data = get_dataframe(all_langs)
+                save_languages(all_langs, 'all.json')
+
+            So all.json is actually probably adequate for some inspection.
+            There's nothing spooky about the `get_dataframe` function; it seems to be simply measuring languages using pooling, and then mapping them into a dataframe.
+            Unfortunately, due to randomness I can't inspect the exact languages I looked at above, '37131' shows a different language now in all.json.
+
+            what could have been bad was a section in analyze.py where I measure the pareto front again. I suspect I did this because it smooths the curve; but I've commented it out (as I remember doing back and forth many times earlier this year). 
+                - update: this doesn't seem to have done anything except cause interpolate to throw an error complaining about div by zero.
+
+            The other thing could be the `rename_author_columns` function, which is super ugly and I'm willing to give it up since I'm not going to use this code to produce official figures anymore.
+
+        - actually, the error I got was this:
+
+            Saving languages ...
+            0%|                                                                                                        | 0/72 [00:00<?, ?it/s]
+            Traceback (most recent call last):
+            File "/Users/nathanielimel/clms/thesis/code/modals/src/analysis/analyze.py", line 90, in <module>
+                main()
+            File "/Users/nathanielimel/clms/thesis/code/modals/src/analysis/analyze.py", line 57, in main
+                save_languages(dominating_languages, 'dominant.json') # idk why I was indexing all_langs
+            File "/Users/nathanielimel/clms/thesis/code/modals/src/file_util.py", line 92, in save_languages
+                attributes["meanings"] = {i:{np.array2string(np.array(item_dict["arr"])): item_dict["string"]} for i, item_dict in enumerate(L.lexicon_)}
+            AttributeError
+
+        I recently changed the following line
+
+            save_languages([all_langs[i] for i in dominating_indices], 'dominant.json') # overwrite dominant
+        to 
+
+            save_languages([all_langs[i] for i in dominating_indices], 'dominant.json') # overwrite dominant
+
+        because I immediately above had
+
+            dominating_languages = [languages[i] for i in dominating_indices]
+
+        But it looks like I shouldn't have lol. Because here's where `languages` gets initialized:
+
+            languages = pareto_raw_df.values.tolist()
+
+        e.g, it's just a list of languages _as their pareto data_, instead of as language objects.
+
+    When this code finally finished running, the results -- report and plot-- look exactly as before. This surprised me, because I uncommented the scaling complexity line, so I would have thought simplicity would have been changed. But complexity and simplicity are perfect -1 relationship, and the correlations are the same. Looking at the dataframe for all languages, I see that simplicity is no longer negative, but we have basically the same languages:
+
+            complexity  comm_cost  simplicity  informativeness
+        62       0.011364    0.93056    0.988636          0.06944
+        36150    0.022727    0.93056    0.977273          0.06944
+        36101    0.227273    0.92708    0.772727          0.07292
+        28       0.113636    0.92708    0.886364          0.07292
+        39670    0.181818    0.92667    0.818182          0.07333
+
+    Without scaling the data, and commenting out the plot and df lines that rename the author columns, I get:
+
+            complexity  informativeness  nauze
+        62              1          0.06944    0.0
+        55              2          0.11111    1.0
+        8               2          0.12500    1.0
+        36150           2          0.06944    0.0
+        1994            3          0.10764    0.5
+        ...           ...              ...    ...
+        31916          84          0.12896    0.0
+        16700          86          0.16835    0.2
+        32748          86          0.13764    0.1
+        32495          86          0.16305    0.1
+        17601          88          0.14736    0.1
+    
+    Which all seems fine. At this point I may focus on more explicitly engineered debugging investigation.
+
+
+7.3.22: print statements not showing up in evolutionary algorithm script
+    This is also an old bug that I forgot about, and noticed because I want output telling me when the estimation of the frontier is starting and the sampling has stopped.
+
+    I have the following print statements
+
+    print("Estimating pareto frontier ...")
+
+    print("Sampling seed generation...")
+
+    In my estimate_pareto_frontier.py, but they're not showing up in my system.output.txt file. Come to think of it, I actually don't see the typical 
+
+    "Saved N sampled languages" printed from my save_languages util function. 
+
+    Weird: I actually do see these print statements, but not until after the long thing I wanted to be warned was starting, finished, which is not useful. To clarify: I get all the print statements I put in, but not at the time I expected them.
+
+7.3.22: Negative simplicity values in the old codebase:
+
+    This is probably because I had the following line commented out:
+
+        data = scale_complexity(data, max(list(data["complexity"])))
+
+    And without this, in the function `add_columns`, simplicity is defined as 1 - complexity, but if complexity isn't in [0,1], we'll get negative values.
+
+7.3.22: At this point, I will try to find the truth about the complexity correlations with naturalness by building something that can take the languages of the old codebase and turn them into equivalent altk / new codebase languages.
+
+    The motivation is the following: I've checked the measures of naturalness (SAV / Nauze), and the complexity values of languages look good upon inspection of the old codebase. So we have (implicitly) two different datasets: languages with their complexity and naturalness data. These define 2 correlation coefficients. The task is to make sure these datasets are truly comparable, and then find the right coefficient.
+
+    1. Implement tools to convert between old languages and the new ones.
+    2. Run the complexity measures again on all the languages.
+    3. Get the pearson correlations.
+
