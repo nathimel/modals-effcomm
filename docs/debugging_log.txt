@@ -504,3 +504,34 @@ This happened once right after deleting altk's complexity module for refactoring
     saved the two plots in a folder called `docs/first_correlation_debug_run`.
 
     This is without dropping duplicates, and the length of all_data.csv is 66325 without 5 the natural languages.
+    These results can be found on the commit message "first correlation run".
+
+    When I drop duplicates. The results don't change much. The all_data.csv has about half as many entries, 35170 + 5.
+
+        Degree sav pearson correlations:
+        simplicity: 0.4401090069250126
+        complexity: -0.44010900692501265
+        informativity: 0.6399118603515791
+        optimality: 0.5432094201556613
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.813636   16.400000       0.746296    0.957112
+        dlsav_means         0.813636   16.400000       0.746296    0.957112
+        population_means    0.516987   42.505159       0.530802    0.708255
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         16.315724  -16.315724       3.046501   10.659846
+        Two-sided p-value    0.000083    0.000083       0.038159    0.000439
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         16.315724  -16.315724       3.046501   10.659846
+        Two-sided p-value    0.000083    0.000083       0.038159    0.000439    
+
+    - Next, I plan to run the same steps, but instead of keeping the new codebase sampled languages out of the analysis, I will let the pool of languages consist of all the old languages plus the new codebase sampled and explored ones.

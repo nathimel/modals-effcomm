@@ -104,9 +104,10 @@ def main():
     # Construct main dataframe and plot
     ############################################################################
 
-    data = get_dataframe(langs, subset=["complexity", "comm_cost"])
-    pareto_data = get_dataframe(dom_langs, subset=["complexity", "comm_cost"])
-    natural_data = get_dataframe(nat_langs, subset=["complexity", "comm_cost"])
+    kwargs = {"subset": ["complexity", "comm_cost"], "duplicates": "count"}
+    data = get_dataframe(langs, **kwargs)
+    pareto_data = get_dataframe(dom_langs, **kwargs)
+    natural_data = get_dataframe(nat_langs, **kwargs)
     data = data.append(natural_data)
 
     # Plot

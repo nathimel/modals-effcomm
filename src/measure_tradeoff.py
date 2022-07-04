@@ -32,30 +32,30 @@ def main():
 
     set_seed(configs["random_seed"])
 
-    # # load languages    
-    # print("Loading all languages ...")
-    # print("sampled...")
-    # sampled_result = load_languages(sampled_languages_fn)
-    # print("dominant...")
-    # dominant_result = load_languages(dominant_languages_fn)
-    # print("natural...")
-    # natural_result = load_languages(natural_languages_fn)
-    # sampled_languages, dominant_languages, natural_languages, id_start = (
-    #     sampled_result["languages"],
-    #     dominant_result["languages"],
-    #     natural_result["languages"],
-    #     sampled_result["id_start"],
-    # )
-    # langs = list(set(sampled_languages + dominant_languages + natural_languages))
-    # print(f"{len(langs)} total langs.")
+    # load languages    
+    print("Loading all languages ...")
+    print("sampled...")
+    sampled_result = load_languages(sampled_languages_fn)
+    print("dominant...")
+    dominant_result = load_languages(dominant_languages_fn)
+    print("natural...")
+    natural_result = load_languages(natural_languages_fn)
+    sampled_languages, dominant_languages, natural_languages, id_start = (
+        sampled_result["languages"],
+        dominant_result["languages"],
+        natural_result["languages"],
+        sampled_result["id_start"],
+    )
 
-    # load up and measure old languages
+    # load up old languages and add to pool
     old_result = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/old.yml")
-    langs = old_result["languages"]
+    old_langs = old_result["languages"]
     dominant_result = load_languages(dominant_languages_fn)
     natural_result = load_languages(natural_languages_fn)
     natural_languages = natural_result["languages"]
-    langs = list(set(langs + natural_languages))
+
+    langs = list(set(sampled_languages + dominant_languages + natural_languages + old_langs))
+    print(f"{len(langs)} total langs.")    
 
     # Load trade-off criteria
     comp_measure = lambda lang: language_complexity(
