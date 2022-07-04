@@ -622,4 +622,58 @@ This happened once right after deleting altk's complexity module for refactoring
     Now I will run BOTH full experiments with negation turned on. This involves the following steps:
         - running the old code (less than 25 mins)
         - obtaining the json files lexicon.json, all.json
+        - running the debug_correlations.py script and checking all the measurements are the same
+        - running the measure_tradeoff and analysis scripts as one check (just old langs)
+        - running the entire pipeline, as a separate check (pooling the old and new langs)
 
+    No discrepancies were found between the old and new language measurements:
+
+        total discrepancies:  0
+        total old languages:  66456
+        Saved 66456 old languages
+
+        sample  pearson
+        new     -0.4091872227754934
+        old     -0.4091872227754934
+
+    Check 1: The old languages alone
+
+    In the final analysis, I see that the correlation is high, but not as high as the debug script predicted (0.38 vs 0.40), which is strange, but could be due to dropping duplicates in the analysis script (indeed, looking at all_data, its only about 30k long instead of 66k).
+
+        Degree sav pearson correlations:
+        simplicity: 0.38204573364941424
+        complexity: -0.38204573364941447
+        informativity: 0.6553656982496618
+        optimality: 0.5072446445166654
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.789744   16.400000       0.746296    0.955218
+        dlsav_means         0.789744   16.400000       0.746296    0.955218
+        population_means    0.556643   34.581826       0.531503    0.737487
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         11.363641  -11.363641       3.036599    7.871290
+        Two-sided p-value    0.000342    0.000342       0.038530    0.001408
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         11.363641  -11.363641       3.036599    7.871290
+        Two-sided p-value    0.000342    0.000342       0.038530    0.001408 
+
+    Check 2: the old langs combined with the new codebases pool of langs
+
+    
+
+7.4.22: Taking samples of JUST 100% natural languages.
+
+    I notice that in the old codebase this is something I did. I think this is a nice strategy. It raises the question of whether the sample is biased, and thus affecting correlations. In general, we really don't know how to take a good sample of the mathematically possible languages. 
+        - Uniform sampling is really bad at finding optimal languages. 
+        - And the evolutionary algorithm should be good at finding those optimal ones, but there may be some lock-in involved -- though we do randomly mutate the parents and save them to the explored langs, regardless of their local fitness, so I'm not sure why this is such a problem.
+
+    Doing this in the new codebase:
