@@ -725,3 +725,22 @@ This happened once right after deleting altk's complexity module for refactoring
             optimality: 0.46861543248553206        
 
         Which is far higher. This motivates turning up the sample size even higher, and also thinking about seeding the evolutionary algorithm with more degree 1.0 universal_property languages.
+        
+        The commit name is "Correlation with simplicity went way up as a result of sampling fully SAV languages and increasing sample size", which, lmao, sounds like p-hacking if I ever heard of it xD. But seriously, I'm not convinced that it is. P-hacking I think describes when you get a really unrepresentative sample, and the whole point is that we're exploring as best we can, possibly even better now than before. Whether there are more universal_property languages elsewhere in the space that hasn't been explored is still an open question. The _trend_ looks like the answer would be no, but at this point I'm cautious to make strong claims.
+
+        Turning up to 20k sampling size, we get 15764 sampled languages and 20494 total langs. And the correlation with both simplicity and informativity goes up a bit:
+
+            Degree sav pearson correlations:
+            simplicity: 0.27448407524007945
+            complexity: -0.2744840752400772
+            informativity: 0.8034243588109712
+            optimality: 0.5171836442749919
+
+        This is for half_credit_literal. 
+        Trying for indicator_literal with a sample size of 20k, we get 15764 sampled languages (which should be the same) and 20494 total langs (which could in principle be different, but not super worrying):
+
+            Degree sav pearson correlations:
+            simplicity: 0.27448407524007945
+            complexity: -0.2744840752400772
+            informativity: 0.8034243588109712
+            optimality: 0.5171836442749919
