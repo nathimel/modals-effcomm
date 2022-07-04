@@ -623,6 +623,7 @@ This happened once right after deleting altk's complexity module for refactoring
         - running the old code (less than 25 mins)
         - obtaining the json files lexicon.json, all.json
         - running the debug_correlations.py script and checking all the measurements are the same
+        - deleting any languages saved in output folders
         - running the measure_tradeoff and analysis scripts as one check (just old langs)
         - running the entire pipeline, as a separate check (pooling the old and new langs)
 
@@ -668,7 +669,35 @@ This happened once right after deleting altk's complexity module for refactoring
 
     Check 2: the old langs combined with the new codebases pool of langs
 
-    
+    Here were the results: slightly lower complexity as expected,
+
+        Degree sav pearson correlations:
+        simplicity: 0.3568978222203001
+        complexity: -0.3568978222203005
+        informativity: 0.6823818567868
+        optimality: 0.494225008839281
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.789744   16.400000       0.746296    0.953079
+        dlsav_means         0.789744   16.400000       0.746296    0.953079
+        population_means    0.556636   34.582355       0.533804    0.737567
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         11.363972  -11.363972       3.004070    7.912685
+        Two-sided p-value    0.000342    0.000342       0.039782    0.001380
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         11.363972  -11.363972       3.004070    7.912685
+        Two-sided p-value    0.000342    0.000342       0.039782    0.001380
+
+    Nothing too dramatic in the plot, other than the high informativity space looks better.
 
 7.4.22: Taking samples of JUST 100% natural languages.
 
