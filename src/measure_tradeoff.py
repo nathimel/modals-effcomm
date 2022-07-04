@@ -46,14 +46,7 @@ def main():
     dominant_languages = dominant_result["languages"]
     natural_languages = natural_result["languages"]
 
-    # load up old languages and add to pool
-    print("old...")
-    old_result = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/old.yml")
-    old_langs = old_result["languages"]
-
-    # langs = list(set(old_langs + natural_languages))
-    langs = list(set(sampled_languages + dominant_languages + natural_languages + old_langs))
-    # langs = list(set(sampled_languages + dominant_languages + natural_languages))
+    langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")
 
     # Load trade-off criteria
@@ -88,13 +81,9 @@ def main():
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
 
-    # save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
-    # save_languages(dominant_languages_fn, dom_langs, id_start, kind="dominant")
+    save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
+    save_languages(dominant_languages_fn, dom_langs, id_start, kind="dominant")
     save_languages(natural_languages_fn, natural_languages, id_start=None, kind="natural")
-    
-    # versions without id_start for debugging
-    save_languages(sampled_languages_fn, langs, id_start=None, kind="sampled")
-    save_languages(dominant_languages_fn, dom_langs, id_start=None, kind="dominant")
 
     print("done.")
 
