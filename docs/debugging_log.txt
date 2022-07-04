@@ -744,3 +744,20 @@ This happened once right after deleting altk's complexity module for refactoring
             complexity: -0.2744840752400772
             informativity: 0.8034243588109712
             optimality: 0.5171836442749919
+
+
+    Adding degree 1.0 naturalness languages to the seed population of the evolutionary algorithm:
+
+        - I actually noticed that the generate_languages function call for the seed actually starts off with _no_ criterion applied. I might change this to include the criterion to get even amounts of degrees, but since I'm going to inject with high naturalness languages anyway, I'll do the latter first.
+
+        - the results were about the same, with slightly less languages explored during the evolutionary algorithm. That makes some sense: I gave it a head start to the extent highly natural languages are closer to the frontier.
+
+            19634 total langs.
+            .
+            .
+            .
+            Degree sav pearson correlations:
+            simplicity: 0.27942214075127864
+            complexity: -0.27942214075127825
+            informativity: 0.8005810203039387
+            optimality: 0.5191003974244972

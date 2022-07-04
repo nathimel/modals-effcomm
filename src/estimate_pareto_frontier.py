@@ -3,6 +3,7 @@
 import sys
 from altk.effcomm.optimization import EvolutionaryOptimizer
 from misc.file_util import *
+from modals import modal_language
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_measures import language_complexity
 from sample_languages import generate_languages
@@ -54,16 +55,31 @@ def main():
 
     print("Sampling seed generation...")
     expressions = load_expressions(expressions_fn)
-    seed_result = generate_languages(
-        ModalLanguage,
-        expressions,
-        lang_size,
-        sample_size,
+    result = generate_languages(
+        language_class=ModalLanguage,
+        expressions=expressions,
+        lang_size=lang_size,
+        sample_size=sample_size,
         id_start=id_start,
         # verbose=True,
     )
-    seed_population = seed_result["languages"]
-    id_start = seed_result["id_start"]
+    r_population = result["languages"]
+    id_start = result["id_start"]
+
+    # add degree 1.0 naturalness langs to the seed
+    universal_property = getattr(modal_language, configs["universal_property"])    
+    natural_expressions = [e for e in expressions if universal_property(e)]
+    result = generate_languages(
+        language_class=ModalLanguage,
+        expressions=natural_expressions,
+        lang_size=lang_size,
+        sample_size=sample_size,
+        criterion=universal_property, # this isn't actually necessary in this case
+        id_start=id_start,
+    )
+    n_population = result["languages"]
+    id_start = result["id_start"]
+    seed_population = r_population + n_population
 
     # construct measures of complexity and informativity as optimization objectives
     space = load_space(space_fn)
@@ -140,7 +156,7 @@ def main():
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
-    save_languages(artificial_langs_fn, pool, id_start=id_start, kind="sampled")
+    save_languages(artificial_langs_fn, pool, id_start=id_start, kind="explored")
     save_languages(dom_langs_fn, dominant_langs, id_start=id_start, kind="dominant")
 
     print("done.")

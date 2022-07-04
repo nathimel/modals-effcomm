@@ -48,7 +48,7 @@ def main():
         expressions=natural_expressions,
         lang_size=lang_size,
         sample_size=sample_size,
-        criterion=universal_property,
+        criterion=universal_property, # this isn't actually necessary in this case
         id_start=id_start,
     )
     universal_languages = result["languages"]
