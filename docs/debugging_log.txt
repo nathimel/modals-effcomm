@@ -564,6 +564,62 @@ This happened once right after deleting altk's complexity module for refactoring
         t-statistic         13.632536  -13.632536       3.001778   10.882309
         Two-sided p-value    0.000168    0.000168       0.039872    0.000405
 
-    Now I will run BOTH full experiments with negation turned on.
+    You can view the results on the commit message "pooled old and new langs together in one experiment".
 
-    
+    For sanity, I'm also running the new code with negation turned off only, and no langs added from the old codebase. I've done this many times already, but I just want to check that the correlations are still quite low.
+        - Interestingly, doing this resulted in an error in analysis.py in the call:
+           data = get_dataframe(langs, **kwargs)
+           .
+           .
+           .
+            ValueError: Length of values (2528) does not match length of index (2529)
+
+        Looking at the altk analysis submodule, I see
+
+            # drop but count duplicates
+            elif duplicates == "count":
+                vcs = data.value_counts(subset=subset)
+                data = data.drop_duplicates(subset=subset)
+                data = data.sort_values(by=subset)
+                data["counts"] = vcs.values
+
+        I checked this logic on small toy data in a python environment, but it seemed correct.
+
+        - RESOLVED: I looked at the data and there were many Nones and NaNs. I realized this was because I was loading languages that weren't measured: this was because I forgot to uncomment out the save_languages lines at the end of measure_tradeoff (which I had replaced with different saving lines for the above experiment combining old and new)!
+
+    And sure enough, here are the very low correlations.
+
+        Degree sav pearson correlations:
+        simplicity: 0.0805049152987793
+        complexity: -0.08050491529877928
+        informativity: 0.7342289479023422
+        optimality: 0.3294735688942782
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.800000   17.200000       0.746296    0.958545
+        dlsav_means         0.800000   17.200000       0.746296    0.958545
+        population_means    0.638135   31.120363       0.580944    0.807325
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic          7.505357   -7.505357       2.337639    6.176596
+        Two-sided p-value    0.001686    0.001686       0.079584    0.003490
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic          7.505357   -7.505357       2.337639    6.176596
+        Two-sided p-value    0.001686    0.001686       0.079584    0.003490    
+
+
+    Though this is _much_ higher correlation with informativity than I usually see. Don't know what could be going on here. Could be the lack of negation, but that doesn't make much sense because that should only impact complexity.
+
+
+    Now I will run BOTH full experiments with negation turned on. This involves the following steps:
+        - running the old code (less than 25 mins)
+        - obtaining the json files lexicon.json, all.json
+

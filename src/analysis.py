@@ -94,17 +94,16 @@ def main():
     result_sampled = load_languages(langs_fn)
     result_natural = load_languages(nat_langs_fn)
     result_dominant = load_languages(dom_langs_fn)
-    langs, nat_langs, dom_langs = (
-        result_sampled["languages"],
-        result_natural["languages"],
-        result_dominant["languages"],
-    )
+    langs = result_sampled["languages"]
+    nat_langs = result_natural["languages"]
+    dom_langs = result_dominant["languages"]
+
 
     ############################################################################
     # Construct main dataframe and plot
     ############################################################################
 
-    kwargs = {"subset": ["complexity", "comm_cost"], "duplicates": "count"}
+    kwargs = {"subset": ["complexity", "comm_cost"], "duplicates": "drop"}
     data = get_dataframe(langs, **kwargs)
     pareto_data = get_dataframe(dom_langs, **kwargs)
     natural_data = get_dataframe(nat_langs, **kwargs)

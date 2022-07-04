@@ -40,12 +40,16 @@ def main():
     dominant_result = load_languages(dominant_languages_fn)
     print("natural...")
     natural_result = load_languages(natural_languages_fn)
-    sampled_languages, dominant_languages, natural_languages, id_start = (
-        sampled_result["languages"],
-        dominant_result["languages"],
-        natural_result["languages"],
-        sampled_result["id_start"],
-    )
+    # sampled_languages, dominant_languages, natural_languages, id_start = (
+    #     sampled_result["languages"],
+    #     dominant_result["languages"],
+    #     natural_result["languages"],
+    #     sampled_result["id_start"],
+    # )
+    sampled_languages = sampled_result["languages"]
+    dominant_languages = dominant_result["languages"]
+    natural_languages = natural_result["languages"]
+    id_start = sampled_result["id_start"]
 
     # load up old languages and add to pool
     old_result = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/old.yml")
@@ -54,7 +58,8 @@ def main():
     natural_result = load_languages(natural_languages_fn)
     natural_languages = natural_result["languages"]
 
-    langs = list(set(sampled_languages + dominant_languages + natural_languages + old_langs))
+    # langs = list(set(sampled_languages + dominant_languages + natural_languages + old_langs))
+    langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")    
 
     # Load trade-off criteria
@@ -89,12 +94,12 @@ def main():
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
 
-    # save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
-    # save_languages(dominant_languages_fn, dom_langs, id_start, kind="dominant")
+    save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
+    save_languages(dominant_languages_fn, dom_langs, id_start, kind="dominant")
     save_languages(natural_languages_fn, natural_languages, id_start=None, kind="natural")
     
-    save_languages(sampled_languages_fn, langs, id_start=None, kind="sampled")
-    save_languages(dominant_languages_fn, dom_langs, id_start=None, kind="dominant")
+    # save_languages(sampled_languages_fn, langs, id_start=None, kind="sampled")
+    # save_languages(dominant_languages_fn, dom_langs, id_start=None, kind="dominant")
 
     print("done.")
 
