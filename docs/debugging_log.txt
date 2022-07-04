@@ -430,3 +430,77 @@ This happened once right after deleting altk's complexity module for refactoring
     2. Run the complexity measures again on all the languages.
     3. Get the pearson correlations.
 
+7.4.22: Writing the debug_correlations.py script
+
+    So far this is a promising strategy. I load up the old languages as all.json, and then construct the analogous ModalLanguages. Along the way I keep track of any discrepancies between complexity in the old and new language, and between the old and new measure of naturalness. So far, no discrepancies for naturalness. I did get, however:
+
+    With negation off in old but on in new:
+
+        total discrepancies:  58251
+        total old languages:  66321
+        Saved 66321 old languages
+
+    Upon closer inspection, though, I realized this is probably because I'm comparing two differnt complexity measures: one with negation, and one without. So next I will measure will negation turned off in the new codebase, and then run the old code with negation on and measure that too.
+
+        - Trying this, I noticed that the new langs still had negation. So i'm looking into the modal_language_of_thought module for errors not following the configs and such.
+            - Changed the line
+                self.contains_negation = "negation" in lot_configs
+            to 
+            self.contains_negation = lot_configs["negation"]
+
+    With negation off in both old and new:
+
+        total discrepancies:  0
+        total old languages:  66321
+        Saved 66321 old languages
+
+    Furthermore, here was the correlation data of naturalness with complexity, which is indeed quite high:
+
+            sample  pearson
+            new     -0.4685788796530204
+            old     -0.4685788796530204
+    
+    Given this, I want to measure the tradeoff and do analysis in the new codebase with these converted old languages. My best guess is that something has happened with sampling so that the old languages represent a better sampling of the space, or at least one that results in more positive results.
+    That is: 
+    
+        - I run the pipeline of the full experiment, but instead of sampling and using the evolutionary algorithm, I simply let the pool of languages consist of the old langauges converted to ModalLanguages. After all, those languages have been found by exploration with the evolutionary algorithm and sampling from the old codebase.
+
+    One thing I am noticing is that all the langauges are being kept even after running set() on them to unique, but I doubt they really are all unique. I'm not sure yet why, because the expression names should just be the same as all expressions used in the new codebase. Looking at the hash function for ModalLanguage, I see as expected:
+
+        # requiring diff name is a strong requirement
+        return hash(tuple(sorted(self.expressions)))
+
+    which ought to be uniquing things. But, in analysis, I still have the option of dropping duplicates, so I can probably be confident about not counting extras there.
+
+    Here were the results, which concur with the old codebase!
+
+        Degree sav pearson correlations:
+        simplicity: 0.46870328674046224
+        complexity: -0.4687032867404632
+        informativity: 0.492507973867846
+        optimality: 0.5571371626617981
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.813636   16.400000       0.746296    0.957112
+        dlsav_means         0.813636   16.400000       0.746296    0.957112
+        population_means    0.634684   32.147834       0.532526    0.783940
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic          9.842396   -9.842396       3.022135    7.417872
+        Two-sided p-value    0.000598    0.000598       0.039081    0.001763
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic          9.842396   -9.842396       3.022135    7.417872
+        Two-sided p-value    0.000598    0.000598       0.039081    0.001763
+
+    The plot does look like more of the space is explored (in particular, the high informativity langs look more explored). But it's not dramatically different from the new plots i'm used to looking at at this point. I note that the informativity looks right, unlike in the old plot -- which had values past the prior. In fact, the similarity is so striking that I've 
+    saved the two plots in a folder called `docs/first_correlation_debug_run`.
+
+    This is without dropping duplicates, and the length of all_data.csv is 66325 without 5 the natural languages.

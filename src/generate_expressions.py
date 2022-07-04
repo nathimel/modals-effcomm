@@ -36,6 +36,13 @@ if __name__ == "__main__":
             tqdm(p.imap(mlot.minimum_lot_description, meanings), total=len(meanings))
         )
 
+    # Check if negation shouldn't be there
+    negation = configs["language_of_thought"]["negation"]
+    if not negation:
+        lots = [formula for formula in lot_expressions if "-" in formula]
+        if len(lots) != 0:
+            raise ValueError(f"Negation shouldn't be in lot but found the following formulae with negation: {lots}")
+
     modal_expressions = [
         ModalExpression(
             form=f"dummy_form_{i}",

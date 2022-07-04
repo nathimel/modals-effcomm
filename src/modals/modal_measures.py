@@ -10,11 +10,6 @@ from modals.modal_language_of_thought import ExpressionTree, ModalLOT
 """Defines the complexity measures for measuring modals as minimum description length in a modal language of thought.
 """
 
-# class ModalComplexityMeasure:
-
-#     def __init__(self, mlot: ModalLOT):
-#         self.mlot = mlot
-
 def language_complexity(language: ModalLanguage, mlot: ModalLOT) -> float:
     """Sum of the language's item complexities."""
     return sum([item_complexity(e, mlot) for e in language.expressions])

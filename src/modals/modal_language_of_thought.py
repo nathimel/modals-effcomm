@@ -131,7 +131,7 @@ class ModalLOT:
         """
         self.forces = meaning_space.forces
         self.flavors = meaning_space.flavors
-        self.contains_negation = "negation" in lot_configs
+        self.contains_negation = lot_configs["negation"]
 
     def minimum_lot_description(self, meaning: ModalMeaning) -> list:
         """Runs a heuristic to estimate the shortest length description of modal meanings in a language of thought.
@@ -220,7 +220,6 @@ class ModalLOT:
                 shortest = next
 
         if complement and self.expression_complexity(shortest) != 1:
-            # return ExpressionTree(Nonterminal("-"), [shortest])
             return self.__negation(shortest)
 
         return shortest
@@ -555,7 +554,6 @@ class ModalLOT:
     # Complement
     #################################################################
 
-    # TODO: delete? never called
     def __negation(self, ET: ExpressionTree) -> ExpressionTree:
         """
         An operation, not an inference.
@@ -585,7 +583,6 @@ class ModalLOT:
                 ExpressionTree(atom) if not isinstance(atom, ExpressionTree) else atom
                 for atom in atoms_c
             ]
-
             comp = ExpressionTree(
                 node=Nonterminal("-"),
                 children=[ExpressionTree(node=Nonterminal("+"), children=atoms)],

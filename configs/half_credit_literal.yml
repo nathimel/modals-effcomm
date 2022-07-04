@@ -13,13 +13,13 @@ flavor_names:
 utility: half_credit # half_credit or indicator
 agent_type: literal # literal or pragmatic
 language_of_thought:
-  negation: True
+  negation: False # for debugging correlations
 universal_property: sav # iff or sav
 
 # other experiment parameters
 processes: 6
 random_seed: 42
-sample_size: 15000
+sample_size: 2000
 lang_size: 10
 evolutionary_alg:
   generation_size: 2000
