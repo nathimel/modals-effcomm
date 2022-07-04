@@ -12,7 +12,6 @@ def main():
         print("Usage: python3 src/sample_languages.py path_to_config_file")
         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
-    print("Sampling languages ...")
 
     # Load expressions and save path
     config_fn = sys.argv[1]
@@ -28,18 +27,34 @@ def main():
     # Turn the knob on universal property
     expressions = load_expressions(expression_save_fn)
     universal_property = getattr(modal_language, configs["universal_property"])
+
+    print("Sampling random languages ...")
     result = generate_languages(
-        ModalLanguage,        
-        expressions,
-        lang_size,
-        sample_size,
-        universal_property,
+        language_class=ModalLanguage,
+        expressions=expressions,
+        lang_size=lang_size,
+        sample_size=sample_size,
+        criterion=universal_property,
     )
-    languages = result["languages"]
+    any_languages = result["languages"]
     id_start = result["id_start"]
 
+    # WARNING: this seems to be doubling the sample size, before you unique the pool afterwards.
+    # sample only 100% universal property languages
+    print("Sampling degree 1.0 universal languages ...")
+    natural_expressions = [e for e in expressions if universal_property(e)]
+    result = generate_languages(
+        language_class=ModalLanguage,
+        expressions=natural_expressions,
+        lang_size=lang_size,
+        sample_size=sample_size,
+        criterion=universal_property,
+        id_start=id_start,
+    )
+    universal_languages = result["languages"]
+
     # unique and save langs
-    languages = list(set(languages))
+    languages = list(set(any_languages + universal_languages))
     save_languages(lang_save_fn, languages, id_start, kind="sampled")
     print("done.")
 

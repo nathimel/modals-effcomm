@@ -706,3 +706,22 @@ This happened once right after deleting altk's complexity module for refactoring
         - And the evolutionary algorithm should be good at finding those optimal ones, but there may be some lock-in involved -- though we do randomly mutate the parents and save them to the explored langs, regardless of their local fitness, so I'm not sure why this is such a problem.
 
     Doing this in the new codebase:
+
+        - Unfortunately, while passing in only the natural expressions lets the generate_languages() function run just fine, it doesn't seem to be finding any langauges that the normal random sampler can't find. I know this because it's saving the same number before and after.
+        In particular, we're back to almost 0 correlation again:
+                    
+            Degree sav pearson correlations:
+            simplicity: -0.030188734478632562
+            complexity: 0.030188734478632653
+            informativity: 0.7449740074285384
+            optimality: 0.26938205710854785        
+
+        - HOWEVER! I turned up the knob on sample size from 2k to 10k, and got
+
+            Degree sav pearson correlations:
+            simplicity: 0.23183545729787725
+            complexity: -0.23183545729787725
+            informativity: 0.7811426304586019
+            optimality: 0.46861543248553206        
+
+        Which is far higher. This motivates turning up the sample size even higher, and also thinking about seeding the evolutionary algorithm with more degree 1.0 universal_property languages.
