@@ -535,3 +535,35 @@ This happened once right after deleting altk's complexity module for refactoring
         Two-sided p-value    0.000083    0.000083       0.038159    0.000439    
 
     - Next, I plan to run the same steps, but instead of keeping the new codebase sampled languages out of the analysis, I will let the pool of languages consist of all the old languages plus the new codebase sampled and explored ones.
+
+    Here were the results:
+
+        Degree sav pearson correlations:
+        simplicity: 0.4151781617085524
+        complexity: -0.4151781617085524
+        informativity: 0.6770489229218878
+        optimality: 0.5256428747463577
+
+        MEANS
+                        simplicity  complexity  informativity  optimality
+        name                                                               
+        natural_means       0.804545   17.200000       0.746296    0.955460
+        dlsav_means         0.804545   17.200000       0.746296    0.955460
+        population_means    0.517221   42.484588       0.533966    0.706636
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         13.632536  -13.632536       3.001778   10.882309
+        Two-sided p-value    0.000168    0.000168       0.039872    0.000405
+
+        dlsav languages against population
+                        simplicity  complexity  informativity  optimality
+        stat                                                                
+        t-statistic         13.632536  -13.632536       3.001778   10.882309
+        Two-sided p-value    0.000168    0.000168       0.039872    0.000405
+
+    Now I will run BOTH full experiments with negation turned on.
+
+    
