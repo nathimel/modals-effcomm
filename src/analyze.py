@@ -126,7 +126,7 @@ def main():
     natural_data["simplicity"] = simplicity(natural_data)
 
     # tradeoff properties
-    properties = ["simplicity", "complexity", "informativity", "optimality"]
+    properties = ["simplicity", "informativity", "optimality"]
 
     # Pearson correlations
     rhos = []

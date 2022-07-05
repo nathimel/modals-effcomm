@@ -790,9 +790,27 @@ This happened once right after deleting altk's complexity module for refactoring
             informativity: 0.7995081848160996
             optimality: 0.460000315343279
 
+        And this was 15764 sampled languages, as before with injecting the degree1 langs.
+
         - Increasing the sample size to 40k:
 
-        
+            Notably, this results in 30710 sampled languages. Interestingly, the evolutionary algorithm doesn't do much to explore: it finds 33363 explored languages, and the final analysis has just 33368 total langs (add 5 for the naturals). 
+                - This means that much of the work can be done by the sampling script, and not the evolutionary algorithm -- which is opposite of what I had been believing. Also, the sampling script is faster at finding languages (though this could partly be due to the fact the evolutionary algorithm measures each generation, and there's no measurement in the sampler.)
+                - I also note that (after dropping duplicates) the all_data.csv has about 23k entries.
+
+            I also started timing the full experiment in run.sh. The 40k run took 8m17.086s total. (half_credit_literal)
+
+            Here were the results:
+
+                Degree sav pearson correlations:
+                simplicity: 0.30819300359460555
+                complexity: -0.30819300359460544
+                informativity: 0.8317336287804182
+                optimality: 0.5668854005095101
+
+            Again, the plot shows that the low comm_cost space is still very unexplored. I'm also going to stop printing complexity correlations until I need them again.
+
+
 
         One thing I do note is that I have also removed the sanity check and synonymy languages in the seeding of the evolutionary algorithm, and this still results in the low comm_cost space not being explored. Given that I can get the same results with this higher sampling number, my hypothesis is that the low comm_cost is not well explored by uniform sampling. It may have been well explored by the evolutionary algorithm at some point, but I don't know what has gone wrong. This inspires a very important conjecture:
             - The reason why I'm getting like 0.3 correlation at the highest right now, instead of the old codebase's 0.4Xs, could be because the low comm_cost space is not being explored enough. So my next hypothesis to test is:
