@@ -10,9 +10,10 @@ from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import (
     Add_Modal,
+    Add_Point,    
     Remove_Modal,
+    Remove_Point,
     Interchange_Modal,
-    Add_Point,
 )
 from altk.effcomm.informativity import (
     informativity,
@@ -63,23 +64,8 @@ def main():
         id_start=id_start,
         # verbose=True,
     )
-    r_population = result["languages"]
+    seed_population = result["languages"]
     id_start = result["id_start"]
-
-    # add degree 1.0 naturalness langs to the seed
-    universal_property = getattr(modal_language, configs["universal_property"])    
-    natural_expressions = [e for e in expressions if universal_property(e)]
-    result = generate_languages(
-        language_class=ModalLanguage,
-        expressions=natural_expressions,
-        lang_size=lang_size,
-        sample_size=sample_size,
-        criterion=universal_property, # this isn't actually necessary in this case
-        id_start=id_start,
-    )
-    n_population = result["languages"]
-    id_start = result["id_start"]
-    seed_population = r_population + n_population
 
     # construct measures of complexity and informativity as optimization objectives
     space = load_space(space_fn)
@@ -105,32 +91,10 @@ def main():
     mutations = [
         Add_Modal(),
         Remove_Modal(),
-        # Remove_Point(),
+        Remove_Point(),
         Add_Point(),
         Interchange_Modal(),
     ]
-
-    # # sanity check: perfectly informative language
-    # vocab = []
-    # points = space.objects
-    # # Sanity check: create a perfectly informative language.
-    # for expression in expressions:
-    #     points_ = expression.meaning.objects
-    #     if len(points_) == 1:
-    #         vocab.append(expression)
-    # assert len(vocab) == len(points)
-    # lang = ModalLanguage(vocab, name='Sanity_Check')
-
-    # # perfect informativeness but synonymy
-    # vocab1 = vocab
-    # for expression in expressions:
-    #     points_ = expression.meaning.objects
-    #     if len(points_) == 1:
-    #         vocab1.append(expression) # add each synonym
-    # lang1 = ModalLanguage(vocab1, name='Synonymy')
-    
-    # seed_population.append(lang)
-    # seed_population.append(lang1)
 
     # Initialize optimizer and run algorithm
     optimizer = EvolutionaryOptimizer(

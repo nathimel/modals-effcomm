@@ -812,6 +812,55 @@ This happened once right after deleting altk's complexity module for refactoring
 
         IMPORTANT: Unfortunately, I forgot to remove the injecting of degree1 langs into the evolutionary sampler. The generation size is the sample size, which remained small (2k) and as noted previously, at this size does not have an effect, but I need to remove this extra call to `generate_languages` and run again.
 
+            - Fortunately, I've confirmed that the above results do in fact hold when you don't inject the seed languages with degree1 langs. It's actually not that big of a deal to me to do this actually, because it's a bit like giving the evoluationary algorithm a prior or headstart, but it is objectively exploring fitness independent of its seed after X generations.
+            These were the results (though they are after changing the precondition for AddPoint to be less restrictive)
+
+                Degree sav pearson correlations:
+                simplicity: 0.32594052876431134
+                informativity: 0.8223497501162024
+                optimality: 0.6001674393381625
+
+
+        Patas run on all configs with 60k sample size -- without the help of new AddPoint:
+
+            - indicator_literal
+
+                48533 total langs.
+
+                simplicity: 0.35324353074601395
+                informativity: 0.8075340747083615
+                optimality: 0.4956028725636091
+
+                I do note that the plot looks pretty disappointing, very low exploration of high informativity space.
+
+            - indicator_pragmatic
+                48686 total langs.
+
+                Degree sav pearson correlations:
+                simplicity: 0.3565456977614203
+                informativity: 0.7592295348947574
+                optimality: 0.5619919946361154
+
+                As usual, this plot has many perfect informativity languages, though we know that this is expected and does not mean that many literally perfect informativity languages exist. This is a good illustration of why it's important to make sure the literal informativity experiments are robust first, because we will be measuring the same languages in both cases, but pragmatics in some sense obscures the shortcomings of bad sampling.
+
+            - half_credit_literal
+
+                48432 total langs.
+
+                simplicity: 0.3291947721105495
+                informativity: 0.84123551942777
+                optimality: 0.6028356910410583
+
+            - half_credit_pragmatic
+
+                48477 total langs.
+
+                simplicity: 0.31439208466348345
+                informativity: 0.7049393865716511
+                optimality: 0.38530611462020353
+
+        These changes won't be committed because I don't want to deal with the large file complaint. I'll also note that this took 01:38:21, and I think I might even have better luck on my local. But at least it runs to completion, and if I ever want something to run and close my laptop, patas is a good option.
+
         One thing I do note is that I have also removed the sanity check and synonymy languages in the seeding of the evolutionary algorithm, and this still results in the low comm_cost space not being explored. Given that I can get the same results with this higher sampling number, my hypothesis is that the low comm_cost is not well explored by uniform sampling. It may have been well explored by the evolutionary algorithm at some point, but I don't know what has gone wrong. This inspires a very important conjecture:
             - The reason why I'm getting like 0.3 correlation at the highest right now, instead of the old codebase's 0.4Xs, could be because the low comm_cost space is not being explored enough. So my next hypothesis to test is:
                 - Find a way to increase the high informativity space sample, because this may result in higher correlation of naturalness with optimality.
@@ -842,6 +891,8 @@ This happened once right after deleting altk's complexity module for refactoring
         I changed this to 
 
                 return True
+        
+        and then upon realizing the problem with lang_size stuff, I just made AddPoint inherit from AddModal, and call its super for the precondition.
 
         And in the mutation method, I changed what's in the if block to:
 
@@ -850,3 +901,241 @@ This happened once right after deleting altk's complexity module for refactoring
             if uncovered_points(language):
                 point = random.choice(list(uncovered_points(language)))
         
+
+        The results were slightly better on the statistics side, and also looking at the plot, the high informativity languages _do_ look more discovered. However, the effect is not dramatic, and still no perfect languages are discovered, which is surprising!
+
+        Next I want to inspect the other mutations. I'm not currently calling RemovePoint, but it does call upon informativity, because it's supposed to increase it. It has this precondition: 
+
+            def precondition(self, language: ModalLanguage, **kwargs) -> bool:
+                """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
+
+                # Is not already perfectly informative
+                inf = kwargs["objectives"]["informativity"](language)
+                if inf is None or np.isclose(inf, 1.0):
+                    return False
+
+                # Can express more than one point
+                expressions = language.expressions
+                for expression in expressions:
+                    points = expression.meaning.objects
+                    if len(points) > 1:
+                        return True
+                return False
+
+        Though I don't recall this mutation being helpful in this codebase, I will add it to the list of mutations, and actually remove the first condition, but keep the second.
+
+        I do note however that it was being used in the old codebase. in fact, here is a list of the mutations used in the old codebase:
+            - add
+            - remove
+            - interchange
+            - remove_bit
+
+            I note that the implementation of remove_bit is significantly different from my RemovePoint. In remove_bit, I just randomly select an expression and remove a point from its meaning space, and then as long as the resulting expression doesn't have 0 points in its meaning, I replace the modal with this less ambiguous one.
+
+                # randomly select a modal
+                for index in range(language.size()):
+                    lex = language.lexicon_.copy()
+                    arr = np.array(lex[index]["arr"])
+
+                    if np.count_nonzero(arr) == 0:
+                        raise ValueError('Array to replace in remove_bit cannot be all 0.')
+
+                    # randomly remove a bit
+                    argw = list(np.argwhere(arr))
+                    if len(argw) == 0:
+                        continue
+                    loc = random.choice(argw)
+                    row, col = loc
+                    arr[row, col] = 0
+                    if np.count_nonzero(arr) != 0:
+                        key = np.array2string(arr)
+                        # replace the modal
+                        new_expression = expressions[key]
+                        language.pop(index)
+                        language.add_modal(new_expression)
+                        break
+                return language
+
+
+        Looking at RemovePoint, I think I may have forgotten not to merely add the new modal, but to REPLACE the old ambiguous one!
+
+                # Search for the correct expression
+                for e in expressions:
+                    points_ = e.meaning.objects
+                    if set(points) == set(points_):
+                        new_expression = e
+                        break
+        >>>>> here I should have deleted the old expression! >>>>>
+                language.add_expression(new_expression)
+    >>>>But?    language.pop(index)
+                return language        
+
+        actually, the problem is more subtle. language.pop(index) actually _should_ be taking care of the replace logic -- but it's doing something worse: its the last index reached by the enumerate(vocab) loop. This means that if we are handed a perfectly informative language, this function will REDUCE ITS INFORMATIVITY because it will still pop the last expression!!
+
+        Ah, after fixing this the stats still aren't in the .40 range. On the bright side, the language size seems to have increased a bit, indicating that more langs are getting explored.
+
+            39042 total langs.
+
+            Degree sav pearson correlations:
+            simplicity: 0.31006584292647443
+            informativity: 0.813443407291671
+            optimality: 0.5404819315463313
+
+        The plot looks about as good as below. It really looks like there are three languages with perfect informativity, but inspecting the dominant.yml file, I see the lowest comm_cost value is still 0.0625, because we have a variable-force epistemic modal:
+
+            - sampled_lang_95515:
+                data:
+                Language: artificial
+                comm_cost: 0.0625
+                complexity: 22
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9375
+                name: sampled_lang_95515
+                optimality: 0.9999754175259222
+                sav: 1.0
+                simplicity: null
+                expressions:
+                - form: dummy_form_35
+                lot: (epistemic ) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this guy
+                meaning:
+                - strong+epistemic
+                - weak+epistemic
+                - form: dummy_form_1
+                lot: (* (strong ) (deontic ))
+                meaning:
+                - strong+deontic
+                - form: dummy_form_0
+                lot: (* (strong ) (circumstantial ))
+                meaning:
+                - strong+circumstantial
+                - form: dummy_form_7_1
+                lot: (* (weak ) (circumstantial ))
+                meaning:
+                - weak+circumstantial
+                - form: dummy_form_15
+                lot: (* (weak ) (deontic ))
+                meaning:
+                - weak+deontic
+                - form: dummy_form_3
+                lot: (* (strong ) (epistemic ))
+                meaning:
+                - strong+epistemic        
+
+        So, something must be preventing this language from having the RemovePoint mutation apply. One strategy might be to load up the mutation and this language in a python environment and see what happens when I apply it.
+
+
+
+        IMPORTANT: good progress on informativity exploration!
+
+        The following statistics are not really an improvement. However, the PLOT shows that more of the high, and perfect informativity languages are now being explored!
+
+                36276 total langs.
+
+                simplicity: 0.31199846177233853
+                informativity: 0.81526175885202
+                optimality: 0.5432685530503337
+
+        Upon inspecting the dominant languages YAML, I see low comm_cost languages, but I actually DON'T see perfect languages, just:
+
+            - sampled_lang_41948:
+                data:
+                Language: artificial
+                comm_cost: 0.0625
+                complexity: 22
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9375
+                name: sampled_lang_41948
+                optimality: 0.9999754175259222
+                sav: 1.0
+                simplicity: null
+                expressions:
+                - form: dummy_form_15
+                lot: (* (weak ) (deontic ))
+                meaning:
+                - weak+deontic
+                - form: dummy_form_35
+                lot: (epistemic )
+                meaning:
+                - strong+epistemic
+                - weak+epistemic
+                - form: dummy_form_0
+                lot: (* (strong ) (circumstantial ))
+                meaning:
+                - strong+circumstantial
+                - form: dummy_form_31
+                lot: (* (weak ) (epistemic ))
+                meaning:
+                - weak+epistemic
+                - form: dummy_form_7
+                lot: (* (weak ) (circumstantial ))
+                meaning:
+                - weak+circumstantial
+                - form: dummy_form_1
+                lot: (* (strong ) (deontic ))
+                meaning:
+                - strong+deontic        
+
+            - sampled_lang_42069:
+                data:
+                Language: artificial
+                comm_cost: 0.08333333333333337
+                complexity: 18
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9166666666666666
+                name: sampled_lang_42069
+                optimality: 0.9999871576181779
+                sav: 1.0
+                simplicity: null
+                expressions:
+                - form: dummy_form_8
+                lot: (circumstantial )
+                meaning:
+                - strong+circumstantial
+                - weak+circumstantial
+                - form: dummy_form_3
+                lot: (* (strong ) (epistemic ))
+                meaning:
+                - strong+epistemic
+                - form: dummy_form_1
+                lot: (* (strong ) (deontic ))
+                meaning:
+                - strong+deontic
+                - form: dummy_form_31
+                lot: (* (weak ) (epistemic ))
+                meaning:
+                - weak+epistemic
+                - form: dummy_form_15
+                lot: (* (weak ) (deontic ))
+                meaning:
+                - weak+deontic
+
+    I also found the following languages not in dominant, but in the list of all languages, which had higher complexity and a lot of expressions, but slightly better informativity than the above:
+
+            - sampled_lang_46319:
+                data:
+                Language: artificial
+                comm_cost: 0.04166666666666663
+                complexity: 30
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9583333333333334
+                name: sampled_lang_46319
+                optimality: 0.9356823936
+
+            - sampled_lang_45184:
+                data:
+                Language: artificial
+                comm_cost: 0.029166666666666674
+                complexity: 40
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9708333333333333
+                name: sampled_lang_45184
+                optimality: 0.8457272762292343
+                sav: 1.0
+                simplicity: null
+
+    The upshot: the perfect informativity languages are _still_ not found, and the high informativity space can still be explored a lot more.

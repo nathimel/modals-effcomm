@@ -1,7 +1,6 @@
 """Classes for defining the evolutionary algorithm for modals, including specific mutations on modal languages."""
 
 import random
-import numpy as np
 
 from altk.effcomm.optimization import Mutation
 from modals.modal_language import ModalExpression, ModalLanguage
@@ -48,14 +47,16 @@ class Remove_Modal(Mutation):
         return language
 
 
-class Add_Point(Mutation):
-    """Add a new modal expressing exactly one point the language does not already cover. Designed to increase informativity."""
+class Add_Point(Add_Modal):
+    """Add a new modal expressing exactly one point, and if possible a point that the language does not already cover. Designed to increase informativity."""
 
+    # def precondition(self, language: ModalLanguage, **kwargs) -> bool:
+    #     """Only apply when every point is not already expressible."""
+    #     # Check if any inexpressible meanings
+    #     # return bool(uncovered_points(language))
+    #     # return True
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
-        """Only apply when every point is not already expressible."""
-        # Check if any inexpressible meanings
-        # return bool(uncovered_points(language))
-        return True
+        return super().precondition(language, **kwargs)
 
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression], **kwargs
@@ -78,12 +79,6 @@ class Add_Point(Mutation):
         if new_expression is None:
             raise ValueError("new meaning not found in set of possible meanings")
 
-        # TODO: Relax / remove this!
-        # if new_expression in language.expressions:
-        #     raise ValueError(
-        #         f"AddPoint tried to add {new_expression} but the language already contains it."
-        #     )
-
         # Add it
         language.add_expression(new_expression)
         return language
@@ -96,9 +91,9 @@ class Remove_Point(Mutation):
         """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
 
         # Is not already perfectly informative
-        inf = kwargs["objectives"]["informativity"](language)
-        if inf is None or np.isclose(inf, 1.0):
-            return False
+        # inf = kwargs["objectives"]["informativity"](language)
+        # if inf is None or np.isclose(inf, 1.0):
+            # return False
 
         # Can express more than one point
         expressions = language.expressions
@@ -111,15 +106,20 @@ class Remove_Point(Mutation):
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
     ) -> ModalLanguage:
-        """Choose a random modal from the langauge and replace it with a modal that deletes one of the meaning points a language expresses."""
+        """Choose a random modal from the langauge and replace it with a modal that is less ambiguous by point point."""
         # randomly select an modal with more than one meaning
         vocab = language.expressions.copy()
         random.shuffle(vocab)
+        expression_to_remove = None
 
         for index, expression in enumerate(vocab):
             points = list(expression.meaning.objects)
             if len(points) > 1:
+                expression_to_remove = expression
                 break
+        
+        if expression_to_remove is None:
+            return language
 
         # randomly remove a meaning point
         point = random.choice(points)
@@ -131,9 +131,11 @@ class Remove_Point(Mutation):
             if set(points) == set(points_):
                 new_expression = e
                 break
-
+        
+        # Replace the ambiguous expression with the more precise one
+        language.expressions.remove(expression_to_remove)
         language.add_expression(new_expression)
-        language.pop(index)
+        # language.pop(index)
         return language
 
 
