@@ -810,8 +810,43 @@ This happened once right after deleting altk's complexity module for refactoring
 
             Again, the plot shows that the low comm_cost space is still very unexplored. I'm also going to stop printing complexity correlations until I need them again.
 
-
+        IMPORTANT: Unfortunately, I forgot to remove the injecting of degree1 langs into the evolutionary sampler. The generation size is the sample size, which remained small (2k) and as noted previously, at this size does not have an effect, but I need to remove this extra call to `generate_languages` and run again.
 
         One thing I do note is that I have also removed the sanity check and synonymy languages in the seeding of the evolutionary algorithm, and this still results in the low comm_cost space not being explored. Given that I can get the same results with this higher sampling number, my hypothesis is that the low comm_cost is not well explored by uniform sampling. It may have been well explored by the evolutionary algorithm at some point, but I don't know what has gone wrong. This inspires a very important conjecture:
             - The reason why I'm getting like 0.3 correlation at the highest right now, instead of the old codebase's 0.4Xs, could be because the low comm_cost space is not being explored enough. So my next hypothesis to test is:
                 - Find a way to increase the high informativity space sample, because this may result in higher correlation of naturalness with optimality.
+
+7.5.22: Investigating informativity promoting mutations in evolutionary algorithm.
+
+    A basic response to why perfectly informative languages are not being discovered is that: they're not allowed to for some reason, lol.
+
+    More precisely, the way that languages become more fit is through mutation. At each generation, the most fit languages are mutated. But if languages are not allowed to become more informative, then this could explain why the space isn't getting explored. In particular, there could be a check in AddPoint that requires the informativity to not be close to 1.0. 
+
+        - Just immediately, this will prevent high complexity, perfect informativity languages!! This explains why there's nothing inbetween the sanity check and synonym langs.
+        - Moreover, it may be too strong a requirement for informativity to be `np.is_close`. Inspecting some of the dominant languges, some of the comm_cost values are quite low: SanityCheck descendants are near zero, which means they can't have high complexity children. However, inspecting the dominant languages for more recent runs without the sanity checks, the lowest comm_cost is the prior, at 0.1667, which is not close to 0.
+            >>> np.isclose(0.0, 0.1667)
+            False
+            Although, looking at a SanityCheck language, the same holds:
+            >>> np.isclose(0.0, -0.0024568085877116896)
+            False
+
+            So in principle this hypothesis may be false, since the AddPoint mutation should be able to still apply, but I think the concerns are real enough to remove this condition on not being informativity 1.0 entirely.
+
+        - Upon inspection, I wasn't comparing informativity directly, but only uncovered points. this was the relevant code:
+
+            def precondition(self, language: ModalLanguage, **kwargs) -> bool:
+                """Only apply when every point is not already expressible."""
+                # Check if any inexpressible meanings
+                return bool(uncovered_points(language))
+        
+        I changed this to 
+
+                return True
+
+        And in the mutation method, I changed what's in the if block to:
+
+        
+            point = random.choice(language.universe.objects)
+            if uncovered_points(language):
+                point = random.choice(list(uncovered_points(language)))
+        

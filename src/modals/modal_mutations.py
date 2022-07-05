@@ -54,15 +54,18 @@ class Add_Point(Mutation):
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
         """Only apply when every point is not already expressible."""
         # Check if any inexpressible meanings
-        return bool(uncovered_points(language))
+        # return bool(uncovered_points(language))
+        return True
 
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression], **kwargs
     ) -> ModalLanguage:
-        """Add a new expression to the language containing exactly one random meaning point not already expressed by the language."""
+        """Add a new expression to the language containing exactly one random meaning point, preferably one not already expressed by the language."""
 
         # add a random meaning point to an existing expression
-        point = random.choice(list(uncovered_points(language)))
+        point = random.choice(list(language.universe.objects))
+        if uncovered_points(language):
+            point = random.choice(list(uncovered_points(language)))
 
         # Search for the correct expression
         new_meaning = [point]
@@ -75,10 +78,11 @@ class Add_Point(Mutation):
         if new_expression is None:
             raise ValueError("new meaning not found in set of possible meanings")
 
-        if new_expression in language.expressions:
-            raise ValueError(
-                f"AddPoint tried to add {new_expression} but the language already contains it."
-            )
+        # TODO: Relax / remove this!
+        # if new_expression in language.expressions:
+        #     raise ValueError(
+        #         f"AddPoint tried to add {new_expression} but the language already contains it."
+        #     )
 
         # Add it
         language.add_expression(new_expression)
