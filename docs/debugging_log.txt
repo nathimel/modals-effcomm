@@ -981,161 +981,51 @@ This happened once right after deleting altk's complexity module for refactoring
             informativity: 0.813443407291671
             optimality: 0.5404819315463313
 
-        The plot looks about as good as below. It really looks like there are three languages with perfect informativity, but inspecting the dominant.yml file, I see the lowest comm_cost value is still 0.0625, because we have a variable-force epistemic modal:
+        The plot looks about as good as below. It really looks like there are three languages with perfect informativity. When I look in artificial.yml, I find perfectly informative languages! Restate: The perfect informativity space is now being explored with some success: specifically, the following search turns up 9 languages:
 
-            - sampled_lang_95515:
+              informativity: 0.9999999999999999
+
+        And in dominant.yml, I found the perfect informativity language (the one with six expressions all denoting one point):
+
+            - sampled_lang_444874:
                 data:
                 Language: artificial
-                comm_cost: 0.0625
-                complexity: 22
+                comm_cost: 1.1102230246251565e-16
+                complexity: 24
                 dlsav: true
                 iff: 1.0
-                informativity: 0.9375
-                name: sampled_lang_95515
-                optimality: 0.9999754175259222
+                informativity: 0.9999999999999999
+                name: sampled_lang_444874
+                optimality: 0.9999999999999999
                 sav: 1.0
                 simplicity: null
                 expressions:
-                - form: dummy_form_35
-                lot: (epistemic ) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this guy
+                - form: dummy_form_15
+                lot: (* (weak ) (deontic ))
                 meaning:
-                - strong+epistemic
-                - weak+epistemic
+                - weak+deontic
+                - form: dummy_form_0
+                lot: (* (strong ) (circumstantial ))
+                meaning:
+                - strong+circumstantial
                 - form: dummy_form_1
                 lot: (* (strong ) (deontic ))
                 meaning:
                 - strong+deontic
-                - form: dummy_form_0
-                lot: (* (strong ) (circumstantial ))
-                meaning:
-                - strong+circumstantial
-                - form: dummy_form_7_1
-                lot: (* (weak ) (circumstantial ))
-                meaning:
-                - weak+circumstantial
-                - form: dummy_form_15
-                lot: (* (weak ) (deontic ))
-                meaning:
-                - weak+deontic
-                - form: dummy_form_3
-                lot: (* (strong ) (epistemic ))
-                meaning:
-                - strong+epistemic        
-
-        So, something must be preventing this language from having the RemovePoint mutation apply. One strategy might be to load up the mutation and this language in a python environment and see what happens when I apply it.
-
-
-
-        IMPORTANT: good progress on informativity exploration!
-
-        The following statistics are not really an improvement. However, the PLOT shows that more of the high, and perfect informativity languages are now being explored!
-
-                36276 total langs.
-
-                simplicity: 0.31199846177233853
-                informativity: 0.81526175885202
-                optimality: 0.5432685530503337
-
-        Upon inspecting the dominant languages YAML, I see low comm_cost languages, but I actually DON'T see perfect languages, just:
-
-            - sampled_lang_41948:
-                data:
-                Language: artificial
-                comm_cost: 0.0625
-                complexity: 22
-                dlsav: true
-                iff: 1.0
-                informativity: 0.9375
-                name: sampled_lang_41948
-                optimality: 0.9999754175259222
-                sav: 1.0
-                simplicity: null
-                expressions:
-                - form: dummy_form_15
-                lot: (* (weak ) (deontic ))
-                meaning:
-                - weak+deontic
-                - form: dummy_form_35
-                lot: (epistemic )
-                meaning:
-                - strong+epistemic
-                - weak+epistemic
-                - form: dummy_form_0
-                lot: (* (strong ) (circumstantial ))
-                meaning:
-                - strong+circumstantial
                 - form: dummy_form_31
                 lot: (* (weak ) (epistemic ))
                 meaning:
                 - weak+epistemic
+                - form: dummy_form_3
+                lot: (* (strong ) (epistemic ))
+                meaning:
+                - strong+epistemic
                 - form: dummy_form_7
                 lot: (* (weak ) (circumstantial ))
                 meaning:
-                - weak+circumstantial
-                - form: dummy_form_1
-                lot: (* (strong ) (deontic ))
-                meaning:
-                - strong+deontic        
+                - weak+circumstantial        
 
-            - sampled_lang_42069:
-                data:
-                Language: artificial
-                comm_cost: 0.08333333333333337
-                complexity: 18
-                dlsav: true
-                iff: 1.0
-                informativity: 0.9166666666666666
-                name: sampled_lang_42069
-                optimality: 0.9999871576181779
-                sav: 1.0
-                simplicity: null
-                expressions:
-                - form: dummy_form_8
-                lot: (circumstantial )
-                meaning:
-                - strong+circumstantial
-                - weak+circumstantial
-                - form: dummy_form_3
-                lot: (* (strong ) (epistemic ))
-                meaning:
-                - strong+epistemic
-                - form: dummy_form_1
-                lot: (* (strong ) (deontic ))
-                meaning:
-                - strong+deontic
-                - form: dummy_form_31
-                lot: (* (weak ) (epistemic ))
-                meaning:
-                - weak+epistemic
-                - form: dummy_form_15
-                lot: (* (weak ) (deontic ))
-                meaning:
-                - weak+deontic
 
-    I also found the following languages not in dominant, but in the list of all languages, which had higher complexity and a lot of expressions, but slightly better informativity than the above:
-
-            - sampled_lang_46319:
-                data:
-                Language: artificial
-                comm_cost: 0.04166666666666663
-                complexity: 30
-                dlsav: true
-                iff: 1.0
-                informativity: 0.9583333333333334
-                name: sampled_lang_46319
-                optimality: 0.9356823936
-
-            - sampled_lang_45184:
-                data:
-                Language: artificial
-                comm_cost: 0.029166666666666674
-                complexity: 40
-                dlsav: true
-                iff: 1.0
-                informativity: 0.9708333333333333
-                name: sampled_lang_45184
-                optimality: 0.8457272762292343
-                sav: 1.0
-                simplicity: null
-
-    The upshot: the perfect informativity languages are _still_ not found, and the high informativity space can still be explored a lot more.
+    This is enough progress to close up this entry for now. The upshot: I am successfully finding the perfectly informative langauges in my evoluationary algorithm, most likely as a result of debugging some of the logic errors in my mutations AddPoint and RemovePoint. Partly because my correlation of naturalness with simplicity is _STILL_ not as high as in the old codebase, though, I'm somewhat skeptical that the work is done. I'm at around 0.31, but my old code was finding results yielding around 0.41 - 0.47.
+    My hypothesis is that the high informativity space is being explored better, but not as well as in the old codebase. Another possibility is that the old codebase is better at exploring low-complexity languages in general.
+    Ideas to consider: increasing the sample size (which I know helps somewhat) and engineering mutations that reduce complexity (which I haven't thought of yet).

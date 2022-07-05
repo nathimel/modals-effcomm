@@ -50,11 +50,6 @@ class Remove_Modal(Mutation):
 class Add_Point(Add_Modal):
     """Add a new modal expressing exactly one point, and if possible a point that the language does not already cover. Designed to increase informativity."""
 
-    # def precondition(self, language: ModalLanguage, **kwargs) -> bool:
-    #     """Only apply when every point is not already expressible."""
-    #     # Check if any inexpressible meanings
-    #     # return bool(uncovered_points(language))
-    #     # return True
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
         return super().precondition(language, **kwargs)
 
@@ -88,14 +83,8 @@ class Remove_Point(Mutation):
     """Replace an ambiguous modal with a modal expressing one fewer meaning points. Designed to increase informativity."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
-        """Only apply when language is not perfectly informative, or when it has a modal that expresses more than one meaning point."""
-
-        # Is not already perfectly informative
-        # inf = kwargs["objectives"]["informativity"](language)
-        # if inf is None or np.isclose(inf, 1.0):
-            # return False
-
-        # Can express more than one point
+        """Only apply when the language has a modal that expresses more than one meaning point."""
+        # Can express more than one pointe
         expressions = language.expressions
         for expression in expressions:
             points = expression.meaning.objects
@@ -110,9 +99,9 @@ class Remove_Point(Mutation):
         # randomly select an modal with more than one meaning
         vocab = language.expressions.copy()
         random.shuffle(vocab)
+        
         expression_to_remove = None
-
-        for index, expression in enumerate(vocab):
+        for expression in vocab:
             points = list(expression.meaning.objects)
             if len(points) > 1:
                 expression_to_remove = expression
@@ -135,7 +124,6 @@ class Remove_Point(Mutation):
         # Replace the ambiguous expression with the more precise one
         language.expressions.remove(expression_to_remove)
         language.add_expression(new_expression)
-        # language.pop(index)
         return language
 
 
