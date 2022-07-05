@@ -110,27 +110,27 @@ def main():
         Interchange_Modal(),
     ]
 
-    # sanity check: perfectly informative language
-    vocab = []
-    points = space.objects
-    # Sanity check: create a perfectly informative language.
-    for expression in expressions:
-        points_ = expression.meaning.objects
-        if len(points_) == 1:
-            vocab.append(expression)
-    assert len(vocab) == len(points)
-    lang = ModalLanguage(vocab, name='Sanity_Check')
+    # # sanity check: perfectly informative language
+    # vocab = []
+    # points = space.objects
+    # # Sanity check: create a perfectly informative language.
+    # for expression in expressions:
+    #     points_ = expression.meaning.objects
+    #     if len(points_) == 1:
+    #         vocab.append(expression)
+    # assert len(vocab) == len(points)
+    # lang = ModalLanguage(vocab, name='Sanity_Check')
 
-    # perfect informativeness but synonymy
-    vocab1 = vocab
-    for expression in expressions:
-        points_ = expression.meaning.objects
-        if len(points_) == 1:
-            vocab1.append(expression) # add each synonym
-    lang1 = ModalLanguage(vocab1, name='Synonymy')
+    # # perfect informativeness but synonymy
+    # vocab1 = vocab
+    # for expression in expressions:
+    #     points_ = expression.meaning.objects
+    #     if len(points_) == 1:
+    #         vocab1.append(expression) # add each synonym
+    # lang1 = ModalLanguage(vocab1, name='Synonymy')
     
-    seed_population.append(lang)
-    seed_population.append(lang1)
+    # seed_population.append(lang)
+    # seed_population.append(lang1)
 
     # Initialize optimizer and run algorithm
     optimizer = EvolutionaryOptimizer(
@@ -147,9 +147,6 @@ def main():
     dominant_langs = result["dominating_languages"]
     explored_langs = result["explored_languages"]
     id_start = result["id_start"]
-
-    # Explore additionally
-    # result = optimizer.fit(explored_langs, explore=1.0)
 
     # Save all explored langs
     pool = explored_langs + sampled_languages

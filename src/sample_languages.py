@@ -36,25 +36,10 @@ def main():
         sample_size=sample_size,
         criterion=universal_property,
     )
-    any_languages = result["languages"]
+    languages = result["languages"]
     id_start = result["id_start"]
 
-    # WARNING: this seems to be doubling the sample size, before you unique the pool afterwards.
-    # sample only 100% universal property languages
-    print("Sampling degree 1.0 universal languages ...")
-    natural_expressions = [e for e in expressions if universal_property(e)]
-    result = generate_languages(
-        language_class=ModalLanguage,
-        expressions=natural_expressions,
-        lang_size=lang_size,
-        sample_size=sample_size,
-        criterion=universal_property, # this isn't actually necessary in this case
-        id_start=id_start,
-    )
-    universal_languages = result["languages"]
-
-    # unique and save langs
-    languages = list(set(any_languages + universal_languages))
+    languages = list(set(languages))
     save_languages(lang_save_fn, languages, id_start, kind="sampled")
     print("done.")
 

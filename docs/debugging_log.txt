@@ -761,3 +761,39 @@ This happened once right after deleting altk's complexity module for refactoring
             complexity: -0.27942214075127825
             informativity: 0.8005810203039387
             optimality: 0.5191003974244972
+
+7.4.22: Testing with very large sampling size
+
+    Given that I can increase the optimality correlation with naturalness by sampling more degree 1.0 languages, a natural next step which addresses both sampling more optimal languages and sampling more of the space in general, is simply to ask for a very large sample size.
+
+    In particular, I won't inject degree 1.0 langs in sampling. There will be just one call to `generate_languages`. 
+
+        - First, I will try 20k.
+
+        Results for half_credit_literal look like they confirm the hypothesis: 
+
+            18529 total langs.
+
+            Degree sav pearson correlations:
+            simplicity: 0.27478177250674074
+            complexity: -0.2747817725067404
+            informativity: 0.8070911122098514
+            optimality: 0.5358468342428402
+
+        Results for indicator_literal similarly (and are more positive):
+
+            18640 total langs.
+
+            Degree sav pearson correlations:
+            simplicity: 0.29572958275332895
+            complexity: -0.29572958275332895
+            informativity: 0.7995081848160996
+            optimality: 0.460000315343279
+
+        - Increasing the sample size to 40k:
+
+        
+
+        One thing I do note is that I have also removed the sanity check and synonymy languages in the seeding of the evolutionary algorithm, and this still results in the low comm_cost space not being explored. Given that I can get the same results with this higher sampling number, my hypothesis is that the low comm_cost is not well explored by uniform sampling. It may have been well explored by the evolutionary algorithm at some point, but I don't know what has gone wrong. This inspires a very important conjecture:
+            - The reason why I'm getting like 0.3 correlation at the highest right now, instead of the old codebase's 0.4Xs, could be because the low comm_cost space is not being explored enough. So my next hypothesis to test is:
+                - Find a way to increase the high informativity space sample, because this may result in higher correlation of naturalness with optimality.
