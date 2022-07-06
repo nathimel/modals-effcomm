@@ -65,6 +65,7 @@ def main():
     # Get trade-off results
     properties_to_measure = {
         "complexity": comp_measure,
+        "simplicity": lambda lang: None, # reset simplicity from evol alg exploration
         "informativity": inf_measure,
         "comm_cost": lambda lang: 1 - inf_measure(lang),
         "iff": lambda lang: lang.degree_property(iff),

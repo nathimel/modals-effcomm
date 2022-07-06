@@ -85,6 +85,7 @@ def main():
         "comm_cost": lambda lang: 1 - informativity_measure(lang),
         "informativity": informativity_measure,
         "complexity": complexity_measure,
+        "simplicity": lambda lang: 1 / complexity_measure(lang) # warning: this is different from the simplicity value computed during analysis.
     }
 
     # Load modals-specifc mutations
@@ -107,13 +108,58 @@ def main():
         lang_size=lang_size,
         processes=processes,
     )
-    result = optimizer.fit(seed_population, id_start, explore=explore)
-    dominant_langs = result["dominating_languages"]
-    explored_langs = result["explored_languages"]
-    id_start = result["id_start"]
+
+    # Run optimizer once for each corner of the 2D space of possible langs
+    directions = {
+        "lower_left" : ("comm_cost", "complexity"),
+        "lower_right" : ("informativity", "complexity"),
+        "upper_left" : ("comm_cost", "simplicity"),
+        "upper_right": ("informativity", "simplicity"),
+    }
+
+    results = {k: None for k in directions}
+    pool = []
+    for direction in directions:
+        # set directions of optimization
+        x, y = directions[direction]
+        optimizer.x = x
+        optimizer.y = y
+        print(f"Minimizing for {x}, {y} ...")
+
+        # run algorithm
+        result = optimizer.fit(
+            seed_population=seed_population,
+            id_start=id_start,
+            explore=explore,
+        )
+
+        # collect results
+        results[direction] = result
+        id_start = result["id_start"]
+        pool.extend(results[direction]["explored_languages"])
+
+    # the Pareto langs
+    dominant_langs = results["lower_left"]["dominating_languages"]
+
+    # result = optimizer.fit(seed_population, id_start, explore=explore)
+    # dominant_langs = result["dominating_languages"]
+    # explored_langs = result["explored_languages"]
+    # id_start = result["id_start"]
+
+    # # try and optimize for high cost langs while still optimizing for simplicity
+    # optimizer.x = "informativity"
+    # high_cost_result = optimizer.fit(seed_population, id_start)
+    # high_cost_explored = high_cost_result["explored_languages"]
+    # id_start = high_cost_result["id_start"]
 
     # Save all explored langs
-    pool = explored_langs + sampled_languages
+    # pool = explored_langs + high_cost_explored
+
+    
+
+
+    print(f"Discovered {len(pool)} languages.")
+    pool.extend(sampled_languages)
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
