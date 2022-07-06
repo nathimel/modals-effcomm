@@ -1121,6 +1121,11 @@ This happened once right after deleting altk's complexity module for refactoring
     I think this is a good sampling methodology, it samples not just the optimal languages, and it does so in a principled and mostly unbiased way. One way to improve it would be:
         - to add more specific mutations for the different objectives.
 
+    To conclude: 
+        - I got the statistics I was looking for, namely those more congruent with the old codebase correlations with complexity, around 0.48. I'm also more confident in these stats than any others i've measured, because the method seems less biased to me. The sample size is also far higher: 173k langs.
+        - The plot looks more explored.
+        - some TODOs left are speed, and better mutations for each corner objective.
+
 7.5.22: FALSE ALARM: Don't forget your complexity measure doubles the atoms that are not TOP and BOTTOM.
 
     For a year I've been seeing lang complexity up at like 70 or 80. But the maximum language complexity is 40. Why is this? Because we double the atoms that are not (1).
