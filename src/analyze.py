@@ -29,6 +29,7 @@ def get_modals_plot(
     pareto_points = interpolate_data(pareto_points)
     pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
+    # aesthetics for all data
     kwargs = {
         "color": naturalness, 
         "shape": "dlsav", 
@@ -38,25 +39,27 @@ def get_modals_plot(
         kwargs["size"] = "counts"
 
     plot = (
-        pn.ggplot(data=data, mapping=pn.aes(x="comm_cost", y="complexity"))
-        + pn.scale_x_continuous(limits=[0, 1])
+        # Set data and the axes
+        pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
+        + pn.scale_y_continuous(limits=[0, 1])
+        
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.geom_point(  # The natural languages
-            natural_data,
-            color="red",
-            shape="+",
-            size=4,
-        )
-        + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
+        # + pn.geom_point(  # The natural languages
+        #     natural_data,
+        #     color="red",
+        #     shape="+",
+        #     size=4,
+        # )
+        # + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
-        + pn.xlab("Communicative cost")
-        + pn.ylab("Complexity")
+        + pn.xlab("Complexity")        
+        + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")
-        # + pn.theme_classic()
+        + pn.theme_classic()
     )
     return plot
 
@@ -103,15 +106,26 @@ def main():
     # Construct main dataframe and plot
     ############################################################################
 
-    kwargs = {"subset": ["complexity", "comm_cost"], "duplicates": "drop"}
+    # Record all observations, including duplicates, for statistical analyses
+    subset = ["complexity", "comm_cost"]
+    kwargs = {"subset": subset, "duplicates": "leave"}
+
     data = get_dataframe(langs, **kwargs)
     pareto_data = get_dataframe(dom_langs, **kwargs)
     natural_data = get_dataframe(nat_langs, **kwargs)
     data = data.append(natural_data)
-
+    
     # Plot
     naturalness = configs["universal_property"]
-    plot = get_modals_plot(data, pareto_data, naturalness=naturalness, counts=False)
+
+    # Add counts only for plot
+    plot_data = data.copy()
+    vcs = plot_data.value_counts(subset=subset)
+    plot_data = plot_data.drop_duplicates(subset=subset)
+    plot_data = plot_data.sort_values(by=subset)
+    plot_data["counts"] = vcs.values
+
+    plot = get_modals_plot(plot_data, pareto_data, naturalness=naturalness, counts=True)
     plot.save(plot_fn, width=10, height=10, dpi=300)
 
 

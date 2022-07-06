@@ -1,6 +1,7 @@
 The purpose of this file is to track bugs that often recur, and document how they were resolved.
 
 6.29.22: incomplete looking plot
+status: resolved
 
     - NB: solved partially on 7.5.22 by exploring all corners of the space with optimizer.
 
@@ -19,21 +20,25 @@ Tried:
 
 
 6.29.22: random seed not producing deterministic behavior
+status: unresolved
 
 I have never seen deterministic behavior yet, but making the entry now. All scripts call the set_seed() function, which updates the only two libraries I know of that I'm using that use randomness:
     - random
     - numpy
 
 7.1.22: pandas datatype confusion seems to not be a problem anymore. 
+status: resolved*
 
 I'm not particularly worried about removing the logic which prevented floats from being read as strings, because the statistics and data look the same with and without. For reference though, pandas was once confused about there being mixed data types and I had to us pd.to_numeric() to convert all the appropriate columns back to floats.
 
 7.1.22: strange plot with correct data but huge complexity limit at like 3e10
+status: resolved*
 
 This happened once right after deleting altk's complexity module for refactoring, but then I haven't been able to reproduce again.
 
 
 7.3.22: Highly complex DLSAV languages
+status: resolved
 
     Looking into specific languages:
     - This has been an issue ever since I added dlsav functionality, and I should have noticed it before, but I am now addressing it as part of the more general debugging process of aligning / comparing the new and old codebase results.
@@ -164,6 +169,7 @@ This happened once right after deleting altk's complexity module for refactoring
         - This means conclusively that the old modals codebase is incorrect, at least with respect to computing informativity for half_credit. It's also probably incorrect wrt literal, too. Unfortunately this buggy and misleading result is in the abstract we submitted, and it's on my website as the poster: but we still have time to correct the SALT version, and I'm happy to change the poster to the talk version from salt :) 
 
 7.3.22 Manually check some SAV / Nauze languages for old and new codebase.
+status: resolved
 
     In light of the progress I made in manually checking DLSAV / vanderklok languages, I will now check languages that seem to differ in their values and or position in the old vs new codebase, and see which implementation is right. 
 
@@ -402,6 +408,8 @@ This happened once right after deleting altk's complexity module for refactoring
 
 
 7.3.22: print statements not showing up in evolutionary algorithm script
+status: resolved*
+
     This is also an old bug that I forgot about, and noticed because I want output telling me when the estimation of the frontier is starting and the sampling has stopped.
 
     I have the following print statements
@@ -417,6 +425,7 @@ This happened once right after deleting altk's complexity module for refactoring
     Weird: I actually do see these print statements, but not until after the long thing I wanted to be warned was starting, finished, which is not useful. To clarify: I get all the print statements I put in, but not at the time I expected them.
 
 7.3.22: Negative simplicity values in the old codebase:
+status: resolved
 
     This is probably because I had the following line commented out:
 
@@ -425,6 +434,7 @@ This happened once right after deleting altk's complexity module for refactoring
     And without this, in the function `add_columns`, simplicity is defined as 1 - complexity, but if complexity isn't in [0,1], we'll get negative values.
 
 7.3.22: At this point, I will try to find the truth about the complexity correlations with naturalness by building something that can take the languages of the old codebase and turn them into equivalent altk / new codebase languages.
+status: resolved
 
     The motivation is the following: I've checked the measures of naturalness (SAV / Nauze), and the complexity values of languages look good upon inspection of the old codebase. So we have (implicitly) two different datasets: languages with their complexity and naturalness data. These define 2 correlation coefficients. The task is to make sure these datasets are truly comparable, and then find the right coefficient.
 
@@ -433,6 +443,7 @@ This happened once right after deleting altk's complexity module for refactoring
     3. Get the pearson correlations.
 
 7.4.22: Writing the debug_correlations.py script
+status: resolved
 
     So far this is a promising strategy. I load up the old languages as all.json, and then construct the analogous ModalLanguages. Along the way I keep track of any discrepancies between complexity in the old and new language, and between the old and new measure of naturalness. So far, no discrepancies for naturalness. I did get, however:
 
@@ -702,6 +713,7 @@ This happened once right after deleting altk's complexity module for refactoring
     Nothing too dramatic in the plot, other than the high informativity space looks better.
 
 7.4.22: Taking samples of JUST 100% natural languages.
+status: resolved
 
     I notice that in the old codebase this is something I did. I think this is a nice strategy. It raises the question of whether the sample is biased, and thus affecting correlations. In general, we really don't know how to take a good sample of the mathematically possible languages. 
         - Uniform sampling is really bad at finding optimal languages. 
@@ -765,6 +777,7 @@ This happened once right after deleting altk's complexity module for refactoring
             optimality: 0.5191003974244972
 
 7.4.22: Testing with very large sampling size
+status: resolved
 
     Given that I can increase the optimality correlation with naturalness by sampling more degree 1.0 languages, a natural next step which addresses both sampling more optimal languages and sampling more of the space in general, is simply to ask for a very large sample size.
 
@@ -868,6 +881,7 @@ This happened once right after deleting altk's complexity module for refactoring
                 - Find a way to increase the high informativity space sample, because this may result in higher correlation of naturalness with optimality.
 
 7.5.22: Investigating informativity promoting mutations in evolutionary algorithm.
+status: resolved
 
     A basic response to why perfectly informative languages are not being discovered is that: they're not allowed to for some reason, lol.
 
@@ -1032,7 +1046,8 @@ This happened once right after deleting altk's complexity module for refactoring
     My hypothesis is that the high informativity space is being explored better, but not as well as in the old codebase. Another possibility is that the old codebase is better at exploring low-complexity languages in general.
     Ideas to consider: increasing the sample size (which I know helps somewhat) and engineering mutations that reduce complexity (which I haven't thought of yet).
 
-7.5.22:
+7.5.22: Four corner optimization as a sampling method
+status: resolved* (works but is slow, and have only done it twice so far)
 
     What if I just ran the evoluationary algorithm but instead of optimizing for complexity and comm_cost, i optimize for complexity and informativeness?
     (and add this to the first result)
@@ -1139,6 +1154,7 @@ This happened once right after deleting altk's complexity module for refactoring
         - figure out what to do about the fact github can't handle my files now.
 
 7.5.22: FALSE ALARM: Don't forget your complexity measure doubles the atoms that are not TOP and BOTTOM.
+status: resolved
 
     For a year I've been seeing lang complexity up at like 70 or 80. But the maximum language complexity is 40. Why is this? Because we double the atoms that are not (1).
 
@@ -1153,3 +1169,54 @@ This happened once right after deleting altk's complexity module for refactoring
     for a fixed language size N, the maximum language complexity is just 2 * num_atoms. So if you ever write a test, you can check that the value is correct and is even.
 
 
+7.6.22: Preparing the 4-corner result as the main results for SALT
+
+    - After meeting with Shane, we decide that we will likely use the results of the four-corner optimization /exploration for the main results of our SALT paper. 
+    - Some changes that needed to apply to the plot: 
+        - flip axes, 
+            - Ran into an issue here where complexity and comm_cost values were not swapped: that is, complexity ranged from 0 to 1, but comm_cost ranged from 1 to 80.
+                - This was just because I forgot to flip the xlab and ylab labels.
+        - use classic theme,
+        - record the counts for size.
+            - Recording counts as size makes the DLSAV key harder to see, because before it was DLSAV as size. There may be some other shapes we can use instead, but I don't see this as a major issue.
+    - A change to the statistics: don't drop duplicates. Just for the sake of being explicit, I'll put some of the discussion I had with shane today below:
+
+        Regarding the shape of the resulting explored plot:
+            - We are more confident than ever now that we have explored the space well. The sparse areas of the plot may in fact be low density regions of the language space. What does this mean?
+                - This means that there is NOT a bijection from languages <-> points. Every language corresponds to some point. But the same point may be the measurement values of MANY languages. And it is not the case that the set of points (the range of the function) is covered by the input space.
+                - This is a natural consequence of one main fact: the language space is discrete, while the space of points is continuous. 
+                - There is also the matter of the transformation / mapping: a reason you will never see a perfectly precise, but highly complex langauge being higher in complexity than lower informativity languages is because perfectly unambiguous synonyms will always get beat out by ambiguous, but very unnatural (and thus complex, e.g. think "mought"), expressions. This means that the upper left part of the space will never be explored.
+                    - This is an important point. I will restate it: the fact that perfectly informative languages must sacrifice informativity to become more complex entails that max complexity, max informativity languages are impossible. 
+                    - There may be some thinking here to do and even some research ideas. At the same time, it may be something that only holds for restricted domains (e.g. function instead of content words), because it seems to be a part of the tradeoff when you encode the possibility of synonymy / meaning overlap. 
+
+    - An mild concern: I don't see the natural languages anymore. this may be because they were dropped by my constructing a copy of the final dataframe and doing the "counts" on that one, whereas I probably need to count first, and then add the natural languges. I haven't checked this, but I'm not concerned because this is an issue for after SALT.
+    - To that end, I'm keeping languages in the data, but removing them from the plot. So we still benefit from discovering those languages and adding them to our pool, but we don't identify them as natural yet ;)
+
+    Here are the results when you leave all observations in. Correlation with simplicity increased by about 0.03, and optimality increased by about 0.02. But correlation with optimality increased by more than 0.6.
+
+        Degree sav pearson correlations:
+        simplicity: 0.5124885250713449
+        informativity: 0.7690636331914136
+        optimality: 0.6896187431039775
+
+        MEANS
+                        simplicity  informativity  optimality
+        name                                                   
+        natural_means       0.795000       0.746296    0.952014
+        dlsav_means         0.795000       0.746296    0.952014
+        population_means    0.407141       0.516596    0.645423
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  informativity  optimality
+        stat                                                    
+        t-statistic         19.392966       3.247343   11.830951
+        Two-sided p-value    0.000042       0.031455    0.000292
+
+        dlsav languages against population
+                        simplicity  informativity  optimality
+        stat                                                    
+        t-statistic         19.392966       3.247343   11.830951
+        Two-sided p-value    0.000042       0.031455    0.000292
+
+    - On saving the huge pool (173k) of langs: my solution for now is to create a local folder for each commit, and store the artificial.yml language there. May move to dropbox, or look into git large file storage, or just start adding the language YMLs to gitignore. Will have to think about it.
