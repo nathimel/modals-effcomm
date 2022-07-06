@@ -120,10 +120,9 @@ def main():
 
     # Add counts only for plot
     plot_data = data.copy()
-    vcs = plot_data.value_counts(subset=subset)
-    plot_data = plot_data.drop_duplicates(subset=subset)
-    plot_data = plot_data.sort_values(by=subset)
+    vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data["counts"] = vcs.values
+    plot_data = plot_data.drop_duplicates(subset=subset)    
 
     plot = get_modals_plot(plot_data, pareto_data, naturalness=naturalness, counts=True)
     plot.save(plot_fn, width=10, height=10, dpi=300)

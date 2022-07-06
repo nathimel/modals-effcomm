@@ -1179,6 +1179,8 @@ status: resolved
         - use classic theme,
         - record the counts for size.
             - Recording counts as size makes the DLSAV key harder to see, because before it was DLSAV as size. There may be some other shapes we can use instead, but I don't see this as a major issue.
+            - This raised an issue where the max simplicity, high comm_cost point has one gigantic dot of 2500ish langs, but based on the discussion with Shane we expected there to be just 6 languages. Moving this to its own issue now.
+
     - A change to the statistics: don't drop duplicates. Just for the sake of being explicit, I'll put some of the discussion I had with shane today below:
 
         Regarding the shape of the resulting explored plot:
@@ -1220,3 +1222,89 @@ status: resolved
         Two-sided p-value    0.000042       0.031455    0.000292
 
     - On saving the huge pool (173k) of langs: my solution for now is to create a local folder for each commit, and store the artificial.yml language there. May move to dropbox, or look into git large file storage, or just start adding the language YMLs to gitignore. Will have to think about it.
+
+7.6.22: max simplicity, high comm_cost point has one gigantic dot of 2500ish langs
+
+    In the top left of Pareto frontier (on SALT version of plot with comm_cost on y axis and complexity on x axis), there is a giant point of 2500 languages. This may be due to a bug of recording more than the theoretically possible number of unique languages, which should just be one language for each meaning point, so 6 for a semantic space of (2,3).
+
+    Hypothesis: I suspect this is the result of a rounding error. Because in the past, I've seen that comm_cost and informativity can take all kinds of floating point values that are probably equivalent.
+
+    But my strategy was first to look at the data. Specifically, I loaded up the all_data.csv (which github allows me to track) and performed the "counts" logic in analysis on it, which yielded
+
+                    complexity  comm_cost                  name  dlsav  counts
+            37671            1   0.583333    sampled_lang_34030  False    2627
+            23122            2   0.666667    sampled_lang_33973   True    1376
+            37563            2   0.666667    sampled_lang_33995  False     855
+            22855            2   0.750000    sampled_lang_33968   True     846
+            23636            3   0.520833    sampled_lang_35857  False     702
+            ...            ...        ...                   ...    ...     ...
+            111964          80   0.696181  sampled_lang_1366049  False       1
+            325             80   0.696627  sampled_lang_1369470  False       1
+            1525            80   0.750000  sampled_lang_1571344  False       1
+            239             80   0.752778  sampled_lang_1407894  False       1
+            15362           80   0.833333  sampled_lang_1389258  False       1
+
+    We see that there are 2627 languages with just complexity 1. This sounds like an error to me: there should only be one language with complexity 1, the language containing just TOP.
+
+    Another very important point: when you start counting, the language "name" column becomes lossy or misleading. It is just the "name" of the first language with those measurements.
+
+    The next step I will do is identify these languages which have complexity 1. 
+    There was just one such language, and I confirmed this was the case when searching the yaml file by text too.
+    So, something must have gone wrong from the time I loaded the langauges and got their dataframe, or dropped duplicates from it.
+        - I can try to use altk's get_dataframe function, and then check how many entries have complexity 1, to rule out altk as the culprit.
+            - Indeed, when I do subset the resulting dataframe using
+                `data[data["complexity"]==1]`
+            I get a dataframe with just one language.
+
+        - Next I want to see if my "counts" logic is the culprit, so I will run it and see if this produces the 2626 extra counts. There's good reason to think that it's actually distributing the counts incorrectly, too -- because maybe the langauges which were counted as complexity 1 are actually complexity X languages, possible duplicates. In other words I expect once this is resolved, the counts will be more evenly distributed, at least along the frontier.
+            - I found the culprit. value_counts() on a pd.DataFrame will by default sort the rows of the input dataframe by frequency. This is detailed in the docs. So we've actually created
+
+                complexity  comm_cost   
+                36          1.110223e-16    2627
+                            1.666667e-01    1376
+                40          1.110223e-16     855
+                64          6.562500e-01     846
+                72          6.574074e-01     702
+                                            ... 
+                30          1.898148e-01       1
+                46          5.770833e-01       1
+                30          1.898148e-01       1
+                            1.875000e-01       1
+                1           5.833333e-01       1
+
+            But if we set sort=False, we get the expected result:
+
+                complexity  comm_cost
+                1           0.583333       1
+                2           0.666667       2
+                            0.666667       3
+                            0.750000       3
+                3           0.520833       1
+                                        ... 
+                80          0.696181       1
+                            0.696627       1
+                            0.750000     105
+                            0.752778     100
+                            0.833333      13
+        
+        If we look at the code that does the "counts" logic, we have
+
+            plot_data = data.copy()
+            vcs = plot_data.value_counts(subset=subset) <<<<<< This sorts the dataframe by frequency
+            plot_data = plot_data.drop_duplicates(subset=subset)
+            plot_data = plot_data.sort_values(by=subset) <<<<<<< This sorts the dataframe according to ascending=True, which is different
+            plot_data["counts"] = vcs.values
+
+        And I believe the following is what we want
+
+            plot_data = data.copy()
+            vcs = plot_data.value_counts(subset=subset, sort=False)
+            plot_data["counts"] = vcs.values
+            plot_data = plot_data.drop_duplicates(subset=subset)
+
+
+
+        I'm now confident this will resolve the issue. Running the analysis script again to see the difference. (note that this won't affect the stats, since I just use a separate dataframe with all points and none of this logic involved).
+
+        After running,
+
