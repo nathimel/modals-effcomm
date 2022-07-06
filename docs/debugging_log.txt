@@ -2,6 +2,8 @@ The purpose of this file is to track bugs that often recur, and document how the
 
 6.29.22: incomplete looking plot
 
+    - NB: solved partially on 7.5.22 by exploring all corners of the space with optimizer.
+
 The high informativity, low communicative cost languages don't seem to be getting explored after some updates, most recently to altk's optimization and agent modules. The space used to be fully explored. I have seen this problem before too. 
 Tried:
     Looking into AddPoint:
@@ -472,7 +474,7 @@ This happened once right after deleting altk's complexity module for refactoring
 
     which ought to be uniquing things. But, in analysis, I still have the option of dropping duplicates, so I can probably be confident about not counting extras there.
 
-    Here were the results, which concur with the old codebase!
+    Here were the REPRODUCED results, which concur with the old codebase!
 
         Degree sav pearson correlations:
         simplicity: 0.46870328674046224
@@ -1114,17 +1116,27 @@ This happened once right after deleting altk's complexity module for refactoring
         t-statistic          18.51147       3.001566   11.300500
         Two-sided p-value     0.00005       0.039880    0.000349
 
+
+        real    68m53.951s
+        user    53m57.331s
+        sys     4m28.764s
+
     And the plot looks _much_ more explored. The perfect and high informativity space looks thoroughly explored. The other corners are more explored than they every have been. I'm still getting not that many DLSAV languages in the low informativity, low complexity area, but that could be because that's truly where they're more sparse. After all, we knew that informativity was doing most of the work.
 
     *************CELEBRATION*********TADA***********YAY***************
 
     I think this is a good sampling methodology, it samples not just the optimal languages, and it does so in a principled and mostly unbiased way. One way to improve it would be:
+        - speedup
         - to add more specific mutations for the different objectives.
+
+    Also, Unfortunately but not a surprise: github rejects my artificial.yml file.
+    Another downside: this takes longer than an hour to run.
 
     To conclude: 
         - I got the statistics I was looking for, namely those more congruent with the old codebase correlations with complexity, around 0.48. I'm also more confident in these stats than any others i've measured, because the method seems less biased to me. The sample size is also far higher: 173k langs.
         - The plot looks more explored.
         - some TODOs left are speed, and better mutations for each corner objective.
+        - figure out what to do about the fact github can't handle my files now.
 
 7.5.22: FALSE ALARM: Don't forget your complexity measure doubles the atoms that are not TOP and BOTTOM.
 
