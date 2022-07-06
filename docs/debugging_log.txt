@@ -1078,3 +1078,61 @@ This happened once right after deleting altk's complexity module for refactoring
 
     Though I've now set up the measure_tradeoff script to reset the simplicity values of each language to be None. I'm going to commit, and re-run, this time with all 4 corners.
 
+    Well, it took an hour, but I've finally reproduced the results from the old codebase, and I'm very confident in the results. Here they are:
+
+
+        173250 total langs.
+        Measuring min distance to frontier ...
+        Setting optimality ...
+        Saved 173250 sampled languages
+        Saved 19 dominant languages
+        Saved 5 natural languages
+
+        Degree sav pearson correlations:
+        simplicity: 0.48401273629041136
+        informativity: 0.7480614473861689
+        optimality: 0.6289970536861712
+    
+
+        MEANS
+                        simplicity  informativity  optimality
+        name                                                   
+        natural_means       0.795000       0.746296    0.952014
+        dlsav_means         0.795000       0.746296    0.952014
+        population_means    0.424771       0.533981    0.659169
+
+        TTEST STATS
+        natural languages against population
+                        simplicity  informativity  optimality
+        stat                                                    
+        t-statistic          18.51147       3.001566   11.300500
+        Two-sided p-value     0.00005       0.039880    0.000349
+
+        dlsav languages against population
+                        simplicity  informativity  optimality
+        stat                                                    
+        t-statistic          18.51147       3.001566   11.300500
+        Two-sided p-value     0.00005       0.039880    0.000349
+
+    And the plot looks _much_ more explored. The perfect and high informativity space looks thoroughly explored. The other corners are more explored than they every have been. I'm still getting not that many DLSAV languages in the low informativity, low complexity area, but that could be because that's truly where they're more sparse. After all, we knew that informativity was doing most of the work.
+
+    *************CELEBRATION*********TADA***********YAY***************
+
+    I think this is a good sampling methodology, it samples not just the optimal languages, and it does so in a principled and mostly unbiased way. One way to improve it would be:
+        - to add more specific mutations for the different objectives.
+
+7.5.22: FALSE ALARM: Don't forget your complexity measure doubles the atoms that are not TOP and BOTTOM.
+
+    For a year I've been seeing lang complexity up at like 70 or 80. But the maximum language complexity is 40. Why is this? Because we double the atoms that are not (1).
+
+    SO, correction: the maximum language complexity is 80, not 40.
+    Explictly:
+
+
+        complexity = (2 * num_atoms) + (1 * occurences of TOP)
+    
+    And note that the doubling term always dominates.
+
+    for a fixed language size N, the maximum language complexity is just 2 * num_atoms. So if you ever write a test, you can check that the value is correct and is even.
+
+
