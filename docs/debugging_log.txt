@@ -1290,18 +1290,30 @@ status: resolved
         If we look at the code that does the "counts" logic, we have
 
             plot_data = data.copy()
-            vcs = plot_data.value_counts(subset=subset) <<<<<< This sorts the dataframe by frequency
+            vcs = plot_data.value_counts(subset=subset) <<<<<< This sorts the dataframe by frequency, so we need to specify sort=False
             plot_data = plot_data.drop_duplicates(subset=subset)
-            plot_data = plot_data.sort_values(by=subset) <<<<<<< This sorts the dataframe according to ascending=True, which is different
+            plot_data = plot_data.sort_values(by=subset) <<<<<<< This sorts the dataframe according to ascending=True, which is correct
             plot_data["counts"] = vcs.values
 
+        There are a few tricky issues with pandas. One is that value_counts DOES sort, even when you specify sort=False: it sorts by the subset you supplied. So you do need to call sort_values on the dataframe. 
         And I believe the following is what we want
 
             plot_data = data.copy()
-            vcs = plot_data.value_counts(subset=subset, sort=False)
-            plot_data["counts"] = vcs.values
-            plot_data = plot_data.drop_duplicates(subset=subset)
 
+            # get counts. Will return values sorted according to the subsets.
+            vcs = plot_data.value_counts(subset=subset, sort=False)  
+
+            # keeps the first occurence of the observation by default, 
+            # so we have the right number of entries,
+            # but we stil need to sort the same way as value_counts.
+            plot_data = plot_data.drop_duplicates(subset=subset)
+            
+            # sort according to the subsets.
+            plot_data = plot_data.sort_values(by=subset)
+
+            # Now we've ensured that size and order match,
+            # so assign these counts to the df
+            plot_data["counts"] = vcs.values
 
 
         I'm now confident this will resolve the issue. Running the analysis script again to see the difference. (note that this won't affect the stats, since I just use a separate dataframe with all points and none of this logic involved).
