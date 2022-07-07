@@ -155,7 +155,7 @@ def main():
         confidence_intervals.append(d["confidence_intervals"])
 
     # Means and ttest for natural, dlsav, population
-    dlsav_data = natural_data[natural_data["dlsav"] == True]
+    dlsav_data = data[data["dlsav"] == True]
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
