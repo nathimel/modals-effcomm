@@ -1224,6 +1224,7 @@ status: resolved
     - On saving the huge pool (173k) of langs: my solution for now is to create a local folder for each commit, and store the artificial.yml language there. May move to dropbox, or look into git large file storage, or just start adding the language YMLs to gitignore. Will have to think about it.
 
 7.6.22: max simplicity, high comm_cost point has one gigantic dot of 2500ish langs
+status: almost solved
 
     In the top left of Pareto frontier (on SALT version of plot with comm_cost on y axis and complexity on x axis), there is a giant point of 2500 languages. This may be due to a bug of recording more than the theoretically possible number of unique languages, which should just be one language for each meaning point, so 6 for a semantic space of (2,3).
 
@@ -1318,5 +1319,310 @@ status: resolved
 
         I'm now confident this will resolve the issue. Running the analysis script again to see the difference. (note that this won't affect the stats, since I just use a separate dataframe with all points and none of this logic involved).
 
-        After running,
+        After running, the plot looked much like before, with the vast majority of points very small, and a handful with larger size.
 
+        I note that the most frequent point, the one with 2627 counterparts, was one with the following measurements (which align with the plot's visualization):
+
+            comm_cost: 1.1102230246251565e-16
+            complexity: 36
+            dlsav: true        
+        
+        That is, we get a large yellow triangle at the bottom of the plot. It is not an optimal langauge -- and it's easy to see why: even though it's perfectly informative, it has more expressions than it needs.
+
+        Here is an example of one of the 2767 languages that have this measurement:
+
+            (You can actually see the synonymy logic I built in above, in the fact that synonyms have unique forms (so that they can be indexed correctly in the sender and receiver matrices).)
+
+            - sampled_lang_855467:
+                data:
+                Language: artificial
+                comm_cost: 1.1102230246251565e-16
+                complexity: 36
+                dlsav: true
+                iff: 1.0
+                informativity: 0.9999999999999999
+                name: sampled_lang_855467
+                optimality: 0.8939339828220179
+                sav: 1.0
+                simplicity: null
+                expressions:
+                - form: dummy_form_3_1
+                lot: (* (strong ) (epistemic ))
+                meaning:
+                - strong+epistemic
+                - form: dummy_form_1_1 <<< notice the extra '_1' for uniqueness
+                lot: (* (strong ) (deontic ))
+                meaning:
+                - strong+deontic
+                - form: dummy_form_7_1
+                lot: (* (weak ) (circumstantial ))
+                meaning:
+                - weak+circumstantial
+                - form: dummy_form_0_1
+                lot: (* (strong ) (circumstantial ))
+                meaning:
+                - strong+circumstantial
+                - form: dummy_form_15_1
+                lot: (* (weak ) (deontic ))
+                meaning:
+                - weak+deontic
+                - form: dummy_form_31_1
+                lot: (* (weak ) (epistemic ))
+                meaning:
+                - weak+epistemic
+                - form: dummy_form_1
+                lot: (* (strong ) (deontic )) <<<< already seen
+                meaning:
+                - strong+deontic
+                - form: dummy_form_7_0
+                lot: (* (weak ) (circumstantial )) <<<< already seen
+                meaning:
+                - weak+circumstantial
+                - form: dummy_form_31
+                lot: (* (weak ) (epistemic )) <<<< already seen
+                meaning:
+                - weak+epistemic        
+
+        I would conjecture that every langauge with this measurement has 9 expressions and exactly three synonyms. 
+            - I have confirmed this by loading them up and checking.
+        
+        One question that this raises, is that in terms of combinatorics, shouldn't the languages of size 10 yield more possible synonyms, and thus shouldn't the set of possible languages be larger, and thus the counts, and thus the size of the triangle for complexity 40 languages? That triangle is large, but not the largest.
+            - These languages correspond to counterparts of the following:
+
+                - sampled_lang_845898:
+                    data:
+                    Language: artificial
+                    comm_cost: 1.1102230246251565e-16
+                    complexity: 40
+                    dlsav: true
+                    iff: 1.0
+                    informativity: 0.9999999999999999
+                    name: sampled_lang_845898
+                    optimality: 0.8585786437626906
+                    sav: 1.0
+                    simplicity: null
+                    expressions:
+                    - form: dummy_form_3_1
+                    lot: (* (strong ) (epistemic ))
+                    meaning:
+                    - strong+epistemic
+                    - form: dummy_form_1_1
+                    lot: (* (strong ) (deontic ))
+                    meaning:
+                    - strong+deontic
+                    - form: dummy_form_7
+                    lot: (* (weak ) (circumstantial ))
+                    meaning:
+                    - weak+circumstantial
+                    - form: dummy_form_0_1
+                    lot: (* (strong ) (circumstantial ))
+                    meaning:
+                    - strong+circumstantial
+                    - form: dummy_form_15_1
+                    lot: (* (weak ) (deontic ))
+                    meaning:
+                    - weak+deontic
+                    - form: dummy_form_31_1
+                    lot: (* (weak ) (epistemic ))
+                    meaning:
+                    - weak+epistemic
+                    - form: dummy_form_15_0
+                    lot: (* (weak ) (deontic )) <<< synonym
+                    meaning:
+                    - weak+deontic
+                    - form: dummy_form_31
+                    lot: (* (weak ) (epistemic )) <<< synonym
+                    meaning:
+                    - weak+epistemic
+                    - form: dummy_form_3_0
+                    lot: (* (strong ) (epistemic )) <<<< synonym
+                    meaning:
+                    - strong+epistemic
+                    - form: dummy_form_1
+                    lot: (* (strong ) (deontic )) <<<< synonym
+                    meaning:
+                    - strong+deontic            
+
+        It makes sense that there are only 4 possible synonyms -- any more than that and you lose informativity. 
+        Now we can mathematically compare the 36 complexity langs to 40 complexity langs by asking the question: 
+
+        NOTE: see https://www.andrew.cmu.edu/user/ps7z/prob.pdf for an quick and clear explanation of factorial, permuations, and combinations.
+
+        The statement of the problem:
+
+            - How many ways are there to choose k objects from a list of n items, allowing repetition of objects, and order doesn't matter?
+                - https://math.stackexchange.com/questions/794716/the-number-of-different-ways-to-choose-k-out-of-n-unique-items
+                - its \binom{k + n - 1}{k}
+
+            - How many ways are there to choose 3 expressions (the synonyms, allowing repetition) from 6 possible expressions, where order doesn't matter?
+                WRONG: 6c3 = 20
+                CORRECT: n^k = 6^3 = 
+                
+            vs
+            - How many ways are there to choose 4 expressions from 6 possible expressions with repetition without order?
+                WRONG: 6c4 = 15
+                
+            
+        So it is true that there are more possible 'small' languages in this sense. 
+        
+        But I'm still puzzled as to why there are as many as there are: why are there 2627 points?
+
+            - Well, we know there are that many languages -- i've confirmed that in the artificial.yml file. 
+            - I think the answer is straightforward: my hashing function is incorrect for languages. This is a big enough bug fix that I'm moving to a new issue entry.
+            
+
+7.6.22: The hash function for ModalLanguages is too strong, as a result of the logic used for allowing synonyms to have different hashes.
+status: resolved
+
+        My hashing function is incorrect for languages. Right now it's 
+
+            return hash(tuple(sorted(self.expressions)))
+
+        But we know that the hash for the expressions will return unique hashes for synonyms, because of the form logic that I built in. And we need to keep this, because we need it for the Sender/Receiver matrix operations. So a natural solution is to keep the hashing on the expression level, but when comparing at the language level, we abstract away from the form differences in synonyms: and only look at the hashes for expressions QUA meanings. 
+        
+        A first pass would be
+
+            return hash(tuple(sorted([e.meaning for e in self.expressions])))
+
+        Where the hash for a ModalMeaning (which I've just changed from not requiring sorting to requiring it) is now:
+
+            return hash(tuple(sorted(self.objects)))
+
+        This throws an error, though, because I haven't implemented the less than operator for meanings:
+
+            Traceback (most recent call last):
+            File "<stdin>", line 1, in <module>
+            File "/Users/nathanielimel/clms/projects/modals-effcomm/src/misc/file_util.py", line 181, in load_languages
+                set(
+            File "/Users/nathanielimel/clms/projects/modals-effcomm/src/modals/modal_language.py", line 159, in __hash__
+                return hash(tuple(sorted([e.meaning for e in self.expressions])))
+            TypeError: '<' not supported between instances of 'ModalMeaning' and 'ModalMeaning'
+        
+        So I'll use the LOT strings, because even though that's just as arbitrary as implementing a less than for ModalMeaning, it's already done. 
+        
+        That is, the next try is:
+
+            return hash(tuple(sorted([e.lot_expression for e in self.expressions])))
+
+        This throws no errors. It also yields far fewer unique languages as expected. However, I expected (sic) 6 choose 3 = 20 languages, but I got 56.
+            - NOTE: this math is wrong, but I'm keeping it here for posterity.
+
+            len(unique_languages)
+            107372
+            >>> langs = [lang for lang in languages if lang.data["complexity"]==36 and lang.data["comm_cost"]==1.1102230246251565e-16]
+            >>> len(langs)
+            2627
+            >>> langs_unique = [lang for lang in unique_languages if lang.data["complexity"]==36 and lang.data["comm_cost"]==1.1102230246251565e-16]
+            >>> len(langs_unique)
+            56
+
+            - THIS IS THE CORRECT NUMBER of langauges but I didn't know it. Here's why:
+                - with repetition and without order significance 
+                = \binom{k + n - 1}{k}
+                with k = 3 and n = 6
+                = 8 choose 3
+                = 56
+        
+        So, I created a list of all the unique LoT expressions, for each of these langauges, and checked out the first element:
+
+            >>> vocabs = [list(set([e.lot_expression for e in lang.expressions])) for lang in langs_unique]        
+
+            >>> for lot in vocabs[0]:
+            ...     print(lot)
+            ... 
+            (* (weak ) (deontic ))
+            (* (strong ) (deontic ))
+            (* (strong ) (epistemic ))
+            (* (weak ) (circumstantial ))
+            (* (weak ) (epistemic ))
+            (* (strong ) (circumstantial ))
+        
+        Which shows just the 6 unambiguous points as expected.
+
+        The next step is to make sure that they're all the same set. The purpose of this check is to rule out if there are anything other than unambiguous points.
+            - Indeed, there's just one set in vocabs.
+
+        -----
+        The length of our list of unique languages of point=(36, 1.1102230246251565e-16) is the number that was predicted by combinatorics if we correctly hashed.
+
+        I will now check the list of unique languages of point=(40, 1.1102230246251565e-16) for the same checks:
+            - the set of meanings is just the same 6 lot expressions
+            - it has length = \binom{k + n - 1}{k}
+
+        length of langs=113
+        13 choose 4 = 715
+
+            - So the length of these languages is not exactly the number of possible combinations. But that's okay -- we only require that it's not greater, and that it's not greater than the lang size 9, e.g. complexity 36 languages. This is because it can be hard to sample all possible combinations. It is promising enough that this list of languages is already double the list of 36 complexity languages.
+
+        And I have confirmed that the only set of meanings is the 6 unambiguous ones. 
+
+        This is sufficient for me to mark this issue resolved within the scope it was started for.
+
+7.6.22: KeyError with dlsav
+status: resolved
+
+    When running the full experiment above, I ran into the following error during the analyze script:
+
+        Traceback (most recent call last):
+        File "/Users/nathanielimel/clms/projects/modals-effcomm/src/analyze.py", line 202, in <module>
+            main()
+        File "/Users/nathanielimel/clms/projects/modals-effcomm/src/analyze.py", line 115, in main
+            natural_data = get_dataframe(nat_langs, **kwargs)
+        File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/altk/effcomm/analysis.py", line 28, in get_dataframe
+            data=[tuple(lang.data[k] for k in columns) for lang in languages],
+        File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/altk/effcomm/analysis.py", line 28, in <listcomp>
+            data=[tuple(lang.data[k] for k in columns) for lang in languages],
+        File "/Users/nathanielimel/miniforge3/envs/modals-effcomm/lib/python3.10/site-packages/altk/effcomm/analysis.py", line 28, in <genexpr>
+            data=[tuple(lang.data[k] for k in columns) for lang in languages],
+        KeyError: 'dlsav'
+
+    Sure enough, "dlsav" is not one of the keys in the initialization the `data` attribute of a ModalLanguage in __init__. And so it is certainly possible for a language to not have been measured for the 'dlsav' property. My biggest worry, though, is why has this not been an issue before?
+    
+    Notably, it didn't happen for `data` or `pareto_data`, just `natural_data`. but presumably `data` contains `natural_data`. It is possible, though, that the languages were measured and then added to only artificial.yml, and so the natural.yml wasn't updated. 
+        - Taking a look at the natural.yml file, I confirm this is the case. There are 5 natural languages, but only 4 contain the dlsav field.
+        - javanese lacks dlsav.
+        
+        In fact (and this supports the idea it wasn't measured), javanese lacks all measurements.
+
+            - javanese:
+                data:
+                Language: natural
+                comm_cost: null
+                complexity: null
+                iff: null
+                informativity: null
+                name: javanese
+                optimality: null
+                sav: null
+                simplicity: null
+
+        What this means is that it is not sufficient to add the key for 'dlsav' in __init__, thought I now have. I need to ensure that the natural languages are saved after being measured. They are certainly measured.
+
+    Something else interesting: only the 4 languages except javanese show up in artificial.yml. This could explain why I haven't seen the error before: maybe something specifically has happened to block javanese.
+
+    I know for a fact that the following operation only takes a second or two, so it's probably the best solution for now, and it's readable.
+
+        nat_langs = [lang for lang in langs if lang.is_natural()]
+    
+    Note that I could just as easily remove the natural languages using this logic.
+
+
+7.6.22: full run of experiment with new hash function
+
+    Interestingly, the correlation coefficients have each gone down by a few hundreths. 
+
+        108701 total langs.
+
+        Degree sav pearson correlations:
+        simplicity: 0.4843976306855893
+        informativity: 0.7577931130687842
+        optimality: 0.651941190544032
+
+    This isn't too surprising since the total langs has gone down significantly (by 70k). In fact, it's maybe surprising that it doesn't go down more.
+
+    Also, the pattern on the plot is gorgeous, lol.
+
+    But more importantly, the counts are more in the range that we presented at salt -- the legend shows them at 100 to 300. I'm not positive that those results we presented were wrong, since they were obtained by Shane -- but looking at the commit closest to it, it seemed to have the bad value_counts logic. But this together with the fact we weren't sampling nearly as much (literally less than 10% of this sample) could probably account for that.
+
+
+    Upshot: I am feeling quite confident that these are the results we will present. I'm confident in how I'm measuring langauges, and how I'm exploring the space. This commit has the message "full run with new language hash"

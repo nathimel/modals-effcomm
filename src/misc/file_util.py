@@ -1,9 +1,9 @@
 import os
-from typing import Callable
-import yaml
 import random
+import time
+import yaml
 import numpy as np
-from typing import Any
+from typing import Any, Callable
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_measures import half_credit, indicator
@@ -123,7 +123,7 @@ def load_expressions(fn) -> list[ModalExpression]:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind=""):
+def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind="", verbose=True):
     """Saves a list of modal languages to a .yml file.
 
     Args:
@@ -133,7 +133,10 @@ def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind=""):
 
         id_start: a number representing the total number of languages generated so far in an experiment. When saving natural languages, can be None.
 
+        kind: a string for printing the kind of pool of languages, e.g. 'sampled'
+
     """
+    start = time.time()
     space = languages[0].expressions[0].meaning.universe
 
     # Do not use a dict, which will lose data from the yaml representation
@@ -153,10 +156,15 @@ def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind=""):
         kind = f" {kind} "
     else:
         kind == " "
-    print(f"Saved {len(langs)}{kind}languages")
+    
+    duration = ""
+    if verbose:
+        duration = time.time() - start
+        duration = f"in {duration:.2f} seconds"
+    print(f"Saved {len(langs)}{kind}languages {duration}")
 
 
-def load_languages(fn) -> dict[str, Any]:
+def load_languages(fn: str, verbose=True) -> dict[str, Any]:
     """Loads modal languages from a .yml file.
 
     Args:
@@ -169,6 +177,7 @@ def load_languages(fn) -> dict[str, Any]:
             "id_start": (an int or None),
         }
     """
+    start = time.time()
 
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
@@ -176,18 +185,20 @@ def load_languages(fn) -> dict[str, Any]:
     id_start = d["id_start"]
 
     languages = d["languages"]
-    return {
-        "languages": list(
-            set(
-                [
+    result = {
+        "languages": [
                     ModalLanguage.from_yaml_rep(name, data, space)
                     for language in languages # a list of dicts
                     for name, data in language.items() # a dict with one entry
-                ]
-            )
-        ),
+                ],
         "id_start": id_start,
     }
+    duration = ""
+    if verbose:
+        duration = time.time() - start
+        duration = f"in {duration:.2f} seconds"
+        print(f"Loaded {len(result['languages'])} languages {duration}")
+    return result
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

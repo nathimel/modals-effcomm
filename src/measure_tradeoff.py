@@ -82,10 +82,11 @@ def main():
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
 
+    nat_langs = [lang for lang in langs if lang.is_natural()]
+
     save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
     save_languages(dominant_languages_fn, dom_langs, id_start, kind="dominant")
-    save_languages(natural_languages_fn, natural_languages, id_start=None, kind="natural")
-
+    save_languages(natural_languages_fn, nat_langs, id_start=None, kind="natural")
     print("done.")
 
 

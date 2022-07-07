@@ -98,6 +98,7 @@ class ModalLanguage(Language):
                 "optimality": None, 
                 "iff": None, 
                 "sav": None,
+                "dlsav": None,
                 "name": name,
                 "Language": None,
             } if data is None else data
@@ -131,7 +132,7 @@ class ModalLanguage(Language):
         return expressions_
 
     @property
-    def expressions(self) -> list[Expression]:
+    def expressions(self) -> list[ModalExpression]:
         return super().expressions
     
     @expressions.setter
@@ -145,8 +146,20 @@ class ModalLanguage(Language):
         return f"Modal_Language: {self.data['name']}\n[\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        # requiring diff name is a strong requirement
-        return hash(tuple(sorted(self.expressions)))
+        """Return a unique hash for a ModalLanguage. Two languages are unique if they differ in their vocabulary only by the forms of each expression.
+
+        Note that it is not sufficient to simply return
+            `hash(tuple(sorted(self.expressions)))`
+
+        Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa.
+
+        To this end, we treat two languages equal if they have expressions that differ only in forms. Specifically, we hash a tuple of the sorted list of LoT strings in a language.
+
+        Note that requiring a differnt name is also too strong a requirement, because it will not distinguish languages that may even be identical up to the forms of their expressions.
+        """
+        # hash a tuple of the sorted list of LoT strings in a language
+        return hash(tuple(sorted([e.lot_expression for e in self.expressions])))
+
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
