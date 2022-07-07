@@ -1626,3 +1626,68 @@ status: resolved
 
 
     Upshot: I am feeling quite confident that these are the results we will present. I'm confident in how I'm measuring langauges, and how I'm exploring the space. This commit has the message "full run with new language hash"
+
+7.7.22: dlsav and natural statistics are exactly the same
+status: resolved
+
+    The two ttest results were exactly the same for natural and dlsav data. Looking into analysis, I had constructed the wrong dataframe. I had
+
+        dlsav_data = natural_data[natural_data["dlsav"] == True]
+    
+    I changed to
+
+        dlsav_data = data[data["dlsav"] == True]
+
+7.7.22: TODO: add ProcessPool multiprocessing
+status: not urgent
+
+    The following is a list of things that should be parallelized but aren't yet:
+
+        (estimated speedup: unknown)
+        - Measuring each generation in altk evolutionary algorithm
+        e.g.
+            # Measure each generation
+            for lang in languages:
+                for m in self.objectives:
+                    lang.data[m] = self.objectives[m](lang)
+
+        (estimated speedup: it's complicated)
+
+        - Each optimization corner of the evolutionary algorithm, 
+        e.g.
+            for direction in directions:
+                x, y = directions[direction]
+                ...
+                optimizer.fit()
+
+            Notes on the speedup estimate:
+
+            For 200 generations and generation size of 2000, the second longest optimization corner is the 3rd, (comm_cost, simplicity -- upper left if we think of x=cost, y=comp), and takes 16:42. So for the main paper results, we'd probably get a speedup of about 16 minutes.
+
+        (estimated speedup: minor; this currently takes less than 30 seconds)
+        - Measuring all languages in altk tradeoff
+        e.g.
+
+            for lang in tqdm(languages):
+                for prop in properties:
+                    lang.data[prop] = properties[prop](lang)
+                points.append((lang.data[x], lang.data[y]))
+
+        (estimated speedup: probably same as above)
+        - Measuring languages to obtain dataframe in altk analysis
+        e.g.
+
+            data = pd.DataFrame(
+                data=[tuple(lang.data[k] for k in columns) for lang in languages],
+                columns=columns,
+            )
+
+7.7.22: YAML File IO takes a long time saving and loading languages.
+status: not urgent
+
+    Here are some estimates:
+
+        Loaded 108701 languages in 313.49 seconds
+        Saved 108701 sampled languages in 153.51 seconds
+
+    I'd be surprised if I could get substantial improvement. Future work can explore more heavy-duty file IO tools.
