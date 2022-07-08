@@ -5,7 +5,7 @@ This code accompanies the following paper:
 > N. Imel and S. Steinert-Threlkeld, Modals in natural language optimize the simplicity/informativeness
 trade-off, in _Proceedings of Semantics and Linguistic Theory (SALT 32)_, 2022.
 
-The repo contains code for constructing artificial languages and measuring them for communicative efficiency. In particular, the codebase is organized around the following steps
+The repo contains code for constructing artificial languages and measuring them for communicative efficiency. The codebase is organized around the following steps of the experiment.
 
 ## Setting up an experiment
 A single file specifies the parameters and filepaths for an experiment, e.g. `half_credit_literal.yml`. These will include:
@@ -34,14 +34,14 @@ The notion of naturalness we use tracks 'closeness of languages to actual modal 
 Measuring of languages:
 - Complexity
 - Communicative Cost
-- Satisfaction of semantic universals (independence of force and flavor)
-- Optimality wrt a pareto frontier
+- Satisfaction of semantic universal(s)
+- Optimality w.r.t a Pareto frontier
 
 Analysis:
-- compute correlation between naturalness and optimality
+- perform statistical analyses, including correlation between naturalness and optimality
 - plot tradeoff
 
-To this end, the codebase is structured as follows:
+## Structure of the codebase
 
 ```bash
 .
@@ -49,25 +49,43 @@ To this end, the codebase is structured as follows:
 │ # YAML files that define experimental parameters for
 │ # modal languages, sample size, the type of naturalness to measure,
 │ # file output paths, etc.
-├── data 
-│ # where natural languages are stored to be read in for the experiment
+│   ├── half_credit_literal.yml
+│   └── ...
+├── data
+│   └── natural_languages
+│       ├── Gitksan
+│       │   └── modals.csv
+│       └── ...
 ├── outputs
 │ # readable intermediate output and experimental results, e.g.
-│ # generated languages,
-│ # the progress of the experiment printed to stdout,
-│ # and final results, including dataframes and plots.
+│   └── half_credit_literal
+│       ├── analysis
+│       │   │  # resulting dataframes and figures
+│       │   ├── ...
+│       │   ├── all_data.csv
+│       │   └── plot.png
+│       ├── expressions.yml
+│       ├── languages
+│       │   ├── # generated languages
+│       │   ├── artificial.yml
+│       │   └── natural.yml
+│       └── system_output.txt # progress of the experiment printed to stdout,
 ├── scripts
 │   └── run_full_experiment.sh # the main script to run
 └── src 
-    ├── # python scripts to construct the space of possible languages, 
-    │   # sample from this space, 
-    │   # and measure the communicative efficiency of the sample 
-    │   # by estimating a Pareto frontier using an evolutionary algorithm
-    ├── modals
-    │   # module that defines the meaning space for modals, 
-    │   # the modal language data structure,
-    │   # the measures of complexity and communicative cost, 
-    │   # and mutations that may apply during the evolutionary algorithm
+    │ # python scripts to construct the space of possible languages, 
+    │ # sample from this space, 
+    │ # and measure the communicative efficiency of the sample 
+    │ # by estimating a Pareto frontier using an evolutionary algorithm
+    ├── ...    
+    ├── sample_languages.py
+    └── modals
+        │ # module that defines the meaning space for modals, 
+        │ # the modal language data structure,
+        │ # measures of complexity and communicative cost, 
+        │ # and mutations that may apply during the evolutionary algorithm
+        ├── ...
+        └── modal_language.py
 ```    
 
 ## Requirements  
@@ -76,4 +94,34 @@ Get the required packages by running `conda env create -f environment.yml`
   
 ## Replicating the experimental results
 
-The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/main_results/config.yml`.
+The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/half_credit_literal.yml`.
+
+This just runs the following python scripts, which can also be run individually
+
+`python3 src/create_folders.py path_to_config`
+
+`python3 src/build_meaning_space.py path_to_config`
+
+`python3 src/generate_expressions.py path_to_config`
+
+`python3 src/sample_languages.py path_to_config`
+
+`python3 src/add_natural_languages.py path_to_config`
+
+`python3 src/estimate_pareto_frontier.py path_to_config`
+
+`python3 src/measure_tradeoff.py path_to_config`
+
+`python3 src/analyze.py path_to_config`
+
+## Citation
+
+To cite this work, please use the following:
+```
+@inproceedings{Imel2022,
+  author    = {Imel, Nathaniel, and Shane Steinert-Threlkeld},
+  title     = {Modals in natural language optimize the simplicity/informativeness trade-off},
+  year      = {2022},
+  booktitle = {Proceedings of Semantics and Linguistic Theory (SALT 32)},
+}
+```
