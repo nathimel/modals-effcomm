@@ -1691,3 +1691,37 @@ status: not urgent
         Saved 108701 sampled languages in 153.51 seconds
 
     I'd be surprised if I could get substantial improvement. Future work can explore more heavy-duty file IO tools.
+    
+7.7.22: Results for pragmatic are suspiciously poor
+status: unresolved
+
+    (for sav, on patas)
+    
+    Low optimality results for indicator_pragmatic:
+
+        simplicity: 0.13611488839862035
+        informativity: 0.40696227763875314
+        optimality: 0.05992833718639482
+
+    The only difference I can spot between indicator_literal and indicator_pragmatic is the sample_size paramter for random sampling, which is 2k vs 20k, respectively. However, since the evolutionary four-corner optimization technique applied, I'm puzzled why this still made such a difference.
+    The number of discovered indicator_literal langs: 112991
+    The number of discovered indicator_pragmatic langs: 45367
+
+        Looking at the plot for indicator_pragmatic, I can immediately see one possible explanation: there are a _TON_ of somewhat optimal languages that are 0 degree SAV (large area, very large point sizes, etc). 
+        Moreover, the majority, maybe 60% of the frontier consists of perfectly natural languages, especially as informativity increases. So essentially the indicator_pragmatic language space just consists of many perfectly unnatural languages that are fairly uninformative. This empirical fact is in line with how we intuitively reason about pragmatics -- when there's overlap, we have inference to exploit.
+
+
+    Low optimality results for half_credit_pragmatic:
+
+        simplicity: 0.08686105515347999
+        informativity: 0.4707834625846252
+        optimality: -0.24517766217213488
+
+    The number of discovered half_credit_literal langs: 109422
+    The number of discovered half_credit_pragmatic langs: 63422
+
+        The plot has the same phenomenon for half_credit_pragmatic, though the effect feels less dramatic, probably because the entire plot is shifted over due to the nature of half_credit pragmatics (highest comm_cost is much lower).
+    
+    The major remaining issue is that it still doesn't seem right to say that optimality is _negatively_ correlated with sav. And likewise for the 0.05 correlation with optimality for indicator. 
+
+    These results should be run again, and the random sample size should be increased to the level that half_credit_literal has.
