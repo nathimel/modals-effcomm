@@ -3,7 +3,7 @@ done.
 Generating expressions...
 done.
 Sampling random languages ...
-Saved 15764 sampled languages in 42.55 seconds
+Saved 30710 sampled languages in 90.65 seconds
 done.
 Adding gitksan
 Adding javanese
@@ -12,59 +12,56 @@ Adding logoori
 Adding tlingit
 Saved 5 natural languages in 0.01 seconds
 Estimating pareto frontier ...
-Loaded 15764 languages in 76.52 seconds
+Loaded 30710 languages in 149.47 seconds
 Sampling seed generation...
 Minimizing for comm_cost, complexity ...
 Minimizing for informativity, complexity ...
 Minimizing for comm_cost, simplicity ...
 Minimizing for informativity, simplicity ...
 Discovered 1592252 languages.
-Saved 112987 explored languages in 385.49 seconds
-Saved 16 dominant languages in 0.03 seconds
+Saved 98809 explored languages in 310.75 seconds
+Saved 17 dominant languages in 0.03 seconds
 done.
 Measuring tradeoff ...
 Loading all languages ...
 sampled...
-Loaded 112987 languages in 637.30 seconds
+Loaded 98809 languages in 522.76 seconds
 dominant...
-Loaded 16 languages in 0.05 seconds
+Loaded 17 languages in 0.05 seconds
 natural...
 Loaded 5 languages in 0.02 seconds
-112991 total langs.
+98814 total langs.
 Measuring min distance to frontier ...
 Setting optimality ...
-Saved 112991 sampled languages in 355.74 seconds
-Saved 17 dominant languages in 0.03 seconds
-Saved 4 natural languages in 0.01 seconds
+Saved 98814 sampled languages in 286.46 seconds
+Saved 22 dominant languages in 0.04 seconds
+Saved 5 natural languages in 0.01 seconds
 done.
-Loaded 112991 languages in 657.24 seconds
-Loaded 4 languages in 0.02 seconds
-Loaded 17 languages in 0.05 seconds
+Loaded 98814 languages in 515.96 seconds
+Loaded 5 languages in 0.02 seconds
+Loaded 22 languages in 0.06 seconds
 Degree sav pearson correlations:
-simplicity: 0.5407187966627192
-informativity: 0.7806665784398038
-optimality: 0.6924359855489691
+simplicity: 0.4257518271512351
+informativity: 0.7777171714235943
+optimality: 0.6251052485311671
 
 MEANS
                   simplicity  informativity  optimality
 name                                                   
-natural_means       0.806250       0.532407    0.947322
-dlsav_means         0.635513       0.712301    0.888905
-population_means    0.395189       0.388428    0.645598
+natural_means       0.795000       0.592593    0.958524
+dlsav_means         0.643153       0.691135    0.889336
+population_means    0.514213       0.397904    0.729207
 
 TTEST STATS
 natural languages against population
                    simplicity  informativity  optimality
 stat                                                    
-t-statistic         19.255437       2.657020   18.987863
-Two-sided p-value    0.000306       0.076533    0.000319
+t-statistic         14.039332       2.653285   16.114446
+Two-sided p-value    0.000149       0.056787    0.000087
 
 dlsav languages against population
                    simplicity  informativity  optimality
 stat                                                    
-t-statistic        114.094146     102.522384   331.02944
-Two-sided p-value    0.000000       0.000000     0.00000
+t-statistic         66.271308      98.036341  226.185298
+Two-sided p-value    0.000000       0.000000    0.000000
 
-real	90m33.386s
-user	88m55.242s
-sys	1m22.084s
