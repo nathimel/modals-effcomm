@@ -1691,7 +1691,7 @@ status: not urgent
         Saved 108701 sampled languages in 153.51 seconds
 
     I'd be surprised if I could get substantial improvement. Future work can explore more heavy-duty file IO tools.
-    
+
 7.7.22: Results for pragmatic are suspiciously poor
 status: unresolved
 
@@ -1725,3 +1725,23 @@ status: unresolved
     The major remaining issue is that it still doesn't seem right to say that optimality is _negatively_ correlated with sav. And likewise for the 0.05 correlation with optimality for indicator. 
 
     These results should be run again, and the random sample size should be increased to the level that half_credit_literal has.
+
+
+    I ran all four configs again with a random sample size of 40k (took about 5h again). The results for literal speakers remain very positive (though different, see the random seed issue), but the results for pragmatic speakers are quite poor. In fact they are surprisingly poor given the plots: I would at least expect higher correlation with optimality.
+
+        indicator pragmatic
+
+        simplicity: 0.22544956948981418
+        informativity: 0.38073428791953906
+        optimality: 0.2591299914779223    
+
+        plot: like 80% of optimal languages are perfectly natural. And there are many perfectly natural languages in the middle, e.g., not optimal. I observe a general trend towards both simplicity and informativeness; the coefficient for simplicity in particular I am surprised is fairly low. 
+            - note compared to the entropy quantifiers results, these numbers aren't so different (optimality was .3).
+
+        half_credit_pragmatic
+
+        simplicity: 0.18032611628317569
+        informativity: 0.43323971354696705
+        optimality: -0.11936231642150943
+
+        plot: more than half the optimal languages are perfectly natural. But there are many perfectly natural languages that are in the middle, e.g., not optimal. However, I do observe a general trend towards informativeness, which seems to be captured in the coefficient. But I'm still surprised about optimality.

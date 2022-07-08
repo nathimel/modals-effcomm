@@ -8,22 +8,27 @@ trade-off, in _Proceedings of Semantics and Linguistic Theory (SALT 32)_, 2022.
 The repo contains code for constructing artificial languages and measuring them for communicative efficiency. The codebase is organized around the following steps of the experiment.
 
 ## Setting up an experiment
+
 A single file specifies the parameters and filepaths for an experiment, e.g. `half_credit_literal.yml`. These will include:
+
 - size of the semantic space to measure (number of quantificational forces and modal flavors).
 - vocabulary size for artificial modal languages
 - the number of total languages to generate
 - how long to run algorithm to estimate optimal languages
 
 ## Sampling languages
+
 Generate a large and diverse sample of mathematically possible languages
 
 This is accomplished by the following steps:
+
 - Expression generating from the set of meanings
 - Sampling expresions into languages
 - Use an evolutionary algorithm to estimate the optimal languages
 - Explore the full space of possible languages using the same algorithm
 
 A separate step is adding natural language data:
+
 - Load data obtained from [A Database of Modal Typology](https://github.com/CLMBRs/modal-typology).
 - Convert each natural language into the appropriate experiment data structure
 
@@ -32,12 +37,14 @@ Next, we analyze the resulting sample for the relationship between efficiency an
 The notion of naturalness we use tracks 'closeness of languages to actual modal typological facts' by measuring the proportion of a language satisfying a modal semantic universal.
   
 Measuring of languages:
+
 - Complexity
 - Communicative Cost
 - Satisfaction of semantic universal(s)
 - Optimality w.r.t a Pareto frontier
 
 Analysis:
+
 - perform statistical analyses, including correlation between naturalness and optimality
 - plot tradeoff
 
@@ -90,7 +97,13 @@ Analysis:
 
 ## Requirements  
 
-Get the required packages by running `conda env create -f environment.yml`
+Get the required packages by running
+
+`conda env create -f environment.yml`
+
+Additionally, this project requires [the artificial language toolkit (ALTK)](https://github.com/nathimel/altk). Install it via git with
+
+`python3 -m pip install git+https://github.com/nathimel/altk.git`
   
 ## Replicating the experimental results
 
