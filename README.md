@@ -33,6 +33,7 @@ A separate step is adding natural language data:
 - Convert each natural language into the appropriate experiment data structure
 
 ## Analyzing the simplicity/informativeness trade-off
+
 Next, we analyze the resulting sample for the relationship between efficiency and naturalness.
 The notion of naturalness we use tracks 'closeness of languages to actual modal typological facts' by measuring the proportion of a language satisfying a modal semantic universal.
   
@@ -50,6 +51,9 @@ Analysis:
 
 ## Structure of the codebase
 
+<details>
+<summary>Map of repo</summary>
+<br>
 ```bash
 .
 ├── configs
@@ -79,21 +83,22 @@ Analysis:
 │       └── system_output.txt # progress of the experiment printed to stdout,
 ├── scripts
 │   └── run_full_experiment.sh # the main script to run
-└── src 
-    │ # python scripts to construct the space of possible languages, 
-    │ # sample from this space, 
-    │ # and measure the communicative efficiency of the sample 
+└── src
+    │ # python scripts to construct the space of possible languages,
+    │ # sample from this space,
+    │ # and measure the communicative efficiency of the sample
     │ # by estimating a Pareto frontier using an evolutionary algorithm
-    ├── ...    
+    ├── ...
     ├── sample_languages.py
     └── modals
-        │ # module that defines the meaning space for modals, 
+        │ # module that defines the meaning space for modals,
         │ # the modal language data structure,
-        │ # measures of complexity and communicative cost, 
+        │ # measures of complexity and communicative cost,
         │ # and mutations that may apply during the evolutionary algorithm
         ├── ...
         └── modal_language.py
-```    
+```
+</details>
 
 ## Requirements  
 
@@ -130,6 +135,7 @@ This just runs the following python scripts, which can also be run individually
 ## Citation
 
 To cite this work, please use the following:
+
 ```
 @inproceedings{Imel2022,
   author    = {Imel, Nathaniel, and Shane Steinert-Threlkeld},
