@@ -1759,9 +1759,29 @@ status: unresolved
         Me: There is a difference in sample size, but it’s not dramatic (I tried to make all my config files minimally diff and so they have the same random sampling and evol alg params). For indicator prag we have 75k, for half credit prag 85k.
         I’ll need to check out complexity. One strategy could be to just load the literal generated languages and measure them with pragmatic to see if complexities change.
 
+        Test 0: load both experiment's languages and compare complexity of counterparts.
+
+            I wrote a script to do this. These were results:
+            
+                Loaded 94914 languages in 258.71 seconds
+                Loaded 85953 languages in 232.62 seconds
+                found 34693 matching literal and pragmatic languages.
+                found 0 discrepancies in complexity.
+
+            What this means is that there were actually at least 50k languages that were in fact disjoint. This is initially somewhat surprising to me, because I had been under the impression that experiments, even with different measurement functions (speaker type, utility function) basically explore the same _space_, the same underlying pool of languages. But perhaps something about the measures encourages different areas of the space to be explore?
+
+            I'll need to think about this: in particular, assume the differences in complexity really come down to differences in sampling. That is, even though the two experiments explore roughly the same _size_ of languages overall, the set that they explore is mostly non overlapping.
+
+            Reasons I can think to explain this:
+                - the evolutionary algorithm is encouraged to explore different languages, based on the measures. (but in what exact way?)
+
+
+
         Test 1: load languages from pragmatic experiment and measure them in literal experiment (measure_tradeoff and analyze)
 
             - The simplest way to proceed is just to change the file paths manually in the config files.
+
+            - Actually, I could just compare the languages between these two experiments, make sure they're equal (same vocab), and then see if they differ in complexity at all. Call this Test 0.
 
 
         Test 2: load languages from literal experiment and measure them in pragmatic experiment.
