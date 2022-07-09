@@ -476,9 +476,9 @@ status: resolved
     Given this, I want to measure the tradeoff and do analysis in the new codebase with these converted old languages. My best guess is that something has happened with sampling so that the old languages represent a better sampling of the space, or at least one that results in more positive results.
     That is: 
     
-        - I run the pipeline of the full experiment, but instead of sampling and using the evolutionary algorithm, I simply let the pool of languages consist of the old langauges converted to ModalLanguages. After all, those languages have been found by exploration with the evolutionary algorithm and sampling from the old codebase.
+        - I run the pipeline of the full experiment, but instead of sampling and using the evolutionary algorithm, I simply let the pool of languages consist of the old languages converted to ModalLanguages. After all, those languages have been found by exploration with the evolutionary algorithm and sampling from the old codebase.
 
-    One thing I am noticing is that all the langauges are being kept even after running set() on them to unique, but I doubt they really are all unique. I'm not sure yet why, because the expression names should just be the same as all expressions used in the new codebase. Looking at the hash function for ModalLanguage, I see as expected:
+    One thing I am noticing is that all the languages are being kept even after running set() on them to unique, but I doubt they really are all unique. I'm not sure yet why, because the expression names should just be the same as all expressions used in the new codebase. Looking at the hash function for ModalLanguage, I see as expected:
 
         # requiring diff name is a strong requirement
         return hash(tuple(sorted(self.expressions)))
@@ -721,7 +721,7 @@ status: resolved
 
     Doing this in the new codebase:
 
-        - Unfortunately, while passing in only the natural expressions lets the generate_languages() function run just fine, it doesn't seem to be finding any langauges that the normal random sampler can't find. I know this because it's saving the same number before and after.
+        - Unfortunately, while passing in only the natural expressions lets the generate_languages() function run just fine, it doesn't seem to be finding any languages that the normal random sampler can't find. I know this because it's saving the same number before and after.
         In particular, we're back to almost 0 correlation again:
                     
             Degree sav pearson correlations:
@@ -1042,7 +1042,7 @@ status: resolved
                 - weak+circumstantial        
 
 
-    This is enough progress to close up this entry for now. The upshot: I am successfully finding the perfectly informative langauges in my evoluationary algorithm, most likely as a result of debugging some of the logic errors in my mutations AddPoint and RemovePoint. Partly because my correlation of naturalness with simplicity is _STILL_ not as high as in the old codebase, though, I'm somewhat skeptical that the work is done. I'm at around 0.31, but my old code was finding results yielding around 0.41 - 0.47.
+    This is enough progress to close up this entry for now. The upshot: I am successfully finding the perfectly informative languages in my evoluationary algorithm, most likely as a result of debugging some of the logic errors in my mutations AddPoint and RemovePoint. Partly because my correlation of naturalness with simplicity is _STILL_ not as high as in the old codebase, though, I'm somewhat skeptical that the work is done. I'm at around 0.31, but my old code was finding results yielding around 0.41 - 0.47.
     My hypothesis is that the high informativity space is being explored better, but not as well as in the old codebase. Another possibility is that the old codebase is better at exploring low-complexity languages in general.
     Ideas to consider: increasing the sample size (which I know helps somewhat) and engineering mutations that reduce complexity (which I haven't thought of yet).
 
@@ -1251,13 +1251,13 @@ status: almost solved
 
     The next step I will do is identify these languages which have complexity 1. 
     There was just one such language, and I confirmed this was the case when searching the yaml file by text too.
-    So, something must have gone wrong from the time I loaded the langauges and got their dataframe, or dropped duplicates from it.
+    So, something must have gone wrong from the time I loaded the languages and got their dataframe, or dropped duplicates from it.
         - I can try to use altk's get_dataframe function, and then check how many entries have complexity 1, to rule out altk as the culprit.
             - Indeed, when I do subset the resulting dataframe using
                 `data[data["complexity"]==1]`
             I get a dataframe with just one language.
 
-        - Next I want to see if my "counts" logic is the culprit, so I will run it and see if this produces the 2626 extra counts. There's good reason to think that it's actually distributing the counts incorrectly, too -- because maybe the langauges which were counted as complexity 1 are actually complexity X languages, possible duplicates. In other words I expect once this is resolved, the counts will be more evenly distributed, at least along the frontier.
+        - Next I want to see if my "counts" logic is the culprit, so I will run it and see if this produces the 2626 extra counts. There's good reason to think that it's actually distributing the counts incorrectly, too -- because maybe the languages which were counted as complexity 1 are actually complexity X languages, possible duplicates. In other words I expect once this is resolved, the counts will be more evenly distributed, at least along the frontier.
             - I found the culprit. value_counts() on a pd.DataFrame will by default sort the rows of the input dataframe by frequency. This is detailed in the docs. So we've actually created
 
                 complexity  comm_cost   
@@ -1516,14 +1516,14 @@ status: resolved
             >>> len(langs_unique)
             56
 
-            - THIS IS THE CORRECT NUMBER of langauges but I didn't know it. Here's why:
+            - THIS IS THE CORRECT NUMBER of languages but I didn't know it. Here's why:
                 - with repetition and without order significance 
                 = \binom{k + n - 1}{k}
                 with k = 3 and n = 6
                 = 8 choose 3
                 = 56
         
-        So, I created a list of all the unique LoT expressions, for each of these langauges, and checked out the first element:
+        So, I created a list of all the unique LoT expressions, for each of these languages, and checked out the first element:
 
             >>> vocabs = [list(set([e.lot_expression for e in lang.expressions])) for lang in langs_unique]        
 
@@ -1625,7 +1625,7 @@ status: resolved
     But more importantly, the counts are more in the range that we presented at salt -- the legend shows them at 100 to 300. I'm not positive that those results we presented were wrong, since they were obtained by Shane -- but looking at the commit closest to it, it seemed to have the bad value_counts logic. But this together with the fact we weren't sampling nearly as much (literally less than 10% of this sample) could probably account for that.
 
 
-    Upshot: I am feeling quite confident that these are the results we will present. I'm confident in how I'm measuring langauges, and how I'm exploring the space. This commit has the message "full run with new language hash"
+    Upshot: I am feeling quite confident that these are the results we will present. I'm confident in how I'm measuring languages, and how I'm exploring the space. This commit has the message "full run with new language hash"
 
 7.7.22: dlsav and natural statistics are exactly the same
 status: resolved
@@ -1745,3 +1745,23 @@ status: unresolved
         optimality: -0.11936231642150943
 
         plot: more than half the optimal languages are perfectly natural. But there are many perfectly natural languages that are in the middle, e.g., not optimal. However, I do observe a general trend towards informativeness, which seems to be captured in the coefficient. But I'm still surprised about optimality.
+
+    Shane's first pass:
+
+        Just as a reminder: pragmatic reasoning will make comm cost go down without affecting complexity at all, so that should have the effect of lowering the correlation w/ complexity I think.
+
+        Where exactly are complexity and cost being measured? In the following sense: cost is a property of sender/receiver, i.e. 1-I(S, R).  But in the way we currently have a separation btn langs and S/R, complexity should be a property of the lang, that is uneffected by which S/R are using it?
+
+        Me: Yeah, complexity is fully independent.
+
+        But then why does the correlation change so dramatically btn the literal and pragmatic case? That's the part I'm missing.  Is it just sample size, or something else?
+
+        Me: There is a difference in sample size, but it’s not dramatic (I tried to make all my config files minimally diff and so they have the same random sampling and evol alg params). For indicator prag we have 75k, for half credit prag 85k.
+        I’ll need to check out complexity. One strategy could be to just load the literal generated languages and measure them with pragmatic to see if complexities change.
+
+        Test 1: load languages from pragmatic experiment and measure them in literal experiment (measure_tradeoff and analyze)
+
+            - The simplest way to proceed is just to change the file paths manually in the config files.
+
+
+        Test 2: load languages from literal experiment and measure them in pragmatic experiment.

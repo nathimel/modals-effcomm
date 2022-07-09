@@ -1,4 +1,4 @@
-"""Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off."""
+"""Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off, and robust exploration of the 2D space of possible modal languages."""
 
 import sys
 from altk.effcomm.optimization import EvolutionaryOptimizer
@@ -10,7 +10,7 @@ from sample_languages import generate_languages
 from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import (
     Add_Modal,
-    Add_Point,    
+    Add_Point,
     Remove_Modal,
     Remove_Point,
     Interchange_Modal,
@@ -62,7 +62,6 @@ def main():
         lang_size=lang_size,
         sample_size=sample_size,
         id_start=id_start,
-        # verbose=True,
     )
     seed_population = result["languages"]
     id_start = result["id_start"]
@@ -81,11 +80,23 @@ def main():
         utility=build_utility_matrix(space, load_utility(configs["utility"])),
         agent_type=agent_type,
     )
+
+    # Use optimizer as an exploration / sampling method as follows:
+    # estimate FOUR pareto frontiers using the evolutionary algorithm; one for each corner of the 2D space of possible langs
+    directions = {
+        "lower_left": ("comm_cost", "complexity"),
+        "lower_right": ("informativity", "complexity"),
+        "upper_left": ("comm_cost", "simplicity"),
+        "upper_right": ("informativity", "simplicity"),
+    }    
     objectives = {
         "comm_cost": lambda lang: 1 - informativity_measure(lang),
         "informativity": informativity_measure,
         "complexity": complexity_measure,
-        "simplicity": lambda lang: 1 / complexity_measure(lang) # warning: this is different from the simplicity value computed during analysis.
+        "simplicity": lambda lang: 1
+        / complexity_measure(
+            lang
+        ),  # this is different from the simplicity value computed during analysis. The data['simplicity'] field will be reset to None before then, in measure_tradeoff.
     }
 
     # Load modals-specifc mutations
@@ -97,7 +108,7 @@ def main():
         Interchange_Modal(),
     ]
 
-    # Initialize optimizer and run algorithm
+    # Initialize optimizer
     optimizer = EvolutionaryOptimizer(
         objectives=objectives,
         expressions=expressions,
@@ -109,14 +120,7 @@ def main():
         processes=processes,
     )
 
-    # Run optimizer once for each corner of the 2D space of possible langs
-    directions = {
-        "lower_left" : ("comm_cost", "complexity"),
-        "lower_right" : ("informativity", "complexity"),
-        "upper_left" : ("comm_cost", "simplicity"),
-        "upper_right": ("informativity", "simplicity"),
-    }
-
+    # Explore all four corners of the possible language space
     results = {k: None for k in directions}
     pool = []
     for direction in directions:
@@ -138,25 +142,8 @@ def main():
         id_start = result["id_start"]
         pool.extend(results[direction]["explored_languages"])
 
-    # the Pareto langs
+    # the Pareto langs for the complexity/comm_cost trade-off.
     dominant_langs = results["lower_left"]["dominating_languages"]
-
-    # result = optimizer.fit(seed_population, id_start, explore=explore)
-    # dominant_langs = result["dominating_languages"]
-    # explored_langs = result["explored_languages"]
-    # id_start = result["id_start"]
-
-    # # try and optimize for high cost langs while still optimizing for simplicity
-    # optimizer.x = "informativity"
-    # high_cost_result = optimizer.fit(seed_population, id_start)
-    # high_cost_explored = high_cost_result["explored_languages"]
-    # id_start = high_cost_result["id_start"]
-
-    # Save all explored langs
-    # pool = explored_langs + high_cost_explored
-
-    
-
 
     print(f"Discovered {len(pool)} languages.")
     pool.extend(sampled_languages)
