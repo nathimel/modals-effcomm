@@ -54,6 +54,7 @@ Analysis:
 <details>
 <summary>Map of repo</summary>
 <br>
+
 ```bash
 .
 ├── configs
