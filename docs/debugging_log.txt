@@ -1818,7 +1818,44 @@ status: unresolved
 
             - The simplest way to proceed is just to change the file paths manually in the config files.
 
-            - Actually, I could just compare the languages between these two experiments, make sure they're equal (same vocab), and then see if they differ in complexity at all. Call this Test 0.
+        the results:
 
+            Degree sav pearson correlations:
+            simplicity: 0.46805778888050487
+            informativity: 0.0651700139555651
+            optimality: 0.39889141958071855
+
+            MEANS
+                            simplicity  informativity  optimality
+            name                                                   
+            natural_means       0.806250       0.965972    0.862867
+            dlsav_means         0.646948       1.153990    0.735540
+            population_means    0.471054       0.930971    0.628848
+
+            TTEST STATS
+            natural languages against population
+                            simplicity  informativity  optimality
+            stat                                                    
+            t-statistic         15.701675       0.198313    3.141778
+            Two-sided p-value    0.000561       0.855478    0.051592
+
+            dlsav languages against population
+                            simplicity  informativity     optimality
+            stat                                                       
+            t-statistic         88.205789       42.43659   3.776001e+01
+            Two-sided p-value    0.000000        0.00000  5.896111e-271
+
+
+        Notice how different informativity is now. Compare this to the most recent run of full experiment with pragmatic settings, where simplicity has less than half the correlation strength, and informativity is as high as simplicity is now:
+
+            simplicity: 0.18032611628317569
+            informativity: 0.43323971354696705
+            optimality: -0.11936231642150943
+
+        The plot is informative. Compared to the plot for the full experiment for the pragmatic setting, there are far more languages at the bottom of the plot, and many of them are fully natural. (It does, as it should, look as if the literal experiment results were squashed). And there are far LESS languages in the upper left; in the original full pragmatic experiment, the densest area was in the upper left corner, and full of fully unnatural languages.
+
+        So I'm confident that what we have is a sampling issue: the language pool from each experiment is not the same. This raises a few questions: What is the correct pool for each experiment? Should they all be the same, maximal pool? And how do we know if we've found it?
+
+        I'm worried about whether we can improve sampling in a principled way for the pragmatic measure: why is the resulting sample, of optimizing all four corners of the space, giving such different result than if we merely change the informativity measure to give less reward (e.g. be more aggressive)
 
         Test 2: load languages from literal experiment and measure them in pragmatic experiment.
