@@ -1816,7 +1816,47 @@ status: unresolved
 
         Test 1: load languages from pragmatic experiment and measure them in literal experiment (measure_tradeoff and analyze)
 
-            - The simplest way to proceed is just to change the file paths manually in the config files.
+            - The simplest way to proceed is just to change the file paths manually in the config file.
+
+        These were the original half_credit_literal result:
+
+            simplicity: 0.46805778888062943
+            informativity: 0.7724286934553124
+            optimality: 0.6457743360494049
+
+        And here are the results when measuring the languages produced in the pragmatic version of the experiment:          
+
+            Degree sav pearson correlations:
+            simplicity: 0.18032611628319356
+            informativity: 0.5361134836542771
+            optimality: 0.27951462523025844
+
+            MEANS
+                            simplicity  informativity  optimality
+            name                                                   
+            natural_means       0.795000       0.746296    0.951134
+            dlsav_means         0.679170       0.611892    0.839120
+            population_means    0.541366       0.532717    0.729446
+
+            TTEST STATS
+            natural languages against population
+                            simplicity  informativity  optimality
+            stat                                                    
+            t-statistic         12.681693       3.019436    8.392832
+            Two-sided p-value    0.000223       0.039185    0.001103
+
+            dlsav languages against population
+                            simplicity  informativity  optimality
+            stat                                                    
+            t-statistic         61.403119   3.016456e+01   70.137804
+            Two-sided p-value    0.000000  3.766663e-177    0.000000
+
+        It is a good thing that simplicity correlation is exactly as low, and that the informativity is slightly lower (because the pragmatic languages don't need to be as literally informative). Because the quantitative results are what they should be if only the input pool of languages differed, this makes me confident that the difference of interest between the literal and pragmatic results is not our measures, but the fact that the two experiments end up exploring a different, but similarly sized, pool of languages. And this invites us to think about whether, and how to better sample the space.
+
+        Test 2: load languages from literal experiment and measure them in pragmatic experiment.
+
+            - proceeding by changing the file paths manually in the config file.
+
 
         the results:
 
@@ -1857,5 +1897,3 @@ status: unresolved
         So I'm confident that what we have is a sampling issue: the language pool from each experiment is not the same. This raises a few questions: What is the correct pool for each experiment? Should they all be the same, maximal pool? And how do we know if we've found it?
 
         I'm worried about whether we can improve sampling in a principled way for the pragmatic measure: why is the resulting sample, of optimizing all four corners of the space, giving such different result than if we merely change the informativity measure to give less reward (e.g. be more aggressive)
-
-        Test 2: load languages from literal experiment and measure them in pragmatic experiment.
