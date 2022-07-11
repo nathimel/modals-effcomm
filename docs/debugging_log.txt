@@ -1776,6 +1776,43 @@ status: unresolved
                 - the evolutionary algorithm is encouraged to explore different languages, based on the measures. (but in what exact way?)
 
 
+            - Followup / counterpoint to the script: I should have first looked just at the _overlapping_ languages using simple set() logic, since that's essentially the logic I wanted to use for building the comparison script. So I loaded both lists of languages, and took their intersection.
+
+                >>> result_literal = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/outputs/half_credit_literal/languages/artificial.yml")
+                Loaded 94914 languages in 261.41 seconds
+                >>> result_pragmatic = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/outputs/half_credit_pragmatic/languages/artificial.yml")
+                Loaded 85953 languages in 242.96 seconds
+                >>> literal_languages = result_literal["languages"]
+                >>> pragmatic_languages = result_literal["languages"]
+                >>> pool_intersection = set(literal_languages).intersection(set(pragmatic_languages))
+                >>> len(pool_intersection)
+                94914
+
+        This is surprising. How can I take a set B that is strictly smaller than A, and have A intersect B be the same size as A? The intersection must be less than or equal to the number of elements in the smallest argument. So I checked with dominant and natural languages, and found (as expected) there was 0 in that intersection, which means the hash function used in __contains__ is producing the expected result for this latter case.
+
+        Okay, so I tried to reproduce the results and did not get this again. In particular,
+
+            >>> result_literal = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/outputs/half_credit_literal/languages/artificial.yml")
+            Loaded 94914 languages in 261.74 seconds
+            >>> result_pragmatic = load_languages("/Users/nathanielimel/clms/projects/modals-effcomm/outputs/half_credit_pragmatic/languages/artificial.yml")
+            Loaded 85953 languages in 234.39 seconds
+            >>> pragmatic_languages = result_pragmatic["languages"]
+            >>> len(pragmatic_languages)
+            85953
+            >>> literal_languages = result_literal["languages"]
+            >>> len(literal_languages)
+            94914
+            >>> len(set(literal_languages))
+            94914
+            >>> len(set(pragmatic_languages))
+            85953
+            >>> overlapping_languages = set(literal_languages).intersection(set(pragmatic_languages))
+            >>> len(overlapping_languages)
+            34693
+
+        This number is the one I expected. So there must be a sampling difference. And this sampling difference must be enough that the languages that _are_ explored in the pragmatic are such that the SAV ones aren't related to the optimal ones.
+
+        Next, I want to proceed with Test 1.
 
         Test 1: load languages from pragmatic experiment and measure them in literal experiment (measure_tradeoff and analyze)
 

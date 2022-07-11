@@ -35,7 +35,7 @@ A separate step is adding natural language data:
 ## Analyzing the simplicity/informativeness trade-off
 
 Next, we analyze the resulting sample for the relationship between efficiency and naturalness.
-The notion of naturalness we use tracks 'closeness of languages to actual modal typological facts' by measuring the proportion of a language satisfying a modal semantic universal.
+The notion of naturalness we use tracks closeness of languages to actual modal typological facts by measuring the proportion of a language satisfying a modal semantic universal.
   
 Measuring of languages:
 
