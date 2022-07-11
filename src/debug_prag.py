@@ -45,14 +45,14 @@ def main():
     matches = 0
     for key in comparison:
         langs_dict = comparison[key]
-        if None not in list(langs_dict.values()):
+        if None not in list(langs_dict.values()): # if both entries exist
             matches += 1
 
             literal_lang = langs_dict["literal"]
             pragmatic_lang = langs_dict["pragmatic"]
 
-            literal_complexity = lang.data["complexity"]
-            pragmatic_complexity = lang.data["complexity"]
+            literal_complexity = literal_lang.data["complexity"]
+            pragmatic_complexity = pragmatic_lang.data["complexity"]
 
             if literal_complexity != pragmatic_complexity:
                 discrepancies[key] = {
