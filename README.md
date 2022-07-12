@@ -115,7 +115,10 @@ Additionally, this project requires [the artificial language toolkit (ALTK)](htt
 
 The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/half_credit_literal.yml`.
 
-This just runs the following python scripts, which can also be run individually
+This just runs the following python scripts, which can also be run individually:
+<details>
+<summary>individual scripts</summary>
+<br>
 
 `python3 src/create_folders.py path_to_config`
 
@@ -132,6 +135,7 @@ This just runs the following python scripts, which can also be run individually
 `python3 src/measure_tradeoff.py path_to_config`
 
 `python3 src/analyze.py path_to_config`
+</details>
 
 ## Citation
 
