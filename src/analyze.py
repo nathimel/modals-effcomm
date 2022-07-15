@@ -179,10 +179,10 @@ def main():
     print()
 
     print("TTEST STATS")
-    print("natural languages against population")
+    print(f"natural languages ({len(natural_data)}) against population ({len(data)})")
     print(ttest_natural_df)
     print()
-    print("dlsav languages against population")
+    print(f"dlsav languages ({len(dlsav_data)}) against population ({len(data)})")
     print(ttest_dlsav_df)
     print()
 
