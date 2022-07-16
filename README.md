@@ -113,7 +113,7 @@ Additionally, this project requires [the artificial language toolkit (ALTK)](htt
   
 ## Replicating the experimental results
 
-The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/half_credit_literal.yml`.
+The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/salt.yml`.
 
 This just runs the following python scripts, which can also be run individually:
 <details>
