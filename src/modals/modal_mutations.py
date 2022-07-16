@@ -59,7 +59,7 @@ class Add_Point(Add_Modal):
         """Add a new expression to the language containing exactly one random meaning point, preferably one not already expressed by the language."""
 
         # add a random meaning point to an existing expression
-        point = random.choice(list(language.universe.objects))
+        point = random.choice(list(language.universe.referents))
         if uncovered_points(language):
             point = random.choice(list(uncovered_points(language)))
 
@@ -67,7 +67,7 @@ class Add_Point(Add_Modal):
         new_meaning = [point]
         new_expression = None
         for e in expressions:
-            points_ = e.meaning.objects
+            points_ = e.meaning.referents
             if set(points_) == set(new_meaning):
                 new_expression = e
 
@@ -87,7 +87,7 @@ class Remove_Point(Mutation):
         # Can express more than one pointe
         expressions = language.expressions
         for expression in expressions:
-            points = expression.meaning.objects
+            points = expression.meaning.referents
             if len(points) > 1:
                 return True
         return False
@@ -102,7 +102,7 @@ class Remove_Point(Mutation):
         
         expression_to_remove = None
         for expression in vocab:
-            points = list(expression.meaning.objects)
+            points = list(expression.meaning.referents)
             if len(points) > 1:
                 expression_to_remove = expression
                 break
@@ -116,7 +116,7 @@ class Remove_Point(Mutation):
 
         # Search for the correct expression
         for e in expressions:
-            points_ = e.meaning.objects
+            points_ = e.meaning.referents
             if set(points) == set(points_):
                 new_expression = e
                 break
@@ -153,7 +153,7 @@ def uncovered_points(language: ModalLanguage) -> set[ModalMeaning]:
     points = [
         point
         for e in language.expressions
-        for point in e.meaning.objects
+        for point in e.meaning.referents
     ]
-    space = language.universe.objects
+    space = language.universe.referents
     return set(space) - set(points)

@@ -6,6 +6,7 @@ from itertools import product
 
 from altk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
+from modals.modal_meaning import ModalMeaningPoint
 
 ##############################################################################
 # Expression
@@ -49,7 +50,7 @@ class ModalExpression(Expression):
         """Convert to a dictionary representation of the expression for compact saving to .yml files."""
         return {
             "form": self.form,
-            "meaning": list(self.meaning.objects),
+            "meaning": [point.name for point in self.meaning.referents],
             "lot": self.lot_expression,
         }
 
@@ -58,13 +59,13 @@ class ModalExpression(Expression):
         """Takes a yaml representation and returns the corresponding Modal Expression.
 
         Args:
-            - rep: a dictionary of the form {'form': str, 'meaning': list, 'lot': str}
+            - rep: a dictionary of the form {'form': str, 'meaning': list[str], 'lot': str}
         """
         form = rep["form"]
-        meaning = rep["meaning"]
+        points=[ModalMeaningPoint(name=name) for name in rep["meaning"]]
         lot = rep["lot"]
 
-        meaning = ModalMeaning(meaning, space)
+        meaning = ModalMeaning(points, space)
         return cls(form, meaning, lot)
 
 
@@ -212,17 +213,17 @@ def iff(e: ModalExpression) -> bool:
 
     The set of forces X that a modal lexical item m can express and the set of flavors be Y that m can express, then the full set of meaning points that m expresses is the Cartesian product of X and Y.
     """
-    points = e.meaning.objects
+    points = e.meaning.referents
     forces = set()
     flavors = set()
     for point in points:
-        force, flavor = point.split("+")
+        force, flavor = point.name.split("+")
         forces.add(force)
         flavors.add(flavor)
 
     for (force, flavor) in product(forces, flavors):
-        point = f"{force}+{flavor}"
-        if point not in points:
+        name = f"{force}+{flavor}"
+        if name not in [point.name for point in points]:
             return False
     return True
 
@@ -230,11 +231,11 @@ def iff(e: ModalExpression) -> bool:
 def sav(e: ModalExpression) -> bool:
     """Single Axis of Variability universal: a modal expression may exhibit
     ambiguity across forces, or flavors, but not both."""
-    points = e.meaning.objects
+    points = e.meaning.referents
     forces = set()
     flavors = set()
     for point in points:
-        force, flavor = point.split("+")
+        force, flavor = point.name.split("+")
         forces.add(force)
         flavors.add(flavor)
 
