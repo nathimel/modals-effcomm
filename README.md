@@ -25,7 +25,7 @@ This is accomplished by the following steps:
 - Expression generating from the set of meanings
 - Sampling expresions into languages
 - Use an evolutionary algorithm to estimate the optimal languages
-- Explore the full space of possible languages using the same algorithm
+- Explore the space of possible languages using the same algorithm
 
 A separate step is adding natural language data:
 
