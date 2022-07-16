@@ -109,7 +109,7 @@ Get the required packages by running
 
 Additionally, this project requires [the artificial language toolkit (ALTK)](https://github.com/nathimel/altk). Install it via git with
 
-`python3 -m pip install git+https://github.com/nathimel/altk.git`
+`python3 -m pip install git+https://github.com/nathimel/altk.git@e20657a122a54ff607344f6dc8c4f04a34a06bd0`
   
 ## Replicating the experimental results
 
