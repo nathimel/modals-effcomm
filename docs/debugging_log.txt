@@ -1897,3 +1897,7 @@ status: unresolved
         So I'm confident that what we have is a sampling issue: the language pool from each experiment is not the same. This raises a few questions: What is the correct pool for each experiment? Should they all be the same, maximal pool? And how do we know if we've found it?
 
         I'm worried about whether we can improve sampling in a principled way for the pragmatic measure: why is the resulting sample, of optimizing all four corners of the space, giving such different result than if we merely change the informativity measure to give less reward (e.g. be more aggressive)
+
+7.16.22: Abstracted meaning point into a class instead of just storing strings as the elements of meanings.
+
+    Ran through dev after fixing a few easy bugs. If issues come up, the commit hash for this update is: 

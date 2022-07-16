@@ -6,7 +6,7 @@ import pandas as pd
 from misc.file_util import load_configs, load_expressions
 from misc.file_util import load_space, save_languages
 from modals.modal_language import ModalExpression, ModalLanguage
-from modals.modal_meaning import ModalMeaning
+from modals.modal_meaning import ModalMeaning, ModalMeaningPoint
 
 
 def process_can_express(val: Any, can_express: dict):
@@ -78,7 +78,10 @@ def main():
         experiment_vocabulary = []
         for modal in vocabulary:
             form = modal
-            meaning = ModalMeaning(vocabulary[modal], space)
+            meaning = ModalMeaning(
+                points=[ModalMeaningPoint(name=name) for name in vocabulary[modal]], 
+                meaning_space=space,
+                )
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
                 if expression.meaning == meaning:
