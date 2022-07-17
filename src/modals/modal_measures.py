@@ -2,6 +2,7 @@
 
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_language_of_thought import ExpressionTree, ModalLOT
+from modals.modal_meaning import ModalMeaningPoint
 
 ##############################################################################
 # Complexity measure for modals
@@ -25,7 +26,7 @@ def item_complexity(item: ModalExpression, mlot: ModalLOT) -> int:
 # Utility (reward) functions for informativity measure
 ##############################################################################
 
-def indicator(m: str, m_: str) -> int:
+def indicator(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> int:
     """Utility function that rewards only perfect recovery of meaning point m.
     
     Args:
@@ -38,7 +39,7 @@ def indicator(m: str, m_: str) -> int:
     """
     return int(m == m_)
 
-def half_credit(m: str, m_: str) -> float:
+def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
     """Utility function that awards 0.5 credit for each correctly recovered feature (force or flavor) of meaning point m.
     
     Args:
@@ -49,8 +50,8 @@ def half_credit(m: str, m_: str) -> float:
     Returns: 
         an float, either 0, 0.5, or 1.0 corresponding to the fraction of correctly recovered features of the speaker's meaning point.
     """
-    intended = m.split("+")
-    guess = m_.split("+")
+    intended = m.name.split("+")
+    guess = m_.name.split("+")
     score = 0.0
     for feature in intended:
         if feature in guess:
