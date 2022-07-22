@@ -27,11 +27,6 @@ This is accomplished by the following steps:
 - Use an evolutionary algorithm to estimate the optimal languages
 - Explore the space of possible languages using the same algorithm
 
-A separate step is adding natural language data:
-
-- Load data obtained from [A Database of Modal Typology](https://github.com/CLMBRs/modal-typology).
-- Convert each natural language into the appropriate experiment data structure
-
 ## Analyzing the simplicity/informativeness trade-off
 
 Next, we analyze the resulting sample for the relationship between efficiency and naturalness.

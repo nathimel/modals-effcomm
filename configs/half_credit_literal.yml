@@ -33,14 +33,7 @@ evolutionary_alg:
 file_paths:
   meaning_space: outputs/half_credit_literal/meaning_space.yml
   expressions: outputs/half_credit_literal/expressions.yml
-  data:
-    gitksan: data/natural_languages/Gitksan/modals.csv
-    javanese: data/natural_languages/Javanese-Paciran/modals.csv
-    lillooet: data/natural_languages/Lillooet-Salish/modals.csv
-    logoori: data/natural_languages/Logoori/modals.csv
-    tlingit: data/natural_languages/Tlingit/modals.csv
   artificial_languages: outputs/half_credit_literal/languages/artificial.yml
-  natural_languages: outputs/half_credit_literal/languages/natural.yml
   dominant_languages: outputs/half_credit_literal/languages/dominant.yml # Pareto
   analysis:
     correlations: outputs/half_credit_literal/analysis/correlations/property.csv # dummy property name
@@ -48,7 +41,6 @@ file_paths:
     pareto_data: outputs/half_credit_literal/analysis/pareto_data.csv
     plot: outputs/half_credit_literal/analysis/plot.png
     means: outputs/half_credit_literal/analysis/means.csv
-    ttest_natural: outputs/half_credit_literal/analysis/ttest_natural.csv
     ttest_dlsav: outputs/half_credit_literal/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans

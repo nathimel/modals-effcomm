@@ -27,8 +27,6 @@ def get_modals_plot(
     Returns:
         plot: a plotnine 2D plot of the trade-off.
     """
-    natural_data = data[data["Language"] == "natural"]
-
     # smooth pareto curve again
     pareto_df = pareto_data[["comm_cost", "complexity"]]
     pareto_points = pareto_df.to_records(index=False).tolist()
@@ -53,13 +51,6 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        # + pn.geom_point(  # The natural languages
-        #     natural_data,
-        #     color="red",
-        #     shape="+",
-        #     size=4,
-        # )
-        # + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
@@ -87,7 +78,6 @@ def main():
 
     # Load languages
     langs_fn = configs["file_paths"]["artificial_languages"]
-    nat_langs_fn = configs["file_paths"]["natural_languages"]
     dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
     # Load analysis files
@@ -97,15 +87,12 @@ def main():
     plot_fn = analysis_fns["plot"]
     correlations_fn = analysis_fns["correlations"]
     means_fn = analysis_fns["means"]
-    ttest_natural_fn = analysis_fns["ttest_natural"]
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
     # Load languages
     result_sampled = load_languages(langs_fn)
-    result_natural = load_languages(nat_langs_fn)
     result_dominant = load_languages(dom_langs_fn)
     langs = result_sampled["languages"]
-    nat_langs = result_natural["languages"]
     dom_langs = result_dominant["languages"]
 
     ############################################################################
@@ -118,8 +105,6 @@ def main():
 
     data = get_dataframe(langs, **kwargs)
     pareto_data = get_dataframe(dom_langs, **kwargs)
-    natural_data = get_dataframe(nat_langs, **kwargs)
-    data = data.append(natural_data)
 
     # Plot
     naturalness = configs["universal_property"]
@@ -142,7 +127,6 @@ def main():
     max_complexity = data["complexity"].max()
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
-    natural_data["simplicity"] = simplicity(natural_data)
 
     # tradeoff properties
     properties = ["simplicity", "informativity", "optimality"]
@@ -162,13 +146,11 @@ def main():
     # Means and ttest for natural, dlsav, population
     dlsav_data = data[data["dlsav"] == True]
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
-    natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index(
+    means_df = pd.concat([dlsav_means, population_means]).set_index(
         "name"
     )
     pop_means_dict = population_means.iloc[0].to_dict()
-    ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
     ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
 
     ############################################################################
@@ -185,8 +167,6 @@ def main():
     print()
 
     print("TTEST STATS")
-    print(f"natural languages ({len(natural_data)}) against population ({len(data)})")
-    print(ttest_natural_df)
     print()
     print(f"dlsav languages ({len(dlsav_data)}) against population ({len(data)})")
     print(ttest_dlsav_df)
@@ -194,7 +174,6 @@ def main():
 
     # Save results
     means_df.to_csv(means_fn)
-    ttest_natural_df.to_csv(ttest_natural_fn, index=False)
     ttest_dlsav_df.to_csv(ttest_dlsav_fn, index=False)
     [
         intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)

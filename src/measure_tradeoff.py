@@ -24,7 +24,6 @@ def main():
     paths = configs["file_paths"]
     space_fn = paths["meaning_space"]
     sampled_languages_fn = paths["artificial_languages"]
-    natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
     space = file_util.load_space(space_fn)
 
@@ -36,15 +35,12 @@ def main():
     sampled_result = file_util.load_languages(sampled_languages_fn)
     print("dominant...")
     dominant_result = file_util.load_languages(dominant_languages_fn)
-    print("natural...")
-    natural_result = file_util.load_languages(natural_languages_fn)
 
     id_start = sampled_result["id_start"]
     sampled_languages = sampled_result["languages"]
     dominant_languages = dominant_result["languages"]
-    natural_languages = natural_result["languages"]
 
-    langs = list(set(sampled_languages + dominant_languages + natural_languages))
+    langs = list(set(sampled_languages + dominant_languages))
     print(f"{len(langs)} total langs.")
 
     # Load trade-off criteria
@@ -79,14 +75,9 @@ def main():
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
 
-    nat_langs = [lang for lang in langs if lang.is_natural()]
-
     file_util.save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
     file_util.save_languages(
         dominant_languages_fn, dom_langs, id_start, kind="dominant"
-    )
-    file_util.save_languages(
-        natural_languages_fn, nat_langs, id_start=None, kind="natural"
     )
     print("done.")
 
