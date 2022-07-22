@@ -40,13 +40,13 @@ def main():
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
     expression_save_fn = configs["file_paths"]["expressions"]
-    space_fn = configs['file_paths']["meaning_space"]    
+    space_fn = configs["file_paths"]["meaning_space"]
     lang_save_fn = configs["file_paths"]["natural_languages"]
 
     # Load csv files
     dataframes = {
-        language_name: pd.read_csv(configs['file_paths']["data"][language_name])
-        for language_name in configs['file_paths']["data"]
+        language_name: pd.read_csv(configs["file_paths"]["data"][language_name])
+        for language_name in configs["file_paths"]["data"]
     }
 
     # Load possible expressions and meaning space to map natural vocabularies into
@@ -79,9 +79,9 @@ def main():
         for modal in vocabulary:
             form = modal
             meaning = ModalMeaning(
-                points=[ModalMeaningPoint(name=name) for name in vocabulary[modal]], 
+                points=[ModalMeaningPoint(name=name) for name in vocabulary[modal]],
                 meaning_space=space,
-                )
+            )
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
                 if expression.meaning == meaning:
@@ -93,7 +93,8 @@ def main():
         experiment_languages.append(ModalLanguage(experiment_vocabulary, language_name))
 
     # save for analysis
-    save_languages(lang_save_fn, experiment_languages, id_start=None, kind='natural')
+    save_languages(lang_save_fn, experiment_languages, id_start=None, kind="natural")
+
 
 if __name__ == "__main__":
     main()

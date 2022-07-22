@@ -2,12 +2,11 @@
 
 import sys
 from altk.effcomm.optimization import EvolutionaryOptimizer
-from misc.file_util import *
-from modals import modal_language
+from misc import file_util
 from modals.modal_language_of_thought import ModalLOT
+from modals.modal_language import ModalLanguage
 from modals.modal_measures import language_complexity
 from sample_languages import generate_languages
-from misc.file_util import load_languages, set_seed
 from modals.modal_mutations import (
     Add_Modal,
     Add_Point,
@@ -15,11 +14,8 @@ from modals.modal_mutations import (
     Remove_Point,
     Interchange_Modal,
 )
-from altk.effcomm.informativity import (
-    informativity,
-    uniform_prior,
-    build_utility_matrix,
-)
+from altk.effcomm.informativity import informativity
+from altk.effcomm.util import uniform_prior
 
 
 def main():
@@ -30,7 +26,7 @@ def main():
     print("Estimating pareto frontier ...")
 
     config_fn = sys.argv[1]
-    configs = load_configs(config_fn)
+    configs = file_util.load_configs(config_fn)
     expressions_fn = configs["file_paths"]["expressions"]
     space_fn = configs["file_paths"]["meaning_space"]
     artificial_langs_fn = configs["file_paths"]["artificial_languages"]
@@ -46,16 +42,16 @@ def main():
     lang_size = evolutionary_alg_configs["maximum_lang_size"]
     explore = evolutionary_alg_configs["explore"]
 
-    set_seed(configs["random_seed"])
+    file_util.set_seed(configs["random_seed"])
 
     # Create the first generation of languages
 
-    result = load_languages(artificial_langs_fn)
+    result = file_util.load_languages(artificial_langs_fn)
     sampled_languages = result["languages"]
     id_start = result["id_start"]
 
     print("Sampling seed generation...")
-    expressions = load_expressions(expressions_fn)
+    expressions = file_util.load_expressions(expressions_fn)
     result = generate_languages(
         language_class=ModalLanguage,
         expressions=expressions,
@@ -67,7 +63,7 @@ def main():
     id_start = result["id_start"]
 
     # construct measures of complexity and informativity as optimization objectives
-    space = load_space(space_fn)
+    space = file_util.load_space(space_fn)
 
     complexity_measure = lambda lang: language_complexity(
         language=lang,
@@ -77,7 +73,7 @@ def main():
     informativity_measure = lambda lang: informativity(
         language=lang,
         prior=uniform_prior(space),
-        utility=build_utility_matrix(space, load_utility(configs["utility"])),
+        utility=file_util.load_utility(configs["utility"]),
         agent_type=agent_type,
     )
 
@@ -88,7 +84,7 @@ def main():
         "lower_right": ("informativity", "complexity"),
         "upper_left": ("comm_cost", "simplicity"),
         "upper_right": ("informativity", "simplicity"),
-    }    
+    }
     objectives = {
         "comm_cost": lambda lang: 1 - informativity_measure(lang),
         "informativity": informativity_measure,
@@ -150,8 +146,12 @@ def main():
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
-    save_languages(artificial_langs_fn, pool, id_start=id_start, kind="explored")
-    save_languages(dom_langs_fn, dominant_langs, id_start=id_start, kind="dominant")
+    file_util.save_languages(
+        artificial_langs_fn, pool, id_start=id_start, kind="explored"
+    )
+    file_util.save_languages(
+        dom_langs_fn, dominant_langs, id_start=id_start, kind="dominant"
+    )
 
     print("done.")
 

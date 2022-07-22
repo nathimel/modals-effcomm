@@ -99,14 +99,14 @@ class Remove_Point(Mutation):
         # randomly select an modal with more than one meaning
         vocab = language.expressions.copy()
         random.shuffle(vocab)
-        
+
         expression_to_remove = None
         for expression in vocab:
             points = list(expression.meaning.referents)
             if len(points) > 1:
                 expression_to_remove = expression
                 break
-        
+
         if expression_to_remove is None:
             return language
 
@@ -120,7 +120,7 @@ class Remove_Point(Mutation):
             if set(points) == set(points_):
                 new_expression = e
                 break
-        
+
         # Replace the ambiguous expression with the more precise one
         language.expressions.remove(expression_to_remove)
         language.add_expression(new_expression)
@@ -150,10 +150,6 @@ class Interchange_Modal(Mutation):
 def uncovered_points(language: ModalLanguage) -> set[ModalMeaning]:
     """Helper function for AddPoint to get the list of meanings not expressible in a language."""
     # Check for any points not expressed
-    points = [
-        point
-        for e in language.expressions
-        for point in e.meaning.referents
-    ]
+    points = [point for e in language.expressions for point in e.meaning.referents]
     space = language.universe.referents
     return set(space) - set(points)

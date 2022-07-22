@@ -12,7 +12,6 @@ def main():
         print("Usage: python3 src/sample_languages.py path_to_config_file")
         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
-
     # Load expressions and save path
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)

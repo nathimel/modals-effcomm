@@ -18,6 +18,7 @@ class ModalMeaningPoint(Referent):
     def __eq__(self, __o: object) -> bool:
         return self.name == __o.name
 
+
 class ModalMeaningSpace(Universe):
     """Represents the set of possible modal (force, flavor) pairs.
 
@@ -49,9 +50,10 @@ class ModalMeaningSpace(Universe):
         # construct a universe with cartesian product
         super().__init__(
             referents={
-                ModalMeaningPoint(name=f"{force}+{flavor}") 
-                for force in forces for flavor in flavors
-                }
+                ModalMeaningPoint(name=f"{force}+{flavor}")
+                for force in forces
+                for flavor in flavors
+            }
         )
         self.arr = np.zeros((len(forces), len(flavors)))
 
@@ -120,9 +122,8 @@ class ModalMeaningSpace(Universe):
             )
 
         return {
-            ModalMeaningPoint(
-                name=f"{self.forces[pair[0]]}+{self.flavors[pair[1]]}"
-                ) for pair in np.argwhere(a)
+            ModalMeaningPoint(name=f"{self.forces[pair[0]]}+{self.flavors[pair[1]]}")
+            for pair in np.argwhere(a)
         }
 
     def __str__(self):
@@ -143,18 +144,17 @@ class ModalMeaning(Meaning):
         m = Modal_Meaning({'weak+epistemic'}, space)
     """
 
-    def __init__(self, points: Iterable[ModalMeaningPoint], meaning_space: ModalMeaningSpace):
+    def __init__(
+        self,
+        points: Iterable[ModalMeaningPoint],
+        meaning_space: ModalMeaningSpace,
+    ):
         """
-        Args: 
-        """
-        self.referents = list(points) # the points in the meaning space with nonzero probability
+        Args:
+            points: the points in meaning space that are actually expressed with nonzero probability
 
-        # Construct the probability distribution over points
-        # can_express = {k: 1 / len(self.referents) for k in self.referents}
-        # space = {
-        #     k: 0 for k in meaning_space.referents if k not in can_express
-        # }
-        # dist = can_express | space
+            meaning_space: the modal meaning space of all possible points that can be expressed
+        """
         super().__init__(referents=points, universe=meaning_space)
 
     def to_array(self) -> np.ndarray:

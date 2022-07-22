@@ -146,7 +146,7 @@ class ModalLOT:
         """
         # TODO: figure out how to use Pool() to play nice with Python objects
         # arrs = [meaning.to_array() for meaning in meanings]
-        # r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]        
+        # r = [str(self.__joint_heuristic(arr)) for arr in tqdm(arrs)]
         arr = meaning.to_array()
         r = str(self.__joint_heuristic(arr))
         return r
@@ -334,7 +334,6 @@ class ModalLOT:
             and not [child for child in ET.tree()]
         )
 
-
     def __contains_id(self, ET: ExpressionTree, id: str) -> bool:
         """
         Returns true if the identity ("1" or "0") or ExpressionTree wrapper
@@ -412,7 +411,6 @@ class ModalLOT:
                 ],
             )
         return ET
-
 
     ##########################################################################
     # Addition

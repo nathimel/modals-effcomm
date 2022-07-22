@@ -22,7 +22,9 @@ if __name__ == "__main__":
     config_fn = sys.argv[1]
     configs = load_configs(config_fn)
     meaning_space_fn = configs["file_paths"]["meaning_space"]
-    expression_save_fn = configs["file_paths"]["expressions"] #TODO: consider checking if expressions already exist instead of regenerating every time
+    expression_save_fn = configs["file_paths"][
+        "expressions"
+    ]  # TODO: consider checking if expressions already exist instead of regenerating every time
 
     # Generate expressions, measure them, and save
     space = load_space(meaning_space_fn)
@@ -41,7 +43,9 @@ if __name__ == "__main__":
     if not negation:
         lots = [formula for formula in lot_expressions if "-" in formula]
         if len(lots) != 0:
-            raise ValueError(f"Negation shouldn't be in lot but found the following formulae with negation: {lots}")
+            raise ValueError(
+                f"Negation shouldn't be in lot but found the following formulae with negation: {lots}"
+            )
 
     modal_expressions = [
         ModalExpression(

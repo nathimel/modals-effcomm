@@ -2,8 +2,14 @@ import sys
 import pandas as pd
 import plotnine as pn
 from altk.effcomm.tradeoff import interpolate_data
-from altk.effcomm.analysis import get_dataframe, pearson_analysis, trade_off_means, trade_off_ttest
+from altk.effcomm.analysis import (
+    get_dataframe,
+    pearson_analysis,
+    trade_off_means,
+    trade_off_ttest,
+)
 from misc.file_util import load_languages, load_configs, set_seed
+
 
 def get_modals_plot(
     data: pd.DataFrame,
@@ -31,8 +37,8 @@ def get_modals_plot(
 
     # aesthetics for all data
     kwargs = {
-        "color": naturalness, 
-        "shape": "dlsav", 
+        "color": naturalness,
+        "shape": "dlsav",
         "size": "dlsav",
     }
     if counts:
@@ -42,7 +48,6 @@ def get_modals_plot(
         # Set data and the axes
         pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
         + pn.scale_y_continuous(limits=[0, 1])
-        
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
@@ -56,16 +61,18 @@ def get_modals_plot(
         # )
         # + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
-        + pn.xlab("Complexity")        
+        + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
     return plot
 
+
 ##############################################################################
 # Main driver code
 ##############################################################################
+
 
 def main():
     if len(sys.argv) != 2:
@@ -101,7 +108,6 @@ def main():
     nat_langs = result_natural["languages"]
     dom_langs = result_dominant["languages"]
 
-
     ############################################################################
     # Construct main dataframe and plot
     ############################################################################
@@ -114,20 +120,19 @@ def main():
     pareto_data = get_dataframe(dom_langs, **kwargs)
     natural_data = get_dataframe(nat_langs, **kwargs)
     data = data.append(natural_data)
-    
+
     # Plot
     naturalness = configs["universal_property"]
 
     # Add counts only for plot
     plot_data = data.copy()
     vcs = plot_data.value_counts(subset=subset, sort=False)
-    plot_data = data.drop_duplicates(subset=subset) # drop dupes from original
+    plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
     plot_data["counts"] = vcs.values
 
     plot = get_modals_plot(plot_data, pareto_data, naturalness=naturalness, counts=True)
     plot.save(plot_fn, width=10, height=10, dpi=300)
-
 
     ############################################################################
     # Statistics
@@ -159,11 +164,12 @@ def main():
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index("name")
+    means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index(
+        "name"
+    )
     pop_means_dict = population_means.iloc[0].to_dict()
     ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
     ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
-
 
     ############################################################################
     # Print report to stdout and save
