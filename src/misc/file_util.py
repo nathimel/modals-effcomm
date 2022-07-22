@@ -78,6 +78,65 @@ def load_space(fn: str) -> ModalMeaningSpace:
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Prior
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+def save_prior(fn: str, prior: dict[str, float]) -> None:
+    """Save an estimated prior over modal meaning points to a YAML file.
+
+    Args:
+        fn: the file to save the probability distribution dict to.
+
+        prior: a dict representing the distribution over meaning points with
+            string keys = meaning point names,
+            float values = weights e.g. frequencies or probabilities.
+    """
+    with open(fn, "w") as outfile:
+        yaml.safe_dump(prior, outfile)
+
+
+def load_prior(fn: str) -> dict[str, float]:
+    """Load a prior communicative need probability distribution over modal meaning points from a saved YAML file."""
+    with open(fn, "r") as stream:
+        d = yaml.safe_load(stream)
+    return d
+
+
+def prior_to_array(
+    prior: dict[str, float],
+    space: ModalMeaningSpace,
+) -> np.ndarray:
+    """Given a dict corresponding to a (possibly not normalized) prior distribution over meaning points, return the normalized numpy array.
+
+    Args:
+        prior: a dict representing the distribution over meaning points with
+            string keys = meaning point names,
+            float values = weights e.g. frequencies or probabilities.
+
+        space: the ModalMeaningSpace used for the experiment.
+    """
+    if set(prior.keys()) != set([point.name for point in space.referents]):
+        raise ValueError(
+            "The set of keys in of dict storing prior over meaning points must be identical to the set of meaning point names of the ModalMeaningSpace."
+        )
+
+    p = np.array([prior[point.name] for point in space.referents])
+
+    if np.any(p < 0):
+        raise ValueError(
+            "The prior probability distribution over meaning points may not be constructed with negative weights."
+        )
+
+    if np.sum(p) == 0:
+        raise ValueError(
+            "Th prior probability distribution over meaning points may not be constructed with all zero weights."
+        )
+
+    return p
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Expressions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

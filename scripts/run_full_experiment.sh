@@ -21,6 +21,8 @@ python3 src/sample_languages.py $CONFIG
 
 python3 src/add_natural_languages.py $CONFIG
 
+python3 src/extract_prior.py $CONFIG
+
 python3 src/estimate_pareto_frontier.py $CONFIG
 
 python3 src/measure_tradeoff.py $CONFIG

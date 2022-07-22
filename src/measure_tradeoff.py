@@ -6,7 +6,6 @@ from modals.modal_measures import language_complexity
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import iff, sav, dlsav
 from altk.effcomm.informativity import informativity
-from altk.effcomm.util import uniform_prior
 from altk.effcomm.tradeoff import tradeoff
 
 
@@ -23,10 +22,10 @@ def main():
 
     paths = configs["file_paths"]
     space_fn = paths["meaning_space"]
+    prior_fn = paths["prior"]
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
-    space = file_util.load_space(space_fn)
 
     file_util.set_seed(configs["random_seed"])
 
@@ -48,13 +47,16 @@ def main():
     print(f"{len(langs)} total langs.")
 
     # Load trade-off criteria
+    space = file_util.load_space(space_fn)
+    prior = file_util.load_prior(prior_fn)
+
     comp_measure = lambda lang: language_complexity(
         language=lang, mlot=ModalLOT(space, configs["language_of_thought"])
     )
 
     inf_measure = lambda lang: informativity(
         language=lang,
-        prior=uniform_prior(space),
+        prior=file_util.prior_to_array(prior, space),
         utility=file_util.load_utility(configs["utility"]),
         agent_type=configs["agent_type"],
     )
