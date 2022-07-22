@@ -123,7 +123,9 @@ def load_expressions(fn) -> list[ModalExpression]:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind="", verbose=True):
+def save_languages(
+    fn, languages: list[ModalLanguage], id_start: int, kind="", verbose=True
+):
     """Saves a list of modal languages to a .yml file.
 
     Args:
@@ -156,7 +158,7 @@ def save_languages(fn, languages: list[ModalLanguage], id_start: int, kind="", v
         kind = f" {kind} "
     else:
         kind == " "
-    
+
     duration = ""
     if verbose:
         duration = time.time() - start
@@ -187,10 +189,10 @@ def load_languages(fn: str, verbose=True) -> dict[str, Any]:
     languages = d["languages"]
     result = {
         "languages": [
-                    ModalLanguage.from_yaml_rep(name, data, space)
-                    for language in languages # a list of dicts
-                    for name, data in language.items() # a dict with one entry
-                ],
+            ModalLanguage.from_yaml_rep(name, data, space)
+            for language in languages  # a list of dicts
+            for name, data in language.items()  # a dict with one entry
+        ],
         "id_start": id_start,
     }
     duration = ""

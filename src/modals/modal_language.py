@@ -27,12 +27,8 @@ class ModalExpression(Expression):
         self.lot_expression = lot_expression
 
     def __hash__(self) -> int:
-        return (
-            hash(self.form)
-            + hash(self.meaning)
-            + hash(self.lot_expression)
-        )
-    
+        return hash(self.form) + hash(self.meaning) + hash(self.lot_expression)
+
     def __lt__(self, __o: object) -> bool:
         return self.form < __o.form
 
@@ -62,7 +58,7 @@ class ModalExpression(Expression):
             - rep: a dictionary of the form {'form': str, 'meaning': list[str], 'lot': str}
         """
         form = rep["form"]
-        points=[ModalMeaningPoint(name=name) for name in rep["meaning"]]
+        points = [ModalMeaningPoint(name=name) for name in rep["meaning"]]
         lot = rep["lot"]
 
         meaning = ModalMeaning(points, space)
@@ -84,25 +80,24 @@ class ModalLanguage(Language):
         c = language.complexity
     """
 
-    def __init__(
-        self, 
-        expressions: list[ModalExpression], 
-        name: str = None, 
-        data=None
-        ):
+    def __init__(self, expressions: list[ModalExpression], name: str = None, data=None):
         super().__init__(expressions)
-        self.data = {
-                "complexity": None, 
+        self.data = (
+            {
+                "complexity": None,
                 "simplicity": None,
                 "comm_cost": None,
-                "informativity": None, 
-                "optimality": None, 
-                "iff": None, 
+                "informativity": None,
+                "optimality": None,
+                "iff": None,
                 "sav": None,
                 "dlsav": None,
                 "name": name,
                 "Language": None,
-            } if data is None else data
+            }
+            if data is None
+            else data
+        )
 
         # data must be initialized first
         self.data["Language"] = "natural" if self.is_natural() else "artificial"
@@ -135,7 +130,7 @@ class ModalLanguage(Language):
     @property
     def expressions(self) -> list[ModalExpression]:
         return super().expressions
-    
+
     @expressions.setter
     def expressions(self, val) -> None:
         if not val:
@@ -161,7 +156,6 @@ class ModalLanguage(Language):
         # hash a tuple of the sorted list of LoT strings in a language
         return hash(tuple(sorted([e.lot_expression for e in self.expressions])))
 
-
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
 
@@ -171,8 +165,7 @@ class ModalLanguage(Language):
         A dict of the language name and its data. This data is itself a dict of a list of the expressions, and other data.
         """
         data = {
-            self.data["name"]:
-            {
+            self.data["name"]: {
                 "expressions": [e.yaml_rep() for e in self.expressions],
                 "data": self.data,
             },
@@ -243,16 +236,17 @@ def sav(e: ModalExpression) -> bool:
         return False
     return True
 
+
 def dlsav(language: ModalLanguage) -> bool:
     """Domain-Level Single Axis of Variability universal: modals may be ambiguous across force or flavor, within a single modal domain (root vs epistemic).
-    
-    There is one main case to check for, after checking that the SAV universal holds of all expressions. 
+
+    There is one main case to check for, after checking that the SAV universal holds of all expressions.
 
     Note: Epistemic modals never cause a violation.
-     - if modal is within the epistemic domain and satisfies sav, dlsav will not be violated (because there is only one flavor in this 'domain', and modals are allowed to span domains, e.g. English 'must'.)    
+     - if modal is within the epistemic domain and satisfies sav, dlsav will not be violated (because there is only one flavor in this 'domain', and modals are allowed to span domains, e.g. English 'must'.)
 
     Case to check for: there aren't both kinds of ambiguity within the root domain.
-    - if the modal is in the root domain, and is ambiguous along axis a, no other root modals may be ambiguous across axis b where a != b. 
+    - if the modal is in the root domain, and is ambiguous along axis a, no other root modals may be ambiguous across axis b where a != b.
     """
     row_ambigs = False
     col_ambigs = False
@@ -264,14 +258,14 @@ def dlsav(language: ModalLanguage) -> bool:
         # get meanings
         argw = np.argwhere(expression.meaning.to_array())
         # has more than a single meaning
-        if argw.size != 0 and len(argw) != 1: 
+        if argw.size != 0 and len(argw) != 1:
             # any meanings not the epistemic column
-            if np.any(argw[:,1]):
+            if np.any(argw[:, 1]):
                 # check all values same along first axis
-                if np.all(argw[:,0] == argw[0,0]):
+                if np.all(argw[:, 0] == argw[0, 0]):
                     row_ambigs = True
                 # check all values same along second axis
-                if np.all(argw[:,1] == argw[0,1]):
+                if np.all(argw[:, 1] == argw[0, 1]):
                     col_ambigs = True
 
     # if not both kinds of ambiguity / case 2 is true of entire language

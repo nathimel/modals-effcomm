@@ -1693,7 +1693,7 @@ status: not urgent
     I'd be surprised if I could get substantial improvement. Future work can explore more heavy-duty file IO tools.
 
 7.7.22: Results for pragmatic are suspiciously poor
-status: unresolved
+status: resolved
 
     (for sav, on patas)
     
@@ -1899,8 +1899,13 @@ status: unresolved
         I'm worried about whether we can improve sampling in a principled way for the pragmatic measure: why is the resulting sample, of optimizing all four corners of the space, giving such different result than if we merely change the informativity measure to give less reward (e.g. be more aggressive)
 
 7.16.22: Abstracted meaning point into a class instead of just storing strings as the elements of meanings.
+status: resolved
 
     Ran through dev after fixing a few easy bugs. If issues come up, the commit hash for this update is: 
         4e2b71d03368c0fb4832e9f04df237a1b03aeeb2
     with commit message:
         updated codebase with ModalMeaningPoint logic
+
+
+7.21.22: Updated altk for a refactor with signaling. Moved some functions from informativity to a util module. Also, a major change is that  now communicative_success takes a utility function, not a utility matrix. This will require small fixes here.
+status: unresolved
