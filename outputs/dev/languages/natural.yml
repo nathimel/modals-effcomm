@@ -16,7 +16,7 @@ languages:
       iff: 1.0
       informativity: 0.6666666666666667
       name: gitksan
-      optimality: 0.9836569101790837
+      optimality: 0.9717833673722222
       sav: 1.0
       simplicity: null
     expressions:
@@ -43,42 +43,39 @@ languages:
       meaning:
       - strong+circumstantial
       - strong+deontic
-- lillooet:
+- logoori:
     data:
       Language: natural
-      comm_cost: 0.4444444444444444
-      complexity: 14
+      comm_cost: 0.5925925925925926
+      complexity: 12
       dlsav: true
       iff: 1.0
-      informativity: 0.5555555555555556
-      name: lillooet
-      optimality: 0.9385112643984835
+      informativity: 0.40740740740740744
+      name: logoori
+      optimality: 0.9122149160923343
       sav: 1.0
       simplicity: null
     expressions:
-    - form: k'a
-      lot: (epistemic )
+    - form: kunyala
+      lot: (weak )
       meaning:
-      - strong+epistemic
       - weak+epistemic
-    - form: ka-...-a
-      lot: (circumstantial )
+      - weak+circumstantial
+      - weak+deontic
+    - form: haondi
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: fwana
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: kudoka
+      lot: (strong )
       meaning:
       - strong+circumstantial
-      - weak+circumstantial
-    - form: ka
-      lot: (deontic )
-      meaning:
+      - strong+epistemic
       - strong+deontic
-      - weak+deontic
-    - form: -an'
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
-    - form: -ku7
-      lot: (* (strong ) (epistemic ))
-      meaning:
-      - strong+epistemic
 - tlingit:
     data:
       Language: natural
@@ -88,7 +85,7 @@ languages:
       iff: 1.0
       informativity: 0.5
       name: tlingit
-      optimality: 0.8529128953673688
+      optimality: 0.8547799249059744
       sav: 1.0
       simplicity: null
     expressions:
@@ -112,36 +109,39 @@ languages:
       lot: (* (weak ) (circumstantial ))
       meaning:
       - weak+circumstantial
-- logoori:
+- lillooet:
     data:
       Language: natural
-      comm_cost: 0.5925925925925926
-      complexity: 12
+      comm_cost: 0.4444444444444444
+      complexity: 14
       dlsav: true
       iff: 1.0
-      informativity: 0.40740740740740744
-      name: logoori
-      optimality: 0.9233939564642992
+      informativity: 0.5555555555555556
+      name: lillooet
+      optimality: 0.9563967360571046
       sav: 1.0
       simplicity: null
     expressions:
-    - form: kunyala
-      lot: (weak )
+    - form: k'a
+      lot: (epistemic )
       meaning:
       - weak+epistemic
-      - weak+circumstantial
-      - weak+deontic
-    - form: haondi
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: fwana
-      lot: (* (weak ) (epistemic ))
-      meaning:
-      - weak+epistemic
-    - form: kudoka
-      lot: (strong )
+      - strong+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
       meaning:
       - strong+circumstantial
+      - weak+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - weak+deontic
       - strong+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
       - strong+epistemic
