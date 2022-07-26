@@ -1,15 +1,15 @@
-# An Efficient Communication Analysis of Modal Typology
+# Modal Semantic Universals Optimize the Simplicity/Informativeness Trade-off
 
 This code accompanies the following paper:
 
-> N. Imel and S. Steinert-Threlkeld, Modals in natural language optimize the simplicity/informativeness
+> N. Imel and S. Steinert-Threlkeld, Modal semantic universals optimize the simplicity/informativeness
 trade-off, in _Proceedings of Semantics and Linguistic Theory (SALT 32)_, 2022.
 
 The repo contains code for constructing artificial languages and measuring them for communicative efficiency. The codebase is organized around the following steps of the experiment.
 
 ## Setting up an experiment
 
-A single file specifies the parameters and filepaths for an experiment, e.g. `half_credit_literal.yml`. These will include:
+A single file specifies the parameters and filepaths for an experiment, e.g. `salt.yml`. These will include:
 
 - size of the semantic space to measure (number of quantificational forces and modal flavors).
 - vocabulary size for artificial modal languages
@@ -74,8 +74,8 @@ Analysis:
 │       ├── expressions.yml
 │       ├── languages
 │       │   ├── # generated languages
-│       │   ├── artificial.yml
-│       │   └── natural.yml
+│       │   ├── dominant.yml
+│       │   └── artificial.yml
 │       └── system_output.txt # progress of the experiment printed to stdout,
 ├── scripts
 │   └── run_full_experiment.sh # the main script to run
@@ -104,7 +104,7 @@ Get the required packages by running
 
 Additionally, this project requires [the artificial language toolkit (ALTK)](https://github.com/nathimel/altk). Install it via git with
 
-`python3 -m pip install git+https://github.com/nathimel/altk.git@e20657a122a54ff607344f6dc8c4f04a34a06bd0`
+`python3 -m pip install git+https://github.com/nathimel/altk.git@`
   
 ## Replicating the experimental results
 
@@ -123,8 +123,6 @@ This just runs the following python scripts, which can also be run individually:
 
 `python3 src/sample_languages.py path_to_config`
 
-`python3 src/add_natural_languages.py path_to_config`
-
 `python3 src/estimate_pareto_frontier.py path_to_config`
 
 `python3 src/measure_tradeoff.py path_to_config`
@@ -139,7 +137,7 @@ To cite this work, please use the following:
 ```
 @inproceedings{Imel2022,
   author    = {Imel, Nathaniel, and Shane Steinert-Threlkeld},
-  title     = {Modals in natural language optimize the simplicity/informativeness trade-off},
+  title     = {Modal semantic universals optimize the simplicity/informativeness trade-off},
   year      = {2022},
   booktitle = {Proceedings of Semantics and Linguistic Theory (SALT 32)},
 }
