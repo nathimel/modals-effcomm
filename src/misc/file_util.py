@@ -94,7 +94,9 @@ def save_expressions(fn, expressions: list[ModalExpression]):
     expressions = [
         {
             "form": e.form,
-            "meaning": [point.name for point in e.meaning.referents],
+            "meaning": sorted([ # sorted for consistency
+                point.name for point in e.meaning.referents]
+                ),
             "lot": e.lot_expression,
         }
         for e in expressions
