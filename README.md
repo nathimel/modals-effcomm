@@ -23,7 +23,7 @@ Generate a large and diverse sample of mathematically possible languages
 This is accomplished by the following steps:
 
 - Expression generating from the set of meanings
-- Sampling expresions into languages
+- Sampling expressions into languages
 - Use an evolutionary algorithm to estimate the optimal languages
 - Explore the space of possible languages using the same algorithm
 

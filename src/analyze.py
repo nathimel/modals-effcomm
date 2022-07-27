@@ -46,12 +46,12 @@ def get_modals_plot(
         # Set data and the axes
         pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
         + pn.scale_y_continuous(limits=[0, 1])
+        + pn.geom_line(size=1, alpha=0.5, data=pareto_smoothed)
         + pn.geom_point(  # all langs
             stroke=0,
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")

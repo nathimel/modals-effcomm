@@ -17,7 +17,7 @@ python3 src/build_meaning_space.py $CONFIG
 
 python3 src/generate_expressions.py $CONFIG
 
-python3 src/sample_languages.py $CONFIG
+# python3 src/sample_languages.py $CONFIG
 
 # python3 src/add_natural_languages.py $CONFIG # new since salt
 
