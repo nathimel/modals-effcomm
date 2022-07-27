@@ -102,9 +102,9 @@ Get the required packages by running
 
 `conda env create -f environment.yml`
 
-Additionally, this project requires [the artificial language toolkit (ALTK)](https://github.com/nathimel/altk). Install it via git with
+Additionally, this project [the artificial language toolkit (ALTK)](https://github.com/nathimel/altk). Install the correct version via git with
 
-`python3 -m pip install git+https://github.com/nathimel/altk.git@`
+`python3 -m pip install git+https://github.com/nathimel/altk.git@07bfeec0fff2b99641922832e64938f61f5a634e`
   
 ## Replicating the experimental results
 
