@@ -33,14 +33,10 @@ def main():
     artificial_langs_fn = configs["file_paths"]["artificial_languages"]
     dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
-    # Load sampling params
-    lang_size = configs["lang_size"]
-    sample_size = configs["sample_size"]    
-
     # Load optimization params
     evolutionary_alg_configs = configs["evolutionary_alg"]
     agent_type = configs["agent_type"]
-    gen_size = evolutionary_alg_configs["generation_size"]
+    sample_size = evolutionary_alg_configs["generation_size"]
     max_mutations = evolutionary_alg_configs["max_mutations"]
     generations = evolutionary_alg_configs["num_generations"]
     processes = evolutionary_alg_configs["num_processes"]
@@ -51,26 +47,12 @@ def main():
 
     # Create the first generation of languages
 
-    # result = file_util.load_languages(artificial_langs_fn)
-    # sampled_languages = result["languages"]
-    # id_start = result["id_start"]
-
-    expressions = file_util.load_expressions(expressions_fn)
-    universal_property = getattr(modal_language, configs["universal_property"])
-
-    print("Sampling random languages ...")
-    result = generate_languages(
-        language_class=ModalLanguage,
-        expressions=expressions,
-        lang_size=lang_size,
-        sample_size=sample_size,
-        criterion=universal_property,
-    )
+    result = file_util.load_languages(artificial_langs_fn)
     sampled_languages = result["languages"]
-    id_start = result["id_start"]    
+    id_start = result["id_start"]
 
     print("Sampling seed generation...")
-
+    expressions = file_util.load_expressions(expressions_fn)
     result = generate_languages(
         language_class=ModalLanguage,
         expressions=expressions,
