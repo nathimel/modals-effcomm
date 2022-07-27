@@ -27,7 +27,9 @@ class ModalExpression(Expression):
         self.lot_expression = lot_expression
 
     def __hash__(self) -> int:
-        return hash(self.form) + hash(self.meaning) + hash(self.lot_expression)
+        return hash(
+            tuple([hash(self.form), hash(self.meaning), hash(self.lot_expression)])
+        )
 
     def __lt__(self, __o: object) -> bool:
         return self.form < __o.form
@@ -143,18 +145,22 @@ class ModalLanguage(Language):
 
     def __hash__(self) -> int:
         """Return a unique hash for a ModalLanguage. Two languages are unique if they differ in their vocabulary only by the forms of each expression.
-
         Note that it is not sufficient to simply return
             `hash(tuple(sorted(self.expressions)))`
-
         Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa.
-
-        To this end, we treat two languages equal if they have expressions that differ only in forms. Specifically, we hash a tuple of the sorted list of LoT strings in a language.
-
-        Note that requiring a differnt name is also too strong a requirement, because it will not distinguish languages that may even be identical up to the forms of their expressions.
+        To this end, we treat two languages equal if:
+            (1) they have expressions that differ only in forms.
+            (2) they are both artificial, or both natural.
+        Specifically, we hash a tuple of the sorted list of LoT strings in a language.
+        Note that requiring a different name is also too strong a requirement, because it will not distinguish languages that may even be identical up to the forms of their expressions. But to prevent natural languages from being treated as equal to their artificial counterparts that differ only in expression forms, we also check they return the same value upon calling `is_natural`.
         """
         # hash a tuple of the sorted list of LoT strings in a language
-        return hash(tuple(sorted([e.lot_expression for e in self.expressions])))
+        expressions_hash = hash(
+            tuple(sorted([e.lot_expression for e in self.expressions]))
+        )
+        # hash the category of language (natural or artificial)
+        is_natural_hash = hash(self.is_natural())
+        return hash(tuple((expressions_hash, is_natural_hash)))
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
