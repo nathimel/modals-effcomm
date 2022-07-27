@@ -1,0 +1,53 @@
+Created folder outputs/salt/languages
+Created folder outputs/salt/analysis/correlations
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling random languages ...
+Saved 30710 sampled languages in 42.21 seconds
+done.
+Estimating pareto frontier ...
+Loaded 30710 languages in 82.19 seconds
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+Minimizing for informativity, complexity ...
+Minimizing for comm_cost, simplicity ...
+Minimizing for informativity, simplicity ...
+Discovered 1592252 languages.
+Saved 89063 explored languages in 119.38 seconds
+Saved 13 dominant languages in 0.01 seconds
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+Loaded 89063 languages in 241.15 seconds
+dominant...
+Loaded 13 languages in 0.02 seconds
+89063 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 89063 sampled languages in 117.62 seconds
+Saved 13 dominant languages in 0.01 seconds
+done.
+Loaded 89063 languages in 243.13 seconds
+Loaded 13 languages in 0.02 seconds
+Degree sav pearson correlations:
+simplicity: 0.30142591103639893
+informativity: 0.7463879149871642
+optimality: 0.5686700950253577
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+dlsav_means         0.643784       0.770290    0.878973
+population_means    0.536086       0.570675    0.740467
+
+TTEST STATS
+
+dlsav languages (4573) against population (89063)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         55.330813      82.042961  221.163328
+Two-sided p-value    0.000000       0.000000    0.000000
+
