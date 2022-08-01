@@ -126,6 +126,36 @@ class ModalMeaningSpace(Universe):
             for pair in np.argwhere(a)
         }
 
+    def prior_to_array(self,
+        prior: dict[str, float],
+    ) -> np.ndarray:
+        """Given a dict corresponding to a (possibly not normalized) prior distribution over meaning points, return the normalized numpy array.
+
+        Args:
+            prior: a dict representing the distribution over meaning points with
+                string keys = meaning point names,
+                float values = weights e.g. frequencies or probabilities.
+
+        """
+        if set(prior.keys()) != set([point.name for point in self.referents]):
+            raise ValueError(
+                "The set of keys in of dict storing prior over meaning points must be identical to the set of meaning point names of the ModalMeaningSpace."
+            )
+
+        p = np.array([prior[point.name] for point in self.referents])
+
+        if np.any(p < 0):
+            raise ValueError(
+                "The prior probability distribution over meaning points may not be constructed with negative weights."
+            )
+
+        if np.sum(p) == 0:
+            raise ValueError(
+                "Th prior probability distribution over meaning points may not be constructed with all zero weights."
+            )
+
+        return p
+
     def __str__(self):
         return str(self.arr)
 
@@ -168,7 +198,7 @@ class ModalMeaning(Meaning):
              [1 0 0]]
 
         Returns:
-            np.ndarray: the array representation of the points instantiated on the modal table of variation
+            np.ndarray: the array representation of the points instantiated on the modal table of variation, with array elements equal to 1 if the point can be expressed and 0 otherwise.
         """
         a = np.array(self.universe.arr)
         for point in self.referents:
