@@ -56,7 +56,7 @@ def main():
 
     inf_measure = lambda lang: informativity(
         language=lang,
-        prior=file_util.prior_to_array(prior, space),
+        prior=space.prior_to_array(prior),
         utility=file_util.load_utility(configs["utility"]),
         agent_type=configs["agent_type"],
     )
