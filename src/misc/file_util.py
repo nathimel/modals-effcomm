@@ -3,6 +3,7 @@ import random
 import time
 import yaml
 import numpy as np
+import pandas as pd
 from typing import Any, Callable
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language import ModalExpression, ModalLanguage
