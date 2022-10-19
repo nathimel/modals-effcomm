@@ -1,0 +1,73 @@
+Created folder outputs/half_credit_literal/languages
+Created folder outputs/half_credit_literal/analysis/correlations
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling random languages ...
+Saved 30710 sampled languages in 41.85 seconds
+done.
+Adding gitksan
+Adding javanese
+Adding lillooet
+Adding logoori
+Adding tlingit
+Saved 5 natural languages in 0.00 seconds
+Estimating prior...
+Loading dataframes...
+Parsing and tagging sentences...
+done.
+Estimating pareto frontier ...
+Loaded 30710 languages in 81.67 seconds
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+Minimizing for informativity, complexity ...
+Minimizing for comm_cost, simplicity ...
+Minimizing for informativity, simplicity ...
+Discovered 1592252 languages.
+Saved 117755 explored languages in 1094.19 seconds
+Saved 10 dominant languages in 0.02 seconds
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+Loaded 117755 languages in 321.38 seconds
+dominant...
+Loaded 10 languages in 0.01 seconds
+natural...
+Loaded 5 languages in 0.01 seconds
+117760 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 117760 sampled languages in 154.14 seconds
+Saved 11 dominant languages in 0.01 seconds
+Saved 5 natural languages in 0.01 seconds
+done.
+Loaded 117760 languages in 334.00 seconds
+Loaded 5 languages in 0.01 seconds
+Loaded 11 languages in 0.02 seconds
+Degree sav pearson correlations:
+simplicity: 0.35695435900129435
+informativity: 0.5499428605080611
+optimality: 0.5203894459670392
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.795000       0.743634    0.932832
+dlsav_means         0.637878       0.715881    0.848000
+population_means    0.520067       0.554665    0.716895
+
+TTEST STATS
+natural languages (5) against population (117765)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         13.746651       4.281035   11.379062
+Two-sided p-value    0.000162       0.012837    0.000340
+
+dlsav languages (6323) against population (117765)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         74.048474      61.853116  146.902259
+Two-sided p-value    0.000000       0.000000    0.000000
+

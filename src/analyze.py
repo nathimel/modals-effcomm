@@ -29,6 +29,9 @@ def get_modals_plot(
     """
     natural_data = data[data["Language"] == "natural"]
 
+    print("NATURAL DATA")
+    print(natural_data)
+
     # smooth pareto curve again
     pareto_df = pareto_data[["comm_cost", "complexity"]]
     pareto_points = pareto_df.to_records(index=False).tolist()
