@@ -13,7 +13,7 @@ def main():
     configs = load_configs(config_fn)
 
     for file_key in configs["file_paths"]:
-        if file_key != "data":
+        if file_key != "data" and file_key != "modality_corpus":
             if file_key == "analysis":
                 for file_key_ in configs["file_paths"][file_key]:
                     make_path(configs["file_paths"][file_key][file_key_])

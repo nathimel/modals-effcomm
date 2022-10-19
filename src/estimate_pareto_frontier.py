@@ -15,7 +15,6 @@ from modals.modal_mutations import (
     Interchange_Modal,
 )
 from altk.effcomm.informativity import informativity
-from altk.effcomm.util import uniform_prior
 
 
 def main():
@@ -29,6 +28,7 @@ def main():
     configs = file_util.load_configs(config_fn)
     expressions_fn = configs["file_paths"]["expressions"]
     space_fn = configs["file_paths"]["meaning_space"]
+    prior_fn = configs["file_paths"]["prior"]
     artificial_langs_fn = configs["file_paths"]["artificial_languages"]
     dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
@@ -64,6 +64,7 @@ def main():
 
     # construct measures of complexity and informativity as optimization objectives
     space = file_util.load_space(space_fn)
+    prior = file_util.load_prior(prior_fn)
 
     complexity_measure = lambda lang: language_complexity(
         language=lang,
@@ -72,7 +73,7 @@ def main():
 
     informativity_measure = lambda lang: informativity(
         language=lang,
-        prior=uniform_prior(space),
+        prior=space.prior_to_array(prior),
         utility=file_util.load_utility(configs["utility"]),
         agent_type=agent_type,
     )
