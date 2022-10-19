@@ -53,13 +53,13 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        # + pn.geom_point(  # The natural languages
-        #     natural_data,
-        #     color="red",
-        #     shape="+",
-        #     size=4,
-        # )
-        # + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
+        + pn.geom_point(  # The natural languages
+            natural_data,
+            color="red",
+            shape="+",
+            size=4,
+        )
+        + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
         + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
