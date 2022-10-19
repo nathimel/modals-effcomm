@@ -14,6 +14,7 @@ from misc.file_util import load_languages, load_configs, set_seed
 def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
+    natural_data: pd.DataFrame,
     naturalness: str,
     counts=False,
 ) -> pn.ggplot:
@@ -27,7 +28,6 @@ def get_modals_plot(
     Returns:
         plot: a plotnine 2D plot of the trade-off.
     """
-    natural_data = data[data["Language"] == "natural"]
 
     print("NATURAL DATA")
     print(natural_data)
@@ -134,7 +134,13 @@ def main():
     plot_data = plot_data.sort_values(by=subset)
     plot_data["counts"] = vcs.values
 
-    plot = get_modals_plot(plot_data, pareto_data, naturalness=naturalness, counts=True)
+    plot = get_modals_plot(
+        data=plot_data,
+        pareto_data=pareto_data,
+        natural_data=natural_data,
+        naturalness=naturalness,
+        counts=True,
+    )
     plot.save(plot_fn, width=10, height=10, dpi=300)
 
     ############################################################################
