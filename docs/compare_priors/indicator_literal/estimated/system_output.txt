@@ -1,0 +1,85 @@
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling random languages ...
+Saved 30710 sampled languages in 85.00 seconds
+done.
+Adding gitksan
+Adding javanese
+Adding lillooet
+Adding logoori
+Adding tlingit
+Saved 5 natural languages in 0.01 seconds
+Estimating prior...
+Loading dataframes...
+Parsing and tagging sentences...
+done.
+Estimating pareto frontier ...
+Loaded 30710 languages in 156.73 seconds
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+Minimizing for informativity, complexity ...
+Minimizing for comm_cost, simplicity ...
+Minimizing for informativity, simplicity ...
+Discovered 1592252 languages.
+Saved 86730 explored languages in 221.75 seconds
+Saved 13 dominant languages in 0.02 seconds
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+Loaded 86730 languages in 440.05 seconds
+dominant...
+Loaded 13 languages in 0.07 seconds
+natural...
+Loaded 5 languages in 0.03 seconds
+86735 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 86735 sampled languages in 236.26 seconds
+Saved 13 dominant languages in 0.02 seconds
+Saved 5 natural languages in 0.01 seconds
+done.
+Loaded 86735 languages in 433.21 seconds
+Loaded 5 languages in 0.02 seconds
+Loaded 13 languages in 0.03 seconds
+NATURAL DATA
+  Language  comm_cost  complexity  dlsav  iff  informativity      name  \
+0  natural   0.407496          16   True  1.0       0.592504   gitksan   
+1  natural   0.604917          12   True  1.0       0.395083   logoori   
+2  natural   0.465242          14   True  1.0       0.534758  lillooet   
+3  natural   0.400058          20   True  1.0       0.599942   tlingit   
+4  natural   0.285890          20   True  1.0       0.714110  javanese   
+
+   optimality  sav simplicity  
+0    0.929414  1.0       None  
+1    0.933894  1.0       None  
+2    0.937929  1.0       None  
+3    0.896863  1.0       None  
+4    0.928518  1.0       None  
+Degree sav pearson correlations:
+simplicity: 0.3392404628645037
+informativity: 0.683462301385998
+optimality: 0.5285163160789984
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.795000       0.567280    0.925324
+dlsav_means         0.647735       0.670336    0.866173
+population_means    0.542361       0.426694    0.735271
+
+TTEST STATS
+natural languages (5) against population (86740)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         12.631960       2.706288   25.992192
+Two-sided p-value    0.000226       0.053743    0.000013
+
+dlsav languages (5209) against population (86740)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         58.337891      78.180104  164.520794
+Two-sided p-value    0.000000       0.000000    0.000000
+
