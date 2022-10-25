@@ -88,7 +88,7 @@ def main():
     print("Constructing uniform prior")
     prior = generate_uniform(space)
 
-    if False: # TODO: move option for uniform/estimated to config file
+    if True: # TODO: move option for uniform/estimated to config file
 
         ##########################################################################
         # Load and parse corpus to extract auxiliaries
