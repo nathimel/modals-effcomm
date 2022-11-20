@@ -1,0 +1,96 @@
+# modals specific parameters
+num_forces: 2
+force_names:
+  - weak
+  - strong
+num_flavors: 3
+flavor_names:
+  - epistemic
+  - deontic
+  - circumstantial
+
+# measures
+utility: half_credit # half_credit or indicator
+agent_type: literal # literal or pragmatic
+language_of_thought:
+  negation: True
+universal_property: iff # iff or sav
+
+# other experiment parameters
+processes: 6
+random_seed: 42
+sample_size: 40000
+lang_size: 10
+evolutionary_alg:
+  generation_size: 2000
+  num_generations: 200
+  max_mutations: 5
+  num_processes: 6
+  maximum_lang_size: 10
+  explore: 0
+
+# outputs etc
+file_paths:
+  meaning_space: outputs/journal/dev/meaning_space.yml
+  expressions: outputs/journal/dev/expressions.yml
+  data:
+    csv: data/natural_languages/Language/modals.csv
+    languages:
+      - Donmari
+      - Gitksan
+      - Goemai
+      - Hebrew
+      - Hinuq
+      - Hup
+      - Jamul-Tipay
+      - Javanese-Paciran
+      - Kwaza
+      - Lillooet-Salish
+      - Logoori
+      - Mani
+      - Mian
+      - Nuosu
+      - Qiang
+      - Tlingit
+      - Tundra-Nenets
+      - Vaeakau-Taumako
+
+  prior: outputs/journal/dev/prior.yml
+  prior_df: outputs/journal/dev/prior_df.csv # meaning counts from corpus
+  modality_corpus: 
+    0:
+      dev: data/modality_corpus/0/dev.txt
+      train: data/modality_corpus/0/train.txt
+    1:
+      dev: data/modality_corpus/1/dev.txt
+      train: data/modality_corpus/1/train.txt
+    2:
+      dev: data/modality_corpus/2/dev.txt
+      train: data/modality_corpus/2/train.txt
+    3:
+      dev: data/modality_corpus/3/dev.txt
+      train: data/modality_corpus/3/train.txt
+    4:
+      dev: data/modality_corpus/4/dev.txt
+      train: data/modality_corpus/4/train.txt
+    test: 
+      test: data/modality_corpus/test/test.txt    
+  artificial_languages: outputs/journal/dev/languages/artificial.yml
+  natural_languages: outputs/journal/dev/languages/natural.yml
+  dominant_languages: outputs/journal/dev/languages/dominant.yml # Pareto
+  analysis:
+    correlations: outputs/journal/dev/analysis/correlations/property.csv # dummy property name
+    data: outputs/journal/dev/analysis/all_data.csv
+    pareto_data: outputs/journal/dev/analysis/pareto_data.csv
+    plot: outputs/journal/dev/analysis/plot.png
+    means: outputs/journal/dev/analysis/means.csv
+    ttest_natural: outputs/journal/dev/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/journal/dev/analysis/ttest_dlsav.csv
+
+# How to interpret the modal database can_express values as booleans
+can_express:
+  True:
+    - 1
+  False:
+    - "?" # the '?' must be enclosed in quotes
+    - 0

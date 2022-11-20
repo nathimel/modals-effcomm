@@ -1908,4 +1908,60 @@ status: resolved
 
 
 7.21.22: Updated altk for a refactor with signaling. Moved some functions from informativity to a util module. Also, a major change is that  now communicative_success takes a utility function, not a utility matrix. This will require small fixes here.
-status: unresolved
+status: resolved
+
+11.19.22: Finally refactoring the ugly `is_natural` code in `modal_language`, which also means that function needs to be removed in altk.
+status:
+
+Although the actually bug was motivated by losing natural languages after measure_tradeoff, it was nice to clean this up. The move was to go with a property, which updates the data dict of a language every time its set.
+
+The cause of losing natural languages during measure tradeoff was due to the list(set()) operation of uniquing languages. 
+
+However, I would have thought that two languages would have been considered unique even if they have all the same expressions, but one is natural and the other isn't. And if they're unique, then they won't get dropped by the set() operation.
+
+Interestingly, it could be a problem _within_ the natural languages, not between the naturals and artificials:
+
+        >>> len(nat_langs)
+        18
+        >>> len(set(nat_langs))
+        16
+
+I took a look at the languages which are marked equal:
+
+        >>> for eq in eqs:
+        ...     print(eq[0].data["name"], eq[1].data["name"])
+        ... 
+        Donmari Goemai
+        Goemai Donmari
+        Mian Vaeakau-Taumako
+        Vaeakau-Taumako Mian
+
+Looking at the languages, we see that Donmari and Goemai have the same modals: weak+deontic and strong+deontic. Meanwhile, we see that Mian and Vaeakau-Taumako have the same modals: strong+deontic and strong+deontic.
+
+
+Looks like I'll need to edit the hashing or equality function, and maybe encode that natural languages are always unique or something. A complex conditional hashing looks gerrymandered, but I think it describes exactly what we want, so it'll end up being the best move. So the new hashing function looks like:
+
+
+        if self.natural:
+            expressions_hash = hash(tuple(sorted([hash(e) for e in self.expressions])))
+        else:
+            # hash a tuple of the sorted list of LoT strings in a language
+            expressions_hash = hash(
+                tuple(sorted([e.lot_expression for e in self.expressions]))
+            )
+        return expressions_hash
+
+
+    And the resulting set operation on natural languages looks like:
+
+        >>> len(nat_langs)
+        18
+        >>> len(set(nat_langs))
+        18
+
+    While for artificials, we have
+
+        >>> len(dom_langs)
+        12
+        >>> len(set(dom_langs))
+        12    

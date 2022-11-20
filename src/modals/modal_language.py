@@ -202,6 +202,7 @@ class ModalLanguage(Language):
             self.data["name"]: {
                 "expressions": [e.yaml_rep() for e in self.expressions],
                 "data": self.data,
+                "length": self.__len__(), # just for easy inspection
             },
         }
         return data
