@@ -82,8 +82,15 @@ class ModalLanguage(Language):
         c = language.complexity
     """
 
-    def __init__(self, expressions: list[ModalExpression], name: str = None, data=None):
+    def __init__(
+        self, 
+        expressions: list[ModalExpression], 
+        name: str = None, 
+        data = None, 
+        natural = False,
+        ):
         super().__init__(expressions)
+        # Initialize / load all data
         self.data = (
             {
                 "complexity": None,
@@ -101,8 +108,26 @@ class ModalLanguage(Language):
             else data
         )
 
-        # data must be initialized first
-        self.data["Language"] = "natural" if self.is_natural() else "artificial"
+        # Preserve language type when loading from yaml
+        if (data is not None) and ("Language" in data) and (data["Language"] == "natural"):
+            self.natural = True
+        else:
+            self.natural = False
+
+        # TODO: do the same as above for `name`
+
+    """Whether a Modal Language represents a natural language constructed from typological data."""
+    @property
+    def natural(self) -> bool:
+        return self._natural
+    
+    @natural.setter
+    def natural(self, val) -> None:
+        if not isinstance(val, bool):
+            raise ValueError(f"the attribute `natural` must be set to a bool, received type {type(val)}.")
+        self._natural = val
+        # make sure data is consistent
+        self.data["Language"] = "natural" if self._natural else "artificial"
 
     def rename_synonyms(
         self, expressions: list[ModalExpression]
@@ -146,27 +171,24 @@ class ModalLanguage(Language):
     def __hash__(self) -> int:
         """Return a unique hash for a ModalLanguage. Two languages are unique if they differ in their vocabulary only by the forms of each expression.
 
-        Note that it is not sufficient to simply return
-            `hash(tuple(sorted(self.expressions)))`
-
-        Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa.
+        Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa. However, we need to make sure that all natural languages are distinct, even if they have exactly the same modal meanings, differing only in form. 
 
         To this end, we treat two languages equal if:
 
-            (1) they have expressions that differ only in forms.
-            (2) they are both artificial, or both natural.
+            (1) If they are artificial, then they differ only in forms.
+            (2) If they are natural, they must have exactly the same forms.
 
-        Specifically, we hash a tuple of the sorted list of LoT strings in a language.
-
-        Note that requiring a different name is also too strong a requirement, because it will not distinguish languages that may even be identical up to the forms of their expressions. But to prevent natural languages from being treated as equal to their artificial counterparts that differ only in expression forms, we also check they return the same value upon calling `is_natural`.
+        For the artificial langs, we hash a tuple of the sorted list of LoT strings in a language.
         """
-        # hash a tuple of the sorted list of LoT strings in a language
-        expressions_hash = hash(
-            tuple(sorted([e.lot_expression for e in self.expressions]))
-        )
-        # hash the category of language (natural or artificial)
-        is_natural_hash = hash(self.is_natural())
-        return hash(tuple((expressions_hash, is_natural_hash)))
+
+        if self.natural:
+            expressions_hash = hash(tuple(sorted([hash(e) for e in self.expressions])))
+        else:
+            # hash a tuple of the sorted list of LoT strings in a language
+            expressions_hash = hash(
+                tuple(sorted([e.lot_expression for e in self.expressions]))
+            )
+        return expressions_hash
 
     def __eq__(self, __o: object) -> bool:
         return hash(self) == hash(__o)
@@ -202,11 +224,6 @@ class ModalLanguage(Language):
         lang = cls(expressions, name=name, data=data)
 
         return lang
-
-    def is_natural(self) -> bool:
-        """Whether a Modal Language represents a natural language constructed from typological data."""
-        return not any([c for c in self.data["name"] if c.isdigit()])
-
 
 ##############################################################################
 # Functions

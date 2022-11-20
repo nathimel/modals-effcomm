@@ -44,9 +44,10 @@ def main():
     lang_save_fn = configs["file_paths"]["natural_languages"]
 
     # Load csv files
+    csv_path = configs["file_paths"]["data"]["csv"]
     dataframes = {
-        language_name: pd.read_csv(configs["file_paths"]["data"][language_name])
-        for language_name in configs["file_paths"]["data"]
+        language_name: pd.read_csv(csv_path.replace("Language", language_name))
+        for language_name in configs["file_paths"]["data"]["languages"]
     }
 
     # Load possible expressions and meaning space to map natural vocabularies into
@@ -90,7 +91,9 @@ def main():
                     )
                     experiment_vocabulary.append(experiment_modal)
                     break
-        experiment_languages.append(ModalLanguage(experiment_vocabulary, language_name))
+        lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name)
+        lang.natural = True
+        experiment_languages.append(lang)
 
     # save for analysis
     save_languages(lang_save_fn, experiment_languages, id_start=None, kind="natural")
