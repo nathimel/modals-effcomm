@@ -17,6 +17,7 @@ def get_modals_plot(
     natural_data: pd.DataFrame,
     naturalness: str,
     counts=False,
+    dlsav=False,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
@@ -24,6 +25,12 @@ def get_modals_plot(
         data: a DataFrame representing all the measurements of a tradeoff.
 
         pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff.
+
+        natural_data: a DataFrame representing the measurements of the natural languages.
+
+        counts: whether to add the counts of (complexity, comm_cost) as an aesthetic.
+
+        dlsav: whether to add the categorical DLSAV universal property as an aesthetic.
 
     Returns:
         plot: a plotnine 2D plot of the trade-off.
@@ -41,9 +48,12 @@ def get_modals_plot(
     # aesthetics for all data
     kwargs = {
         "color": naturalness,
-        "shape": "dlsav",
-        "size": "dlsav",
     }
+
+    if dlsav:
+        kwargs["shape"] = dlsav
+        kwargs["size"] = dlsav
+
     if counts:
         kwargs["size"] = "counts"
 
