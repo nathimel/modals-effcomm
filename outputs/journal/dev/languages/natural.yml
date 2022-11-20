@@ -1,0 +1,577 @@
+flavors:
+- epistemic
+- deontic
+- circumstantial
+forces:
+- weak
+- strong
+id_start: null
+languages:
+- Goemai:
+    data:
+      Language: natural
+      comm_cost: 0.7042172154823801
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.29578278451761986
+      name: Goemai
+      optimality: 0.9124532474001869
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "go\u0300e"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "n\u0300-"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    length: 2
+- Kwaza:
+    data:
+      Language: natural
+      comm_cost: 0.8175909878682842
+      complexity: 4
+      dlsav: true
+      iff: 1.0
+      informativity: 0.1824090121317158
+      name: Kwaza
+      optimality: 0.9180041316865332
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -tehere
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: -cehere
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    length: 2
+- Javanese-Paciran:
+    data:
+      Language: natural
+      comm_cost: 0.1429448295782786
+      complexity: 20
+      dlsav: true
+      iff: 1.0
+      informativity: 0.8570551704217214
+      name: Javanese-Paciran
+      optimality: 0.9441630441908696
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: oleh
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    length: 5
+- Tlingit:
+    data:
+      Language: natural
+      comm_cost: 0.3580300404390526
+      complexity: 28
+      dlsav: true
+      iff: 1.0
+      informativity: 0.6419699595609474
+      name: Tlingit
+      optimality: 0.8057149545065934
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "gw\xE1l"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: giwe
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: "sh\xE1kd\xE9"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: future mode
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: potential mode
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: prohibitive mode
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: "tl\xE9l aad\xE9  .... y\xE9"
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    length: 7
+- Donmari:
+    data:
+      Language: natural
+      comm_cost: 0.7042172154823801
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.29578278451761986
+      name: Donmari
+      optimality: 0.9124532474001869
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "xalli\u0304"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: "la\u0304zem"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 2
+- Qiang:
+    data:
+      Language: natural
+      comm_cost: 0.6471572308877335
+      complexity: 24
+      dlsav: true
+      iff: 1.0
+      informativity: 0.35284276911226653
+      name: Qiang
+      optimality: 0.7935995044442021
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "\u014Bu\u0259-\u0273i"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "\u014Bua-(\u0282\u0251)/\u014Bua-s\u0251n/\u014Bua-\u014Bua"
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: "t\u0255a-\u014Bu\u0325\u0259\u0325"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "\u0281u"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: se
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: "me-t\u0255hi"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    length: 6
+- Hebrew:
+    data:
+      Language: natural
+      comm_cost: 0.2569765389306117
+      complexity: 32
+      dlsav: false
+      iff: 0.875
+      informativity: 0.7430234610693883
+      name: Hebrew
+      optimality: 0.8147711211772302
+      sav: 0.875
+      simplicity: null
+    expressions:
+    - form: batuakh
+      lot: (* (strong ) (- (deontic )))
+      meaning:
+      - strong+circumstantial
+      - strong+epistemic
+    - form: khayav
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: tzarikh
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: oolay
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: yitakhen
+      lot: (+ (* (weak ) (epistemic )) (* (strong ) (circumstantial )))
+      meaning:
+      - weak+epistemic
+      - strong+circumstantial
+    - form: yakhol
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    - form: mesugelet
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: asur
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    length: 8
+- Gitksan:
+    data:
+      Language: natural
+      comm_cost: 0.20374783362218374
+      complexity: 16
+      dlsav: true
+      iff: 1.0
+      informativity: 0.7962521663778163
+      name: Gitksan
+      optimality: 0.9572002940067427
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "ima(\u2019a)"
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: gat
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: "da\u2019akhlxw"
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: anook(xw)
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: sgi
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    length: 5
+- Mani:
+    data:
+      Language: natural
+      comm_cost: 0.6419699595609474
+      complexity: 12
+      dlsav: true
+      iff: 1.0
+      informativity: 0.35803004043905257
+      name: Mani
+      optimality: 0.8944392530141478
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "l\u025B\u0300"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "l\u025B\u0300l\u025B\u0300"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: bi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    length: 3
+- Lillooet-Salish:
+    data:
+      Language: natural
+      comm_cost: 0.2326208357404197
+      complexity: 14
+      dlsav: true
+      iff: 1.0
+      informativity: 0.7673791642595803
+      name: Lillooet-Salish
+      optimality: 0.9542938533236127
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
+      meaning:
+      - strong+circumstantial
+      - weak+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    length: 5
+- Nuosu:
+    data:
+      Language: natural
+      comm_cost: 0.5652801848642404
+      complexity: 24
+      dlsav: true
+      iff: 1.0
+      informativity: 0.43471981513575964
+      name: Nuosu
+      optimality: 0.8085314888137838
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: ddie ddur
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: tat xi
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: ssox/ ddip ssox
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: get
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: hxit
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dop
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    length: 6
+- Hinuq:
+    data:
+      Language: natural
+      comm_cost: 0.8610629693818602
+      complexity: 4
+      dlsav: true
+      iff: 1.0
+      informativity: 0.1389370306181398
+      name: Hinuq
+      optimality: 0.9074069796929031
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -ese-/-es-
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    length: 1
+- Jamul-Tipay:
+    data:
+      Language: natural
+      comm_cost: 0.6419699595609474
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.35803004043905257
+      name: Jamul-Tipay
+      optimality: 0.9276272341359107
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -wash
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: -kex
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    length: 2
+- Mian:
+    data:
+      Language: natural
+      comm_cost: 0.7462449451184286
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.25375505488157135
+      name: Mian
+      optimality: 0.902208153501632
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -aam
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: -Vm
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 2
+- Hup:
+    data:
+      Language: natural
+      comm_cost: 0.8060129019834392
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.19398709801656078
+      name: Hup
+      optimality: 0.8876385534420651
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "\u0294u\u0303\u0301h"
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: "\u0294u\u0303\u0301hni\u0301y"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: "=cud\u0294u\u0303\u0301h"
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    length: 3
+- Vaeakau-Taumako:
+    data:
+      Language: natural
+      comm_cost: 0.7462449451184286
+      complexity: 8
+      dlsav: true
+      iff: 1.0
+      informativity: 0.25375505488157135
+      name: Vaeakau-Taumako
+      optimality: 0.902208153501632
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: =a
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: me
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 2
+- Tundra-Nenets:
+    data:
+      Language: natural
+      comm_cost: 0.512552955902176
+      complexity: 30
+      dlsav: true
+      iff: 1.0
+      informativity: 0.487447044097824
+      name: Tundra-Nenets
+      optimality: 0.761298281380868
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -ya
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: -pc(')u
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: "-pc(')aqi\u0259"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: -wed (various form depending on person)
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "-wan\u014Bk\u0259'ba"
+      lot: (epistemic )
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: "-n(')aqxi\u0259/-me\u0259qxi\u0259"
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "-n(')ar\u0259x\u0259/-r\u0259xa"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: -wnta
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 8
+- Logoori:
+    data:
+      Language: natural
+      comm_cost: 0.30245843764041336
+      complexity: 12
+      dlsav: true
+      iff: 1.0
+      informativity: 0.6975415623595866
+      name: Logoori
+      optimality: 0.950755276981988
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: kunyala
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+    - form: haondi
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: fwana
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: kudoka
+      lot: (strong )
+      meaning:
+      - strong+circumstantial
+      - strong+epistemic
+      - strong+deontic
+    length: 4

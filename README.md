@@ -18,24 +18,34 @@ A single file specifies the parameters and filepaths for an experiment, e.g. `ha
 
 ## Sampling languages
 
-Generate a large and diverse sample of mathematically possible languages
+Generate a large and diverse sample of mathematically possible languages.
 
-This is accomplished by the following steps:
+This is accomplished by the scripts `generate_expressions.py` `sample_languages.py` and `estimate_pareto_frontier.py`, which perform the following steps:
 
 - Expression generating from the set of meanings
 - Sampling expresions into languages
 - Use an evolutionary algorithm to estimate the optimal languages
 - Explore the space of possible languages using the same algorithm
 
-A separate step is adding natural language data:
+## Adding natural languages
 
-- Load data obtained from [A Database of Modal Typology](https://github.com/CLMBRs/modal-typology).
+To add the natural language modal inventories to measure in an experiment, we use the `add_natural_languages.py` script to:
+
+- Load data obtained from [A Database of Modal Typology](https://github.com/CLMBRs/modal-typology), stored in this repo under [data/natural_languages](data/natural_languages/).
 - Convert each natural language into the appropriate experiment data structure
+
+## Estimating the communicative need distribution
+
+To estimate the prior probability of a (force, flavor) meaning point, we obtain relative frequency statistics using the [Modality Corpus](https://github.com/OnlpLab/Modality-Corpus). Run the script `extract_prior.py` to:
+
+- Load the data annotated for modal flavors, stored in this repo under [data/modality_corpus](data/modality_corpus/).
+- Run each sentence through a parser to exract the verbal auxiliaries.
+- Automatically annotate the modals for force
+- Count the occurrences of the (force, flavor) pairs used in the experiment's meaning space.
 
 ## Analyzing the simplicity/informativeness trade-off
 
-Next, we analyze the resulting sample for the relationship between efficiency and naturalness.
-The notion of naturalness we use tracks closeness of languages to actual modal typological facts by measuring the proportion of a language satisfying a modal semantic universal.
+Finally, analyze the resulting pool of languages for the relationship between efficiency and naturalness. We directly measure natural languages for their efficiency, and the hypothetical languages for their efficiency and satisfaction with semantic universals (e.g. IFF, SAV, DLSAV).
   
 Measuring of languages:
 
@@ -129,6 +139,8 @@ This just runs the following python scripts, which can also be run individually:
 `python3 src/sample_languages.py path_to_config`
 
 `python3 src/add_natural_languages.py path_to_config`
+
+`python3 src/extract_prior.py path_to_config`
 
 `python3 src/estimate_pareto_frontier.py path_to_config`
 
