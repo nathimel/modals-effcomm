@@ -1,0 +1,99 @@
+# modals specific parameters
+num_forces: 2
+force_names:
+  - nonnecessity
+  - impossibility 
+num_flavors: 4
+flavor_names:
+  - epistemic
+  - deontic
+  - circumstantial
+  - teleological
+
+prior_type: uniform # estimated or uniform
+
+# measures
+utility: half_credit # half_credit or indicator ... or load from file?
+agent_type: literal # literal or pragmatic
+language_of_thought:
+  negation: True
+universal_property: iff # iff or sav # but not uegaki or dlsav
+
+# other experiment parameters
+processes: 6
+random_seed: 42
+sample_size: 40000
+lang_size: 10
+evolutionary_alg:
+  generation_size: 2000
+  num_generations: 200
+  max_mutations: 5
+  num_processes: 6
+  maximum_lang_size: 10
+  explore: 0
+
+# outputs etc
+file_paths:
+  meaning_space: outputs/cogsci/dev_large/meaning_space.yml
+  expressions: outputs/cogsci/dev_large/expressions.yml
+  data:
+    csv: data/natural_languages/Language/modals.csv
+    languages:
+      # - Donmari
+      # - Gitksan
+      # - Goemai
+      # - Hebrew
+      # - Hinuq
+      # - Hup
+      # - Jamul-Tipay
+      # - Javanese-Paciran
+      # - Kwaza
+      # - Lillooet-Salish
+      # - Logoori
+      # - Mani
+      # - Mian
+      # - Nuosu
+      # - Qiang
+      # - Tlingit
+      # - Tundra-Nenets
+      # - Vaeakau-Taumako
+
+  prior: outputs/cogsci/dev_large/prior_skewed.yml
+  prior_df: outputs/cogsci/dev_large/prior_df.csv # meaning counts from corpus  
+  modality_corpus: 
+    0:
+      dev: data/modality_corpus/0/dev.txt
+      train: data/modality_corpus/0/train.txt
+    1:
+      dev: data/modality_corpus/1/dev.txt
+      train: data/modality_corpus/1/train.txt
+    2:
+      dev: data/modality_corpus/2/dev.txt
+      train: data/modality_corpus/2/train.txt
+    3:
+      dev: data/modality_corpus/3/dev.txt
+      train: data/modality_corpus/3/train.txt
+    4:
+      dev: data/modality_corpus/4/dev.txt
+      train: data/modality_corpus/4/train.txt
+    test: 
+      test: data/modality_corpus/test/test.txt  
+  artificial_languages: outputs/cogsci/dev_large/languages/artificial.yml
+  natural_languages: outputs/cogsci/dev_large/languages/natural.yml
+  dominant_languages: outputs/cogsci/dev_large/languages/dominant.yml # Pareto
+  analysis:
+    correlations: outputs/cogsci/dev_large/analysis/correlations/property.csv # dummy property name
+    data: outputs/cogsci/dev_large/analysis/all_data.csv
+    pareto_data: outputs/cogsci/dev_large/analysis/pareto_data.csv
+    plot: outputs/cogsci/dev_large/analysis/plot.png
+    means: outputs/cogsci/dev_large/analysis/means.csv
+    ttest_natural: outputs/cogsci/dev_large/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/cogsci/dev_large/analysis/ttest_dlsav.csv
+
+# How to interpret the modal database can_express values as booleans
+can_express:
+  True:
+    - 1
+  False:
+    - "?" # the '?' must be enclosed in quotes
+    - 0

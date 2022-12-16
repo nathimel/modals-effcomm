@@ -76,7 +76,6 @@ def main():
         print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file")
         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
-    print("Estimating prior...")
 
     config_fn = sys.argv[1]
     configs = file_util.load_configs(config_fn)
@@ -84,15 +83,17 @@ def main():
     prior_df_fn = configs["file_paths"]["prior_df"]
     space = file_util.load_space(configs["file_paths"]["meaning_space"])
     modality_corpus = configs["file_paths"]["modality_corpus"]
+    prior_type = configs["prior_type"]
 
-    print("Constructing uniform prior")
-    prior = generate_uniform(space)
+    # N.B. prior is stored as YAML readable, e.g. points are strings of the form "force+flavor"
 
-    if True: # TODO: move option for uniform/estimated to config file
+    if prior_type == "estimated":
 
-        ##########################################################################
+        print("Estimating prior...")
+
+        ########################################################################
         # Load and parse corpus to extract auxiliaries
-        ##########################################################################
+        ########################################################################
 
         print("Loading dataframes...")
         # list of filenames of each dataset used
@@ -131,9 +132,9 @@ def main():
         # lowercase all auxiliaries to collapse e.g, Can and can
         df_aux["token"] = df_aux["token"].str.lower()
 
-        ##########################################################################
+        ########################################################################
         # Estimate relative frequencies of flavors
-        ##########################################################################
+        ########################################################################
 
         # replace gold_modal annotations with our flavors
         for label in labels_to_flavors:
@@ -177,14 +178,19 @@ def main():
         # convert counts to relative frequencies
         prior = {point: point_counts[point] / total for point in point_counts}
 
+        # save dataframe of counts
+        df_points.to_csv(prior_df_fn, index=False)
+
+    elif prior_type == "uniform":
+        print("Constructing uniform prior")
+        prior = generate_uniform(space)
+
     ##########################################################################
     # Save results
     ##########################################################################
 
     # save prior for experiment
     file_util.save_prior(prior_fn, prior)
-    # save dataframe of counts
-    df_points.to_csv(prior_df_fn, index=False)
 
     print("done.")
 

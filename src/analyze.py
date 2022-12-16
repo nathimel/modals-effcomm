@@ -15,7 +15,7 @@ def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
     natural_data: pd.DataFrame,
-    naturalness: str,
+    naturalness: str = "iff",
     counts=False,
     dlsav=False,
 ) -> pn.ggplot:
@@ -27,6 +27,8 @@ def get_modals_plot(
         pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff.
 
         natural_data: a DataFrame representing the measurements of the natural languages.
+
+        naturalness: iff, sav
 
         counts: whether to add the counts of (complexity, comm_cost) as an aesthetic.
 
@@ -51,8 +53,8 @@ def get_modals_plot(
     }
 
     if dlsav:
-        kwargs["shape"] = dlsav
-        kwargs["size"] = dlsav
+        kwargs["shape"] = "dlsav"
+        kwargs["size"] = "dlsav"
 
     if counts:
         kwargs["size"] = "counts"
@@ -131,7 +133,10 @@ def main():
 
     data = get_dataframe(langs, **kwargs)
     pareto_data = get_dataframe(dom_langs, **kwargs)
-    natural_data = get_dataframe(nat_langs, **kwargs)
+    if nat_langs:
+        natural_data = get_dataframe(nat_langs, **kwargs)
+    else:
+        natural_data = pd.DataFrame(data={}, columns=data.columns)
     data = data.append(natural_data)
 
     # Plot

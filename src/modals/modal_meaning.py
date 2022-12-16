@@ -6,8 +6,19 @@ from altk.language.semantics import Universe, Meaning, Referent
 
 
 class ModalMeaningPoint(Referent):
-    def __init__(self, name: str, weight: float = None) -> None:
-        super().__init__(name, weight)
+    # def __init__(self, name: str, weight: float = None) -> None:
+    def __init__(self, force: str, flavor: str) -> None:
+        self.data = (force, flavor)
+        super().__init__(self.name)
+
+    @property
+    def data(self) -> tuple[str]:
+        return self._data
+    
+    @data.setter
+    def data(self, pair: tuple[str]):
+        self._data = pair
+        self.name = f"{pair[0]}+{pair[1]}"
 
     def __str__(self) -> str:
         return self.name
@@ -18,6 +29,15 @@ class ModalMeaningPoint(Referent):
     def __eq__(self, __o: object) -> bool:
         return self.name == __o.name
 
+    @classmethod
+    def from_yaml_rep(cls, name: str):
+        """Takes a yaml representation and returns the corresponding ModalMeaningPoint
+
+        Args:
+            name: the string representation of the force, flavor pair of the form "force+flavor".
+        """
+        force, flavor = name.split("+")
+        return cls(force=force, flavor=flavor)
 
 class ModalMeaningSpace(Universe):
     """Represents the set of possible modal (force, flavor) pairs.
@@ -50,7 +70,8 @@ class ModalMeaningSpace(Universe):
         # construct a universe with cartesian product
         super().__init__(
             referents={
-                ModalMeaningPoint(name=f"{force}+{flavor}")
+                # ModalMeaningPoint(name=f"{force}+{flavor}")
+                ModalMeaningPoint(force=force, flavor=flavor)
                 for force in forces
                 for flavor in flavors
             }
@@ -121,8 +142,12 @@ class ModalMeaningSpace(Universe):
                 f"The size of the numpy array must match the size of the modal meaning space. a.shape={a.shape}, self.forces={len(self.forces)}, self.flavors={len(self.flavors)}"
             )
 
+        # return {
+        #     ModalMeaningPoint(name=f"{self.forces[pair[0]]}+{self.flavors[pair[1]]}")
+        #     for pair in np.argwhere(a)
+        # }
         return {
-            ModalMeaningPoint(name=f"{self.forces[pair[0]]}+{self.flavors[pair[1]]}")
+            ModalMeaningPoint(force=self.forces[pair[0]], flavor=self.flavors[pair[1]])
             for pair in np.argwhere(a)
         }
 
@@ -137,22 +162,29 @@ class ModalMeaningSpace(Universe):
                 float values = weights e.g. frequencies or probabilities.
 
         """
-        if set(prior.keys()) != set([point.name for point in self.referents]):
+        keys = set(prior.keys())
+        points = set([point.data for point in self.referents])
+        if keys != points:
             raise ValueError(
-                "The set of keys in of dict storing prior over meaning points must be identical to the set of meaning point names of the ModalMeaningSpace."
+                f"The set of keys in of dict storing prior over meaning points must be identical to the set of meaning points of the ModalMeaningSpace. keys={prior.keys()}, meaningspace={points}"
             )
 
-        p = np.array([prior[point.name] for point in self.referents])
+        p = np.array([float(prior[point.data]) for point in self.referents])
 
         if np.any(p < 0):
             raise ValueError(
                 "The prior probability distribution over meaning points may not be constructed with negative weights."
             )
-
+        
         if np.sum(p) == 0:
             raise ValueError(
                 "Th prior probability distribution over meaning points may not be constructed with all zero weights."
             )
+        
+        # normalize if necessary
+        if np.sum(p) != 1:
+            print("Normalizing prior to a probability distribution.")
+            p /= p.sum()
 
         return p
 
@@ -163,11 +195,12 @@ class ModalMeaningSpace(Universe):
         return hash((tuple(self.forces), tuple(self.flavors)))
 
 
+# TODO: let the internal data be literally a list of TUPLES, i.e. meaning points, not strings. You can keep the strings for readability as names, and let the internal data be a property so that the name 'force+flavor' changes dynamically with changes to the data.
 class ModalMeaning(Meaning):
     """ "A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
 
     Attributes:
-        objects: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
+        points: the (force,flavor) pairs a modal can be used to express. Each point is a string, 'force+flavor'.
 
     Example usage:
 
@@ -202,7 +235,8 @@ class ModalMeaning(Meaning):
         """
         a = np.array(self.universe.arr)
         for point in self.referents:
-            force, flavor = point.name.split("+")
+            # force, flavor = point.name.split("+")
+            force, flavor = point.data
             indices = (
                 self.universe.force_to_index(force),
                 self.universe.flavor_to_index(flavor),
@@ -234,7 +268,7 @@ class ModalMeaning(Meaning):
         return str(self.referents)
 
     def __hash__(self) -> int:
-        return hash(tuple(sorted([point.name for point in self.referents])))
+        return hash(tuple(sorted([point.data for point in self.referents])))
 
     def __eq__(self, __o: object) -> bool:
         return set(self.referents) == set(__o.referents)

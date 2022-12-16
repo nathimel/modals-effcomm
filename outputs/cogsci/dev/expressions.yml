@@ -1,0 +1,1928 @@
+expressions:
+- form: dummy_form_0
+  lot: (* (impossibility ) (teleological ))
+  meaning:
+  - impossibility+teleological
+- form: dummy_form_1
+  lot: (* (impossibility ) (circumstantial ))
+  meaning:
+  - impossibility+circumstantial
+- form: dummy_form_2
+  lot: (* (impossibility ) (+ (circumstantial ) (teleological )))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_3
+  lot: (* (impossibility ) (deontic ))
+  meaning:
+  - impossibility+deontic
+- form: dummy_form_4
+  lot: (* (impossibility ) (+ (deontic ) (teleological )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+- form: dummy_form_5
+  lot: (* (impossibility ) (+ (deontic ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_6
+  lot: (* (impossibility ) (- (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_7
+  lot: (* (impossibility ) (epistemic ))
+  meaning:
+  - impossibility+epistemic
+- form: dummy_form_8
+  lot: (* (impossibility ) (+ (epistemic ) (teleological )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+- form: dummy_form_9
+  lot: (* (impossibility ) (+ (epistemic ) (circumstantial )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_10
+  lot: (* (impossibility ) (- (deontic )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_11
+  lot: (* (impossibility ) (+ (epistemic ) (deontic )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+- form: dummy_form_12
+  lot: (* (impossibility ) (- (circumstantial )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - impossibility+teleological
+- form: dummy_form_13
+  lot: (* (impossibility ) (- (teleological )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_14
+  lot: (impossibility )
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_15
+  lot: (* (nonnecessity ) (teleological ))
+  meaning:
+  - nonnecessity+teleological
+- form: dummy_form_16
+  lot: (teleological )
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_17
+  lot: "(+\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+- form: dummy_form_18
+  lot: (+ (teleological ) (* (impossibility ) (circumstantial )))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_19
+  lot: "(+\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility ) (deontic\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+- form: dummy_form_20
+  lot: (+ (teleological ) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_21
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+circumstantial
+- form: dummy_form_22
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (teleological\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - impossibility+circumstantial
+- form: dummy_form_23
+  lot: "(+\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+- form: dummy_form_24
+  lot: (+ (teleological ) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_25
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+- form: dummy_form_26
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (teleological\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_27
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (deontic )))\n  (* (nonnecessity\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+teleological
+- form: dummy_form_28
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (teleological\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_29
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (teleological\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+circumstantial
+- form: dummy_form_30
+  lot: (- (* (nonnecessity ) (- (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+- form: dummy_form_31
+  lot: (* (nonnecessity ) (circumstantial ))
+  meaning:
+  - nonnecessity+circumstantial
+- form: dummy_form_32
+  lot: "(+\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_33
+  lot: (circumstantial )
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_34
+  lot: (+ (circumstantial ) (* (impossibility ) (teleological )))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_35
+  lot: "(+\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility ) (deontic\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_36
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (circumstantial )))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_37
+  lot: (+ (circumstantial ) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_38
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_39
+  lot: "(+\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+- form: dummy_form_40
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (circumstantial )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_41
+  lot: (+ (circumstantial ) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_42
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_43
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (deontic )))\n  (* (nonnecessity\
+    \ ) (circumstantial )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_44
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_45
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_46
+  lot: (- (* (nonnecessity ) (- (circumstantial ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+- form: dummy_form_47
+  lot: (* (nonnecessity ) (+ (circumstantial ) (teleological )))
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_48
+  lot: (+ (teleological ) (* (nonnecessity ) (circumstantial )))
+  meaning:
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_49
+  lot: (+ (circumstantial ) (* (nonnecessity ) (teleological )))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_50
+  lot: (+ (teleological ) (circumstantial ))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_51
+  lot: "(+\n  (* (nonnecessity ) (+ (circumstantial ) (teleological )))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_52
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_53
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_54
+  lot: (- (+ (epistemic ) (* (nonnecessity ) (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+- form: dummy_form_55
+  lot: "(+\n  (* (nonnecessity ) (+ (circumstantial ) (teleological )))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_56
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_57
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_58
+  lot: (- (+ (deontic ) (* (nonnecessity ) (epistemic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_59
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (deontic )))\n  (* (nonnecessity\
+    \ ) (+ (circumstantial ) (teleological ))))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_60
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (+\
+    \ (circumstantial ) (teleological ))))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+- form: dummy_form_61
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (+ (circumstantial\
+    \ ) (teleological ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+- form: dummy_form_62
+  lot: (- (* (nonnecessity ) (+ (epistemic ) (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - impossibility+deontic
+- form: dummy_form_63
+  lot: (* (nonnecessity ) (deontic ))
+  meaning:
+  - nonnecessity+deontic
+- form: dummy_form_64
+  lot: "(+\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_65
+  lot: "(+\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_66
+  lot: "(+\n  (* (impossibility ) (+ (circumstantial ) (teleological )))\n  (* (nonnecessity\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_67
+  lot: (deontic )
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_68
+  lot: (+ (deontic ) (* (impossibility ) (teleological )))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_69
+  lot: (+ (deontic ) (* (impossibility ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_70
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (deontic\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - impossibility+teleological
+  - impossibility+circumstantial
+- form: dummy_form_71
+  lot: (+ (* (nonnecessity ) (deontic )) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_72
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_73
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_74
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (deontic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_75
+  lot: (+ (deontic ) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_76
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (deontic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_77
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (deontic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_78
+  lot: (- (* (nonnecessity ) (- (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_79
+  lot: (* (nonnecessity ) (+ (deontic ) (teleological )))
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+- form: dummy_form_80
+  lot: (+ (teleological ) (* (nonnecessity ) (deontic )))
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_81
+  lot: "(+\n  (* (nonnecessity ) (+ (deontic ) (teleological )))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_82
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+teleological
+  - impossibility+circumstantial
+- form: dummy_form_83
+  lot: (+ (deontic ) (* (nonnecessity ) (teleological )))
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_84
+  lot: (+ (teleological ) (deontic ))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_85
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_86
+  lot: (- (+ (epistemic ) (* (nonnecessity ) (circumstantial ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_87
+  lot: "(+\n  (* (nonnecessity ) (+ (deontic ) (teleological )))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+- form: dummy_form_88
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_89
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (+ (deontic ) (teleological ))))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_90
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (+ (deontic\
+    \ ) (teleological ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+deontic
+- form: dummy_form_91
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_92
+  lot: (- (+ (circumstantial ) (* (nonnecessity ) (epistemic ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_93
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (+ (deontic\
+    \ ) (teleological ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_94
+  lot: (- (* (nonnecessity ) (+ (epistemic ) (circumstantial ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_95
+  lot: (* (nonnecessity ) (+ (deontic ) (circumstantial )))
+  meaning:
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_96
+  lot: "(+\n  (* (nonnecessity ) (+ (deontic ) (circumstantial )))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_97
+  lot: (+ (circumstantial ) (* (nonnecessity ) (deontic )))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_98
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_99
+  lot: (+ (deontic ) (* (nonnecessity ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_100
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_101
+  lot: (+ (circumstantial ) (deontic ))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_102
+  lot: (- (+ (epistemic ) (* (nonnecessity ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_103
+  lot: "(+\n  (* (nonnecessity ) (+ (deontic ) (circumstantial )))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_104
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (+ (deontic ) (circumstantial ))))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_105
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_106
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (+ (deontic\
+    \ ) (circumstantial ))))"
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_107
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (epistemic )))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_108
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (+\
+    \ (deontic ) (circumstantial ))))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_109
+  lot: (- (+ (teleological ) (* (nonnecessity ) (epistemic ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_110
+  lot: (- (* (nonnecessity ) (+ (epistemic ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_111
+  lot: (* (nonnecessity ) (- (epistemic )))
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_112
+  lot: "(+\n  (* (nonnecessity ) (- (epistemic )))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_113
+  lot: "(+\n  (* (nonnecessity ) (- (epistemic )))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_114
+  lot: (- (+ (epistemic ) (* (impossibility ) (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_115
+  lot: "(+\n  (* (nonnecessity ) (- (epistemic )))\n  (* (impossibility ) (deontic\
+    \ )))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_116
+  lot: (- (+ (epistemic ) (* (impossibility ) (circumstantial ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_117
+  lot: (- (+ (epistemic ) (* (impossibility ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_118
+  lot: (- (epistemic ))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_119
+  lot: "(+\n  (* (nonnecessity ) (- (epistemic )))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_120
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (epistemic ))))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_121
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (- (epistemic ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+deontic
+- form: dummy_form_122
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (- (epistemic\
+    \ ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+deontic
+- form: dummy_form_123
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (deontic )))\n  (* (nonnecessity\
+    \ ) (- (epistemic ))))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_124
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (-\
+    \ (epistemic ))))"
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_125
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (- (epistemic\
+    \ ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_126
+  lot: (- (* (nonnecessity ) (epistemic )))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - impossibility+deontic
+  - nonnecessity+deontic
+- form: dummy_form_127
+  lot: (* (nonnecessity ) (epistemic ))
+  meaning:
+  - nonnecessity+epistemic
+- form: dummy_form_128
+  lot: "(+\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+- form: dummy_form_129
+  lot: "(+\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_130
+  lot: "(+\n  (* (impossibility ) (+ (circumstantial ) (teleological )))\n  (* (nonnecessity\
+    \ ) (epistemic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_131
+  lot: (+ (* (nonnecessity ) (epistemic )) (* (impossibility ) (deontic )))
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+- form: dummy_form_132
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (epistemic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+- form: dummy_form_133
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (epistemic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - impossibility+deontic
+- form: dummy_form_134
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (epistemic\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - impossibility+circumstantial
+  - impossibility+deontic
+- form: dummy_form_135
+  lot: (epistemic )
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+- form: dummy_form_136
+  lot: (+ (epistemic ) (* (impossibility ) (teleological )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+teleological
+- form: dummy_form_137
+  lot: (+ (epistemic ) (* (impossibility ) (circumstantial )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_138
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - impossibility+teleological
+- form: dummy_form_139
+  lot: (+ (epistemic ) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+deontic
+- form: dummy_form_140
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - impossibility+deontic
+- form: dummy_form_141
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - impossibility+deontic
+- form: dummy_form_142
+  lot: (- (* (nonnecessity ) (- (epistemic ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_143
+  lot: (* (nonnecessity ) (+ (epistemic ) (teleological )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+- form: dummy_form_144
+  lot: (+ (teleological ) (* (nonnecessity ) (epistemic )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_145
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (teleological )))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+circumstantial
+- form: dummy_form_146
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - impossibility+circumstantial
+- form: dummy_form_147
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (teleological )))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+deontic
+- form: dummy_form_148
+  lot: "(+\n  (teleological )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - impossibility+deontic
+- form: dummy_form_149
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (+ (epistemic ) (teleological ))))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_150
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (+ (epistemic\
+    \ ) (teleological ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_151
+  lot: (+ (epistemic ) (* (nonnecessity ) (teleological )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+- form: dummy_form_152
+  lot: (+ (teleological ) (epistemic ))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+teleological
+- form: dummy_form_153
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+circumstantial
+- form: dummy_form_154
+  lot: (- (+ (deontic ) (* (nonnecessity ) (circumstantial ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_155
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (teleological ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - impossibility+deontic
+- form: dummy_form_156
+  lot: (- (+ (circumstantial ) (* (nonnecessity ) (deontic ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_157
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (+ (epistemic\
+    \ ) (teleological ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+- form: dummy_form_158
+  lot: (- (* (nonnecessity ) (+ (deontic ) (circumstantial ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_159
+  lot: (* (nonnecessity ) (+ (epistemic ) (circumstantial )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+circumstantial
+- form: dummy_form_160
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (circumstantial )))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_161
+  lot: (+ (circumstantial ) (* (nonnecessity ) (epistemic )))
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_162
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_163
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (circumstantial )))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_164
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (+ (epistemic ) (circumstantial ))))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_165
+  lot: "(+\n  (circumstantial )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_166
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (+ (epistemic\
+    \ ) (circumstantial ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_167
+  lot: (+ (epistemic ) (* (nonnecessity ) (circumstantial )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+circumstantial
+- form: dummy_form_168
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_169
+  lot: (+ (circumstantial ) (epistemic ))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+- form: dummy_form_170
+  lot: (- (+ (deontic ) (* (nonnecessity ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_171
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (circumstantial ))\n  (* (impossibility\
+    \ ) (deontic )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_172
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (+\
+    \ (epistemic ) (circumstantial ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_173
+  lot: (- (+ (teleological ) (* (nonnecessity ) (deontic ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_174
+  lot: (- (* (nonnecessity ) (+ (deontic ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_175
+  lot: (* (nonnecessity ) (- (deontic )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_176
+  lot: "(+\n  (* (nonnecessity ) (- (deontic )))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_177
+  lot: "(+\n  (* (nonnecessity ) (- (deontic )))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_178
+  lot: (- (+ (deontic ) (* (impossibility ) (epistemic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_179
+  lot: "(+\n  (* (nonnecessity ) (- (deontic )))\n  (* (impossibility ) (deontic )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_180
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (deontic ))))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_181
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (- (deontic ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_182
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (- (deontic\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_183
+  lot: "(+\n  (* (nonnecessity ) (- (deontic )))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+- form: dummy_form_184
+  lot: (- (+ (deontic ) (* (impossibility ) (circumstantial ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_185
+  lot: (- (+ (deontic ) (* (impossibility ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_186
+  lot: (- (deontic ))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_187
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (deontic )))\n  (* (nonnecessity\
+    \ ) (- (deontic ))))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_188
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (-\
+    \ (deontic ))))"
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_189
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (- (deontic\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+- form: dummy_form_190
+  lot: (- (* (nonnecessity ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+- form: dummy_form_191
+  lot: (* (nonnecessity ) (+ (epistemic ) (deontic )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_192
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (deontic )))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_193
+  lot: "(+\n  (* (nonnecessity ) (+ (epistemic ) (deontic )))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_194
+  lot: "(+\n  (* (impossibility ) (+ (circumstantial ) (teleological )))\n  (* (nonnecessity\
+    \ ) (+ (epistemic ) (deontic ))))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+teleological
+  - impossibility+circumstantial
+- form: dummy_form_195
+  lot: (+ (deontic ) (* (nonnecessity ) (epistemic )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_196
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_197
+  lot: "(+\n  (deontic )\n  (* (nonnecessity ) (epistemic ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_198
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (+ (epistemic\
+    \ ) (deontic ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_199
+  lot: (+ (epistemic ) (* (nonnecessity ) (deontic )))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_200
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (teleological )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+teleological
+- form: dummy_form_201
+  lot: "(+\n  (epistemic )\n  (* (nonnecessity ) (deontic ))\n  (* (impossibility\
+    \ ) (circumstantial )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+- form: dummy_form_202
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (+ (epistemic\
+    \ ) (deontic ))))"
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_203
+  lot: (+ (deontic ) (epistemic ))
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+deontic
+- form: dummy_form_204
+  lot: (- (+ (circumstantial ) (* (nonnecessity ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_205
+  lot: (- (+ (teleological ) (* (nonnecessity ) (circumstantial ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_206
+  lot: (- (* (nonnecessity ) (+ (circumstantial ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_207
+  lot: (* (nonnecessity ) (- (circumstantial )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+teleological
+- form: dummy_form_208
+  lot: "(+\n  (* (nonnecessity ) (- (circumstantial )))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+teleological
+  - nonnecessity+teleological
+- form: dummy_form_209
+  lot: "(+\n  (* (nonnecessity ) (- (circumstantial )))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+- form: dummy_form_210
+  lot: "(+\n  (* (impossibility ) (+ (circumstantial ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (circumstantial ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_211
+  lot: "(+\n  (* (nonnecessity ) (- (circumstantial )))\n  (* (impossibility ) (deontic\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - impossibility+deontic
+  - nonnecessity+teleological
+- form: dummy_form_212
+  lot: (- (+ (circumstantial ) (* (impossibility ) (epistemic ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_213
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (- (circumstantial ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_214
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (- (circumstantial\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_215
+  lot: "(+\n  (* (nonnecessity ) (- (circumstantial )))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+teleological
+- form: dummy_form_216
+  lot: (- (+ (circumstantial ) (* (impossibility ) (deontic ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_217
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (circumstantial )))\n  (* (nonnecessity\
+    \ ) (- (circumstantial ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_218
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (- (circumstantial\
+    \ ))))"
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_219
+  lot: (- (+ (circumstantial ) (* (impossibility ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_220
+  lot: (- (circumstantial ))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_221
+  lot: "(+\n  (* (impossibility ) (- (teleological )))\n  (* (nonnecessity ) (- (circumstantial\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_222
+  lot: (- (* (nonnecessity ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_223
+  lot: (* (nonnecessity ) (- (teleological )))
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_224
+  lot: "(+\n  (* (nonnecessity ) (- (teleological )))\n  (* (impossibility ) (teleological\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+teleological
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_225
+  lot: "(+\n  (* (nonnecessity ) (- (teleological )))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_226
+  lot: "(+\n  (* (impossibility ) (+ (circumstantial ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (teleological ))))"
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_227
+  lot: "(+\n  (* (nonnecessity ) (- (teleological )))\n  (* (impossibility ) (deontic\
+    \ )))"
+  meaning:
+  - nonnecessity+epistemic
+  - impossibility+deontic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_228
+  lot: "(+\n  (* (impossibility ) (+ (deontic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (teleological ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_229
+  lot: (- (+ (teleological ) (* (impossibility ) (epistemic ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_230
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (nonnecessity ) (- (teleological\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_231
+  lot: "(+\n  (* (nonnecessity ) (- (teleological )))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+- form: dummy_form_232
+  lot: "(+\n  (* (impossibility ) (+ (epistemic ) (teleological )))\n  (* (nonnecessity\
+    \ ) (- (teleological ))))"
+  meaning:
+  - impossibility+epistemic
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_233
+  lot: (- (+ (teleological ) (* (impossibility ) (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_234
+  lot: "(+\n  (* (impossibility ) (- (deontic )))\n  (* (nonnecessity ) (- (teleological\
+    \ ))))"
+  meaning:
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_235
+  lot: (- (+ (teleological ) (* (impossibility ) (circumstantial ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_236
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (nonnecessity ) (-\
+    \ (teleological ))))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_237
+  lot: (- (teleological ))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_238
+  lot: (- (* (nonnecessity ) (teleological )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_239
+  lot: (nonnecessity )
+  meaning:
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+  - nonnecessity+circumstantial
+  - nonnecessity+teleological
+- form: dummy_form_240
+  lot: (- (* (impossibility ) (- (teleological ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_241
+  lot: (- (* (impossibility ) (- (circumstantial ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_242
+  lot: (- (* (impossibility ) (+ (epistemic ) (deontic ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_243
+  lot: (- (* (impossibility ) (- (deontic ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_244
+  lot: (- (* (impossibility ) (+ (epistemic ) (circumstantial ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_245
+  lot: (- (* (impossibility ) (+ (epistemic ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_246
+  lot: (- (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_247
+  lot: (- (* (impossibility ) (- (epistemic ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_248
+  lot: (- (* (impossibility ) (+ (deontic ) (circumstantial ))))
+  meaning:
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_249
+  lot: (- (* (impossibility ) (+ (deontic ) (teleological ))))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_250
+  lot: (- (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_251
+  lot: (- (* (impossibility ) (+ (circumstantial ) (teleological ))))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_252
+  lot: (- (* (impossibility ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_253
+  lot: (- (* (impossibility ) (teleological )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+- form: dummy_form_254
+  lot: (1 )
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+  - nonnecessity+teleological
+  - impossibility+epistemic
+  - nonnecessity+circumstantial
+  - impossibility+teleological
+  - nonnecessity+epistemic
+  - nonnecessity+deontic
+flavors:
+- epistemic
+- deontic
+- circumstantial
+- teleological
+forces:
+- nonnecessity
+- impossibility

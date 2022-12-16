@@ -52,8 +52,10 @@ def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
     Returns:
         an float, either 0, 0.5, or 1.0 corresponding to the fraction of correctly recovered features of the speaker's meaning point.
     """
-    intended = m.name.split("+")
-    guess = m_.name.split("+")
+    # intended = m.name.split("+")
+    # guess = m_.name.split("+")
+    intended = m.data
+    guess = m_.data
     score = 0.0
     for feature in intended:
         if feature in guess:

@@ -8,11 +8,11 @@ from modals.modal_language import ModalLanguage
 from modals.modal_measures import language_complexity
 from sample_languages import generate_languages
 from modals.modal_mutations import (
-    Add_Modal,
-    Add_Point,
-    Remove_Modal,
-    Remove_Point,
-    Interchange_Modal,
+    AddModal,
+    AddPoint,
+    RemoveModal,
+    RemovePoint,
+    InterchangeModal,
 )
 from altk.effcomm.informativity import informativity
 
@@ -98,11 +98,11 @@ def main():
 
     # Load modals-specifc mutations
     mutations = [
-        Add_Modal(),
-        Remove_Modal(),
-        Remove_Point(),
-        Add_Point(),
-        Interchange_Modal(),
+        AddModal(),
+        RemoveModal(),
+        RemovePoint(),
+        AddPoint(),
+        InterchangeModal(),
     ]
 
     # Initialize optimizer

@@ -11,7 +11,7 @@ from modals.modal_meaning import ModalMeaning
 ##############################################################################
 
 
-class Add_Modal(Mutation):
+class AddModal(Mutation):
     """Add a random modal to the language."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
@@ -30,7 +30,7 @@ class Add_Modal(Mutation):
         return language
 
 
-class Remove_Modal(Mutation):
+class RemoveModal(Mutation):
     """Remove a random modal from the language."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
@@ -47,7 +47,7 @@ class Remove_Modal(Mutation):
         return language
 
 
-class Add_Point(Add_Modal):
+class AddPoint(AddModal):
     """Add a new modal expressing exactly one point, and if possible a point that the language does not already cover. Designed to increase informativity."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
@@ -79,12 +79,12 @@ class Add_Point(Add_Modal):
         return language
 
 
-class Remove_Point(Mutation):
+class RemovePoint(Mutation):
     """Replace an ambiguous modal with a modal expressing one fewer meaning points. Designed to increase informativity."""
 
     def precondition(self, language: ModalLanguage, **kwargs) -> bool:
         """Only apply when the language has a modal that expresses more than one meaning point."""
-        # Can express more than one pointe
+        # Can express more than one point
         expressions = language.expressions
         for expression in expressions:
             points = expression.meaning.referents
@@ -127,7 +127,7 @@ class Remove_Point(Mutation):
         return language
 
 
-class Interchange_Modal(Mutation):
+class InterchangeModal(Mutation):
 
     """Removes and then adds a random expresion.
 
@@ -142,8 +142,8 @@ class Interchange_Modal(Mutation):
         self, language: ModalLanguage, expressions: list[ModalExpression]
     ) -> ModalLanguage:
         """Removes and then adds a random expresion."""
-        add = Add_Modal()
-        remove = Remove_Modal()
+        add = AddModal()
+        remove = RemoveModal()
         return remove.mutate(add.mutate(language, expressions), expressions)
 
 

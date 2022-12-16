@@ -4,7 +4,7 @@ import sys
 from misc import file_util
 from modals.modal_measures import language_complexity
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_language import iff, sav, dlsav
+from modals.modal_language import iff, sav, dlsav, uegaki
 from altk.effcomm.informativity import informativity
 from altk.effcomm.tradeoff import tradeoff
 
@@ -70,6 +70,7 @@ def main():
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav,
+        "uegaki": uegaki,
     }
 
     result = tradeoff(

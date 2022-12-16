@@ -60,7 +60,8 @@ class ModalExpression(Expression):
             - rep: a dictionary of the form {'form': str, 'meaning': list[str], 'lot': str}
         """
         form = rep["form"]
-        points = [ModalMeaningPoint(name=name) for name in rep["meaning"]]
+        points = [ModalMeaningPoint.from_yaml_rep(name=name) for name in rep["meaning"]]
+        # points = [ModalMeaningPoint(name=name) for name in rep["meaning"]]
         lot = rep["lot"]
 
         meaning = ModalMeaning(points, space)
@@ -101,6 +102,7 @@ class ModalLanguage(Language):
                 "iff": None,
                 "sav": None,
                 "dlsav": None,
+                "uegaki": None,
                 "name": name,
                 "Language": None,
             }
@@ -240,13 +242,16 @@ def iff(e: ModalExpression) -> bool:
     forces = set()
     flavors = set()
     for point in points:
-        force, flavor = point.name.split("+")
+        # force, flavor = point.name.split("+")
+        force, flavor = point.data
         forces.add(force)
         flavors.add(flavor)
 
     for (force, flavor) in product(forces, flavors):
-        name = f"{force}+{flavor}"
-        if name not in [point.name for point in points]:
+        # name = f"{force}+{flavor}"
+        pair = (force, flavor)
+        # if name not in [point.name for point in points]:
+        if pair not in [point.data for point in points]:
             return False
     return True
 
@@ -258,7 +263,8 @@ def sav(e: ModalExpression) -> bool:
     forces = set()
     flavors = set()
     for point in points:
-        force, flavor = point.name.split("+")
+        force, flavor = point.data
+        # force, flavor = point.name.split("+")
         forces.add(force)
         flavors.add(flavor)
 
@@ -302,3 +308,21 @@ def dlsav(language: ModalLanguage) -> bool:
     if not (row_ambigs and col_ambigs):
         return True
     return False
+
+def uegaki(language: ModalLanguage) -> bool:
+    """The Uegaki universal: if a language can express epistemic impossiblity, then it can express deontic impossibility.
+    """
+    antecedent = False
+    consequent = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data == ("impossibility", "epistemic",):
+                antecedent = True
+            if point.data == ("impossiblity", "deontic",):
+                consequent = True
+                break
+
+    if antecedent and not consequent:
+        return False
+    return True
