@@ -12,7 +12,7 @@ python3 src/sample_languages.py $CONFIG
 
 # eventually add nat langs
 
-python3 src/set_prior.py $CONFIG
+python3 src/set_prior.py $CONFIG # overwrites prior
 
 python3 src/estimate_pareto_frontier.py $CONFIG
 
