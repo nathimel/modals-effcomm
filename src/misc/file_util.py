@@ -170,7 +170,7 @@ def save_languages(
     start = time.time()
 
     if not languages:
-        print("List of languages empty, so skipping file save.")
+        print(f"List of {kind} languages empty, so skipping file save.")
         return
 
     space = languages[0].expressions[0].meaning.universe

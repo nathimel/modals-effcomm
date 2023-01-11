@@ -1,3 +1,7 @@
+# The default configurations to produce a sample of languages. 
+# Analyses varying in utility or communicative need prior will consume 
+# this sample and save theor corresponding analysis data in subfolders.
+
 # modals specific parameters
 num_forces: 2
 force_names:
@@ -10,10 +14,11 @@ flavor_names:
   - circumstantial
   - teleological
 
-prior_type: uniform # estimated or uniform
+# This is the prior used for the sampling / exploration procedures.
+prior_type: uniform
 
 # measures
-utility: half_credit # half_credit or indicator ... or load from file?
+utility: half_credit # used for sampling/exploration
 agent_type: literal # literal or pragmatic
 language_of_thought:
   negation: True
@@ -34,8 +39,8 @@ evolutionary_alg:
 
 # outputs etc
 file_paths:
-  meaning_space: outputs/cogsci/dev_large/meaning_space.yml
-  expressions: outputs/cogsci/dev_large/expressions.yml
+  meaning_space: outputs/cogsci/base/meaning_space.yml
+  expressions: outputs/cogsci/base/expressions.yml
   data:
     csv: data/natural_languages/Language/modals.csv
     languages:
@@ -58,8 +63,8 @@ file_paths:
       # - Tundra-Nenets
       # - Vaeakau-Taumako
 
-  prior: outputs/cogsci/dev_large/prior_skewed.yml
-  prior_df: outputs/cogsci/dev_large/prior_df.csv # meaning counts from corpus  
+  prior: outputs/cogsci/base/prior.yml # BASE PRIOR for EXPLORATION/SAMPLING, NOT EXPERIMENT! Each experiment folder has its own prior.yml!!
+  prior_df: outputs/cogsci/base/prior_df.csv # meaning counts from corpus  
   modality_corpus: 
     0:
       dev: data/modality_corpus/0/dev.txt
@@ -78,17 +83,23 @@ file_paths:
       train: data/modality_corpus/4/train.txt
     test: 
       test: data/modality_corpus/test/test.txt  
-  artificial_languages: outputs/cogsci/dev_large/languages/artificial.yml
-  natural_languages: outputs/cogsci/dev_large/languages/natural.yml
-  dominant_languages: outputs/cogsci/dev_large/languages/dominant.yml # Pareto
-  analysis:
-    correlations: outputs/cogsci/dev_large/analysis/correlations/property.csv # dummy property name
-    data: outputs/cogsci/dev_large/analysis/all_data.csv
-    pareto_data: outputs/cogsci/dev_large/analysis/pareto_data.csv
-    plot: outputs/cogsci/dev_large/analysis/plot.png
-    means: outputs/cogsci/dev_large/analysis/means.csv
-    ttest_natural: outputs/cogsci/dev_large/analysis/ttest_natural.csv
-    ttest_dlsav: outputs/cogsci/dev_large/analysis/ttest_dlsav.csv
+  artificial_languages: outputs/cogsci/base/languages/artificial.yml
+  natural_languages: outputs/cogsci/base/languages/natural.yml
+
+  # For this and every path below, replace base with base/experimentX etc.
+  dominant_languages: outputs/cogsci/base/languages/dominant.yml # Pareto
+
+  # BELOW SPECIFIED THRU CML ARGS!
+
+  # Different utility / priors will be saved in different subfolders.
+  # analysis:
+  #   correlations: outputs/cogsci/base/analysis/correlations/property.csv # dummy property name
+  #   data: outputs/cogsci/base/analysis/all_data.csv
+  #   pareto_data: outputs/cogsci/base/analysis/pareto_data.csv
+  #   plot: outputs/cogsci/base/analysis/plot.png
+  #   means: outputs/cogsci/base/analysis/means.csv
+  #   ttest_natural: outputs/cogsci/base/analysis/ttest_natural.csv
+  #   ttest_dlsav: outputs/cogsci/base/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:

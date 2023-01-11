@@ -195,7 +195,6 @@ class ModalMeaningSpace(Universe):
         return hash((tuple(self.forces), tuple(self.flavors)))
 
 
-# TODO: let the internal data be literally a list of TUPLES, i.e. meaning points, not strings. You can keep the strings for readability as names, and let the internal data be a property so that the name 'force+flavor' changes dynamically with changes to the data.
 class ModalMeaning(Meaning):
     """ "A modal meaning is a distribution over Modal_Meaning_Points it can be used to communicate.
 
