@@ -309,20 +309,49 @@ def dlsav(language: ModalLanguage) -> bool:
         return True
     return False
 
+
+##############################################################################
+# CogSci Proceedings 2023 helpers
+##############################################################################
+
+IMPOSSIBILITY = "impossibility"
+EPISTEMIC = "epistemic"
+DEONTIC = "deontic"
+
 def uegaki(language: ModalLanguage) -> bool:
     """The Uegaki universal: if a language can express epistemic impossiblity, then it can express deontic impossibility.
     """
-    antecedent = False
-    consequent = False
+    epistemic_impossibility = False
+    deontic_impossibility = False
 
     for expression in language.expressions:
         for point in expression.meaning.referents:
-            if point.data == ("impossibility", "epistemic",):
-                antecedent = True
-            if point.data == ("impossiblity", "deontic",):
-                consequent = True
+            if point.data == (IMPOSSIBILITY, EPISTEMIC,):
+                epistemic_impossibility = True
+            if point.data == (IMPOSSIBILITY, DEONTIC,):
+                deontic_impossibility = True
                 break
 
-    if antecedent and not consequent:
+    if epistemic_impossibility and not deontic_impossibility:
         return False
     return True
+
+def neither_flavor(language: ModalLanguage) -> bool:
+    """Are there languages that lexicalise neither deontic nor epistemic impossibility included in the DP-obeying set or the DP-disobeying set?
+    """
+    # if language does not include deontic impossibility and it does not include epistemic impossibility. 
+    # (note this still permits deontic, epistemic non-necessity. )
+
+    deontic_impossibility = False
+    epistemic_impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data == (IMPOSSIBILITY, EPISTEMIC,):
+                epistemic_impossibility = True
+            if point.data == (IMPOSSIBILITY, DEONTIC,):
+                deontic_impossibility = True
+    
+    if not (epistemic_impossibility or deontic_impossibility):
+        return True
+    return False
