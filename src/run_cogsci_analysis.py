@@ -22,8 +22,9 @@ def main(args):
     # tell pandas to output all columns
     pd.set_option("display.max_columns", None)
 
-
-    folder = f"weighted_utility_linear_search/ratio={args.ratio}"
+    #TODO: turn this into a command line arg instead of commenting out
+    # folder = f"weighted_utility_linear_search/ratio={args.ratio}"
+    folder = f"weighted_prior_linear_search/ratio={args.ratio}"
 
     langs_fn = f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/sampled.yml"
     dom_langs_fn = f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/dominant.yml"
@@ -68,6 +69,10 @@ def main(args):
     kwargs["size"] = "Deontic Priority"
     kwargs["color"] = "Deontic Priority"
 
+    # # kwargs["shape"] = "cogsci_universal"
+    # # kwargs["size"] = "cogsci_universal"
+    # # kwargs["color"] = "cogsci_universal"    
+
     # if counts:
     #     kwargs["size"] = "counts"
 
@@ -95,29 +100,58 @@ def main(args):
     # tradeoff properties
     properties = ["complexity", "comm_cost", "optimality"]
 
-    uegaki_true = data[data["uegaki"] == True]
-    uegaki_false = data[data["uegaki"] == False]
-    uegaki_true_means = trade_off_means("uegaki_true", uegaki_true, properties)
-    uegaki_false_means = trade_off_means("uegaki_false", uegaki_false, properties)
+    # uegaki_true = data[data["uegaki"] == True]
+    # uegaki_false = data[data["uegaki"] == False]
+    # uegaki_true_means = trade_off_means("uegaki_true", uegaki_true, properties)
+    # uegaki_false_means = trade_off_means("uegaki_false", uegaki_false, properties)
+
+    # population_means = trade_off_means("population_means", data, properties)
+
+    # means_df = pd.concat([uegaki_true_means, uegaki_false_means, population_means]).set_index("name")
+
+    # means_df["N"] = [len(uegaki_true), len(uegaki_false), len(data)]
+    # means_df.index = ["Deontic Priority true", "Deontic Priority false", "population"]
+    # print(means_df)
+
+    # pd.set_option('display.float_format', lambda x: '%.3f' % x)
+
+    # pop_means_dict = population_means.iloc[0].to_dict()
+    # ttest_uegaki_df = trade_off_ttest(uegaki_true, pop_means_dict, properties)
+
+    # means_fn = f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/means.csv"
+    # ttest_fn =  f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/ttest.csv"
+
+    # means_df.to_csv(means_fn)
+    # ttest_uegaki_df.to_csv(ttest_fn)
+
+
+    cogsci_true = data[data["cogsci_universal"] == True]
+    cogsci_false = data[data["cogsci_universal"] == False]
+    cogsci_true_means = trade_off_means("cogsci_universal", cogsci_true, properties)
+    cogsci_false_means = trade_off_means("cogsci_universal", cogsci_false, properties)
 
     population_means = trade_off_means("population_means", data, properties)
+    means_df = pd.concat([cogsci_true_means, cogsci_false_means, population_means]).set_index("name")
 
-    means_df = pd.concat([uegaki_true_means, uegaki_false_means, population_means]).set_index("name")
+    means_df["N"] = [len(cogsci_true), len(cogsci_false), len(data)]
+    means_df
+    means_df.index = ["cogsci universal true", "cogsci universal false", "population"]
 
-    means_df["N"] = [len(uegaki_true), len(uegaki_false), len(data)]
-    means_df.index = ["Deontic Priority true", "Deontic Priority false", "population"]
-    print(means_df)
-
-    pd.set_option('display.float_format', lambda x: '%.3f' % x)
+    pd.set_option('display.float_format', lambda x: '%.5f' % x)
 
     pop_means_dict = population_means.iloc[0].to_dict()
-    ttest_uegaki_df = trade_off_ttest(uegaki_true, pop_means_dict, properties)
+    ttest_cogsci_df = trade_off_ttest(cogsci_true, pop_means_dict, properties)
+    ttest_cogsci_df
+
+    print(means_df)
 
     means_fn = f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/means.csv"
     ttest_fn =  f"/Users/nathanielimel/clms/projects/modals-effcomm/outputs/cogsci/base/{folder}/ttest.csv"
 
     means_df.to_csv(means_fn)
-    ttest_uegaki_df.to_csv(ttest_fn)
+    ttest_cogsci_df.to_csv(ttest_fn)    
+
+
 
 
 

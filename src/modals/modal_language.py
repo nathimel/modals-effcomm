@@ -103,6 +103,7 @@ class ModalLanguage(Language):
                 "sav": None,
                 "dlsav": None,
                 "uegaki": None,
+                "cogsci_universal": None,
                 "name": name,
                 "Language": None,
             }
@@ -355,3 +356,32 @@ def neither_flavor(language: ModalLanguage) -> bool:
     if not (epistemic_impossibility or deontic_impossibility):
         return True
     return False
+
+def cogsci_universal(language: ModalLanguage) -> bool:
+    """The cogsci universal: 'If a language lexicalizes any impossibility, it lexicalizes deontic impossibility'. 
+    
+    Equivalently: A language lexicalizes no impossibilities or it lexicalizes deontic impossiblity.
+    """
+    impossibility = False
+    deontic_impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data[0] == IMPOSSIBILITY:
+                impossibility = True
+            if point.data == (IMPOSSIBILITY, DEONTIC,):
+                deontic_impossibility = True
+    
+    return (not impossibility) or deontic_impossibility
+
+def trivial_cogsci_universal(language: ModalLanguage) -> bool:
+    """If a language does not lexicalize any impossibility.
+    """
+    impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data[0] == IMPOSSIBILITY:
+                impossibility = True
+    
+    return not impossibility

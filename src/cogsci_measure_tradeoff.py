@@ -6,7 +6,7 @@ import numpy as np
 from misc import file_util
 from modals.modal_measures import language_complexity
 from modals.modal_language_of_thought import ModalLOT
-from modals.modal_language import iff, sav, dlsav, uegaki
+from modals.modal_language import iff, sav, dlsav, uegaki, cogsci_universal
 from altk.effcomm.informativity import informativity
 from altk.effcomm.tradeoff import tradeoff
 
@@ -105,10 +105,11 @@ def main(args):
     # Get trade-off results
     properties_to_measure = {
         "complexity": comp_measure,
-        "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
+        "simplicity": lambda _: None,  # reset simplicity from evol alg exploration
         "informativity": inf_measure,
         "comm_cost": lambda lang: 1 - inf_measure(lang),
         "uegaki": uegaki,
+        "cogsci_universal": cogsci_universal,
     }
 
     print("Measuring tradeoff ...")

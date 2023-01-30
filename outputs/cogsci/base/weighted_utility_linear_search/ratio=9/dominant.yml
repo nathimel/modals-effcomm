@@ -8,351 +8,21 @@ forces:
 - impossibility
 id_start: 1637952
 languages:
-- sampled_lang_1255285:
+- sampled_lang_65249:
     data:
       Language: artificial
-      comm_cost: 0.6944444444444444
-      complexity: 20
+      cogsci_universal: true
+      comm_cost: 0.671875
+      complexity: 30
       dlsav: null
       iff: null
-      informativity: 0.3055555555555556
-      name: sampled_lang_1255285
-      optimality: 0.9998475346819841
+      informativity: 0.328125
+      name: sampled_lang_65249
+      optimality: 0.9999957539450185
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_169
-      lot: (+ (circumstantial ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-      - nonnecessity+circumstantial
-      - impossibility+epistemic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    length: 5
-- sampled_lang_38283:
-    data:
-      Language: artificial
-      comm_cost: 0.75
-      complexity: 8
-      dlsav: null
-      iff: null
-      informativity: 0.25
-      name: sampled_lang_38283
-      optimality: 0.9999911633627996
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 2
-- sampled_lang_849098:
-    data:
-      Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
-      dlsav: null
-      iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_849098
-      optimality: 0.9999945796697897
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_1_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_127_0
-      lot: (* (nonnecessity ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-    length: 7
-- sampled_lang_46799:
-    data:
-      Language: artificial
-      comm_cost: 0.7055555555555555
-      complexity: 18
-      dlsav: null
-      iff: null
-      informativity: 0.2944444444444445
-      name: sampled_lang_46799
-      optimality: 0.9998021669532088
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_154
-      lot: (- (+ (deontic ) (* (nonnecessity ) (circumstantial ))))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-    length: 4
-- sampled_lang_45099:
-    data:
-      Language: artificial
-      comm_cost: 0.7055555555555555
-      complexity: 18
-      dlsav: null
-      iff: null
-      informativity: 0.2944444444444445
-      name: sampled_lang_45099
-      optimality: 0.9998021669532088
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_185
-      lot: (- (+ (deontic ) (* (impossibility ) (teleological ))))
-      meaning:
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    length: 4
-- sampled_lang_443255:
-    data:
-      Language: artificial
-      comm_cost: 0.7083333333333333
-      complexity: 16
-      dlsav: null
-      iff: null
-      informativity: 0.2916666666666667
-      name: sampled_lang_443255
-      optimality: 0.9998526113039229
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_50
-      lot: (+ (teleological ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-      - impossibility+circumstantial
-      - nonnecessity+teleological
-      - impossibility+teleological
-    length: 4
-- sampled_lang_842538:
-    data:
-      Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
-      dlsav: null
-      iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_842538
-      optimality: 0.9999945796697897
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_127
-      lot: (* (nonnecessity ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 7
-- sampled_lang_49095:
-    data:
-      Language: artificial
-      comm_cost: 0.6875
-      complexity: 26
-      dlsav: null
-      iff: null
-      informativity: 0.3125
-      name: sampled_lang_49095
-      optimality: 0.9999159848817392
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_127
-      lot: (* (nonnecessity ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-    - form: dummy_form_9
-      lot: (* (impossibility ) (+ (epistemic ) (circumstantial )))
-      meaning:
-      - impossibility+circumstantial
-      - impossibility+epistemic
-    length: 6
-- sampled_lang_35988:
-    data:
-      Language: artificial
-      comm_cost: 0.8125
-      complexity: 2
-      dlsav: null
-      iff: null
-      informativity: 0.1875
-      name: sampled_lang_35988
-      optimality: 0.9999851160708332
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_67
-      lot: (deontic )
-      meaning:
-      - nonnecessity+deontic
-      - impossibility+deontic
-    length: 1
-- sampled_lang_842657:
-    data:
-      Language: artificial
-      comm_cost: 0.6666666666666666
-      complexity: 32
-      dlsav: null
-      iff: null
-      informativity: 0.33333333333333337
-      name: sampled_lang_842657
-      optimality: 0.9998482307541091
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_127
-      lot: (* (nonnecessity ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
     - form: dummy_form_1
       lot: (* (impossibility ) (circumstantial ))
       meaning:
@@ -361,109 +31,184 @@ languages:
       lot: (* (nonnecessity ) (circumstantial ))
       meaning:
       - nonnecessity+circumstantial
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
     - form: dummy_form_63
       lot: (* (nonnecessity ) (deontic ))
       meaning:
       - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
+    - form: dummy_form_127
+      lot: (* (nonnecessity ) (epistemic ))
+      meaning:
+      - nonnecessity+epistemic
+    - form: dummy_form_15
+      lot: (* (nonnecessity ) (teleological ))
+      meaning:
+      - nonnecessity+teleological
     length: 8
-- sampled_lang_36226:
+- sampled_lang_55103:
     data:
       Language: artificial
-      comm_cost: 0.875
-      complexity: 1
+      cogsci_universal: true
+      comm_cost: 0.6944444444444444
+      complexity: 16
       dlsav: null
       iff: null
-      informativity: 0.125
-      name: sampled_lang_36226
-      optimality: 0.9999622940461108
+      informativity: 0.3055555555555555
+      name: sampled_lang_55103
+      optimality: 0.9998845201724298
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_254
-      lot: (1 )
+    - form: dummy_form_175
+      lot: (* (nonnecessity ) (- (deontic )))
+      meaning:
+      - nonnecessity+teleological
+      - nonnecessity+epistemic
+      - nonnecessity+circumstantial
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
       meaning:
       - nonnecessity+deontic
+    - form: dummy_form_10
+      lot: (* (impossibility ) (- (deontic )))
+      meaning:
       - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - impossibility+deontic
-      - nonnecessity+epistemic
       - impossibility+circumstantial
-    length: 1
-- sampled_lang_38429:
+      - impossibility+epistemic
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    length: 4
+- sampled_lang_48547:
     data:
       Language: artificial
+      cogsci_universal: true
       comm_cost: 0.7708333333333333
       complexity: 6
       dlsav: null
       iff: null
       informativity: 0.22916666666666669
-      name: sampled_lang_38429
-      optimality: 0.9999391936893242
+      name: sampled_lang_48547
+      optimality: 0.9998788705052171
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_239
-      lot: (nonnecessity )
+    - form: dummy_form_14
+      lot: (impossibility )
+      meaning:
+      - impossibility+teleological
+      - impossibility+circumstantial
+      - impossibility+deontic
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    length: 2
+- sampled_lang_63794:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6875
+      complexity: 22
+      dlsav: null
+      iff: null
+      informativity: 0.3125
+      name: sampled_lang_63794
+      optimality: 0.9999184954986206
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_31
+      lot: (* (nonnecessity ) (circumstantial ))
+      meaning:
+      - nonnecessity+circumstantial
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
+    - form: dummy_form_127
+      lot: (* (nonnecessity ) (epistemic ))
       meaning:
       - nonnecessity+epistemic
-      - nonnecessity+deontic
-      - nonnecessity+teleological
-      - nonnecessity+circumstantial
     - form: dummy_form_3
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
-    length: 2
-- sampled_lang_40479:
+    length: 6
+- sampled_lang_38016:
     data:
       Language: artificial
+      cogsci_universal: true
       comm_cost: 0.7112268518518519
       complexity: 14
       dlsav: null
       iff: null
       informativity: 0.28877314814814814
-      name: sampled_lang_40479
-      optimality: 0.999564486873746
+      name: sampled_lang_38016
+      optimality: 0.9999001287263596
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
     - form: dummy_form_3
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
+    - form: dummy_form_186
+      lot: (- (deontic ))
+      meaning:
+      - nonnecessity+circumstantial
+      - impossibility+epistemic
+      - nonnecessity+epistemic
+      - impossibility+teleological
+      - impossibility+circumstantial
+      - nonnecessity+teleological
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
     - form: dummy_form_31
       lot: (* (nonnecessity ) (circumstantial ))
       meaning:
       - nonnecessity+circumstantial
     length: 4
-- sampled_lang_39543:
+- sampled_lang_39865:
     data:
       Language: artificial
+      cogsci_universal: true
       comm_cost: 0.7152777777777778
       complexity: 10
       dlsav: null
       iff: null
       informativity: 0.2847222222222222
-      name: sampled_lang_39543
-      optimality: 0.9999564214354268
+      name: sampled_lang_39865
+      optimality: 0.9999579047207395
       sav: null
       simplicity: null
       uegaki: true
@@ -471,12 +216,12 @@ languages:
     - form: dummy_form_186
       lot: (- (deontic ))
       meaning:
-      - impossibility+teleological
       - nonnecessity+circumstantial
-      - nonnecessity+teleological
       - impossibility+epistemic
       - nonnecessity+epistemic
+      - impossibility+teleological
       - impossibility+circumstantial
+      - nonnecessity+teleological
     - form: dummy_form_63
       lot: (* (nonnecessity ) (deontic ))
       meaning:
@@ -486,118 +231,98 @@ languages:
       meaning:
       - impossibility+deontic
     length: 3
-- sampled_lang_47415:
+- sampled_lang_53655:
     data:
       Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
+      cogsci_universal: true
+      comm_cost: 0.6736111111111112
+      complexity: 26
       dlsav: null
       iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_47415
-      optimality: 0.9999945796697897
+      informativity: 0.3263888888888889
+      name: sampled_lang_53655
+      optimality: 0.999929012208476
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
     - form: dummy_form_1
       lot: (* (impossibility ) (circumstantial ))
       meaning:
       - impossibility+circumstantial
+    - form: dummy_form_31
+      lot: (* (nonnecessity ) (circumstantial ))
+      meaning:
+      - nonnecessity+circumstantial
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
     - form: dummy_form_63
       lot: (* (nonnecessity ) (deontic ))
       meaning:
       - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
     - form: dummy_form_127
       lot: (* (nonnecessity ) (epistemic ))
       meaning:
       - nonnecessity+epistemic
     length: 7
-- sampled_lang_846878:
+- sampled_lang_36226:
     data:
       Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
+      cogsci_universal: true
+      comm_cost: 0.875
+      complexity: 1
       dlsav: null
       iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_846878
-      optimality: 0.9999945796697897
+      informativity: 0.125
+      name: sampled_lang_36226
+      optimality: 0.9999623196105365
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
+    - form: dummy_form_254
+      lot: (1 )
       meaning:
       - nonnecessity+circumstantial
-    - form: dummy_form_127_1
-      lot: (* (nonnecessity ) (epistemic ))
+      - impossibility+epistemic
+      - nonnecessity+deontic
+      - nonnecessity+epistemic
+      - impossibility+deontic
+      - impossibility+teleological
+      - impossibility+circumstantial
+      - nonnecessity+teleological
+    length: 1
+- sampled_lang_438679:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.7112268518518519
+      complexity: 14
+      dlsav: null
+      iff: null
+      informativity: 0.28877314814814814
+      name: sampled_lang_438679
+      optimality: 0.9999001287263596
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_135
+      lot: (epistemic )
       meaning:
       - nonnecessity+epistemic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    length: 7
-- sampled_lang_54988:
-    data:
-      Language: artificial
-      comm_cost: 0.6944444444444444
-      complexity: 20
-      dlsav: null
-      iff: null
-      informativity: 0.3055555555555555
-      name: sampled_lang_54988
-      optimality: 0.9998475346819841
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
+      - impossibility+epistemic
     - form: dummy_form_3
       lot: (* (impossibility ) (deontic ))
       meaning:
@@ -605,287 +330,295 @@ languages:
     - form: dummy_form_10
       lot: (* (impossibility ) (- (deontic )))
       meaning:
-      - impossibility+circumstantial
       - impossibility+teleological
-      - impossibility+epistemic
-    length: 5
-- sampled_lang_57162:
-    data:
-      Language: artificial
-      comm_cost: 0.7112268518518519
-      complexity: 14
-      dlsav: null
-      iff: null
-      informativity: 0.28877314814814814
-      name: sampled_lang_57162
-      optimality: 0.999564486873746
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
+      - impossibility+circumstantial
       - impossibility+epistemic
     - form: dummy_form_63
       lot: (* (nonnecessity ) (deontic ))
       meaning:
       - nonnecessity+deontic
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
     length: 4
-- sampled_lang_45181:
+- sampled_lang_41444:
     data:
       Language: artificial
-      comm_cost: 0.7112268518518519
-      complexity: 14
-      dlsav: null
-      iff: null
-      informativity: 0.28877314814814814
-      name: sampled_lang_45181
-      optimality: 0.999564486873746
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_127
-      lot: (* (nonnecessity ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-    length: 4
-- sampled_lang_45507:
-    data:
-      Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
-      dlsav: null
-      iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_45507
-      optimality: 0.9999945796697897
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_7
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 7
-- sampled_lang_40405:
-    data:
-      Language: artificial
+      cogsci_universal: true
       comm_cost: 0.7708333333333333
       complexity: 6
       dlsav: null
       iff: null
       informativity: 0.22916666666666669
-      name: sampled_lang_40405
-      optimality: 0.9999391936893242
+      name: sampled_lang_41444
+      optimality: 0.9998788705052171
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_14
-      lot: (impossibility )
+    - form: dummy_form_239
+      lot: (nonnecessity )
       meaning:
-      - impossibility+circumstantial
-      - impossibility+deontic
-      - impossibility+teleological
-      - impossibility+epistemic
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
+      - nonnecessity+teleological
+      - nonnecessity+epistemic
       - nonnecessity+deontic
-    length: 2
-- sampled_lang_44433:
-    data:
-      Language: artificial
-      comm_cost: 0.6875
-      complexity: 26
-      dlsav: null
-      iff: null
-      informativity: 0.3125
-      name: sampled_lang_44433
-      optimality: 0.9999159848817392
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
+      - nonnecessity+circumstantial
     - form: dummy_form_3
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
+    length: 2
+- sampled_lang_81809:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6875
+      complexity: 22
+      dlsav: null
+      iff: null
+      informativity: 0.3125
+      name: sampled_lang_81809
+      optimality: 0.9999184954986206
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_175
+      lot: (* (nonnecessity ) (- (deontic )))
       meaning:
-      - impossibility+teleological
+      - nonnecessity+teleological
+      - nonnecessity+epistemic
+      - nonnecessity+circumstantial
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
     - form: dummy_form_7
       lot: (* (impossibility ) (epistemic ))
       meaning:
       - impossibility+epistemic
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_2
+      lot: (* (impossibility ) (+ (circumstantial ) (teleological )))
+      meaning:
+      - impossibility+teleological
+      - impossibility+circumstantial
+    length: 5
+- sampled_lang_44950:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6666666666666666
+      complexity: 32
+      dlsav: null
+      iff: null
+      informativity: 0.33333333333333337
+      name: sampled_lang_44950
+      optimality: 0.9998097767368218
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
     - form: dummy_form_1
       lot: (* (impossibility ) (circumstantial ))
       meaning:
       - impossibility+circumstantial
-    - form: dummy_form_47
-      lot: (* (nonnecessity ) (+ (circumstantial ) (teleological )))
-      meaning:
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 6
-- sampled_lang_1241150:
-    data:
-      Language: artificial
-      comm_cost: 0.7083333333333333
-      complexity: 16
-      dlsav: null
-      iff: null
-      informativity: 0.2916666666666667
-      name: sampled_lang_1241150
-      optimality: 0.9998526113039229
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_152
-      lot: (+ (teleological ) (epistemic ))
-      meaning:
-      - nonnecessity+epistemic
-      - nonnecessity+teleological
-      - impossibility+teleological
-      - impossibility+epistemic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
     - form: dummy_form_31
       lot: (* (nonnecessity ) (circumstantial ))
       meaning:
       - nonnecessity+circumstantial
-    length: 4
-- sampled_lang_49486:
-    data:
-      Language: artificial
-      comm_cost: 0.7112268518518519
-      complexity: 14
-      dlsav: null
-      iff: null
-      informativity: 0.28877314814814814
-      name: sampled_lang_49486
-      optimality: 0.999564486873746
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
     - form: dummy_form_3
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_0
-      lot: (* (impossibility ) (teleological ))
-      meaning:
-      - impossibility+teleological
-    length: 4
-- sampled_lang_840269:
-    data:
-      Language: artificial
-      comm_cost: 0.6805555555555556
-      complexity: 28
-      dlsav: null
-      iff: null
-      informativity: 0.3194444444444445
-      name: sampled_lang_840269
-      optimality: 0.9999945796697897
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    - form: dummy_form_31
-      lot: (* (nonnecessity ) (circumstantial ))
-      meaning:
-      - nonnecessity+circumstantial
     - form: dummy_form_7
       lot: (* (impossibility ) (epistemic ))
       meaning:
       - impossibility+epistemic
+    - form: dummy_form_0
+      lot: (* (impossibility ) (teleological ))
+      meaning:
+      - impossibility+teleological
+    - form: dummy_form_15
+      lot: (* (nonnecessity ) (teleological ))
+      meaning:
+      - nonnecessity+teleological
+    - form: dummy_form_127
+      lot: (* (nonnecessity ) (epistemic ))
+      meaning:
+      - nonnecessity+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    length: 8
+- sampled_lang_39335:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.75
+      complexity: 8
+      dlsav: null
+      iff: null
+      informativity: 0.25
+      name: sampled_lang_39335
+      optimality: 0.9999912262231699
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    length: 2
+- sampled_lang_35988:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.8125
+      complexity: 2
+      dlsav: null
+      iff: null
+      informativity: 0.1875
+      name: sampled_lang_35988
+      optimality: 0.9999851261620539
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_67
+      lot: (deontic )
+      meaning:
+      - nonnecessity+deontic
+      - impossibility+deontic
+    length: 1
+- sampled_lang_111938:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.671875
+      complexity: 30
+      dlsav: null
+      iff: null
+      informativity: 0.328125
+      name: sampled_lang_111938
+      optimality: 0.9999957539450185
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_1
+      lot: (* (impossibility ) (circumstantial ))
+      meaning:
+      - impossibility+circumstantial
+    - form: dummy_form_31
+      lot: (* (nonnecessity ) (circumstantial ))
+      meaning:
+      - nonnecessity+circumstantial
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
+    - form: dummy_form_127
+      lot: (* (nonnecessity ) (epistemic ))
+      meaning:
+      - nonnecessity+epistemic
+    - form: dummy_form_0
+      lot: (* (impossibility ) (teleological ))
+      meaning:
+      - impossibility+teleological
+    length: 8
+- sampled_lang_47845:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6875
+      complexity: 22
+      dlsav: null
+      iff: null
+      informativity: 0.3125
+      name: sampled_lang_47845
+      optimality: 0.9999184954986206
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_1
+      lot: (* (impossibility ) (circumstantial ))
+      meaning:
+      - impossibility+circumstantial
+    - form: dummy_form_31
+      lot: (* (nonnecessity ) (circumstantial ))
+      meaning:
+      - nonnecessity+circumstantial
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
+    length: 6
+- sampled_lang_101902:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6875
+      complexity: 22
+      dlsav: null
+      iff: null
+      informativity: 0.3125
+      name: sampled_lang_101902
+      optimality: 0.9999184954986206
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_1
+      lot: (* (impossibility ) (circumstantial ))
+      meaning:
+      - impossibility+circumstantial
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
     - form: dummy_form_127
       lot: (* (nonnecessity ) (epistemic ))
       meaning:
@@ -894,179 +627,110 @@ languages:
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 7
-- sampled_lang_47717:
+    length: 6
+- sampled_lang_451787:
     data:
       Language: artificial
-      comm_cost: 0.7112268518518519
-      complexity: 14
-      dlsav: null
-      iff: null
-      informativity: 0.28877314814814814
-      name: sampled_lang_47717
-      optimality: 0.999564486873746
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    length: 4
-- sampled_lang_46744:
-    data:
-      Language: artificial
-      comm_cost: 0.7055555555555555
-      complexity: 18
-      dlsav: null
-      iff: null
-      informativity: 0.29444444444444445
-      name: sampled_lang_46744
-      optimality: 0.9998021669532088
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_170
-      lot: (- (+ (deontic ) (* (nonnecessity ) (teleological ))))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_15
-      lot: (* (nonnecessity ) (teleological ))
-      meaning:
-      - nonnecessity+teleological
-    length: 4
-- sampled_lang_1239476:
-    data:
-      Language: artificial
-      comm_cost: 0.7055555555555555
-      complexity: 18
-      dlsav: null
-      iff: null
-      informativity: 0.29444444444444445
-      name: sampled_lang_1239476
-      optimality: 0.9998021669532088
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_184
-      lot: (- (+ (deontic ) (* (impossibility ) (circumstantial ))))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    length: 4
-- sampled_lang_49682:
-    data:
-      Language: artificial
-      comm_cost: 0.7112268518518519
-      complexity: 14
-      dlsav: null
-      iff: null
-      informativity: 0.28877314814814814
-      name: sampled_lang_49682
-      optimality: 0.999564486873746
-      sav: null
-      simplicity: null
-      uegaki: true
-    expressions:
-    - form: dummy_form_186
-      lot: (- (deontic ))
-      meaning:
-      - impossibility+teleological
-      - nonnecessity+circumstantial
-      - nonnecessity+teleological
-      - impossibility+epistemic
-      - nonnecessity+epistemic
-      - impossibility+circumstantial
-    - form: dummy_form_63
-      lot: (* (nonnecessity ) (deontic ))
-      meaning:
-      - nonnecessity+deontic
-    - form: dummy_form_3
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    length: 4
-- sampled_lang_438963:
-    data:
-      Language: artificial
-      comm_cost: 0.7916666666666666
+      cogsci_universal: true
+      comm_cost: 0.7777777777777778
       complexity: 4
       dlsav: null
       iff: null
-      informativity: 0.20833333333333334
-      name: sampled_lang_438963
-      optimality: 0.9999482499483612
+      informativity: 0.2222222222222222
+      name: sampled_lang_451787
+      optimality: 0.9999802590021322
       sav: null
       simplicity: null
       uegaki: true
     expressions:
-    - form: dummy_form_33
-      lot: (circumstantial )
-      meaning:
-      - nonnecessity+circumstantial
-      - impossibility+circumstantial
     - form: dummy_form_67
       lot: (deontic )
       meaning:
       - nonnecessity+deontic
       - impossibility+deontic
+    - form: dummy_form_186
+      lot: (- (deontic ))
+      meaning:
+      - nonnecessity+circumstantial
+      - impossibility+epistemic
+      - nonnecessity+epistemic
+      - impossibility+teleological
+      - impossibility+circumstantial
+      - nonnecessity+teleological
     length: 2
+- sampled_lang_44544:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.6921296296296297
+      complexity: 20
+      dlsav: null
+      iff: null
+      informativity: 0.30787037037037035
+      name: sampled_lang_44544
+      optimality: 0.9996300614507587
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_7
+      lot: (* (impossibility ) (epistemic ))
+      meaning:
+      - impossibility+epistemic
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_16
+      lot: (teleological )
+      meaning:
+      - impossibility+teleological
+      - nonnecessity+teleological
+    - form: dummy_form_161
+      lot: (+ (circumstantial ) (* (nonnecessity ) (epistemic )))
+      meaning:
+      - impossibility+circumstantial
+      - nonnecessity+epistemic
+      - nonnecessity+circumstantial
+    length: 5
+- sampled_lang_41693:
+    data:
+      Language: artificial
+      cogsci_universal: true
+      comm_cost: 0.7112268518518519
+      complexity: 14
+      dlsav: null
+      iff: null
+      informativity: 0.28877314814814814
+      name: sampled_lang_41693
+      optimality: 0.9999001287263596
+      sav: null
+      simplicity: null
+      uegaki: true
+    expressions:
+    - form: dummy_form_186
+      lot: (- (deontic ))
+      meaning:
+      - nonnecessity+circumstantial
+      - impossibility+epistemic
+      - nonnecessity+epistemic
+      - impossibility+teleological
+      - impossibility+circumstantial
+      - nonnecessity+teleological
+    - form: dummy_form_63
+      lot: (* (nonnecessity ) (deontic ))
+      meaning:
+      - nonnecessity+deontic
+    - form: dummy_form_3
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_127
+      lot: (* (nonnecessity ) (epistemic ))
+      meaning:
+      - nonnecessity+epistemic
+    length: 4
