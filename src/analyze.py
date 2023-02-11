@@ -143,7 +143,7 @@ def main():
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
 
-    breakpoint()
+    # breakpoint()
 
     plot_data["counts"] = vcs.values
 
