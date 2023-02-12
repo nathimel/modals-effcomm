@@ -1,0 +1,968 @@
+flavors:
+- epistemic
+- deontic
+- circumstantial
+forces:
+- weak
+- strong
+id_start: null
+languages:
+- Vietnamese:
+    data:
+      Language: natural
+      comm_cost: 0.12437415751973813
+      complexity: 34
+      dlsav: true
+      iff: 1.0
+      informativity: 0.8756258424802619
+      name: Vietnamese
+      optimality: 0.8753125285789614
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "ch\u1EAFc h\u1EB3n"
+      lot: (* (strong ) (- (deontic )))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+    - form: "ch\u1EAFc ch\u1EAFn"
+      lot: (* (strong ) (- (deontic )))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+    - form: "th\u1EC3"
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: "ph\u1EA3i"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "c\u1EA7n ph\u1EA3i"
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: "\u0111\u01B0\u1EE3c1"
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: "\u0111\u01B0\u1EE3c2"
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: "c\xF3 th\u1EC3 + negated clause"
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "ch\u1EAFc ch\u1EAFn + negated clause"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    length: 9
+- Javanese-Paciran:
+    data:
+      Language: natural
+      comm_cost: 0.14294482957827848
+      complexity: 20
+      dlsav: true
+      iff: 1.0
+      informativity: 0.8570551704217215
+      name: Javanese-Paciran
+      optimality: 0.9441630441908697
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: mesthi
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: paleng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: oleh
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: iso
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: kudu1
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    length: 5
+- Gitksan:
+    data:
+      Language: natural
+      comm_cost: 0.20374783362218363
+      complexity: 16
+      dlsav: true
+      iff: 1.0
+      informativity: 0.7962521663778164
+      name: Gitksan
+      optimality: 0.9595659247524485
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "ima(\u2019a)"
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: gat
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: "da\u2019akhlxw"
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: anook(xw)
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: sgi
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    length: 5
+- Mandarin:
+    data:
+      Language: natural
+      comm_cost: 0.18919699595609474
+      complexity: 40
+      dlsav: true
+      iff: 1.0
+      informativity: 0.8108030040439053
+      name: Mandarin
+      optimality: 0.8053265512726369
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: yiding
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: biran
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: juedui
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: bixu
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    - form: yao
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    - form: dei
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    - form: keneng
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: keyi
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    - form: yexu
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: neng
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    length: 10
+- Thai:
+    data:
+      Language: natural
+      comm_cost: 0.42451457089671996
+      complexity: 48
+      dlsav: true
+      iff: 1.0
+      informativity: 0.57548542910328
+      name: Thai
+      optimality: 0.6365043298173325
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: Dong ca
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: Dong
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: Jambpen dong ca
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: 'Jambpen dong '
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: Jambpen dong
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: Aat ca
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: Anuyard
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: '... dai'
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: saamaat
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: Kong ca
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: saamaat... dai
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: Harm
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: Jambpen
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 13
+- Korean:
+    data:
+      Language: natural
+      comm_cost: 0.17047888985172355
+      complexity: 42
+      dlsav: false
+      iff: 1.0
+      informativity: 0.8295211101482765
+      name: Korean
+      optimality: 0.8003903160101242
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -napo-
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -keyss-
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ya + ha-
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    - form: ci(-to) molun-
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: swu(-to) iss-
+      lot: (* (weak ) (- (deontic )))
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+    - form: -to + toy-
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: philyo- eps-
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: li-ka eps-
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: -myeon an-toy-
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: swu + eps-
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: an -myeon an-toy-
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 11
+- Hindi:
+    data:
+      Language: natural
+      comm_cost: 0.41575197381089923
+      complexity: 20
+      dlsav: false
+      iff: 0.6
+      informativity: 0.5842480261891008
+      name: Hindi
+      optimality: 0.8568961519378658
+      sav: 0.6
+      simplicity: null
+    expressions:
+    - form: zaroor+hogi/hoga
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: dative on subject + fut on verb+ clause final hoga/hogi
+      lot: (* (strong ) (- (epistemic )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+    - form: shayad
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: sakte/sakti/sakta ho
+      lot: (- (* (strong ) (- (deontic ))))
+      meaning:
+      - strong+deontic
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: sakte/sakti/sakta hai
+      lot: (- (* (strong ) (deontic )))
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+      - strong+circumstantial
+      - weak+circumstantial
+      - weak+deontic
+    length: 5
+- Logoori:
+    data:
+      Language: natural
+      comm_cost: 0.30245843764041336
+      complexity: 12
+      dlsav: true
+      iff: 1.0
+      informativity: 0.6975415623595866
+      name: Logoori
+      optimality: 0.950755276981988
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: kunyala
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: haondi
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: fwana
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: kudoka
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    length: 4
+- Farsi:
+    data:
+      Language: natural
+      comm_cost: 0.2421849926182682
+      complexity: 28
+      dlsav: true
+      iff: 1.0
+      informativity: 0.7578150073817318
+      name: Farsi
+      optimality: 0.8510551772472625
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: bayad
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: lazem ast
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: shayad
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: momken ast
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: emkand ast
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: -tavan-
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: -shav-
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    - form: ejaze dad/dasht
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: 'balad ast '
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    length: 9
+- Basque:
+    data:
+      Language: natural
+      comm_cost: 0.37366406701328714
+      complexity: 22
+      dlsav: false
+      iff: 0.6
+      informativity: 0.6263359329867129
+      name: Basque
+      optimality: 0.8524440680307364
+      sav: 0.6
+      simplicity: null
+    expressions:
+    - form: behar
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: ezin
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: ahal
+      lot: (+ (* (weak ) (deontic )) (* (strong ) (circumstantial )))
+      meaning:
+      - strong+circumstantial
+      - weak+deontic
+    - form: daiteke
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    - form: liteke
+      lot: (+ (epistemic ) (* (weak ) (circumstantial )))
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+      - weak+circumstantial
+    length: 5
+- Lillooet-Salish:
+    data:
+      Language: natural
+      comm_cost: 0.2326208357404198
+      complexity: 14
+      dlsav: true
+      iff: 1.0
+      informativity: 0.7673791642595802
+      name: Lillooet-Salish
+      optimality: 0.9564506472352424
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: k'a
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: ka-...-a
+      lot: (circumstantial )
+      meaning:
+      - strong+circumstantial
+      - weak+circumstantial
+    - form: ka
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: -an'
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    length: 5
+- Turkish:
+    data:
+      Language: natural
+      comm_cost: 0.3820581792797998
+      complexity: 26
+      dlsav: false
+      iff: 0.7142857142857143
+      informativity: 0.6179418207202002
+      name: Turkish
+      optimality: 0.8168127067047389
+      sav: 0.7142857142857143
+      simplicity: null
+    expressions:
+    - form: -ma-
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: gerek
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: "\u015Fart"
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "-d\u0131r"
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "laz\u0131m"
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: -abil // -ebil
+      lot: (- (* (strong ) (- (circumstantial ))))
+      meaning:
+      - strong+circumstantial
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: "m\xFCmk\xFCn"
+      lot: (+ (circumstantial ) (* (weak ) (epistemic )))
+      meaning:
+      - strong+circumstantial
+      - weak+epistemic
+      - weak+circumstantial
+    length: 7
+- Dutch:
+    data:
+      Language: natural
+      comm_cost: 0.22982019064124792
+      complexity: 36
+      dlsav: false
+      iff: 0.9
+      informativity: 0.7701798093587521
+      name: Dutch
+      optimality: 0.8073540456262461
+      sav: 0.9
+      simplicity: null
+    expressions:
+    - form: zal
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: moet/moeten
+      lot: (- (* (weak ) (- (deontic ))))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+      - weak+deontic
+    - form: zou/zouden ... moeten
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: kan/kunnen
+      lot: (* (weak ) (- (deontic )))
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+    - form: zou/zouden ... kunnen
+      lot: (* (weak ) (- (deontic )))
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+    - form: 'waarschijnlijk '
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: misschien
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: mag/mogen
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: hoeft
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: wellicht
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    length: 10
+- Hebrew:
+    data:
+      Language: natural
+      comm_cost: 0.2569765389306117
+      complexity: 32
+      dlsav: false
+      iff: 0.875
+      informativity: 0.7430234610693883
+      name: Hebrew
+      optimality: 0.8147711211772302
+      sav: 0.875
+      simplicity: null
+    expressions:
+    - form: batuakh
+      lot: (* (strong ) (- (deontic )))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+    - form: khayav
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: tzarikh
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: oolay
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: yitakhen
+      lot: (+ (* (weak ) (epistemic )) (* (strong ) (circumstantial )))
+      meaning:
+      - strong+circumstantial
+      - weak+epistemic
+    - form: yakhol
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: mesugelet
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: asur
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    length: 8
+- Japanese:
+    data:
+      Language: natural
+      comm_cost: 0.17821767282880807
+      complexity: 48
+      dlsav: false
+      iff: 1.0
+      informativity: 0.8217823271711919
+      name: Japanese
+      optimality: 0.7532597125432127
+      sav: 0.9230769230769231
+      simplicity: null
+    expressions:
+    - form: hazu
+      lot: (- (deontic ))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - weak+epistemic
+      - weak+circumstantial
+    - form: ni chigai nai
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: (a)nakerebanaranai
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: beki
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: kamoshirenai
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: temo ii
+      lot: (deontic )
+      meaning:
+      - strong+deontic
+      - weak+deontic
+    - form: koto-ga deki
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: e
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: koto-ga dekiru
+      lot: (* (weak ) (circumstantial ))
+      meaning:
+      - weak+circumstantial
+    - form: tashika
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: kagira-nai
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: wake
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: naranai
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    length: 13
+- Hausa:
+    data:
+      Language: natural
+      comm_cost: 0.45676471532190766
+      complexity: 34
+      dlsav: false
+      iff: 0.875
+      informativity: 0.5432352846780923
+      name: Hausa
+      optimality: 0.7327453124600277
+      sav: 0.875
+      simplicity: null
+    expressions:
+    - form: dole
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: lallai
+      lot: (* (strong ) (- (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+    - form: "wata\u0199ila"
+      lot: (+ (epistemic ) (* (weak ) (deontic )))
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+    - form: Za ... iya
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    - form: kada
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: "bu\u0199atar"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: za
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: yiwu
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    length: 8
+- Akan:
+    data:
+      Language: natural
+      comm_cost: 0.2851434623531677
+      complexity: 28
+      dlsav: false
+      iff: 0.875
+      informativity: 0.7148565376468323
+      name: Akan
+      optimality: 0.8388920921851736
+      sav: 0.875
+      simplicity: null
+    expressions:
+    - form: "\u025Bs\u025Bs\u025B"
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: "a-gye-s\u025B"
+      lot: (* (strong ) (epistemic ))
+      meaning:
+      - strong+epistemic
+    - form: "\u025B-ho-hia"
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    - form: "\u025Bw\u0254s\u025B"
+      lot: (+ (deontic ) (* (strong ) (circumstantial )))
+      meaning:
+      - strong+deontic
+      - strong+circumstantial
+      - weak+deontic
+    - form: ebia
+      lot: (epistemic )
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: gyama
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: (be)-tumi
+      lot: (weak )
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: ebia+tumi
+      lot: (* (strong ) (- (deontic )))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+    length: 8
+- Kiitharaka:
+    data:
+      Language: natural
+      comm_cost: 0.24663007895243605
+      complexity: 28
+      dlsav: true
+      iff: 1.0
+      informativity: 0.753369921047564
+      name: Kiitharaka
+      optimality: 0.8500307012087447
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: mwanka
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    - form: perfective aspect
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: "w\xEEgue"
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: "\xFBmba"
+      lot: (* (weak ) (- (deontic )))
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+    - form: 'n''wa +verb '
+      lot: (* (weak ) (- (epistemic )))
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+    - form: n'wa + ka
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: ti + ka
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: racima
+      lot: (strong )
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - strong+circumstantial
+    length: 8
+- Greek:
+    data:
+      Language: natural
+      comm_cost: 0.6215337954939342
+      complexity: 14
+      dlsav: false
+      iff: 0.75
+      informativity: 0.3784662045060659
+      name: Greek
+      optimality: 0.8828269995352347
+      sav: 0.5
+      simplicity: null
+    expressions:
+    - form: Prepei
+      lot: (- (circumstantial ))
+      meaning:
+      - strong+deontic
+      - strong+epistemic
+      - weak+epistemic
+      - weak+deontic
+    - form: Mporei
+      lot: (- (* (strong ) (circumstantial )))
+      meaning:
+      - strong+deontic
+      - weak+epistemic
+      - strong+epistemic
+      - weak+circumstantial
+      - weak+deontic
+    - form: Isos
+      lot: (* (weak ) (epistemic ))
+      meaning:
+      - weak+epistemic
+    - form: hreiazomai
+      lot: (* (strong ) (deontic ))
+      meaning:
+      - strong+deontic
+    length: 4
