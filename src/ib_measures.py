@@ -20,7 +20,7 @@ def ib_complexity(
     """Compute the encoder complexity of a language."""
     return information_rate(
         source=prior,
-        encoder=language_to_ib_encoder(
+        encoder=language_to_ib_encoder_decoder(
             language,
             agent_type,
             )["encoder"],
@@ -50,7 +50,7 @@ def ib_comm_cost(
     Returns:
         the communicative cost, E[D[M || \hat{M}]] in bits.
     """
-    system = language_to_ib_encoder(language, agent_type)
+    system = language_to_ib_encoder_decoder(language, agent_type)
     encoder = system["encoder"]
     decoder = system["decoder"]
 
@@ -64,16 +64,22 @@ def ib_comm_cost(
         kl_divergence=kl_dist_mat,
     )
 
-def language_to_ib_encoder(
+def language_to_ib_encoder_decoder(
     language: ModalLanguage, 
     agent_type: str = DEFAULT_AGENT,
-    ) -> np.ndarray:
+    speaker_weights: np.ndarray = None,
+    listener_weights: np.ndarray = None,
+    ) -> dict[str, np.ndarray]:
     """Convert a ModalLanguage, a mapping of words to meanings, to IB encoder, q(w|m) and IB decoder q(m|w).
     
     Args:
         language: the lexicon from which to infer a speaker (encoder).
 
         agent_type: {'literal', 'pragmatic'} RSA speaker type.
+
+        speaker_weights: 
+
+        listener_weights: 
     
     Returns:
         a dict of the form 
@@ -91,10 +97,28 @@ def language_to_ib_encoder(
         listener = LiteralListener(language)
         speaker = PragmaticSpeaker(language, listener)
 
+    if speaker_weights is not None:
+        speaker.weights = speaker_weights
+    if listener_weights is not None:
+        listener.weights = listener_weights
+
     return {
         "encoder": speaker.normalized_weights(),
         "decoder": listener.normalized_weights(),
     }
+
+def ib_encoder_to_rsa_system(
+    encoder: np.ndarray, space: ModalMeaningSpace,
+    agent_type: str = DEFAULT_AGENT,
+) -> dict[str, np.ndarray]:
+    """Get RSA speaker and listener weights from an ib encoder."""
+    language = ModalLanguage.default_language_from_space(space)
+    return language_to_ib_encoder_decoder(
+        language=language,
+        agent_type=agent_type,
+        speaker_weights=encoder,
+        listener_weights=, #TODO: what should go here? 
+    )
 
 def generate_meaning_distribution(
     space: ModalMeaningSpace, 

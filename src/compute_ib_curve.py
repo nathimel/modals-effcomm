@@ -10,8 +10,7 @@ DEFAULT_NUM_ITER = 10
 
 
 # default language for IB to interface with RSA
-from modals.modal_language import ModalLanguage, ModalExpression, ModalMeaning
-
+from modals.modal_language import ModalLanguage
 
 
 # reverse deterministic annealing algorithm (Zaslavsky & Tishby, 2019)
