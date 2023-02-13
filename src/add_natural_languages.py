@@ -1,6 +1,8 @@
 """Script for extracting natural language modals data and adding to efficient communication experiment."""
 
+import os
 import sys
+import yaml
 from typing import Any
 import pandas as pd
 from misc.file_util import load_configs, load_expressions
@@ -8,6 +10,13 @@ from misc.file_util import load_space, save_languages
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_meaning import ModalMeaning, ModalMeaningPoint
 
+
+ALLOWED_REFERENCE_TYPES = ["paper-journal", "elicitation"]
+REFERENCE_TYPES = ["reference-grammar"] + ALLOWED_REFERENCE_TYPES
+REFERENCE_TYPE_KEY = "Reference-type"
+
+METADATA_FN = "metadata.yml"
+MODALS_FN = "modals.csv"
 
 def process_can_express(val: Any, can_express: dict):
     """For an observation of whether a modal can_express a force-flavor pair, interpret ? as 1.
@@ -43,12 +52,37 @@ def main():
     space_fn = configs["file_paths"]["meaning_space"]
     lang_save_fn = configs["file_paths"]["natural_languages"]
 
-    # Load csv files
-    csv_path = configs["file_paths"]["data"]["csv"]
-    dataframes = {
-        language_name: pd.read_csv(csv_path.replace("Language", language_name))
-        for language_name in configs["file_paths"]["data"]["languages"]
-    }
+    ##########################################################################
+    # Load in languages from cloned database
+    ##########################################################################
+
+    language_data_dir = configs["file_paths"]["data"]
+    dirs = [x for x in os.listdir(language_data_dir) if os.path.isdir(os.path.join(language_data_dir, x))]
+
+    dataframes = dict()
+    for dir in dirs:
+        # Ensure that is one of allowed reference types
+        dirpath = os.path.join(language_data_dir, dir)
+        metadata_path = os.path.join(dirpath, METADATA_FN)
+
+        with open(metadata_path, "r") as stream:
+            metadata = yaml.safe_load(stream) # a list of dicts
+        # Extract reference type dict
+        reference_type_metadata , = [d for d in metadata if list(d.keys()) == [REFERENCE_TYPE_KEY]]
+        reference_type = reference_type_metadata[REFERENCE_TYPE_KEY]
+        
+        if reference_type in REFERENCE_TYPES:
+            # Add to dataframes, only if paper journal or elicitation. Skip reference-grammar obtained data.
+            if reference_type in ALLOWED_REFERENCE_TYPES:
+                modals_fn = os.path.join(dirpath, MODALS_FN)
+                dataframes[dir] = pd.read_csv(modals_fn)
+        else:
+            raise ValueError(f"The field 'Reference-type' should only contain one of {ALLOWED_REFERENCE_TYPES}. Received: {reference_type}")
+
+
+    ##########################################################################
+    # Convert DataFrames to ModalLanguages
+    ##########################################################################
 
     # correct for different spelling of row names
     for language_name, df in dataframes.items():
@@ -58,6 +92,11 @@ def main():
         if "expression" not in df.columns:
             if '"core" form' in df.columns:
                 df["expression"] = df['"core" form']
+            elif '“core” form' in df.columns:
+                df["expression"] = df['“core” form']
+            
+            else:
+                raise ValueError("Expression column or variants not found in dataframe.")
 
     # Load possible expressions and meaning space to map natural vocabularies into
     expressions = load_expressions(expression_save_fn)

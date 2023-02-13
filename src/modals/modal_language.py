@@ -216,7 +216,7 @@ class ModalLanguage(Language):
         Args:
             - name: the name of the language
 
-            - data: a dictionary of the expressions and trade-off data
+            - lang_dict: a dictionary of the expressions and trade-off data
 
             - space: the modal meaning space being used by the language.
         """
@@ -227,6 +227,21 @@ class ModalLanguage(Language):
         lang = cls(expressions, name=name, data=data)
 
         return lang
+
+    @classmethod
+    def default_language_from_space(cls, space: ModalMeaningSpace):
+        """Construct a default, perfectly informative ModalLanguage from a ModalMeaningSpace."""
+        expressions = [ModalExpression(
+            form=f"default_expression_{referent}",
+            meaning=ModalMeaning(
+                points=[
+                    ModalMeaningPoint(force=referent.force, flavor=referent.flavor)
+                ],
+                meaning_space=space,
+            ),
+            lot_expression=None, # cannot be measured for complexity
+        ) for referent in space.referents]
+        return cls(expressions, name="DEFAULT_LANGUAGE")
 
 ##############################################################################
 # Functions

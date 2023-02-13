@@ -12,23 +12,6 @@ DEFAULT_NUM_ITER = 10
 # default language for IB to interface with RSA
 from modals.modal_language import ModalLanguage, ModalExpression, ModalMeaning
 
-# NUM_MEANINGS = 6
-# DEFAULT_LANGUAGE = ModalLanguage(
-#     expressions=[
-#         ModalExpression(
-#             form=f"default_expression_{i}",
-#             meaning=ModalMeaning(
-#                 points=[
-#                     ModalMeaningPoint(
-#                         name= # TODO: change the meaning point to have data instead of name
-#                     )
-#                 ],
-#                 meaning_space=space,
-#             ),
-#             lot_expression=None, # not used for complexity
-#         ) for i in range(NUM_MEANINGS)
-#     ],
-# )
 
 
 # reverse deterministic annealing algorithm (Zaslavsky & Tishby, 2019)

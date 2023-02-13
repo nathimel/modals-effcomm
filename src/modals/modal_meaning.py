@@ -9,6 +9,8 @@ class ModalMeaningPoint(Referent):
     # def __init__(self, name: str, weight: float = None) -> None:
     def __init__(self, force: str, flavor: str) -> None:
         self.data = (force, flavor)
+        self.force = force
+        self.flavor = flavor
         super().__init__(self.name)
 
     @property
