@@ -1,0 +1,86 @@
+time ./scripts/run_full_experiment.sh configs/journal/indicator_literal.yml
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+Loaded 100658 languages in 280.37 seconds
+dominant...
+Loaded 13 languages in 0.02 seconds
+natural...
+Loaded 19 languages in 0.04 seconds
+100677 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 100677 sampled languages in 132.36 seconds
+Saved 13 dominant languages in 0.01 seconds
+Saved 19 natural languages in 0.02 seconds
+done.
+Loaded 100677 languages in 265.51 seconds
+Loaded 19 languages in 0.05 seconds
+Loaded 13 languages in 0.02 seconds
+NATURAL DATA
+   Language  comm_cost  complexity  dlsav       iff  informativity  \
+0   natural   0.579249          34  False  0.875000       0.420751   
+1   natural   0.465242          14   True  1.000000       0.534758   
+2   natural   0.284500          48  False  1.000000       0.715500   
+3   natural   0.484370          28   True  1.000000       0.515630   
+4   natural   0.646831          26  False  0.714286       0.353169   
+5   natural   0.248748          34   True  1.000000       0.751252   
+6   natural   0.531005          48   True  1.000000       0.468995   
+7   natural   0.748685          14  False  0.750000       0.251315   
+8   natural   0.622189          20  False  0.600000       0.377811   
+9   natural   0.407496          16   True  1.000000       0.592504   
+10  natural   0.437793          32  False  0.875000       0.562207   
+11  natural   0.527946          28  False  0.875000       0.472054   
+12  natural   0.340958          42  False  1.000000       0.659042   
+13  natural   0.604917          12   True  1.000000       0.395083   
+14  natural   0.378394          40   True  1.000000       0.621606   
+15  natural   0.285890          20   True  1.000000       0.714110   
+16  natural   0.493260          28   True  1.000000       0.506740   
+17  natural   0.627552          22  False  0.600000       0.372448   
+18  natural   0.402863          36  False  0.900000       0.597137   
+
+                name  optimality       sav simplicity  
+0              Hausa    0.746298  0.875000       None  
+1    Lillooet-Salish    0.936831  1.000000       None  
+2           Japanese    0.710890  0.923077       None  
+3              Farsi    0.813291  1.000000       None  
+4            Turkish    0.805937  0.714286       None  
+5         Vietnamese    0.832403  1.000000       None  
+6               Thai    0.637420  1.000000       None  
+7              Greek    0.903697  0.500000       None  
+8              Hindi    0.861393  0.600000       None  
+9            Gitksan    0.929414  1.000000       None  
+10            Hebrew    0.792888  0.875000       None  
+11              Akan    0.806209  0.875000       None  
+12            Korean    0.737199  1.000000       None  
+13           Logoori    0.933114  1.000000       None  
+14          Mandarin    0.743893  1.000000       None  
+15  Javanese-Paciran    0.930645  1.000000       None  
+16        Kiitharaka    0.811846  1.000000       None  
+17            Basque    0.843314  0.600000       None  
+18             Dutch    0.772134  0.900000       None  
+Degree iff pearson correlations:
+simplicity: 0.47436185784269813
+informativity: 0.5526176601702197
+optimality: 0.6093472558206151
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.643421       0.520111    0.818359
+dlsav_means         0.643464       0.662389    0.863318
+population_means    0.530305       0.401774    0.721940
+
+TTEST STATS
+natural languages (19) against population (100696)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic          3.530623       3.726931    5.006054
+Two-sided p-value    0.002389       0.001543    0.000092
+
+dlsav languages (4594) against population (100696)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         57.191645      73.045277  156.552791
+Two-sided p-value    0.000000       0.000000    0.000000
+
