@@ -16,7 +16,7 @@ def generate_uniform(space: ModalMeaningSpace) -> dict[str, float]:
 def renumber_sentences(dfs: list[pd.DataFrame]) -> list[pd.DataFrame]:
     """Helper function to renumber the sentence_ids to be unique wrt all sentences in the dataset, not just within a file."""
     sentence_count = 0
-    for i, df in enumerate(dfs):
+    for df in dfs:
         df["sentence_id"] += sentence_count
         sentence_count = df["sentence_id"].max() + 1
     return dfs

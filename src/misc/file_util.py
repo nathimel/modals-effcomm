@@ -101,6 +101,7 @@ def load_prior(fn: str) -> dict[str, float]:
     """Load a prior communicative need probability distribution over modal meaning points from a saved YAML file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
+    d = {tuple(key.split("+")): value for key, value in d.items()} # convert from strings to tuples
     return d
 
 
@@ -138,6 +139,7 @@ def save_expressions(fn, expressions: list[ModalExpression]):
     expressions = [
         {
             "form": e.form,
+            # N.B.: force+flavor string is most readable in YML file
             "meaning": [point.name for point in e.meaning.referents],
             "lot": e.lot_expression,
         }

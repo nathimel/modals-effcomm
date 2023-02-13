@@ -1,0 +1,128 @@
+Building modal meaning space ...
+done.
+Generating expressions...
+done.
+Sampling random languages ...
+Saved 31524 sampled languages in 42.79 seconds
+done.
+Adding Akan
+Adding Basque
+Adding Dutch
+Adding Farsi
+Adding Gitksan
+Adding Greek
+Adding Hausa
+Adding Hebrew
+Adding Hindi
+Adding Japanese
+Adding Javanese-Paciran
+Adding Kiitharaka
+Adding Korean
+Adding Lillooet-Salish
+Adding Logoori
+Adding Mandarin
+Adding Thai
+Adding Turkish
+Adding Vietnamese
+Saved 19 natural languages in 0.02 seconds
+Estimating prior...
+Constructing uniform prior
+Loading dataframes...
+Parsing and tagging sentences...
+done.
+Estimating pareto frontier ...
+Loaded 31524 languages in 83.15 seconds
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+Minimizing for informativity, complexity ...
+Minimizing for comm_cost, simplicity ...
+Minimizing for informativity, simplicity ...
+Discovered 1592252 languages.
+Saved 95267 explored languages in 1073.23 seconds
+Saved 10 dominant languages in 0.02 seconds
+done.
+Measuring tradeoff ...
+Loading all languages ...
+sampled...
+Loaded 95267 languages in 263.86 seconds
+dominant...
+Loaded 10 languages in 0.02 seconds
+natural...
+Loaded 19 languages in 0.04 seconds
+95286 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saved 95286 sampled languages in 124.05 seconds
+Saved 12 dominant languages in 0.01 seconds
+Saved 19 natural languages in 0.02 seconds
+done.
+Loaded 95286 languages in 257.85 seconds
+Loaded 19 languages in 0.05 seconds
+Loaded 12 languages in 0.02 seconds
+NATURAL DATA
+   Language  comm_cost  complexity  dlsav       iff  informativity  \
+0   natural   0.142945          20   True  1.000000       0.857055   
+1   natural   0.124374          34   True  1.000000       0.875626   
+2   natural   0.170479          42  False  1.000000       0.829521   
+3   natural   0.302458          12   True  1.000000       0.697542   
+4   natural   0.456765          34  False  0.875000       0.543235   
+5   natural   0.424515          48   True  1.000000       0.575485   
+6   natural   0.246630          28   True  1.000000       0.753370   
+7   natural   0.178218          48  False  1.000000       0.821782   
+8   natural   0.382058          26  False  0.714286       0.617942   
+9   natural   0.189197          40   True  1.000000       0.810803   
+10  natural   0.621534          14  False  0.750000       0.378466   
+11  natural   0.415752          20  False  0.600000       0.584248   
+12  natural   0.373664          22  False  0.600000       0.626336   
+13  natural   0.229820          36  False  0.900000       0.770180   
+14  natural   0.256977          32  False  0.875000       0.743023   
+15  natural   0.242185          28   True  1.000000       0.757815   
+16  natural   0.203748          16   True  1.000000       0.796252   
+17  natural   0.285143          28  False  0.875000       0.714857   
+18  natural   0.232621          14   True  1.000000       0.767379   
+
+                name  optimality       sav simplicity  
+0   Javanese-Paciran    0.944163  1.000000       None  
+1         Vietnamese    0.875313  1.000000       None  
+2             Korean    0.800390  1.000000       None  
+3            Logoori    0.950755  1.000000       None  
+4              Hausa    0.732745  0.875000       None  
+5               Thai    0.638370  1.000000       None  
+6         Kiitharaka    0.851275  1.000000       None  
+7           Japanese    0.753260  0.923077       None  
+8            Turkish    0.816813  0.714286       None  
+9           Mandarin    0.805327  1.000000       None  
+10             Greek    0.882827  0.500000       None  
+11             Hindi    0.856896  0.600000       None  
+12            Basque    0.852444  0.600000       None  
+13             Dutch    0.807354  0.900000       None  
+14            Hebrew    0.815368  0.875000       None  
+15             Farsi    0.852231  1.000000       None  
+16           Gitksan    0.961307  1.000000       None  
+17              Akan    0.840720  0.875000       None  
+18   Lillooet-Salish    0.959751  1.000000       None  
+Degree iff pearson correlations:
+simplicity: 0.4169862467988528
+informativity: 0.5696124450562096
+optimality: 0.5986072567977897
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.643421       0.711627    0.841964
+dlsav_means         0.641642       0.730487    0.860247
+population_means    0.544315       0.550136    0.732973
+
+TTEST STATS
+natural languages (19) against population (95305)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic           3.09335       5.518782    5.804939
+Two-sided p-value     0.00627       0.000031    0.000017
+
+dlsav languages (4430) against population (95305)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         47.419811      54.698769   137.82535
+Two-sided p-value    0.000000       0.000000     0.00000
+

@@ -89,7 +89,7 @@ def main():
         for modal in vocabulary:
             form = modal
             meaning = ModalMeaning(
-                points=[ModalMeaningPoint(name=name) for name in vocabulary[modal]],
+                points=[ModalMeaningPoint.from_yaml_rep(name) for name in vocabulary[modal]],
                 meaning_space=space,
             )
             # search for a matching recorded meaning to reuse LoT solutions
