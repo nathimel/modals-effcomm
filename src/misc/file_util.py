@@ -108,6 +108,23 @@ def load_prior(fn: str) -> dict[str, float]:
 # Expressions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+def load_ib_curve(fn: str) -> list[tuple]:
+    """Load an IB curve computed by reverse deterministic annealing of the B.A. algorithm.
+    """
+    df = pd.read_csv(fn)
+    return list(map(tuple, df.to_numpy()))
+
+def save_ib_curve(fn: str, curve: list[tuple]) -> None:
+    """Save a dataframe of (Rate, Distortion) points to a CSV."""
+    df = pd.DataFrame(data=curve, column=["comm_cost", "complexity"])
+    df.to_csv(fn, index=False)
+    print(f"Saved {len(df)} language points to {fn}")    
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Expressions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def save_expressions(fn, expressions: list[ModalExpression]):
     """Saves the set of all possible modal expressions to a .yml file.
