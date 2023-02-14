@@ -107,8 +107,16 @@ def main():
     for language_name, df in dataframes.items():
         print(f"Adding {language_name}")
         vocabulary = {}
+
+        # only look at positive polarity modals
+
+        if "polarity" in df:
+            df_positive = df[df["polarity"] == "positive"]
+        else:
+            df_positive = df
+
         # add each observation
-        for _, row in df.iterrows():
+        for _, row in df_positive.iterrows():
             modal = row["expression"]
             # initialize an expression's set of meanings
             if modal not in vocabulary:

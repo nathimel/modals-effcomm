@@ -140,7 +140,7 @@ def generate_meaning_distribution(
     
     # construct p(u|m) for each meaning
     p_u_m = np.array(
-        [[cost(m, u) for u in space.referents] for m in space.referents]
+        [[decay ** cost(m, u) for u in space.referents] for m in space.referents]
     )
     # each row sums to 1.0
     np.seterr(divide="ignore", invalid="ignore")
