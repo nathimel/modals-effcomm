@@ -13,16 +13,32 @@ DEFAULT_UTILITY = "half_credit"
 
 # TODO: Move this to altk!
 class BayesianListener(Listener):
-    """A Bayesian reciever chooses an interpretation (deterministically) according to p(meaning | word), where
+    """A Bayesian reciever chooses an interpretation according to p(meaning | word), where
 
         P(meanings | words) = P(meanings | words) * P(meanings) / P(words)
+
+    Furthermore, we sometimes require that each word w is deterministically interpreted as meaning \hat{m} as follows:
+
+        \hat{m}_{w}(u) = sum_m [ p(m|w) * m(u) ]
+
     """
 
     def __init__(self, speaker: Speaker, prior: np.ndarray, name: str = None):
         weights = bayes(speaker.normalized_weights(), prior)
         super().__init__(speaker.language, weights=weights, name=name)
 
-    # TODO: If the bayesian receiver is to be deterministic, then I need to make the weights so that each row is a one-hot vector.
+def deterministic_decoder(decoder: np.ndarray, meaning_distributions: np.ndarray) -> np.ndarray:
+    """Compute \hat{m}_{w}(u) = sum_m [ p(m|w) * m(u) ]
+
+    Args:
+        decoder: array of shape `(|words|, |meanings|)`
+
+        meaning_distributions: array of shape `(|meanings|, |meanings|)`
+    
+    Returns:
+        array of shape `(|words|, |meanings|)` representing the 'optimal' deterministic decoder
+    """
+    return marginalize(decoder, meaning_distributions)
 
 def ib_complexity(
     language: ModalLanguage, 
@@ -45,7 +61,6 @@ def ib_comm_cost(
     """Compute the expected KL-divergence betweeen speaker and listener meanings for a language.
     
     Args:
-
         language: the ModalLanguage to measure
 
         prior: communicative need distribution
@@ -61,8 +76,13 @@ def ib_comm_cost(
     encoder = system["encoder"]
     decoder = system["decoder"]
 
+    meanings = generate_meaning_distributions(space, decay, utility)
     space = language.universe
-    kl_dist_mat = generate_kl_divergence(space, decay, utility)
+
+    kl_dist_mat = generate_kl_divergence(
+        encoder_meanings=meanings,
+        decoder_meanings=optimal_meanings(decoder, meanings)
+    )
 
     expected_distortion(
         source=prior,
@@ -107,12 +127,12 @@ def ib_encoder_to_decoder(
     listener = BayesianListener(speaker, prior)
     return listener.normalized_weights()
 
-def generate_meaning_distribution(
+def generate_meaning_distributions(
     space: ModalMeaningSpace, 
     decay: float = DEFAULT_DECAY, 
     utility: str = DEFAULT_UTILITY,
     ) -> np.ndarray:
-    """Generate a conditional distribution over world states given meanings, p(u|m).
+    """Generate a conditional distribution over world states given meanings, p(u|m), for each meaning.
 
     Args:
         space: the ModalMeaningSpace on which meanings are defined
@@ -128,29 +148,28 @@ def generate_meaning_distribution(
     cost = lambda x, y: 1 -  {"half_credit": half_credit, "indicator": indicator}[utility](x,y)
     
     # construct p(u|m) for each meaning
-    p_u_m = np.array(
+    meaning_distributions = np.array(
         [[decay ** cost(m, u) for u in space.referents] for m in space.referents]
     )
     # each row sums to 1.0
     np.seterr(divide="ignore", invalid="ignore")
-    p_u_m = np.nan_to_num(p_u_m / p_u_m.sum(axis=1, keepdims=True))
+    meaning_distributions = np.nan_to_num(meaning_distributions / meaning_distributions.sum(axis=1, keepdims=True))
 
-    return p_u_m
+    return meaning_distributions
 
 
 def generate_kl_divergence(
-    space: ModalMeaningSpace, 
-    decay: float = DEFAULT_DECAY, 
-    utility: str = DEFAULT_UTILITY,
+    encoder_meanings: np.ndarray, 
+    decoder_meanings: np.ndarray,
     ) -> np.ndarray:
     """Generate a distortion matrix for the speaker and listener meanings using KL divergence of their meaning distributions.
     
     Returns:
-        an array of size `(|meanings|, |meanings|)`
+        an array of size `(|meanings|, |meanings|)` representing the pairwise KL divergence D[m || \hat{m}] for each speaker meaning distribution with each listener meaning distribution.
     """
-    meanings = generate_meaning_distribution(space, decay, utility)
+
     return np.array(
-        [[DKL(m, m_) for m in meanings] for m_ in meanings]
+        [[DKL(m, m_) for m in encoder_meanings] for m_ in decoder_meanings]
     )
 
 
@@ -163,6 +182,7 @@ def information_rate(source: np.ndarray, encoder: np.ndarray) -> float:
     pXY = joint(pY_X=encoder, pX=source)
     return MI(pXY=pXY)
 
+#TODO: I think the key is going to be writing an alternative to expected distortion. That's annoying though, because the assumption of a bayesian deterministic listener requires us to separate 
 def expected_distortion(
     source: np.ndarray, 
     encoder: np.ndarray, 
