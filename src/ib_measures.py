@@ -1,35 +1,44 @@
 import numpy as np
 
 from modals.modal_language import ModalLanguage, ModalMeaningSpace
-from altk.effcomm.agent import LiteralListener, LiteralSpeaker, PragmaticSpeaker, PragmaticListener
+from altk.effcomm.agent import LiteralListener, LiteralSpeaker, PragmaticSpeaker, PragmaticListener, Speaker, Listener
 from modals.modal_measures import half_credit, indicator
 
 DEFAULT_DECAY = 1e-1
 DEFAULT_UTILITY = "half_credit"
-DEFAULT_AGENT = "literal"
 
 ##############################################################################
 # Converting from languages to IB quantities
 ##############################################################################
 
+# TODO: Move this to altk!
+class BayesianListener(Listener):
+    """A Bayesian reciever chooses an interpretation (deterministically) according to p(meaning | word), where
+
+        P(meanings | words) = P(meanings | words) * P(meanings) / P(words)
+    """
+
+    def __init__(self, speaker: Speaker, prior: np.ndarray, name: str = None):
+        weights = bayes(speaker.normalized_weights(), prior)
+        super().__init__(speaker.language, weights=weights, name=name)
+
+    # TODO: If the bayesian receiver is to be deterministic, then I need to make the weights so that each row is a one-hot vector.
+
 def ib_complexity(
     language: ModalLanguage, 
     prior: np.ndarray, 
-    agent_type: str,
     ) -> float:
     """Compute the encoder complexity of a language."""
     return information_rate(
         source=prior,
         encoder=language_to_ib_encoder_decoder(
             language,
-            agent_type,
             )["encoder"],
     )
 
 def ib_comm_cost(
     language: ModalLanguage, 
     prior: np.ndarray, 
-    agent_type: str,
     decay: float,
     utility: str,
     ) -> float:
@@ -41,8 +50,6 @@ def ib_comm_cost(
 
         prior: communicative need distribution
 
-        agent_type: {'literal', 'pragmatic'} RSA speaker type.
-
         decay: parameter for meaning distribution p(u|m) generation
 
         utility: parameter for meaning distribution p(u|m) generation
@@ -50,7 +57,7 @@ def ib_comm_cost(
     Returns:
         the communicative cost, E[D[M || \hat{M}]] in bits.
     """
-    system = language_to_ib_encoder_decoder(language, agent_type)
+    system = language_to_ib_encoder_decoder(language, prior)
     encoder = system["encoder"]
     decoder = system["decoder"]
 
@@ -66,20 +73,14 @@ def ib_comm_cost(
 
 def language_to_ib_encoder_decoder(
     language: ModalLanguage, 
-    agent_type: str = DEFAULT_AGENT,
-    speaker_weights: np.ndarray = None,
-    listener_weights: np.ndarray = None,
+    prior: np.ndarray,
     ) -> dict[str, np.ndarray]:
     """Convert a ModalLanguage, a mapping of words to meanings, to IB encoder, q(w|m) and IB decoder q(m|w).
     
     Args:
         language: the lexicon from which to infer a speaker (encoder).
 
-        agent_type: {'literal', 'pragmatic'} RSA speaker type.
-
-        speaker_weights: 
-
-        listener_weights: 
+        prior: communicative need distribution
     
     Returns:
         a dict of the form 
@@ -88,37 +89,23 @@ def language_to_ib_encoder_decoder(
             "decoder": np.ndarray of shape `(|words|, |meanings|)`,
         }
     """
-
-    if agent_type == "literal":
-        speaker = LiteralSpeaker(language)
-        listener = LiteralListener(language)
-
-    elif agent_type == "pragmatic":
-        listener = LiteralListener(language)
-        speaker = PragmaticSpeaker(language, listener)
-
-    if speaker_weights is not None:
-        speaker.weights = speaker_weights
-    if listener_weights is not None:
-        listener.weights = listener_weights
-
+    # In the IB framework, the encoder is a literal speaker and the decoder is a bayes optimal listener.
+    speaker = LiteralSpeaker(language)
+    listener = BayesianListener(speaker, prior)
     return {
         "encoder": speaker.normalized_weights(),
         "decoder": listener.normalized_weights(),
     }
 
-def ib_encoder_to_rsa_system(
-    encoder: np.ndarray, space: ModalMeaningSpace,
-    agent_type: str = DEFAULT_AGENT,
-) -> dict[str, np.ndarray]:
-    """Get RSA speaker and listener weights from an ib encoder."""
-    language = ModalLanguage.default_language_from_space(space)
-    return language_to_ib_encoder_decoder(
-        language=language,
-        agent_type=agent_type,
-        speaker_weights=encoder,
-        listener_weights=, #TODO: what should go here? 
-    )
+def ib_encoder_to_decoder(
+    encoder: np.ndarray,
+    prior: np.ndarray,
+    space: ModalMeaningSpace,
+) -> np.ndarray:
+    speaker = LiteralSpeaker(ModalLanguage.default_language_from_space(space))
+    speaker.weights = encoder
+    listener = BayesianListener(speaker, prior)
+    return listener.normalized_weights()
 
 def generate_meaning_distribution(
     space: ModalMeaningSpace, 
@@ -128,6 +115,8 @@ def generate_meaning_distribution(
     """Generate a conditional distribution over world states given meanings, p(u|m).
 
     Args:
+        space: the ModalMeaningSpace on which meanings are defined
+
         decay: a float in [0,1]. controls informativity, by decaying how much probability mass is assigned to perfect recoveries. As decay approaches 0, only perfect recovery is rewarded (which overrides any partial credit structure built into the utility/cost function). As decay approaches 1, the worst guesses become most likely.
 
         utility: {'indicator', 'half_credit'} whether to reward only perfect recovery of meaning points, or whether to give half credit for a correctly guessed axis of meaning (a force or a flavor).

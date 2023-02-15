@@ -4,7 +4,7 @@ import scipy
 import numpy as np
 
 from modals.modal_meaning import ModalMeaningSpace, ModalMeaningPoint
-from ib_measures import information_rate, expected_distortion, generate_kl_divergence, generate_meaning_distribution, DEFAULT_AGENT, DEFAULT_DECAY, DEFAULT_UTILITY
+from ib_measures import information_rate, expected_distortion, generate_kl_divergence, generate_meaning_distribution, DEFAULT_DECAY, DEFAULT_UTILITY, ib_encoder_to_decoder
 
 DEFAULT_NUM_ITER = 10
 
@@ -26,6 +26,8 @@ def get_curve(
     Args:
         prior: array of shape `|meanings|`
 
+        space: the ModalMeaningSpace on which meanings are defined
+
         max_lang_size: int representing the maximum number of words a system can have. To support perfect informativity, should be greater than or equal to the number of meanings.
 
         num_points: int representing how many points to compute of the IB curve
@@ -42,22 +44,18 @@ def get_curve(
     kl_dist_mat = generate_kl_divergence(space, decay, utility)
     meanings = generate_meaning_distribution(space, decay, utility)
 
-    EDKL = lambda encoder, decoder: expected_distortion(
+    comm_cost = lambda encoder, decoder: expected_distortion(
         source=prior,
         encoder=encoder,
         decoder=decoder,
         kl_divergence=kl_dist_mat,
     )
-
-
-
-    points = []
     complexity = lambda encoder: information_rate(source=prior, encoder=encoder)
-    # comm_cost = lambda encoder: 
+    points = []
 
     logsp = np.logspace(2, 0, num=num_points)
     for beta in logsp:
-        q_w_m = ib_method(
+        encoder = ib_method(
             p_x=prior,
             p_y_x=meanings,
             Z=max_lang_size,
@@ -66,9 +64,10 @@ def get_curve(
             num_iter=100,
         )
 
-        points.append(())
+        decoder = ib_encoder_to_decoder(encoder, prior, space)
+        points.append((comm_cost(encoder, decoder), complexity(encoder)))
 
-        init = q_w_m
+        init = encoder
 
 # code belongs to Chen et. al. (2022) https://github.com/mahowak/deictic_adverbs/blob/master/run_ib_new.py
 def ib_method(
