@@ -1,7 +1,7 @@
 import numpy as np
 
 from modals.modal_language import ModalLanguage, ModalMeaningSpace
-from altk.effcomm.agent import LiteralListener, LiteralSpeaker, PragmaticSpeaker, PragmaticListener, Speaker, Listener
+from altk.effcomm.agent import Speaker, Listener, LiteralSpeaker
 from modals.modal_measures import half_credit, indicator
 
 DEFAULT_DECAY = 1e-1
@@ -78,17 +78,12 @@ def ib_comm_cost(
 
     meanings = generate_meaning_distributions(space, decay, utility)
     space = language.universe
-
-    kl_dist_mat = generate_kl_divergence(
-        encoder_meanings=meanings,
-        decoder_meanings=optimal_meanings(decoder, meanings)
-    )
-
-    expected_distortion(
+    
+    return expected_distortion_ib(
         source=prior,
         encoder=encoder,
-        decoder=decoder,
-        kl_divergence=kl_dist_mat,
+        encoder_meanings=meanings,
+        decoder_meanings=deterministic_decoder(decoder, meanings),
     )
 
 def language_to_ib_encoder_decoder(
@@ -182,7 +177,52 @@ def information_rate(source: np.ndarray, encoder: np.ndarray) -> float:
     pXY = joint(pY_X=encoder, pX=source)
     return MI(pXY=pXY)
 
-#TODO: I think the key is going to be writing an alternative to expected distortion. That's annoying though, because the assumption of a bayesian deterministic listener requires us to separate 
+
+def expected_distortion_ib(
+    source: np.ndarray,
+    encoder: np.ndarray,
+    encoder_meanings: np.ndarray,
+    decoder_meanings: np.ndarray,
+) -> float:
+    """Communicative cost, E[DKL[M || \hat{M}]] = 
+
+        sum_m sum_w p(m) q(w|m) D[m || \hat{m}_w]
+
+    where \hat{m}_w = sum_m p(m|w)m(u)
+
+    Args:
+        source: p(M) of shape `|meanings|`
+
+        encoder: q(w | m) of shape `(|meanings|, |words|)`
+
+        encoder_meanings: M of shape (`|meanings|, |meanings|)`
+
+        decoder_meanings: \hat{M} of shape `(|words|, |meanings|)`
+    
+    Returns:
+        the expected KL divergence
+    """
+    total = 0
+    for i, p_meaning in enumerate(source):
+        for j, p_word in enumerate(encoder):
+            total += (
+                p_meaning *
+                p_word *
+                DKL(encoder_meanings[i], decoder_meanings[j])
+            )
+
+    # alternatively, we might do
+    expected_dkl = float(np.sum(
+        np.diag(source) @ encoder * (decoder_meanings @ encoder_meanings)
+        ))
+    if expected_dkl != total:
+        print("warning, difference in edkl values:")
+        print(total)        
+        print(expected_dkl)
+
+    return total
+
+# will never get used because deterministic bayesian listener is optimal, but this method is more general, so I'm keeping for now.
 def expected_distortion(
     source: np.ndarray, 
     encoder: np.ndarray, 

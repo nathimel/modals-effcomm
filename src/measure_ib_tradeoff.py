@@ -62,7 +62,6 @@ def main():
     comm_cost_measure = lambda lang: ib_measures.ib_comm_cost(
         language=lang,
         prior=prior,
-        agent_type=configs["agent_type"],
         # TODO: put these in configs eventually
         decay=DEFAULT_DECAY,
         utility=DEFAULT_UTILITY,

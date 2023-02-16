@@ -4,7 +4,7 @@
 
 if test $# -lt 1
 then
-    echo "Usage: ./scripts/main_results/run.sh path_to_config"
+    echo "Usage: ./scripts/run_full_experiment.sh path_to_config"
     exit 1
 fi
 

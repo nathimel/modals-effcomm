@@ -31,33 +31,13 @@ evolutionary_alg: # N.B.: We still run evol alg, but not to estimate frontier.
 
 # outputs etc
 file_paths:
-  meaning_space: outputs/journal/dib/dev/meaning_space.yml
-  expressions: outputs/journal/dib/dev/expressions.yml
-  data:
-    csv: data/natural_languages/Language/modals.csv
-    languages:
-      - Akan
-      - Basque
-      - Dutch
-      - Farsi
-      - Gitksan
-      - Greek
-      - Hausa
-      - Hebrew
-      - Hindi
-      - Japanese
-      - Javanese-Paciran
-      - Kiitharaka
-      - Korean
-      - Lillooet-Salish
-      - Logoori
-      - Mandarin
-      - Thai
-      - Turkish
-      - Vietnamese
+  meaning_space: outputs/journal/ib/dev/meaning_space.yml
+  expressions: outputs/journal/ib/dev/expressions.yml
+  data: ../modal-typology/basic-format
 
-  prior: outputs/journal/dib/dev/prior.yml
-  prior_df: outputs/journal/dib/dev/prior_df.csv # meaning counts from corpus
+  ib_curve: outptus/journal/ib/dev/curve.csv
+  prior: outputs/journal/ib/dev/prior.yml
+  prior_df: outputs/journal/ib/dev/prior_df.csv # meaning counts from corpus
   modality_corpus: 
     0:
       dev: data/modality_corpus/0/dev.txt
@@ -76,17 +56,17 @@ file_paths:
       train: data/modality_corpus/4/train.txt
     test: 
       test: data/modality_corpus/test/test.txt    
-  artificial_languages: outputs/journal/dib/dev/languages/artificial.yml
-  natural_languages: outputs/journal/dib/dev/languages/natural.yml
-  dominant_languages: outputs/journal/dib/dev/languages/dominant.yml # Pareto
+  artificial_languages: outputs/journal/ib/dev/languages/artificial.yml
+  natural_languages: outputs/journal/ib/dev/languages/natural.yml
+  dominant_languages: outputs/journal/ib/dev/languages/dominant.yml # Pareto
   analysis:
-    correlations: outputs/journal/dib/dev/analysis/correlations/property.csv # dummy property name
-    data: outputs/journal/dib/dev/analysis/all_data.csv
-    pareto_data: outputs/journal/dib/dev/analysis/pareto_data.csv
-    plot: outputs/journal/dib/dev/analysis/plot.png
-    means: outputs/journal/dib/dev/analysis/means.csv
-    ttest_natural: outputs/journal/dib/dev/analysis/ttest_natural.csv
-    ttest_dlsav: outputs/journal/dib/dev/analysis/ttest_dlsav.csv
+    correlations: outputs/journal/ib/dev/analysis/correlations/property.csv # dummy property name
+    data: outputs/journal/ib/dev/analysis/all_data.csv
+    pareto_data: outputs/journal/ib/dev/analysis/pareto_data.csv
+    plot: outputs/journal/ib/dev/analysis/plot.png
+    means: outputs/journal/ib/dev/analysis/means.csv
+    ttest_natural: outputs/journal/ib/dev/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/journal/ib/dev/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:

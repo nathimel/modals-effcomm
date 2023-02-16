@@ -115,11 +115,11 @@ def load_ib_curve(fn: str) -> list[tuple]:
     df = pd.read_csv(fn)
     return list(map(tuple, df.to_numpy()))
 
-def save_ib_curve(fn: str, curve: list[tuple]) -> None:
+def save_ib_curve(fn: str, curve) -> None:
     """Save a dataframe of (Rate, Distortion) points to a CSV."""
     df = pd.DataFrame(data=curve, column=["comm_cost", "complexity"])
     df.to_csv(fn, index=False)
-    print(f"Saved {len(df)} language points to {fn}")    
+    print(f"Saved {len(df)} language points to {fn}")
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

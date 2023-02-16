@@ -64,7 +64,7 @@ def main():
 
     # construct measures of complexity and informativity as optimization objectives
     space = file_util.load_space(space_fn)
-    prior = file_util.load_prior(prior_fn)
+    prior = space.prior_to_array(file_util.load_prior(prior_fn))
 
     complexity_measure = lambda lang: language_complexity(
         language=lang,
@@ -73,7 +73,7 @@ def main():
 
     informativity_measure = lambda lang: informativity(
         language=lang,
-        prior=space.prior_to_array(prior),
+        prior=prior,
         utility=file_util.load_utility(configs["utility"]),
         agent_type=agent_type,
     )

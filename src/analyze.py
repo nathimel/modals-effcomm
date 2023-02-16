@@ -66,13 +66,19 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.geom_point(  # The natural languages
-            natural_data,
-            color="red",
-            shape="+",
-            size=4,
-        )
-        + pn.geom_text(natural_data, pn.aes(label="name"), ha="left", size=9, nudge_x=1)
+        # + pn.geom_point(  # The natural languages
+        #     natural_data,
+        #     color="red",
+        #     shape="+",
+        #     size=4,
+        # )
+        # + pn.geom_text(
+        #     natural_data, 
+        #     pn.aes(label="name"), 
+        #     ha="left", 
+        #     size=7, # orig 9
+        #     nudge_x=1
+        # )
         + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
@@ -132,7 +138,7 @@ def main():
     data = get_dataframe(langs, **kwargs)
     pareto_data = get_dataframe(dom_langs, **kwargs)
     natural_data = get_dataframe(nat_langs, **kwargs)
-    data = data.append(natural_data)
+    # data = data.append(natural_data)
 
     # Plot
     naturalness = configs["universal_property"]
