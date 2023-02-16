@@ -9,6 +9,7 @@ from altk.effcomm.tradeoff import interpolate_data
 from misc.file_util import load_languages, load_configs, set_seed
 from modals.modal_language import ModalLanguage
 from scipy.stats import ttest_1samp
+import statsmodels.formula.api as smf
 from typing import Any
 
 
@@ -209,6 +210,17 @@ def trade_off_ttest(
     return df.set_index("stat")
 
 
+def standardize(data, cols):
+    for col in cols:
+        data[col] = (data[col] - data[col].mean()) / data[col].std()
+
+def fit_stat_model(formula, data):
+    model = smf.ols(formula=formula, data=data)
+    results = model.fit()
+    print(results.summary())
+    print(results.pvalues)
+
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python3 src/analysis.py path_to_config")
@@ -233,6 +245,8 @@ def main():
     correlations_fn = analysis_fns["correlations"]
     means_fn = analysis_fns["means"]
     ttest_fn = analysis_fns["ttest"]
+    # TODO: write these
+    regressions_fn = analysis_fns["regressions"]
 
     # Load languages
     langs = load_languages(langs_fn)
@@ -240,6 +254,8 @@ def main():
     dom_langs = load_languages(dom_langs_fn)
 
     # Main analysis
+    # TODO: refactor this! repeats='count' needs to be _only_ for plot, not for correlations / regressions
+    # TODO: also, we want counts based on _all_ data together, not separate frames
     data = get_modals_df(langs, repeats='count')
     pareto_data = get_modals_df(dom_langs, repeats='count')
     natural_data = get_modals_df(nat_langs)
