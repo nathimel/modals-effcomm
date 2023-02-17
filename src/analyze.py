@@ -3,12 +3,11 @@ import pandas as pd
 import plotnine as pn
 from altk.effcomm.tradeoff import interpolate_data
 from altk.effcomm.analysis import (
-    get_dataframe,
     pearson_analysis,
     trade_off_means,
     trade_off_ttest,
 )
-from misc.file_util import load_languages, load_configs, set_seed
+from misc.file_util import load_configs, set_seed
 
 
 def get_modals_plot(
@@ -66,6 +65,7 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
+        # TODO: control this via an arg
         # + pn.geom_point(  # The natural languages
         #     natural_data,
         #     color="red",
@@ -104,10 +104,6 @@ def main():
     # tell pandas to output all columns
     pd.set_option("display.max_columns", None)
 
-    # Load languages
-    langs_fn = configs["file_paths"]["artificial_languages"]
-    nat_langs_fn = configs["file_paths"]["natural_languages"]
-    dom_langs_fn = configs["file_paths"]["dominant_languages"]
 
     # Load analysis files
     analysis_fns = configs["file_paths"]["analysis"]
@@ -119,32 +115,22 @@ def main():
     ttest_natural_fn = analysis_fns["ttest_natural"]
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
-    # Load languages
-    result_sampled = load_languages(langs_fn)
-    result_natural = load_languages(nat_langs_fn)
-    result_dominant = load_languages(dom_langs_fn)
-    langs = result_sampled["languages"]
-    nat_langs = result_natural["languages"]
-    dom_langs = result_dominant["languages"]
 
     ############################################################################
-    # Construct main dataframe and plot
+    # Fetch main dataframe and plot
     ############################################################################
 
     # Record all observations, including duplicates, for statistical analyses
-    subset = ["complexity", "comm_cost"]
-    kwargs = {"subset": subset, "duplicates": "leave"}
-
-    data = get_dataframe(langs, **kwargs)
-    pareto_data = get_dataframe(dom_langs, **kwargs)
-    natural_data = get_dataframe(nat_langs, **kwargs)
-    # data = data.append(natural_data)
+    data = pd.read_csv(df_fn)
+    pareto_data = data[data['dominant'] == True]
+    natural_data = data[data['natural'] == True]
 
     # Plot
     naturalness = configs["universal_property"]
 
     # Add counts only for plot
     plot_data = data.copy()
+    subset = ["complexity", "comm_cost"]
     vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
@@ -228,7 +214,6 @@ def main():
         intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
     ]
-    data.to_csv(df_fn)
     pareto_data.to_csv(pareto_df_fn)
 
 

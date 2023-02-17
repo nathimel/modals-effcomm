@@ -1,10 +1,12 @@
 """Script for analyzing the results of the trade-off."""
 
 import sys
+import pandas as pd
 from misc import file_util
 from modals.modal_measures import language_complexity
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import iff, sav, dlsav
+from altk.effcomm.analysis import get_dataframe
 from altk.effcomm.informativity import informativity
 from altk.effcomm.tradeoff import tradeoff
 
@@ -26,6 +28,7 @@ def main():
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
+    df_fn = paths["analysis"]["data"]
 
     file_util.set_seed(configs["random_seed"])
 
@@ -90,7 +93,16 @@ def main():
     file_util.save_languages(
         natural_languages_fn, nat_langs, id_start=None, kind="natural"
     )
-    print("done.")
+    print("saved languages.")
+
+    # TODO: store the language.data fields in a common spot for repeat access in a uniform way
+    all_data = get_dataframe(langs, columns=list(properties_to_measure.keys()) + ["optimality"])
+    # TODO: make this more efficient
+    all_data["natural"] = [lang.natural for lang in langs]
+    all_data["dominant"] = [lang in dom_langs for lang in langs]
+    all_data["name"] = [lang.data["name"] for lang in langs]
+    all_data.to_csv(df_fn)
+    print("saved df.")
 
 
 if __name__ == "__main__":

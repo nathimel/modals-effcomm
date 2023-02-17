@@ -185,7 +185,6 @@ class ModalMeaningSpace(Universe):
         
         # normalize if necessary
         if np.sum(p) != 1:
-            print("Normalizing prior to a probability distribution.")
             p /= p.sum()
 
         return p
