@@ -13,8 +13,8 @@ from misc.file_util import load_configs, set_seed
 def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
-    natural_data: pd.DataFrame,
     naturalness: str,
+    natural_data: pd.DataFrame = None,
     counts=False,
     dlsav=False,
 ) -> pn.ggplot:
@@ -60,31 +60,35 @@ def get_modals_plot(
         # Set data and the axes
         pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
         + pn.scale_y_continuous(limits=[0, 1])
+        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.geom_point(  # all langs
+            data=data,
             stroke=0,
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        # TODO: control this via an arg
-        # + pn.geom_point(  # The natural languages
-        #     natural_data,
-        #     color="red",
-        #     shape="+",
-        #     size=4,
-        # )
-        # + pn.geom_text(
-        #     natural_data, 
-        #     pn.aes(label="name"), 
-        #     ha="left", 
-        #     size=7, # orig 9
-        #     nudge_x=1
-        # )
-        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
+    if natural_data is not None:
+        plot = (
+            plot
+            + pn.geom_point(  # The natural languages
+                natural_data,
+                color="red",
+                shape="+",
+                size=4,
+            )
+            + pn.geom_text(
+                natural_data,
+                pn.aes(label="name"),
+                ha="left",
+                size=7,
+                nudge_x=1,  # orig 9
+            )
+        )
     return plot
 
 
@@ -104,7 +108,6 @@ def main():
     # tell pandas to output all columns
     pd.set_option("display.max_columns", None)
 
-
     # Load analysis files
     analysis_fns = configs["file_paths"]["analysis"]
     df_fn = analysis_fns["data"]
@@ -115,15 +118,14 @@ def main():
     ttest_natural_fn = analysis_fns["ttest_natural"]
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
-
     ############################################################################
     # Fetch main dataframe and plot
     ############################################################################
 
     # Record all observations, including duplicates, for statistical analyses
     data = pd.read_csv(df_fn)
-    pareto_data = data[data['dominant'] == True]
-    natural_data = data[data['natural'] == True]
+    pareto_data = data[data["dominant"] == True]
+    natural_data = data[data["natural"] == True]
 
     # Plot
     naturalness = configs["universal_property"]
