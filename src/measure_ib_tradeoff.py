@@ -48,15 +48,14 @@ def main():
     langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")
 
-    # Load trade-off criteria
-    prior = file_util.load_prior(prior_fn)
-
+    # Load semantic space, prior, and IB bound
+    space = file_util.load_space(space_fn)
+    prior = space.prior_to_array(file_util.load_prior(prior_fn))
     ib_curve = file_util.load_ib_curve(ib_curve_fn)
 
     comp_measure = lambda lang: ib_measures.ib_complexity(
         language=lang, 
         prior=prior, 
-        agent_type=configs["agent_type"],
     )
 
     comm_cost_measure = lambda lang: ib_measures.ib_comm_cost(
@@ -67,11 +66,18 @@ def main():
         utility=DEFAULT_UTILITY,
     )
 
+    inf_measure = lambda lang: ib_measures.ib_accuracy(
+        language=lang,
+        prior=prior,
+        decay=DEFAULT_DECAY,
+        utility=DEFAULT_UTILITY,
+    )
+
     # Get trade-off results
     properties_to_measure = {
         "complexity": comp_measure,
         "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
-        "informativity": lambda lang: None, # TODO: compute I(W;U) 
+        "informativity": inf_measure, # TODO: compute I(W;U) 
         "comm_cost": comm_cost_measure,
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),

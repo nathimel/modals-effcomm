@@ -4,7 +4,7 @@ from modals.modal_language import ModalLanguage, ModalMeaningSpace
 from altk.effcomm.agent import Speaker, Listener, LiteralSpeaker
 from modals.modal_measures import half_credit, indicator
 
-DEFAULT_DECAY = 1e-1
+DEFAULT_DECAY = 0.1
 DEFAULT_UTILITY = "half_credit"
 
 ##############################################################################
@@ -38,19 +38,20 @@ def deterministic_decoder(decoder: np.ndarray, meaning_distributions: np.ndarray
     Returns:
         array of shape `(|words|, |meanings|)` representing the 'optimal' deterministic decoder
     """
-    return marginalize(decoder, meaning_distributions)
+    return decoder @ meaning_distributions
 
 def ib_complexity(
     language: ModalLanguage, 
     prior: np.ndarray, 
     ) -> float:
     """Compute the encoder complexity of a language."""
-    return information_rate(
+    return float(information_rate(
         source=prior,
         encoder=language_to_ib_encoder_decoder(
             language,
+            prior,
             )["encoder"],
-    )
+    ))
 
 def ib_comm_cost(
     language: ModalLanguage, 
@@ -75,16 +76,75 @@ def ib_comm_cost(
     system = language_to_ib_encoder_decoder(language, prior)
     encoder = system["encoder"]
     decoder = system["decoder"]
-
-    meanings = generate_meaning_distributions(space, decay, utility)
     space = language.universe
+
+    conditional_pum = generate_meaning_distributions(space, decay, utility)
+    conditional_puw = deterministic_decoder(decoder, conditional_pum)
+    joint_pmu = joint(conditional_pum, prior)
+    p_w = marginalize(encoder, prior)    
+    joint_puw = joint(conditional_puw, p_w)    
+
+    i_mu = MI(joint_pmu)
+    i_wu = MI(joint_puw)
+    return float(i_mu - i_wu)
+
+
+def ib_accuracy(
+    language: ModalLanguage, 
+    prior: np.ndarray, 
+    decay: float,
+    utility: str,
+    ) -> float:
+    """Compute the expected accuracy I[W:U] of a lexicon.
     
-    return expected_distortion_ib(
-        source=prior,
-        encoder=encoder,
-        encoder_meanings=meanings,
-        decoder_meanings=deterministic_decoder(decoder, meanings),
-    )
+    Args:
+        language: the ModalLanguage to measure
+
+        prior: communicative need distribution
+
+        decay: parameter for meaning distribution p(u|m) generation
+
+        utility: parameter for meaning distribution p(u|m) generation
+
+    Returns:
+        the communicative cost, E[D[M || \hat{M}]] in bits.
+    """
+    system = language_to_ib_encoder_decoder(language, prior)
+    encoder = system["encoder"]
+    decoder = system["decoder"]
+    space = language.universe
+
+    conditional_pum = generate_meaning_distributions(space, decay, utility)
+    conditional_puw = deterministic_decoder(decoder, conditional_pum)
+    p_w = marginalize(encoder, prior)
+    joint_puw = joint(conditional_puw, p_w)    
+
+    i_wu = MI(joint_puw)
+    return float(i_wu)
+
+def information_rate(source: np.ndarray, encoder: np.ndarray) -> float:
+    """Complexity, I(X;Xhat)"""
+    pXY = joint(pY_X=encoder, pX=source)
+    return MI(pXY=pXY)
+
+def rows_zero_to_uniform(mat) -> np.ndarray:
+    """Ensure that P(a|b) is a probability distribution, i.e. each row (indexed by a state) is a distribution over acts, sums to exactly 1.0. Necessary when exploring mathematically possible languages (including natural languages, like Hausa) which sometimes have that a row of the matrix p(word|meaning) is a vector of 0s."""
+
+    threshold = 1e-5
+
+    for row in mat:
+        # less than 1.0
+        if row.sum() and 1.0 - row.sum() > threshold:
+            print("row is nonzero and sums to less than 1.0!")
+            print(row, row.sum())
+            raise Exception
+        # greater than 1.0
+        if row.sum() and row.sum() - 1.0 > threshold:
+            print("row sums to greater than 1.0!")
+            print(row, row.sum())
+            raise Exception
+
+    return np.array([row if row.sum() else np.ones(len(row)) / len(row) for row in mat])
 
 def language_to_ib_encoder_decoder(
     language: ModalLanguage, 
@@ -106,6 +166,7 @@ def language_to_ib_encoder_decoder(
     """
     # In the IB framework, the encoder is a literal speaker and the decoder is a bayes optimal listener.
     speaker = LiteralSpeaker(language)
+    speaker.weights = rows_zero_to_uniform(speaker.normalized_weights())
     listener = BayesianListener(speaker, prior)
     return {
         "encoder": speaker.normalized_weights(),
@@ -167,89 +228,6 @@ def generate_kl_divergence(
         [[DKL(m, m_) for m in encoder_meanings] for m_ in decoder_meanings]
     )
 
-
-##############################################################################
-# Converting from languages to IB quantities
-##############################################################################
-
-def information_rate(source: np.ndarray, encoder: np.ndarray) -> float:
-    """Complexity, I(X;Xhat)"""
-    pXY = joint(pY_X=encoder, pX=source)
-    return MI(pXY=pXY)
-
-
-def expected_distortion_ib(
-    source: np.ndarray,
-    encoder: np.ndarray,
-    encoder_meanings: np.ndarray,
-    decoder_meanings: np.ndarray,
-) -> float:
-    """Communicative cost, E[DKL[M || \hat{M}]] = 
-
-        sum_m sum_w p(m) q(w|m) D[m || \hat{m}_w]
-
-    where \hat{m}_w = sum_m p(m|w)m(u)
-
-    Args:
-        source: p(M) of shape `|meanings|`
-
-        encoder: q(w | m) of shape `(|meanings|, |words|)`
-
-        encoder_meanings: M of shape (`|meanings|, |meanings|)`
-
-        decoder_meanings: \hat{M} of shape `(|words|, |meanings|)`
-    
-    Returns:
-        the expected KL divergence
-    """
-    total = 0
-    for i, p_meaning in enumerate(source):
-        for j, p_word in enumerate(encoder):
-            total += (
-                p_meaning *
-                p_word *
-                DKL(encoder_meanings[i], decoder_meanings[j])
-            )
-
-    # alternatively, we might do
-    expected_dkl = float(np.sum(
-        np.diag(source) @ encoder * (decoder_meanings @ encoder_meanings)
-        ))
-    if expected_dkl != total:
-        print("warning, difference in edkl values:")
-        print(total)        
-        print(expected_dkl)
-
-    return total
-
-# will never get used because deterministic bayesian listener is optimal, but this method is more general, so I'm keeping for now.
-def expected_distortion(
-    source: np.ndarray, 
-    encoder: np.ndarray, 
-    decoder: np.ndarray,
-    kl_divergence: np.ndarray,
-) -> float:
-    """Communicative cost, E[DKL[M || \hat{M}]] = 
-    
-        sum_m p(m) sum_w q(w|m) sum_m' r(m'|w) D_KL[m, m']
-    
-    where q is the encoder, and r the decoder.
-
-    Args:
-        source: array of shape `|meanings|` p(m) the cognitive source / communicative need distribution, i.e. prior distribution over meanings.
-
-        encoder: array of shape `(|meanings|, |words|)`. Represents conditional probability distribution q(w|m), i.e. an RSA speaker.
-
-        decoder: array of shape `(|words|, |meanings|)`. Represents conditional probability distribution q(m|w), i.e. an RSA listener.
-
-        kl_divergence: array of shape `(|meanings|, |meanings|)`. Represents a distortion matrix of KL divergences between speaker and listener meanings.
-
-    Returns:
-        a float representing the expected KL divergence between encoder and decoder representations.
-    """
-    return float(np.sum(np.diag(source) @ encoder @ decoder * kl_divergence))
-
-
 ##############################################################################
 # Helper functions for measuring information-theoretic quantities. Code credit belongs to N. Zaslavsky: https://github.com/nogazs/ib-color-naming/blob/master/src/tools.py
 ##############################################################################
@@ -274,6 +252,7 @@ def conditional(pXY):
 
 def joint(pY_X, pX):
     """:return  pXY """
+    # breakpoint()
     return pY_X * pX[:, None]
 
 
@@ -286,7 +265,9 @@ def bayes(pY_X, pX):
     """:return pX_Y """
     pXY = joint(pY_X, pX)
     pY = marginalize(pY_X, pX)
-    return np.where(pY > PRECISION, pXY.T / pY, 1 / pXY.shape[0])
+    return np.where(pY > PRECISION, pXY / pY, 1 / pXY.shape[0]).T
+
+
 
 
 def softmax(dxy, beta=1, axis=None):

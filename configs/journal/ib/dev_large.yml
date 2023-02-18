@@ -19,11 +19,11 @@ universal_property: iff # iff or sav
 # other experiment parameters
 processes: 6
 random_seed: 42
-sample_size: 1000
+sample_size: 40000
 lang_size: 10
 evolutionary_alg: # N.B.: We still run evol alg, but not to estimate frontier.
-  generation_size: 200
-  num_generations: 50
+  generation_size: 2000
+  num_generations: 200
   max_mutations: 5
   num_processes: 6
   maximum_lang_size: 10
@@ -31,13 +31,13 @@ evolutionary_alg: # N.B.: We still run evol alg, but not to estimate frontier.
 
 # outputs etc
 file_paths:
-  meaning_space: outputs/journal/ib/dev/meaning_space.yml
-  expressions: outputs/journal/ib/dev/expressions.yml
+  meaning_space: outputs/journal/ib/dev_large/meaning_space.yml
+  expressions: outputs/journal/ib/dev_large/expressions.yml
   data: ../modal-typology/basic-format
 
-  ib_curve: outputs/journal/ib/dev/curve.csv
-  prior: outputs/journal/ib/dev/prior.yml
-  prior_df: outputs/journal/ib/dev/prior_df.csv # meaning counts from corpus
+  ib_curve: outputs/journal/ib/dev_large/curve.csv
+  prior: outputs/journal/ib/dev_large/prior.yml
+  prior_df: outputs/journal/ib/dev_large/prior_df.csv # meaning counts from corpus
   modality_corpus: 
     0:
       dev: data/modality_corpus/0/dev.txt
@@ -56,17 +56,17 @@ file_paths:
       train: data/modality_corpus/4/train.txt
     test: 
       test: data/modality_corpus/test/test.txt    
-  artificial_languages: outputs/journal/ib/dev/languages/artificial.yml
-  natural_languages: outputs/journal/ib/dev/languages/natural.yml
-  dominant_languages: outputs/journal/ib/dev/languages/dominant.yml # Pareto
+  artificial_languages: outputs/journal/ib/dev_large/languages/artificial.yml
+  natural_languages: outputs/journal/ib/dev_large/languages/natural.yml
+  dominant_languages: outputs/journal/ib/dev_large/languages/dominant.yml # Pareto
   analysis:
-    correlations: outputs/journal/ib/dev/analysis/correlations/property.csv # dummy property name
-    data: outputs/journal/ib/dev/analysis/all_data.csv
-    pareto_data: outputs/journal/ib/dev/analysis/pareto_data.csv
-    plot: outputs/journal/ib/dev/analysis/plot.png
-    means: outputs/journal/ib/dev/analysis/means.csv
-    ttest_natural: outputs/journal/ib/dev/analysis/ttest_natural.csv
-    ttest_dlsav: outputs/journal/ib/dev/analysis/ttest_dlsav.csv
+    correlations: outputs/journal/ib/dev_large/analysis/correlations/property.csv # dummy property name
+    data: outputs/journal/ib/dev_large/analysis/all_data.csv
+    pareto_data: outputs/journal/ib/dev_large/analysis/pareto_data.csv
+    plot: outputs/journal/ib/dev_large/analysis/plot.png
+    means: outputs/journal/ib/dev_large/analysis/means.csv
+    ttest_natural: outputs/journal/ib/dev_large/analysis/ttest_natural.csv
+    ttest_dlsav: outputs/journal/ib/dev_large/analysis/ttest_dlsav.csv
 
 # How to interpret the modal database can_express values as booleans
 can_express:
