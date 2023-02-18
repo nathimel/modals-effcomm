@@ -84,20 +84,6 @@ def main():
     # Convert DataFrames to ModalLanguages
     ##########################################################################
 
-    # correct for different spelling of row names
-    for language_name, df in dataframes.items():
-        if "flavour" in df.columns:
-            df["flavor"] = df["flavour"]
-        
-        if "expression" not in df.columns:
-            if '"core" form' in df.columns:
-                df["expression"] = df['"core" form']
-            elif '“core” form' in df.columns:
-                df["expression"] = df['“core” form']
-            
-            else:
-                raise ValueError("Expression column or variants not found in dataframe.")
-
     # Load possible expressions and meaning space to map natural vocabularies into
     expressions = load_expressions(expression_save_fn)
     space = load_space(space_fn)

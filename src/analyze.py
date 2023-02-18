@@ -3,19 +3,18 @@ import pandas as pd
 import plotnine as pn
 from altk.effcomm.tradeoff import interpolate_data
 from altk.effcomm.analysis import (
-    get_dataframe,
     pearson_analysis,
     trade_off_means,
     trade_off_ttest,
 )
-from misc.file_util import load_languages, load_configs, set_seed
+from misc.file_util import load_configs, set_seed
 
 
 def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
-    natural_data: pd.DataFrame,
     naturalness: str,
+    natural_data: pd.DataFrame = None,
     counts=False,
     dlsav=False,
 ) -> pn.ggplot:
@@ -59,32 +58,37 @@ def get_modals_plot(
 
     plot = (
         # Set data and the axes
-        pn.ggplot(data=data, mapping=pn.aes(x="complexity", y="comm_cost"))
+        pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
         + pn.scale_y_continuous(limits=[0, 1])
+        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.geom_point(  # all langs
+            data=data,
             stroke=0,
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        # + pn.geom_point(  # The natural languages
-        #     natural_data,
-        #     color="red",
-        #     shape="+",
-        #     size=4,
-        # )
-        # + pn.geom_text(
-        #     natural_data, 
-        #     pn.aes(label="name"), 
-        #     ha="left", 
-        #     size=7, # orig 9
-        #     nudge_x=1
-        # )
-        + pn.geom_line(size=1, data=pareto_smoothed)
         + pn.xlab("Complexity")
         + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
+    if natural_data is not None:
+        plot = (
+            plot
+            + pn.geom_point(  # The natural languages
+                natural_data,
+                color="red",
+                shape="+",
+                size=4,
+            )
+            + pn.geom_text(
+                natural_data,
+                pn.aes(label="name"),
+                ha="left",
+                size=6,
+                nudge_x=1,  # orig 9
+            )
+        )
     return plot
 
 
@@ -104,11 +108,6 @@ def main():
     # tell pandas to output all columns
     pd.set_option("display.max_columns", None)
 
-    # Load languages
-    langs_fn = configs["file_paths"]["artificial_languages"]
-    nat_langs_fn = configs["file_paths"]["natural_languages"]
-    dom_langs_fn = configs["file_paths"]["dominant_languages"]
-
     # Load analysis files
     analysis_fns = configs["file_paths"]["analysis"]
     df_fn = analysis_fns["data"]
@@ -119,32 +118,21 @@ def main():
     ttest_natural_fn = analysis_fns["ttest_natural"]
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
 
-    # Load languages
-    result_sampled = load_languages(langs_fn)
-    result_natural = load_languages(nat_langs_fn)
-    result_dominant = load_languages(dom_langs_fn)
-    langs = result_sampled["languages"]
-    nat_langs = result_natural["languages"]
-    dom_langs = result_dominant["languages"]
-
     ############################################################################
-    # Construct main dataframe and plot
+    # Fetch main dataframe and plot
     ############################################################################
 
     # Record all observations, including duplicates, for statistical analyses
-    subset = ["complexity", "comm_cost"]
-    kwargs = {"subset": subset, "duplicates": "leave"}
-
-    data = get_dataframe(langs, **kwargs)
-    pareto_data = get_dataframe(dom_langs, **kwargs)
-    natural_data = get_dataframe(nat_langs, **kwargs)
-    # data = data.append(natural_data)
+    data = pd.read_csv(df_fn)
+    pareto_data = data[data["dominant"] == True]
+    natural_data = data[data["natural"] == True]
 
     # Plot
     naturalness = configs["universal_property"]
 
     # Add counts only for plot
     plot_data = data.copy()
+    subset = ["complexity", "comm_cost"]
     vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
@@ -228,7 +216,6 @@ def main():
         intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
     ]
-    data.to_csv(df_fn)
     pareto_data.to_csv(pareto_df_fn)
 
 
