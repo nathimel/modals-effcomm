@@ -80,26 +80,30 @@ def get_modals_plot(
             alpha=0.1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.geom_point(  # The natural languages
-            natural_data,
-            color="red",
-            shape="+",
-            size=4,
-        )
-        + pn.geom_text(
-            natural_data, 
-            pn.aes(label="name"), 
-            ha="left", 
-            size=9, 
-            nudge_x=0.05,
-            )
         + pn.geom_line(size=1, data=pareto_smoothed)
-        + pn.xlab("Complexity I[M:W] (bits)")
-        + pn.ylab("Communicative cost E[D_KL[M || M']] (bits)")
+        + pn.xlab("Complexity, I[M:W] bits")
+        + pn.ylab("Communicative cost, E[D_KL[M || M']] bits")
         # + pn.ylab("Informativity I[W:U] (bits)")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
+    if natural_data is not None:
+        plot = (
+            plot
+            + pn.geom_point(  # The natural languages
+                natural_data,
+                color="red",
+                shape="+",
+                size=4,
+            )
+            + pn.geom_text(
+                natural_data,
+                pn.aes(label="name"),
+                ha="left",
+                size=6, # orig 9
+                nudge_x=0.05, 
+            )
+        )    
     return plot
 
 
