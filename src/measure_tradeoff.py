@@ -101,7 +101,7 @@ def main():
     all_data["natural"] = [lang.natural for lang in langs]
     all_data["dominant"] = [lang in dom_langs for lang in langs]
     all_data["name"] = [lang.data["name"] for lang in langs]
-    all_data.to_csv(df_fn)
+    all_data.to_csv(df_fn, index=False)
     print("saved df.")
 
 

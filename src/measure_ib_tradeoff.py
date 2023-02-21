@@ -5,6 +5,7 @@ from misc import file_util
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import iff, sav, dlsav
 from altk.effcomm.tradeoff import tradeoff
+from altk.effcomm.analysis import get_dataframe
 
 import ib_measures
 from ib_measures import DEFAULT_DECAY, DEFAULT_UTILITY
@@ -26,6 +27,8 @@ def main():
     sampled_languages_fn = paths["artificial_languages"]
     natural_languages_fn = paths["natural_languages"]
     dominant_languages_fn = paths["dominant_languages"]
+
+    df_fn = paths["analysis"]["data"]
 
     ib_curve_fn = paths["ib_curve"]
 
@@ -77,7 +80,7 @@ def main():
     properties_to_measure = {
         "complexity": comp_measure,
         "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
-        "informativity": inf_measure, # TODO: compute I(W;U) 
+        "informativity": inf_measure,
         "comm_cost": comm_cost_measure,
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
@@ -92,21 +95,29 @@ def main():
         y="complexity",
         frontier=ib_curve,
     )
-    dom_langs = result["dominating_languages"]
+    # dom_langs = result["dominating_languages"]
     langs = result["languages"]
 
     nat_langs = [lang for lang in langs if lang.natural]
 
     file_util.save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
 
-    # TODO: There isn't much use in saving the dominant langs anymore, since we're going to use IB
-    file_util.save_languages(
-        dominant_languages_fn, dom_langs, id_start, kind="dominant"
-    )
+    # TODO: There isn't much use in saving the dominant langs anymore, since we're going to use IB?
+    # file_util.save_languages(
+    #     dominant_languages_fn, dom_langs, id_start, kind="dominant"
+    # )
     file_util.save_languages(
         natural_languages_fn, nat_langs, id_start=None, kind="natural"
     )
-    print("done.")
+    print("saved languages.")
+
+    # TODO: store the language.data fields in a common spot for repeat access in a uniform way
+    all_data = get_dataframe(langs, columns=list(properties_to_measure.keys()) + ["optimality"])
+    all_data["natural"] = [lang.natural for lang in langs]
+    # all_data["dominant"] = [lang in dom_langs for lang in langs]
+    all_data["name"] = [lang.data["name"] for lang in langs]
+    all_data.to_csv(df_fn, index=False)
+    print("saved df.")
 
 
 if __name__ == "__main__":

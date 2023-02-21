@@ -138,36 +138,32 @@ def main():
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
     ib_curve_fn = configs["file_paths"]["ib_curve"]
 
-
     # Load languages
-    result_sampled = load_languages(langs_fn)
-    result_natural = load_languages(nat_langs_fn)
-    langs = result_sampled["languages"]
-    nat_langs = result_natural["languages"]
+    # result_sampled = load_languages(langs_fn)
+    # result_natural = load_languages(nat_langs_fn)
+    # langs = result_sampled["languages"]
+    # nat_langs = result_natural["languages"]
 
     ############################################################################
-    # Construct main dataframe and plot
+    # Fetch main dataframe and plot
     ############################################################################
 
     # Record all observations, including duplicates, for statistical analyses
-    subset = ["complexity", "comm_cost"]
-    # subset = ["complexity", "informativity"]
-    kwargs = {"subset": subset, "duplicates": "leave"}
+    data = pd.read_csv(df_fn)
 
-    data = get_dataframe(langs, **kwargs)
+    # remove Thai because it's messy rn
+    data = data[data["name"] != "Thai"]
 
     ib_curve = load_ib_curve(ib_curve_fn)
     pareto_data = pd.DataFrame(ib_curve, columns=["comm_cost", "complexity"])
-    # pareto_data = pd.DataFrame(ib_curve, columns=["informativity", "complexity"])
-
-    natural_data = get_dataframe(nat_langs, **kwargs)
-    data = data.append(natural_data)
+    natural_data = data[data["natural"] == True]
 
     # Plot
     naturalness = configs["universal_property"]
 
     # Add counts only for plot
     plot_data = data.copy()
+    subset = ["complexity", "comm_cost"]
     vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
@@ -185,7 +181,7 @@ def main():
     )
     plot.save(plot_fn, width=10, height=10, dpi=300)
 
-    sys.exit()
+    # sys.exit()
 
     ############################################################################
     # Statistics
