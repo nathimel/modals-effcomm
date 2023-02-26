@@ -18,6 +18,7 @@ REFERENCE_TYPE_KEY = "Reference-type"
 METADATA_FN = "metadata.yml"
 MODALS_FN = "modals.csv"
 
+
 def process_can_express(val: Any, can_express: dict):
     """For an observation of whether a modal can_express a force-flavor pair, interpret ? as 1.
 
@@ -57,7 +58,11 @@ def main():
     ##########################################################################
 
     language_data_dir = configs["file_paths"]["data"]
-    dirs = [x for x in os.listdir(language_data_dir) if os.path.isdir(os.path.join(language_data_dir, x))]
+    dirs = [
+        x
+        for x in os.listdir(language_data_dir)
+        if os.path.isdir(os.path.join(language_data_dir, x))
+    ]
 
     dataframes = dict()
     for dir in dirs:
@@ -66,19 +71,22 @@ def main():
         metadata_path = os.path.join(dirpath, METADATA_FN)
 
         with open(metadata_path, "r") as stream:
-            metadata = yaml.safe_load(stream) # a list of dicts
+            metadata = yaml.safe_load(stream)  # a list of dicts
         # Extract reference type dict
-        reference_type_metadata , = [d for d in metadata if list(d.keys()) == [REFERENCE_TYPE_KEY]]
+        (reference_type_metadata,) = [
+            d for d in metadata if list(d.keys()) == [REFERENCE_TYPE_KEY]
+        ]
         reference_type = reference_type_metadata[REFERENCE_TYPE_KEY]
-        
+
         if reference_type in REFERENCE_TYPES:
             # Add to dataframes, only if paper journal or elicitation. Skip reference-grammar obtained data.
             if reference_type in ALLOWED_REFERENCE_TYPES:
                 modals_fn = os.path.join(dirpath, MODALS_FN)
                 dataframes[dir] = pd.read_csv(modals_fn)
         else:
-            raise ValueError(f"The field 'Reference-type' should only contain one of {ALLOWED_REFERENCE_TYPES}. Received: {reference_type}")
-
+            raise ValueError(
+                f"The field 'Reference-type' should only contain one of {ALLOWED_REFERENCE_TYPES}. Received: {reference_type}"
+            )
 
     ##########################################################################
     # Convert DataFrames to ModalLanguages
@@ -122,7 +130,9 @@ def main():
         for modal in vocabulary:
             form = modal
             meaning = ModalMeaning(
-                points=[ModalMeaningPoint.from_yaml_rep(name) for name in vocabulary[modal]],
+                points=[
+                    ModalMeaningPoint.from_yaml_rep(name) for name in vocabulary[modal]
+                ],
                 meaning_space=space,
             )
             # search for a matching recorded meaning to reuse LoT solutions

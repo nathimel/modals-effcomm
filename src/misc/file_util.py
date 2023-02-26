@@ -101,7 +101,9 @@ def load_prior(fn: str) -> dict[str, float]:
     """Load a prior communicative need probability distribution over modal meaning points from a saved YAML file."""
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
-    d = {tuple(key.split("+")): value for key, value in d.items()} # convert from strings to tuples
+    d = {
+        tuple(key.split("+")): value for key, value in d.items()
+    }  # convert from strings to tuples
     return d
 
 
@@ -109,11 +111,12 @@ def load_prior(fn: str) -> dict[str, float]:
 # Expressions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def load_ib_curve(fn: str) -> list[tuple]:
-    """Load a (comm_cost, complexity) IB curve computed by reverse deterministic annealing of the B.A. algorithm.
-    """
+    """Load a (comm_cost, complexity) IB curve computed by reverse deterministic annealing of the B.A. algorithm."""
     df = pd.read_csv(fn)
     return list(map(tuple, df.to_numpy()))
+
 
 def save_ib_curve(fn: str, curve) -> None:
     """Save a dataframe of (comm_cost, complexity) points to a CSV."""
