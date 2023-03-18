@@ -3,12 +3,11 @@ import pandas as pd
 import plotnine as pn
 from altk.effcomm.tradeoff import interpolate_data
 from altk.effcomm.analysis import (
-    get_dataframe,
     pearson_analysis,
     trade_off_means,
     trade_off_ttest,
 )
-from misc.file_util import load_languages, load_configs, set_seed, load_ib_curve
+from misc.file_util import load_configs, set_seed, load_ib_curve
 
 
 def get_modals_plot(
@@ -24,7 +23,7 @@ def get_modals_plot(
     Args:
         data: a DataFrame representing all the measurements of a tradeoff.
 
-        pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff. 
+        pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff.
 
         natural_data: a DataFrame representing the measurements of the natural languages.
 
@@ -48,16 +47,16 @@ def get_modals_plot(
     # max_inf = data["informativity"].max()
     max_cost = data["comm_cost"].max()
     pareto_points = interpolate_data(
-        pareto_points, 
-        # min_cost=min_inf, 
+        pareto_points,
+        # min_cost=min_inf,
         max_cost=max_cost,
-        )
+    )
 
     pareto_smoothed = pd.DataFrame(
-        pareto_points, 
+        pareto_points,
         # columns=["informativity", "complexity"]
-        columns=["comm_cost", "complexity"]
-        )
+        columns=["comm_cost", "complexity"],
+    )
 
     # aesthetics for all data
     kwargs = {
@@ -100,10 +99,10 @@ def get_modals_plot(
                 natural_data,
                 pn.aes(label="name"),
                 ha="left",
-                size=6, # orig 9
-                nudge_x=0.05, 
+                size=6,  # orig 9
+                nudge_x=0.05,
             )
-        )    
+        )
     return plot
 
 
@@ -138,12 +137,6 @@ def main():
     ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
     ib_curve_fn = configs["file_paths"]["ib_curve"]
 
-    # Load languages
-    # result_sampled = load_languages(langs_fn)
-    # result_natural = load_languages(nat_langs_fn)
-    # langs = result_sampled["languages"]
-    # nat_langs = result_natural["languages"]
-
     ############################################################################
     # Fetch main dataframe and plot
     ############################################################################
@@ -167,8 +160,6 @@ def main():
     vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
-
-    # breakpoint()
 
     plot_data["counts"] = vcs.values
 

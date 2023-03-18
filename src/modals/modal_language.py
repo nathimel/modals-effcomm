@@ -85,12 +85,12 @@ class ModalLanguage(Language):
     """
 
     def __init__(
-        self, 
-        expressions: list[ModalExpression], 
-        name: str = None, 
-        data = None, 
-        natural = False,
-        ):
+        self,
+        expressions: list[ModalExpression],
+        name: str = None,
+        data=None,
+        natural=False,
+    ):
         super().__init__(expressions)
         # Initialize / load all data
         self.data = (
@@ -111,7 +111,11 @@ class ModalLanguage(Language):
         )
 
         # Preserve language type when loading from yaml
-        if (data is not None) and ("Language" in data) and (data["Language"] == "natural"):
+        if (
+            (data is not None)
+            and ("Language" in data)
+            and (data["Language"] == "natural")
+        ):
             self.natural = True
         else:
             self.natural = False
@@ -119,14 +123,17 @@ class ModalLanguage(Language):
         # TODO: do the same as above for `name`
 
     """Whether a Modal Language represents a natural language constructed from typological data."""
+
     @property
     def natural(self) -> bool:
         return self._natural
-    
+
     @natural.setter
     def natural(self, val) -> None:
         if not isinstance(val, bool):
-            raise ValueError(f"the attribute `natural` must be set to a bool, received type {type(val)}.")
+            raise ValueError(
+                f"the attribute `natural` must be set to a bool, received type {type(val)}."
+            )
         self._natural = val
         # make sure data is consistent
         self.data["Language"] = "natural" if self._natural else "artificial"
@@ -173,7 +180,7 @@ class ModalLanguage(Language):
     def __hash__(self) -> int:
         """Return a unique hash for a ModalLanguage. Two languages are unique if they differ in their vocabulary only by the forms of each expression.
 
-        Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa. However, we need to make sure that all natural languages are distinct, even if they have exactly the same modal meanings, differing only in form. 
+        Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa. However, we need to make sure that all natural languages are distinct, even if they have exactly the same modal meanings, differing only in form.
 
         To this end, we treat two languages equal if:
 
@@ -204,7 +211,7 @@ class ModalLanguage(Language):
             self.data["name"]: {
                 "expressions": [e.yaml_rep() for e in self.expressions],
                 "data": self.data,
-                "length": self.__len__(), # just for easy inspection
+                "length": self.__len__(),  # just for easy inspection
             },
         }
         return data
@@ -231,17 +238,21 @@ class ModalLanguage(Language):
     @classmethod
     def default_language_from_space(cls, space: ModalMeaningSpace):
         """Construct a default, perfectly informative ModalLanguage from a ModalMeaningSpace."""
-        expressions = [ModalExpression(
-            form=f"default_expression_{referent}",
-            meaning=ModalMeaning(
-                points=[
-                    ModalMeaningPoint(force=referent.force, flavor=referent.flavor)
-                ],
-                meaning_space=space,
-            ),
-            lot_expression=None, # cannot be measured for complexity
-        ) for referent in space.referents]
+        expressions = [
+            ModalExpression(
+                form=f"default_expression_{referent}",
+                meaning=ModalMeaning(
+                    points=[
+                        ModalMeaningPoint(force=referent.force, flavor=referent.flavor)
+                    ],
+                    meaning_space=space,
+                ),
+                lot_expression=None,  # cannot be measured for complexity
+            )
+            for referent in space.referents
+        ]
         return cls(expressions, name="DEFAULT_LANGUAGE")
+
 
 ##############################################################################
 # Functions
@@ -269,6 +280,7 @@ def iff(e: ModalExpression) -> bool:
         if pair not in [point.data for point in points]:
             return False
     return True
+
 
 def sav(e: ModalExpression) -> bool:
     """Single Axis of Variability universal: a modal expression may exhibit

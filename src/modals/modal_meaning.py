@@ -16,7 +16,7 @@ class ModalMeaningPoint(Referent):
     @property
     def data(self) -> tuple[str]:
         return self._data
-    
+
     @data.setter
     def data(self, pair: tuple[str]):
         self._data = pair
@@ -40,6 +40,7 @@ class ModalMeaningPoint(Referent):
         """
         force, flavor = name.split("+")
         return cls(force=force, flavor=flavor)
+
 
 class ModalMeaningSpace(Universe):
     """Represents the set of possible modal (force, flavor) pairs.
@@ -153,7 +154,8 @@ class ModalMeaningSpace(Universe):
             for pair in np.argwhere(a)
         }
 
-    def prior_to_array(self,
+    def prior_to_array(
+        self,
         prior: dict[str, float],
     ) -> np.ndarray:
         """Given a dict corresponding to a (possibly not normalized) prior distribution over meaning points, return the normalized numpy array.
@@ -177,12 +179,12 @@ class ModalMeaningSpace(Universe):
             raise ValueError(
                 "The prior probability distribution over meaning points may not be constructed with negative weights."
             )
-        
+
         if np.sum(p) == 0:
             raise ValueError(
                 "Th prior probability distribution over meaning points may not be constructed with all zero weights."
             )
-        
+
         # normalize if necessary
         if np.sum(p) != 1:
             p /= p.sum()

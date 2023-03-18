@@ -85,8 +85,8 @@ def get_modals_plot(
                 natural_data,
                 pn.aes(label="name"),
                 ha="left",
-                size=6, # orig 9
-                nudge_x=1, 
+                size=6,  # orig 9
+                nudge_x=1,
             )
         )
     return plot

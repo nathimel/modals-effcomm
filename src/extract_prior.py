@@ -13,6 +13,7 @@ def generate_uniform(space: ModalMeaningSpace) -> dict[str, float]:
     """Generate a uniform communicative need distribution / prior over meaning points."""
     return {point.name: 1 / len(space) for point in space.referents}
 
+
 def renumber_sentences(dfs: list[pd.DataFrame]) -> list[pd.DataFrame]:
     """Helper function to renumber the sentence_ids to be unique wrt all sentences in the dataset, not just within a file."""
     sentence_count = 0
@@ -20,6 +21,7 @@ def renumber_sentences(dfs: list[pd.DataFrame]) -> list[pd.DataFrame]:
         df["sentence_id"] += sentence_count
         sentence_count = df["sentence_id"].max() + 1
     return dfs
+
 
 ##############################################################################
 # Hard-coded constants / annotations necessary to extract prior.
@@ -88,7 +90,7 @@ def main():
     print("Constructing uniform prior")
     prior = generate_uniform(space)
 
-    if True: # TODO: move option for uniform/estimated to config file
+    if True:  # TODO: move option for uniform/estimated to config file
 
         ##########################################################################
         # Load and parse corpus to extract auxiliaries
@@ -96,9 +98,13 @@ def main():
 
         print("Loading dataframes...")
         # list of filenames of each dataset used
-        fns = [fn for folder in modality_corpus for fn in modality_corpus[folder].values()]
-        # load dataframe of all files concatenated    
-        df_all = pd.concat(renumber_sentences([pd.read_csv(fn, sep="\t") for fn in fns]))
+        fns = [
+            fn for folder in modality_corpus for fn in modality_corpus[folder].values()
+        ]
+        # load dataframe of all files concatenated
+        df_all = pd.concat(
+            renumber_sentences([pd.read_csv(fn, sep="\t") for fn in fns])
+        )
 
         # for dev
         # df_all = df_all.head(n=1000)
@@ -114,7 +120,9 @@ def main():
         ]  # a list of lists
 
         print("Parsing and tagging sentences...")
-        docs = [nlp(Doc(nlp.vocab, sent)) for sent in tqdm(dataset)]  # this takes about 6m
+        docs = [
+            nlp(Doc(nlp.vocab, sent)) for sent in tqdm(dataset)
+        ]  # this takes about 6m
 
         # inject tags back as columns for the dataframe
         pos_tags = [tok.pos_ for doc in docs for tok in doc]
@@ -161,7 +169,8 @@ def main():
         for force, flavor in itertools.product(space.forces, space.flavors):
             # find occurrences of the meaning point in the data
             df_point = df_force_flavor[
-                (df_force_flavor["force"] == force) & (df_force_flavor["flavor"] == flavor)
+                (df_force_flavor["force"] == force)
+                & (df_force_flavor["flavor"] == flavor)
             ]
             points_dfs.append(df_point)
             # update our counts

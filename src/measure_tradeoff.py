@@ -96,7 +96,9 @@ def main():
     print("saved languages.")
 
     # TODO: store the language.data fields in a common spot for repeat access in a uniform way
-    all_data = get_dataframe(langs, columns=list(properties_to_measure.keys()) + ["optimality"])
+    all_data = get_dataframe(
+        langs, columns=list(properties_to_measure.keys()) + ["optimality"]
+    )
     # TODO: make this more efficient
     all_data["natural"] = [lang.natural for lang in langs]
     all_data["dominant"] = [lang in dom_langs for lang in langs]
