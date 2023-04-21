@@ -39,10 +39,10 @@ def get_modals_plot(
     print(natural_data)
 
     # smooth pareto curve again
-    pareto_df = pareto_data[["comm_cost", "complexity"]]
-    pareto_points = pareto_df.to_records(index=False).tolist()
-    pareto_points = interpolate_data(pareto_points)
-    pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
+    # pareto_df = pareto_data[["comm_cost", "complexity"]]
+    # pareto_points = pareto_df.to_records(index=False).tolist()
+    # pareto_points = interpolate_data(pareto_points)
+    # pareto_smoothed = pd.DataFrame(pareto_points, columns=["comm_cost", "complexity"])
 
     # aesthetics for all data
     kwargs = {
@@ -60,7 +60,7 @@ def get_modals_plot(
         # Set data and the axes
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
         + pn.scale_y_continuous(limits=[0, 1])
-        + pn.geom_line(size=1, data=pareto_smoothed)
+        + pn.geom_point(data=pareto_data)
         + pn.geom_point(  # all langs
             data=data,
             stroke=0,
@@ -126,6 +126,7 @@ def main():
     data = pd.read_csv(df_fn)
     pareto_data = data[data["dominant"] == True]
     natural_data = data[data["natural"] == True]
+    natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # Plot
     naturalness = configs["universal_property"]
