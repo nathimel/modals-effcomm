@@ -1,6 +1,6 @@
 import sys
 from misc import file_util
-from measure_ib_tradeoff import DEFAULT_DECAY, DEFAULT_UTILITY
+from modals.modal_meaning import generate_meaning_distributions
 from altk.effcomm.information import get_ib_curve
 
 
@@ -16,16 +16,14 @@ def main():
     curve_fn = configs["file_paths"]["ib_curve"]
     space_fn = configs["file_paths"]["meaning_space"]
     prior_fn = configs["file_paths"]["prior"]
-    utility = file_util.load_utility(DEFAULT_UTILITY)
 
     space = file_util.load_space(space_fn)
     prior = space.prior_to_array(file_util.load_prior(prior_fn))
+    meaning_dists = generate_meaning_distributions(space)
 
     curve_points = get_ib_curve(
         prior=prior,
-        space=space,
-        decay=DEFAULT_DECAY,
-        cost=lambda x, y: 1 - utility(x, y),
+        meaning_dists=meaning_dists,
         curve_type="comm_cost",
     )
 

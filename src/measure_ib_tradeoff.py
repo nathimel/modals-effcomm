@@ -3,12 +3,10 @@
 import sys
 from misc import file_util
 from modals.modal_language import iff, sav, dlsav
+from modals.modal_meaning import generate_meaning_distributions
 from altk.effcomm.tradeoff import tradeoff
 from altk.effcomm.analysis import get_dataframe
 from altk.effcomm.information import ib_comm_cost, ib_complexity, ib_informativity
-
-DEFAULT_DECAY = 0.1
-DEFAULT_UTILITY = "half_credit"
 
 
 def main():
@@ -56,8 +54,7 @@ def main():
     space = file_util.load_space(space_fn)
     prior = space.prior_to_array(file_util.load_prior(prior_fn))
     ib_curve = file_util.load_ib_curve(ib_curve_fn)
-
-    cost = lambda x, y: 1 - file_util.load_utility(DEFAULT_UTILITY)(x, y)
+    meaning_dists = generate_meaning_distributions(space)
 
     comp_measure = lambda lang: ib_complexity(
         language=lang,
@@ -67,16 +64,13 @@ def main():
     comm_cost_measure = lambda lang: ib_comm_cost(
         language=lang,
         prior=prior,
-        # TODO: put these in configs eventually
-        decay=DEFAULT_DECAY,
-        cost=cost,
+        meaning_dists=meaning_dists,
     )
 
     inf_measure = lambda lang: ib_informativity(
         language=lang,
         prior=prior,
-        decay=DEFAULT_DECAY,
-        cost=cost,
+        meaning_dists=meaning_dists,
     )
 
     # Get trade-off results

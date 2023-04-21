@@ -1,5 +1,5 @@
 from itertools import product
-from typing import Iterable
+from typing import Iterable, Callable
 import numpy as np
 import pandas as pd
 from altk.language.semantics import Universe, Meaning, Referent
@@ -274,3 +274,76 @@ class ModalMeaning(Meaning):
 
     def __eq__(self, __o: object) -> bool:
         return set(self.referents) == set(__o.referents)
+
+##############################################################################
+# Utility (reward) functions for informativity measure
+##############################################################################
+
+def indicator(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> int:
+    """Utility function that rewards only perfect recovery of meaning point m.
+
+    Args:
+        m: a string representing the speaker's intended meaning point, e.g. 'weak+epistemic'
+
+        m_: a string representing the listener's guess about m.
+
+    Returns:
+        an integer, 1 if meaning points are the same and 0 otherwise.
+    """
+    return int(m == m_)
+
+
+def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
+    """Utility function that awards 0.5 credit for each correctly recovered feature (force or flavor) of meaning point m.
+
+    Args:
+        m: a string representing the speaker's intended meaning point, e.g. 'weak+epistemic'
+
+        m_: a string representing the listener's guess about m.
+
+    Returns:
+        an float, either 0, 0.5, or 1.0 corresponding to the fraction of correctly recovered features of the speaker's meaning point.
+    """
+    intended = m.name.split("+")
+    guess = m_.name.split("+")
+    score = 0.0
+    for feature in intended:
+        if feature in guess:
+            score += 0.5
+    return score
+
+
+##############################################################################
+# Meaning distributions for Information Bottleneck analysis
+##############################################################################
+DEFAULT_DECAY = 0.1
+DEFAULT_UTILITY = half_credit
+
+def generate_meaning_distributions(
+    space: ModalMeaningSpace, 
+    decay: float = DEFAULT_DECAY, 
+    cost: Callable[[Referent, Referent], float] = lambda x,y: 1 - DEFAULT_UTILITY(x, y),
+) -> np.ndarray:
+    """Generate a conditional distribution over world states given meanings, $p(u|m)$, for each meaning.
+
+    Args:
+        space: the ModalMeaningSpace on which meanings are defined
+
+        decay: a float in [0,1]. controls informativity, by decaying how much probability mass is assigned to perfect recoveries. As decay approaches 0, only perfect recovery is rewarded (which overrides any partial credit structure built into the utility/cost function). As decay approaches 1, the worst guesses become most likely.
+
+        cost: a cost function defining the pairwise communicative cost for confusing one Referent in the Universe with another. If you have a (scaled) communicative utility matrix, a natural choice for cost might be `lambda x, y: 1 - utility(x, y)`.
+
+    Returns:
+        p_u_m: an array of shape `(|space.referents|, |space.referents|)`
+    """
+
+    # construct p(u|m) for each meaning
+    meaning_distributions = np.array(
+        [[decay ** cost(m, u) for u in space.referents] for m in space.referents]
+    )
+    # each row sums to 1.0
+    np.seterr(divide="ignore", invalid="ignore")
+    meaning_distributions = np.nan_to_num(
+        meaning_distributions / meaning_distributions.sum(axis=1, keepdims=True)
+    )
+    return meaning_distributions
