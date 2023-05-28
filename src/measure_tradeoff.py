@@ -33,7 +33,7 @@ def main():
     file_util.set_seed(configs["random_seed"])
 
     # load languages
-    print("Loading all languages ...")
+    print("Loading all languages:")
     print("sampled...")
     sampled_result = file_util.load_languages(sampled_languages_fn)
     print("dominant...")
@@ -86,6 +86,7 @@ def main():
 
     nat_langs = [lang for lang in langs if lang.natural]
 
+    print("Saving languages...")
     file_util.save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
     file_util.save_languages(
         dominant_languages_fn, dom_langs, id_start, kind="dominant"

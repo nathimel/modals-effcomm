@@ -46,6 +46,7 @@ def main():
 
     # Create the first generation of languages
 
+    print("Loading existing sampled langauges...")
     result = file_util.load_languages(artificial_langs_fn)
     sampled_languages = result["languages"]
     id_start = result["id_start"]
@@ -114,7 +115,6 @@ def main():
         max_mutations=max_mutations,
         generations=generations,
         lang_size=lang_size,
-        processes=processes,
     )
 
     # Explore all four corners of the possible language space

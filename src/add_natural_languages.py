@@ -72,11 +72,13 @@ def main():
 
         with open(metadata_path, "r") as stream:
             metadata = yaml.safe_load(stream)  # a list of dicts
+        
         # Extract reference type dict
-        (reference_type_metadata,) = [
-            d for d in metadata if list(d.keys()) == [REFERENCE_TYPE_KEY]
-        ]
-        reference_type = reference_type_metadata[REFERENCE_TYPE_KEY]
+        # (reference_type_metadata,) = [
+            # d for d in metadata if d == REFERENCE_TYPE_KEY
+        # ]
+        # reference_type = reference_type_metadata[REFERENCE_TYPE_KEY]
+        reference_type = metadata[REFERENCE_TYPE_KEY]
 
         if reference_type in REFERENCE_TYPES:
             # Add to dataframes, only if paper journal or elicitation. Skip reference-grammar obtained data.
