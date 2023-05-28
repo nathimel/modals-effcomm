@@ -12,8 +12,10 @@ from modals.modal_meaning import ModalMeaning, ModalMeaningPoint
 
 
 ALLOWED_REFERENCE_TYPES = ["paper-journal", "elicitation"]
-REFERENCE_TYPES = ["reference-grammar"] + ALLOWED_REFERENCE_TYPES
+REFERENCE_GRAMMAR = "reference-grammar"
+REFERENCE_TYPES = [REFERENCE_GRAMMAR] + ALLOWED_REFERENCE_TYPES
 REFERENCE_TYPE_KEY = "Reference-type"
+LANGUAGE_IS_COMPLETE_KEY = "Complete-language"
 
 METADATA_FN = "metadata.yml"
 MODALS_FN = "modals.csv"
@@ -71,24 +73,26 @@ def main():
         metadata_path = os.path.join(dirpath, METADATA_FN)
 
         with open(metadata_path, "r") as stream:
-            metadata = yaml.safe_load(stream)  # a list of dicts
-        
-        # Extract reference type dict
-        # (reference_type_metadata,) = [
-            # d for d in metadata if d == REFERENCE_TYPE_KEY
-        # ]
-        # reference_type = reference_type_metadata[REFERENCE_TYPE_KEY]
-        reference_type = metadata[REFERENCE_TYPE_KEY]
+            metadata = yaml.safe_load(stream) # dict
 
-        if reference_type in REFERENCE_TYPES:
-            # Add to dataframes, only if paper journal or elicitation. Skip reference-grammar obtained data.
-            if reference_type in ALLOWED_REFERENCE_TYPES:
-                modals_fn = os.path.join(dirpath, MODALS_FN)
-                dataframes[dir] = pd.read_csv(modals_fn)
-        else:
-            raise ValueError(
-                f"The field 'Reference-type' should only contain one of {ALLOWED_REFERENCE_TYPES}. Received: {reference_type}"
-            )
+        # reference_type = metadata[REFERENCE_TYPE_KEY]
+        # if reference_type in REFERENCE_TYPES:
+        #     # Add to dataframes, only if paper journal or elicitation. 
+        #     if reference_type in ALLOWED_REFERENCE_TYPES:
+        #         modals_fn = os.path.join(dirpath, MODALS_FN)
+        #         dataframes[dir] = pd.read_csv(modals_fn)
+        #     else:
+        #         # Skip reference-grammar obtained data if incomplete.
+        #         print(f"Data for {dir} is of type {reference_type} and incomplete, skipping.")
+        # else:
+        #     raise ValueError(
+        #         f"The field 'Reference-type' should only contain one of {REFERENCE_TYPES}. Received: {reference_type}"
+        #     )
+
+        # Only filter by 'Complete-language: true'.
+        if metadata[LANGUAGE_IS_COMPLETE_KEY]:
+            modals_fn = os.path.join(dirpath, MODALS_FN)
+            dataframes[dir] = pd.read_csv(modals_fn)
 
     ##########################################################################
     # Convert DataFrames to ModalLanguages
@@ -105,7 +109,6 @@ def main():
         vocabulary = {}
 
         # only look at positive polarity modals
-
         if "polarity" in df:
             df_positive = df[df["polarity"] == "positive"]
         else:
