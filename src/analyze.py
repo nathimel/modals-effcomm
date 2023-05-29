@@ -126,6 +126,8 @@ def main():
     data = pd.read_csv(df_fn)
     pareto_data = data[data["dominant"] == True]
     natural_data = data[data["natural"] == True]
+
+    print("Excluding Thai from final analysis.")
     natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # Plot
