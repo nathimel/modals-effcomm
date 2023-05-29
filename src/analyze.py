@@ -139,9 +139,6 @@ def main():
     vcs = plot_data.value_counts(subset=subset, sort=False)
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
-
-    # breakpoint()
-
     plot_data["counts"] = vcs.values
 
     plot = get_modals_plot(
