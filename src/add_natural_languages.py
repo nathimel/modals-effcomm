@@ -75,24 +75,19 @@ def main():
         with open(metadata_path, "r") as stream:
             metadata = yaml.safe_load(stream) # dict
 
-        # reference_type = metadata[REFERENCE_TYPE_KEY]
-        # if reference_type in REFERENCE_TYPES:
-        #     # Add to dataframes, only if paper journal or elicitation. 
-        #     if reference_type in ALLOWED_REFERENCE_TYPES:
-        #         modals_fn = os.path.join(dirpath, MODALS_FN)
-        #         dataframes[dir] = pd.read_csv(modals_fn)
-        #     else:
-        #         # Skip reference-grammar obtained data if incomplete.
-        #         print(f"Data for {dir} is of type {reference_type} and incomplete, skipping.")
-        # else:
-        #     raise ValueError(
-        #         f"The field 'Reference-type' should only contain one of {REFERENCE_TYPES}. Received: {reference_type}"
-        #     )
+        reference_type = metadata[REFERENCE_TYPE_KEY]
+        # must be paper-journal or elicitation
+        if reference_type in ALLOWED_REFERENCE_TYPES:
+                modals_fn = os.path.join(dirpath, MODALS_FN)
+                dataframes[dir] = pd.read_csv(modals_fn)
+        else:
+            # Skip reference-grammar obtained data if incomplete.
+            print(f"Data for {dir} is of type {reference_type}; skipping.")
 
-        # Only filter by 'Complete-language: true'.
-        if metadata[LANGUAGE_IS_COMPLETE_KEY]:
-            modals_fn = os.path.join(dirpath, MODALS_FN)
-            dataframes[dir] = pd.read_csv(modals_fn)
+        # # Only filter by 'Complete-language: true'.
+        # if metadata[LANGUAGE_IS_COMPLETE_KEY]:
+        #     modals_fn = os.path.join(dirpath, MODALS_FN)
+        #     dataframes[dir] = pd.read_csv(modals_fn)
 
     ##########################################################################
     # Convert DataFrames to ModalLanguages
