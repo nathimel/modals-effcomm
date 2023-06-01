@@ -16,6 +16,7 @@ def get_modals_plot(
     naturalness: str,
     natural_data: pd.DataFrame = None,
     counts=False,
+    axis_titles = True,
     dlsav=False,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
@@ -28,6 +29,8 @@ def get_modals_plot(
         natural_data: a DataFrame representing the measurements of the natural languages.
 
         counts: whether to add the counts of (complexity, comm_cost) as an aesthetic.
+
+        axis_titles: whether to include axis titles. True by default, but pass False to obtain plot for main paper figure.
 
         dlsav: whether to add the categorical DLSAV universal property as an aesthetic.
 
@@ -67,11 +70,25 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.xlab("Complexity")
-        + pn.ylab("Communicative cost")
         + pn.scale_color_cmap("cividis")
         + pn.theme_classic()
     )
+
+    if axis_titles:
+        plot = (
+        plot
+        + pn.xlab("Complexity")
+        + pn.ylab("Communicative cost")        
+        )
+    else:
+        plot = (
+        plot
+        + pn.theme(
+            axis_title_x=pn.element_blank(),
+            axis_title_y=pn.element_blank(),
+        )
+        )
+
     if natural_data is not None:
         plot = (
             plot
@@ -147,6 +164,7 @@ def main():
         natural_data=natural_data,
         naturalness=naturalness,
         counts=True,
+        # axis_titles=False,
     )
     plot.save(plot_fn, width=10, height=10, dpi=300)
 
