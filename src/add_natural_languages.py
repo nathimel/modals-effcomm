@@ -16,6 +16,7 @@ REFERENCE_GRAMMAR = "reference-grammar"
 REFERENCE_TYPES = [REFERENCE_GRAMMAR] + ALLOWED_REFERENCE_TYPES
 REFERENCE_TYPE_KEY = "Reference-type"
 LANGUAGE_IS_COMPLETE_KEY = "Complete-language"
+FAMILY_KEY = "Family"
 
 METADATA_FN = "metadata.yml"
 MODALS_FN = "modals.csv"
@@ -79,7 +80,13 @@ def main():
         # must be paper-journal or elicitation
         if reference_type in ALLOWED_REFERENCE_TYPES:
                 modals_fn = os.path.join(dirpath, MODALS_FN)
-                dataframes[dir] = pd.read_csv(modals_fn)
+                if FAMILY_KEY not in metadata:
+                    breakpoint()
+                data = {
+                    "df": pd.read_csv(modals_fn),
+                    "family": metadata[FAMILY_KEY],
+                }
+                dataframes[dir] = data
         else:
             # Skip reference-grammar obtained data if incomplete.
             print(f"Data for {dir} is of type {reference_type}; skipping.")
@@ -99,10 +106,12 @@ def main():
 
     # Construct ModalLanguages for each natural language
     experiment_languages = []
-    for language_name, df in dataframes.items():
+    for language_name, data_dict in dataframes.items():
         print(f"Adding {language_name}")
         vocabulary = {}
 
+        df = data_dict["df"]
+        family = data_dict["family"]
         # only look at positive polarity modals
         if "polarity" in df:
             df_positive = df[df["polarity"] == "positive"]
@@ -145,6 +154,7 @@ def main():
                     break
         lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name)
         lang.natural = True
+        lang.data["family"] = family
         experiment_languages.append(lang)
 
     # save for analysis

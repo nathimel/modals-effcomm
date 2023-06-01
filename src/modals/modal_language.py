@@ -105,6 +105,7 @@ class ModalLanguage(Language):
                 "dlsav": None,
                 "name": name,
                 "Language": None,
+                "family": "artificial",
             }
             if data is None
             else data

@@ -19,7 +19,7 @@ universal_property: iff # iff or sav
 # other experiment parameters
 processes: 6
 random_seed: 42
-sample_size: 200
+sample_size: 2000
 lang_size: 10
 evolutionary_alg:
   generation_size: 200
@@ -33,7 +33,7 @@ evolutionary_alg:
 file_paths:
   meaning_space: outputs/journal/dev/meaning_space.yml
   expressions: outputs/journal/dev/expressions.yml
-  data: ../modal-typology/basic-format
+  data: data/natural_languages
 
   prior: outputs/journal/dev/prior.yml
   prior_df: outputs/journal/dev/prior_df.csv # meaning counts from corpus
