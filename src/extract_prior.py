@@ -89,8 +89,8 @@ def main():
 
     print("Constructing uniform prior")
     prior = generate_uniform(space)
-
-    if True:  # TODO: move option for uniform/estimated to config file
+    
+    if configs["prior"] == "estimated":
 
         ##########################################################################
         # Load and parse corpus to extract auxiliaries
@@ -180,9 +180,10 @@ def main():
         # Save a minimal dataframe of counts for later easy reference
         df_points = pd.concat(points_dfs)
         df_points = df_points.drop(columns=["sentence_id", "POS"])
+        # save dataframe of counts
+        df_points.to_csv(prior_df_fn, index=False)
 
         total = sum(point_counts.values())
-
         # convert counts to relative frequencies
         prior = {point: point_counts[point] / total for point in point_counts}
 
@@ -192,8 +193,6 @@ def main():
 
     # save prior for experiment
     file_util.save_prior(prior_fn, prior)
-    # save dataframe of counts
-    df_points.to_csv(prior_df_fn, index=False)
 
     print("done.")
 

@@ -81,10 +81,11 @@ def main():
         if reference_type in ALLOWED_REFERENCE_TYPES:
                 modals_fn = os.path.join(dirpath, MODALS_FN)
                 if FAMILY_KEY not in metadata:
-                    breakpoint()
+                    pass
+                    # breakpoint()
                 data = {
                     "df": pd.read_csv(modals_fn),
-                    "family": metadata[FAMILY_KEY],
+                    # "family": metadata[FAMILY_KEY],
                 }
                 dataframes[dir] = data
         else:
@@ -111,7 +112,7 @@ def main():
         vocabulary = {}
 
         df = data_dict["df"]
-        family = data_dict["family"]
+        # family = data_dict["family"]
         # only look at positive polarity modals
         if "polarity" in df:
             df_positive = df[df["polarity"] == "positive"]
@@ -154,7 +155,7 @@ def main():
                     break
         lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name)
         lang.natural = True
-        lang.data["family"] = family
+        # lang.data["family"] = family
         experiment_languages.append(lang)
 
     # save for analysis

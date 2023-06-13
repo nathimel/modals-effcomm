@@ -95,7 +95,7 @@ def get_modals_plot(
             + pn.geom_point(  # The natural languages
                 natural_data,
                 color="red",
-                # shape="+",
+                shape="+",
                 size=4,
             )
             + pn.geom_text(
