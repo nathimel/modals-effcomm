@@ -129,3 +129,29 @@ stat
 t-statistic         49.180117      76.222253  147.196551
 Two-sided p-value    0.000000       0.000000    0.000000
 
+# for uniform:
+
+Degree iff pearson correlations:
+simplicity: 0.380073372527866
+informativity: 0.6593064273199136
+optimality: 0.5853944906234452
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.722222       0.589678    0.906444
+dlsav_means         0.654111       0.701514    0.894885
+population_means    0.578298       0.403283    0.763478
+
+TTEST STATS
+natural languages (27) against population (83303)
+                     simplicity  informativity    optimality
+stat                                                        
+t-statistic        7.266190e+00   7.818225e+00  1.477325e+01
+Two-sided p-value  1.022984e-07   2.714445e-08  3.678918e-14
+
+dlsav languages (3862) against population (83303)
+                      simplicity  informativity  optimality
+stat                                                       
+t-statistic         3.273389e+01      88.239606  162.392749
+Two-sided p-value  1.248482e-207       0.000000    0.000000
