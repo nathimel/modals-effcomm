@@ -1,5 +1,6 @@
 """Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off, and robust exploration of the 2D space of possible modal languages."""
 
+import random
 import sys
 from altk.effcomm.optimization import EvolutionaryOptimizer
 from misc import file_util
@@ -143,10 +144,21 @@ def main():
     dominant_langs = results["lower_left"]["dominating_languages"]
 
     print(f"Discovered {len(pool)} languages.")
+    print(f"Filtering languages...")
     pool.extend(sampled_languages)
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
+    # remove some non-dominant to limit final pool to a standard size
+    # TODO: get rid of this hack
+    num_natural_langs = 28
+    cap = configs["total_pool_cap"] - len(dominant_langs) - num_natural_langs
+    candidate_langs = [lang for lang in pool if lang not in dominant_langs]
+    if len(pool) > cap:
+        reduced_pool = random.sample(candidate_langs, cap)
+        pool = reduced_pool + dominant_langs
+    
+    print("Saving languages...")
     file_util.save_languages(
         artificial_langs_fn, pool, id_start=id_start, kind="explored"
     )

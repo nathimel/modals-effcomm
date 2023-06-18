@@ -15,7 +15,7 @@ agent_type: pragmatic # literal or pragmatic
 language_of_thought:
   negation: True
 universal_property: iff # iff or sav
-prior: uniform # estimated or uniform
+prior: estimated # estimated or uniform
 
 
 # other experiment parameters
@@ -30,6 +30,8 @@ evolutionary_alg:
   num_processes: 6
   maximum_lang_size: 10
   explore: 0
+total_pool_cap: 75000
+
 
 # outputs etc
 file_paths:

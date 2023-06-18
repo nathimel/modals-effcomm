@@ -1,28 +1,53 @@
-Discovered 1599388 languages.
-Saved 109036 explored languages.
-Saved 13 dominant languages.
-
 Degree iff pearson correlations:
-simplicity: 0.4821871545140428
-informativity: 0.5624762463507536
-optimality: 0.6054640893172225
+simplicity: 0.5414153589328767
+informativity: 0.32985105398017256
+optimality: 0.601895337112314
 
 MEANS
                   simplicity  informativity  optimality
 name                                                   
-natural_means       0.760897       0.474813    0.888448
-dlsav_means         0.647588       0.659889    0.863996
-population_means    0.518765       0.395190    0.711860
+natural_means       0.722222       0.630040    0.883258
+dlsav_means         0.629795       0.511465    0.809669
+population_means    0.480917       0.449333    0.686830
 
 TTEST STATS
-natural languages (39) against population (109076)
+natural languages (27) against population (75000)
                      simplicity  informativity    optimality
 stat                                                        
-t-statistic        1.271720e+01       3.026593  1.722070e+01
-Two-sided p-value  2.884605e-15       0.004423  1.531302e-19
+t-statistic        1.218261e+01   6.765596e+00  1.698950e+01
+Two-sided p-value  2.996962e-12   3.520946e-07  1.350935e-15
 
-dlsav languages (4592) against population (109076)
+dlsav languages (3493) against population (75000)
                    simplicity  informativity  optimality
 stat                                                    
-t-statistic          64.63949       73.91086  164.021652
-Two-sided p-value     0.00000        0.00000    0.000000
+t-statistic         68.191042   1.396525e+01   80.886424
+Two-sided p-value    0.000000   3.605664e-43    0.000000
+
+probably rerun
+
+# For uniform:
+
+Degree iff pearson correlations:
+simplicity: 0.37201808053250807
+informativity: 0.5098951904217885
+optimality: 0.5519379308940889
+
+MEANS
+                  simplicity  informativity  optimality
+name                                                   
+natural_means       0.722222       0.617753    0.907341
+dlsav_means         0.655860       0.549337    0.847318
+population_means    0.576422       0.452659    0.769581
+
+TTEST STATS
+natural languages (27) against population (75000)
+                     simplicity  informativity    optimality
+stat                                                        
+t-statistic        7.360904e+00       5.555644  1.241243e+01
+Two-sided p-value  8.124745e-08       0.000008  1.974811e-12
+
+dlsav languages (3626) against population (75000)
+                      simplicity  informativity  optimality
+stat                                                       
+t-statistic         3.377850e+01   2.119820e+01   56.998999
+Two-sided p-value  1.061728e-217   4.096242e-94    0.000000
