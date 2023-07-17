@@ -154,10 +154,11 @@ This just runs the following python scripts, which can also be run individually:
 To cite this work, please use the following:
 
 ```
-@inproceedings{Imel2022,
-  author    = {Imel, Nathaniel, and Shane Steinert-Threlkeld},
-  title     = {Modals in natural language optimize the simplicity/informativeness trade-off},
-  year      = {2022},
-  booktitle = {Proceedings of Semantics and Linguistic Theory (SALT 32)},
+@article{Imeletal2023,
+  author    = {Imel, Nathaniel, and Guo, Qingxia, and Steinert-Threlkeld, Shane},
+  title     = {An efficient communication analysis of modal typology},
+  year      = {2023},
+  journal = {lingbuzz},
+  url = {https://ling.auf.net/lingbuzz/007392},
 }
 ```
