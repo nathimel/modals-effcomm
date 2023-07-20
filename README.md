@@ -5,7 +5,7 @@ This code accompanies the following paper:
 > N. Imel and S. Steinert-Threlkeld, Modals in natural language optimize the simplicity/informativeness
 trade-off, in _Proceedings of Semantics and Linguistic Theory (SALT 32)_, 2022.
 
-The repo contains code for constructing artificial languages and measuring them for communicative efficiency. The codebase is organized around the following steps of the experiment.
+and an extension thereof. The codebase is structured to support computational experiments measuring natural and artificial modal vocabularies for communicative efficiency.
 
 ## Setting up an experiment
 
