@@ -59,10 +59,11 @@ filepaths:
     means: means.csv
     ttest_natural: ttest_natural.csv
     ttest_dlsav: ttest_dlsav.csv
-  basic_dir: universe=${experiment.universe}/lot_negation=${experiment.effcomm.comp.lot_negation}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
-  sampling_dir: ${filepaths.basic_dir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_sample=${experiment.sampling.unbiased.sample}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
-  language_dir: ${filepaths.sampling_dir}/languages
-  analysis_dir: ${filepaths.sampling_dir}/analysis
-  leaf_subdir: ${filepaths.sampling_dir}
+  expressions_subdir: universe=${experiment.universe}/lot_negation=${experiment.effcomm.comp.lot_negation}
+  inf_subdir: ${filepaths.expressions_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
+  sampling_subdir: ${filepaths.inf_subdir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_sample=${experiment.sampling.unbiased.sample}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
+  language_subdir: ${filepaths.sampling_subdir}/languages
+  analysis_subdir: ${filepaths.sampling_subdir}/analysis
+  leaf_subdir: ${filepaths.sampling_subdir}
   hydra_run_root: outputs
   hydra_sweep_root: multirun

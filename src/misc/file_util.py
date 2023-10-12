@@ -1,4 +1,5 @@
 import os
+import hydra
 import random
 import time
 import yaml
@@ -18,6 +19,20 @@ def set_seed(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Hydra
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def get_original_fp(fn: str):
+    return os.path.join(hydra.utils.get_original_cwd(), fn)
+
+def get_expressions_fn(config: dict):
+    expressions_dir = os.getcwd().replace(
+        config.filepaths.leaf_subdir, config.filepaths.expressions_subdir
+    )
+    expressions_fn = os.path.join(expressions_dir, config.filepaths.expressions)
+    return expressions_fn
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Setup

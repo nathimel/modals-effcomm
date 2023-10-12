@@ -1,10 +1,9 @@
 import os
 import torch
-import hydra
 
 import pandas as pd
 
-# from altk.language.semantics import Universe
+from misc.file_util import get_original_fp
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 
@@ -37,7 +36,7 @@ class Experiment:
         universe = None
         prior = None
 
-        get_original_fp = lambda fn: os.path.join(hydra.utils.get_original_cwd(), fn)
+        
 
         # Initialize Universe, default is a list of integers
         if isinstance(config.experiment.universe, str):

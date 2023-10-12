@@ -12,7 +12,6 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     exp = Experiment.from_hydra(config)
-    breakpoint()
 
 if __name__ == "__main__":
     main()

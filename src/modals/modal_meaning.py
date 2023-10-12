@@ -59,7 +59,7 @@ class ModalMeaningSpace(Universe):
 
     """
 
-    def __init__(self, referents: Iterable[ModalMeaningPoint], forces: list[str], flavors: list[str]):
+    def __init__(self, forces: list[str], flavors: list[str], referents: Iterable[ModalMeaningPoint] = None,):
         """Construct a meaning space for modals, using two axes of variation.
 
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
@@ -72,6 +72,13 @@ class ModalMeaningSpace(Universe):
         self.forces = forces
         self.flavors = flavors
         self.arr = np.zeros((len(forces), len(flavors)))
+        if referents is not None:
+            referents = {
+                # ModalMeaningPoint(name=f"{force}+{flavor}")
+                ModalMeaningPoint(force=force, flavor=flavor)
+                for force in forces
+                for flavor in flavors
+            }
         super().__init__(referents)
 
     @classmethod
@@ -80,9 +87,9 @@ class ModalMeaningSpace(Universe):
         forces = list(set(df["force"].tolist()))
         flavors = list(set(df["flavor"].tolist()))
         return cls(
-            [ModalMeaningPoint(point.force, point.flavor) for point in universe.referents],
             forces,
             flavors,
+            [ModalMeaningPoint(point.force, point.flavor) for point in universe.referents],
         )
 
     def force_to_index(self, force: str):

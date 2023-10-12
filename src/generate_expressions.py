@@ -4,16 +4,17 @@ Every possible modal meaning that can be expressed by a language is given exactl
 """
 
 import sys
+import os
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import ModalExpression
 from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
 
-from altk.language.semantics import Universe
+from experiment import Experiment
 
 import hydra
-from misc.file_util import set_seed, save_expressions
+from misc.file_util import set_seed, save_expressions, get_expressions_fn
 from omegaconf import DictConfig
 
 
@@ -22,12 +23,12 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     # Load parameters for expression generation
-    expressions_fn = config.filepaths.expressions # TODO: consider checking if expressions already exist instead of regenerating every time
+    # TODO: consider checking if expressions already exist instead of regenerating every time
+    expressions_fn = get_expressions_fn(config)
 
     experiment = Experiment.from_hydra(config)
 
     # Generate lot expressions
-    universe = experiment.universe
     meanings = experiment.meanings
     mdl = experiment.mlot.minimum_lot_description
 
@@ -61,3 +62,6 @@ def main(config: DictConfig):
 
     save_expressions(expressions_fn, modal_expressions)
     print("done.")
+
+if __name__ == "__main__":
+    main()
