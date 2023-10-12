@@ -1,0 +1,115 @@
+##############################################################################
+# MAIN CONFIG FILE
+##############################################################################
+
+defaults:
+  - experiment: dev
+  - typology: can_express
+  - _self_ # stuff below can override stuff above  
+
+seed: 42
+
+##############################################################################
+# Paths of files used for consuming and producing data
+##############################################################################
+filepaths: 
+
+  ############################################################################
+  # Data to read in
+  ############################################################################
+  # universe; see experiment.universe
+  universe_fn: data/universe/${experiment.universe}.csv
+  # prior; see experiment.prior
+  prior_fn: data/prior/${experiment.prior}.csv
+
+  # Modality Corpus for prior estimation
+  modality_corpus: 
+    0:
+      dev: data/modality_corpus/0/dev.txt
+      train: data/modality_corpus/0/train.txt
+    1:
+      dev: data/modality_corpus/1/dev.txt
+      train: data/modality_corpus/1/train.txt
+    2:
+      dev: data/modality_corpus/2/dev.txt
+      train: data/modality_corpus/2/train.txt
+    3:
+      dev: data/modality_corpus/3/dev.txt
+      train: data/modality_corpus/3/train.txt
+    4:
+      dev: data/modality_corpus/4/dev.txt
+      train: data/modality_corpus/4/train.txt
+    test: 
+      test: data/modality_corpus/test/test.txt  
+
+  ############################################################################
+  # Outputs
+  ############################################################################  
+
+  # Languages
+  expressions: expressions.yaml
+  artificial_languages: artificial.yml
+  natural_languages: natural.yml
+  dominant_languages: dominant.yml # Pareto-optimal
+
+  # Analysis output data
+  analysis:
+    correlations: correlations/property.csv # dummy property name
+    all_data: all_data.csv # all languages measurements
+    pareto_data: pareto_data.csv # optimal (comp, sim, inf, comm_cost)
+    plot: plot.png
+    means: means.csv
+    ttest_natural: ttest_natural.csv
+    ttest_dlsav: ttest_dlsav.csv  
+  
+  ############################################################################
+  # Hydra automatic folder naming
+  ############################################################################
+
+  # Note that since complexity/informativeness shape the evolutionary algorithm exploration, the former parameters should be parent directory.
+
+  basic_dir: universe=${experiment.universe}/lot_negation=${experiment.effcomm.comp.lot_negation}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
+  
+  sampling_dir: ${filepaths.basic_dir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_sample=${experiment.sampling.unbiased.sample}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
+
+  language_dir: ${filepaths.sampling_dir}/languages
+
+  analysis_dir: ${filepaths.sampling_dir}/analysis
+
+  # where the current working directory will be when hydra is running
+  leaf_subdir: ${filepaths.sampling_dir}
+
+  # hydra run root directory
+  hydra_run_root: outputs
+
+  # hydra multirun root directory
+  hydra_sweep_root: multirun
+
+##############################################################################
+# Hydra run and sweep configs
+##############################################################################
+hydra:
+  run:
+    dir: ${filepaths.hydra_run_root}/${filepaths.leaf_subdir}
+  job:
+    chdir: True
+    config:
+      override_dirname:
+        exclude_keys:
+          - experiment.universe
+          - experiment.effcomm.comp.lot_negation
+          - experiment.effcomm.inf.prior
+          - experiment.effcomm.inf.utility
+          - experiment.effcomm.inf.agent_type
+          - experiment.sampling.maximum_lang_size
+          - experiment.sampling.total_pool_cap
+          - experiment.sampling.unbiased_sample
+          - experiment.sampling.evol.max_mutations
+          - experiment.sampling.evol.generation_size
+          - experiment.sampling.evol.num_generations
+          - experiment.sampling.evol.explore
+          - seed
+
+  sweep:
+    dir: ${filepaths.hydra_sweep_root}
+    subdir: ${filepaths.leaf_subdir}

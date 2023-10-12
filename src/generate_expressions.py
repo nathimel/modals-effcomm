@@ -7,39 +7,41 @@ import sys
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import ModalExpression
-from misc.file_util import load_space, load_configs, save_expressions
-from multiprocess import Pool
+from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
 
+from altk.language.semantics import Universe
 
-if __name__ == "__main__":
-    # Everything must be outside of main() otherwise Pool gets mad
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/generate_expressions.py path_to_config_file")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+import hydra
+from misc.file_util import set_seed, save_expressions
+from omegaconf import DictConfig
+
+
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
     # Load parameters for expression generation
-    config_fn = sys.argv[1]
-    configs = load_configs(config_fn)
-    meaning_space_fn = configs["file_paths"]["meaning_space"]
-    expression_save_fn = configs["file_paths"][
-        "expressions"
-    ]  # TODO: consider checking if expressions already exist instead of regenerating every time
+    expressions_fn = config.filepaths.expressions # TODO: consider checking if expressions already exist instead of regenerating every time
 
-    # Generate expressions, measure them, and save
-    space = load_space(meaning_space_fn)
+    experiment = Experiment.from_hydra(config)
 
-    print("Generating expressions...")
-    mlot = ModalLOT(space, configs["language_of_thought"])
-    meanings = [x for x in space.generate_meanings()]
+    # Generate lot expressions
+    universe = experiment.universe
+    meanings = experiment.meanings
+    mdl = experiment.mlot.minimum_lot_description
 
-    with Pool(configs["processes"]) as p:
+    print("Generating lot expressions...")
+
+    # Measure expressions for complexity
+    with Pool(cpu_count()) as p:
         lot_expressions = list(
-            tqdm(p.imap(mlot.minimum_lot_description, meanings), total=len(meanings))
+            tqdm(p.imap(mdl, meanings), total=len(meanings))
         )
 
     # Check if negation shouldn't be there
-    negation = configs["language_of_thought"]["negation"]
+    # N.B.: this is old stuff just for debugging
+    negation = experiment.lot_negation
     if not negation:
         lots = [formula for formula in lot_expressions if "-" in formula]
         if len(lots) != 0:
@@ -47,6 +49,7 @@ if __name__ == "__main__":
                 f"Negation shouldn't be in lot but found the following formulae with negation: {lots}"
             )
 
+    # Save
     modal_expressions = [
         ModalExpression(
             form=f"dummy_form_{i}",
@@ -56,5 +59,5 @@ if __name__ == "__main__":
         for i, meaning in enumerate(meanings)
     ]
 
-    save_expressions(expression_save_fn, modal_expressions)
+    save_expressions(expressions_fn, modal_expressions)
     print("done.")

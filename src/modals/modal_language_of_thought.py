@@ -121,7 +121,7 @@ class ExpressionTree:
 
 
 class ModalLOT:
-    def __init__(self, meaning_space: ModalMeaningSpace, lot_configs: dict[str, bool]):
+    def __init__(self, meaning_space: ModalMeaningSpace, lot_negation = True):
         """Initialize the LoT, which depends on the number of forces and flavors.
 
         Args:
@@ -131,7 +131,7 @@ class ModalLOT:
         """
         self.forces = meaning_space.forces
         self.flavors = meaning_space.flavors
-        self.contains_negation = lot_configs["negation"]
+        self.contains_negation = lot_negation
 
     def minimum_lot_description(self, meaning: ModalMeaning) -> list:
         """Runs a heuristic to estimate the shortest length description of modal meanings in a language of thought.

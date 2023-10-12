@@ -59,27 +59,31 @@ class ModalMeaningSpace(Universe):
 
     """
 
-    def __init__(self, forces: list[str], flavors: list[str]):
+    def __init__(self, referents: Iterable[ModalMeaningPoint], forces: list[str], flavors: list[str]):
         """Construct a meaning space for modals, using two axes of variation.
 
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
 
         Args:
+            referents: a list of ModalMeaningPoint referents
             forces: a list of the modal force string names
             flavors: a list of the modal flavor string names
         """
-        self.forces = list(forces)
-        self.flavors = list(flavors)
-        # construct a universe with cartesian product
-        super().__init__(
-            referents={
-                # ModalMeaningPoint(name=f"{force}+{flavor}")
-                ModalMeaningPoint(force=force, flavor=flavor)
-                for force in forces
-                for flavor in flavors
-            }
-        )
+        self.forces = forces
+        self.flavors = flavors
         self.arr = np.zeros((len(forces), len(flavors)))
+        super().__init__(referents)
+
+    @classmethod
+    def from_dataframe(cls, df: pd.DataFrame):
+        universe = Universe.from_dataframe(df)
+        forces = list(set(df["force"].tolist()))
+        flavors = list(set(df["flavor"].tolist()))
+        return cls(
+            [ModalMeaningPoint(point.force, point.flavor) for point in universe.referents],
+            forces,
+            flavors,
+        )
 
     def force_to_index(self, force: str):
         """Converts a force name to a table row index.
@@ -311,39 +315,3 @@ def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
         if feature in guess:
             score += 0.5
     return score
-
-
-##############################################################################
-# Meaning distributions for Information Bottleneck analysis
-##############################################################################
-DEFAULT_DECAY = 0.1
-DEFAULT_UTILITY = half_credit
-
-def generate_meaning_distributions(
-    space: ModalMeaningSpace, 
-    decay: float = DEFAULT_DECAY, 
-    cost: Callable[[Referent, Referent], float] = lambda x,y: 1 - DEFAULT_UTILITY(x, y),
-) -> np.ndarray:
-    """Generate a conditional distribution over world states given meanings, $p(u|m)$, for each meaning.
-
-    Args:
-        space: the ModalMeaningSpace on which meanings are defined
-
-        decay: a float in [0,1]. controls informativity, by decaying how much probability mass is assigned to perfect recoveries. As decay approaches 0, only perfect recovery is rewarded (which overrides any partial credit structure built into the utility/cost function). As decay approaches 1, the worst guesses become most likely.
-
-        cost: a cost function defining the pairwise communicative cost for confusing one Referent in the Universe with another. If you have a (scaled) communicative utility matrix, a natural choice for cost might be `lambda x, y: 1 - utility(x, y)`.
-
-    Returns:
-        p_u_m: an array of shape `(|space.referents|, |space.referents|)`
-    """
-
-    # construct p(u|m) for each meaning
-    meaning_distributions = np.array(
-        [[decay ** cost(m, u) for u in space.referents] for m in space.referents]
-    )
-    # each row sums to 1.0
-    np.seterr(divide="ignore", invalid="ignore")
-    meaning_distributions = np.nan_to_num(
-        meaning_distributions / meaning_distributions.sum(axis=1, keepdims=True)
-    )
-    return meaning_distributions
