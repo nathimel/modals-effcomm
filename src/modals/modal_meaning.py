@@ -72,13 +72,14 @@ class ModalMeaningSpace(Universe):
         self.forces = forces
         self.flavors = flavors
         self.arr = np.zeros((len(forces), len(flavors)))
-        if referents is not None:
+        if referents is None:
             referents = {
                 # ModalMeaningPoint(name=f"{force}+{flavor}")
                 ModalMeaningPoint(force=force, flavor=flavor)
                 for force in forces
                 for flavor in flavors
             }
+        # breakpoint()
         super().__init__(referents)
 
     @classmethod

@@ -1,31 +1,29 @@
 """Script for sampling languages."""
 
 import sys
-from altk.effcomm.sampling import generate_languages
+from altk.language.sampling import generate_languages
 from modals import modal_language
 from modals.modal_language import ModalLanguage
-from misc.file_util import *
+
+import hydra
+from misc.file_util import set_seed, save_languages, load_expressions, get_subdir_fn
+from omegaconf import DictConfig
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/sample_languages.py path_to_config_file")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
-    # Load expressions and save path
-    config_fn = sys.argv[1]
-    configs = load_configs(config_fn)
-    expression_save_fn = configs["file_paths"]["expressions"]
-    lang_save_fn = configs["file_paths"]["artificial_languages"]
+    expressions_fn = get_subdir_fn(config, config.filepaths.expressions_subdir, config.filepaths.expressions)
+    lang_save_fn = get_subdir_fn(config, config.filepaths.language_subdir, config.filepaths.artificial_languages)
 
     # Load parameters for languages
-    lang_size = configs["lang_size"]
-    sample_size = configs["sample_size"]
-    set_seed(configs["random_seed"])
+    lang_size = config.experiment.sampling.maximum_lang_size
+    sample_size = config.experiment.sampling.unbiased.sample_size
 
     # Turn the knob on universal property
-    expressions = load_expressions(expression_save_fn)
-    universal_property = getattr(modal_language, configs["universal_property"])
+    expressions = load_expressions(expressions_fn)
+    universal_property = getattr(modal_language, config.experiment.sampling.unbiased.universal_property)
 
     print("Sampling random languages ...")
     result = generate_languages(

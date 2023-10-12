@@ -1,106 +1,106 @@
 expressions:
 - form: dummy_form_0
-  lot: (* (weak ) (deontic ))
+  lot: (* (weak ) (epistemic ))
   meaning:
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_1
   lot: (* (weak ) (circumstantial ))
   meaning:
   - weak+circumstantial
 - form: dummy_form_2
-  lot: (* (weak ) (- (epistemic )))
+  lot: (* (weak ) (- (deontic )))
   meaning:
   - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_3
-  lot: (* (weak ) (epistemic ))
-  meaning:
   - weak+epistemic
+- form: dummy_form_3
+  lot: (* (weak ) (deontic ))
+  meaning:
+  - weak+deontic
 - form: dummy_form_4
   lot: (* (weak ) (- (circumstantial )))
   meaning:
   - weak+deontic
   - weak+epistemic
 - form: dummy_form_5
-  lot: (* (weak ) (- (deontic )))
+  lot: (* (weak ) (- (epistemic )))
   meaning:
+  - weak+deontic
   - weak+circumstantial
-  - weak+epistemic
 - form: dummy_form_6
   lot: (weak )
   meaning:
-  - weak+circumstantial
   - weak+deontic
+  - weak+circumstantial
   - weak+epistemic
 - form: dummy_form_7
-  lot: (* (strong ) (deontic ))
+  lot: (* (strong ) (epistemic ))
   meaning:
-  - strong+deontic
+  - strong+epistemic
 - form: dummy_form_8
-  lot: (deontic )
+  lot: (epistemic )
   meaning:
-  - strong+deontic
-  - weak+deontic
+  - strong+epistemic
+  - weak+epistemic
 - form: dummy_form_9
-  lot: (+ (* (strong ) (deontic )) (* (weak ) (circumstantial )))
+  lot: (+ (* (strong ) (epistemic )) (* (weak ) (circumstantial )))
   meaning:
-  - strong+deontic
+  - strong+epistemic
   - weak+circumstantial
 - form: dummy_form_10
-  lot: (+ (deontic ) (* (weak ) (circumstantial )))
+  lot: (+ (epistemic ) (* (weak ) (circumstantial )))
   meaning:
-  - strong+deontic
+  - strong+epistemic
   - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_11
-  lot: (+ (* (strong ) (deontic )) (* (weak ) (epistemic )))
-  meaning:
-  - strong+deontic
   - weak+epistemic
-- form: dummy_form_12
-  lot: (+ (deontic ) (* (weak ) (epistemic )))
+- form: dummy_form_11
+  lot: (+ (* (strong ) (epistemic )) (* (weak ) (deontic )))
   meaning:
-  - strong+deontic
   - weak+deontic
+  - strong+epistemic
+- form: dummy_form_12
+  lot: (+ (epistemic ) (* (weak ) (deontic )))
+  meaning:
+  - weak+deontic
+  - strong+epistemic
   - weak+epistemic
 - form: dummy_form_13
-  lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (deontic )))
+  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (epistemic )))
   meaning:
-  - strong+deontic
-  - weak+circumstantial
-  - weak+epistemic
-- form: dummy_form_14
-  lot: (- (* (strong ) (- (deontic ))))
-  meaning:
-  - strong+deontic
-  - weak+circumstantial
   - weak+deontic
+  - strong+epistemic
+  - weak+circumstantial
+- form: dummy_form_14
+  lot: (- (* (strong ) (- (epistemic ))))
+  meaning:
+  - weak+deontic
+  - strong+epistemic
+  - weak+circumstantial
   - weak+epistemic
 - form: dummy_form_15
   lot: (* (strong ) (circumstantial ))
   meaning:
   - strong+circumstantial
 - form: dummy_form_16
-  lot: (+ (* (strong ) (circumstantial )) (* (weak ) (deontic )))
+  lot: (+ (* (strong ) (circumstantial )) (* (weak ) (epistemic )))
   meaning:
   - strong+circumstantial
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_17
   lot: (circumstantial )
   meaning:
   - strong+circumstantial
   - weak+circumstantial
 - form: dummy_form_18
-  lot: (+ (circumstantial ) (* (weak ) (deontic )))
+  lot: (+ (circumstantial ) (* (weak ) (epistemic )))
   meaning:
   - strong+circumstantial
   - weak+circumstantial
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_19
-  lot: (+ (* (strong ) (circumstantial )) (* (weak ) (epistemic )))
+  lot: (+ (* (strong ) (circumstantial )) (* (weak ) (deontic )))
   meaning:
   - strong+circumstantial
-  - weak+epistemic
+  - weak+deontic
 - form: dummy_form_20
   lot: (+ (* (weak ) (- (circumstantial ))) (* (strong ) (circumstantial )))
   meaning:
@@ -108,113 +108,113 @@ expressions:
   - weak+deontic
   - weak+epistemic
 - form: dummy_form_21
-  lot: (+ (circumstantial ) (* (weak ) (epistemic )))
+  lot: (+ (circumstantial ) (* (weak ) (deontic )))
   meaning:
   - strong+circumstantial
+  - weak+deontic
   - weak+circumstantial
-  - weak+epistemic
 - form: dummy_form_22
   lot: (- (* (strong ) (- (circumstantial ))))
   meaning:
   - strong+circumstantial
-  - weak+circumstantial
   - weak+deontic
+  - weak+circumstantial
   - weak+epistemic
 - form: dummy_form_23
-  lot: (* (strong ) (- (epistemic )))
+  lot: (* (strong ) (- (deontic )))
   meaning:
   - strong+circumstantial
-  - strong+deontic
+  - strong+epistemic
 - form: dummy_form_24
-  lot: (+ (deontic ) (* (strong ) (circumstantial )))
+  lot: (+ (epistemic ) (* (strong ) (circumstantial )))
   meaning:
   - strong+circumstantial
-  - strong+deontic
-  - weak+deontic
+  - strong+epistemic
+  - weak+epistemic
 - form: dummy_form_25
-  lot: (+ (circumstantial ) (* (strong ) (deontic )))
+  lot: (+ (circumstantial ) (* (strong ) (epistemic )))
   meaning:
   - strong+circumstantial
-  - strong+deontic
+  - strong+epistemic
   - weak+circumstantial
 - form: dummy_form_26
-  lot: (- (epistemic ))
+  lot: (- (deontic ))
   meaning:
   - strong+circumstantial
-  - strong+deontic
+  - strong+epistemic
   - weak+circumstantial
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_27
-  lot: (+ (* (strong ) (- (epistemic ))) (* (weak ) (epistemic )))
+  lot: (+ (* (strong ) (- (deontic ))) (* (weak ) (deontic )))
   meaning:
   - strong+circumstantial
-  - strong+deontic
-  - weak+epistemic
+  - strong+epistemic
+  - weak+deontic
 - form: dummy_form_28
-  lot: (+ (* (weak ) (- (circumstantial ))) (* (strong ) (- (epistemic ))))
+  lot: (+ (* (weak ) (- (circumstantial ))) (* (strong ) (- (deontic ))))
   meaning:
-  - strong+circumstantial
-  - strong+deontic
-  - weak+deontic
   - weak+epistemic
+  - strong+circumstantial
+  - strong+epistemic
+  - weak+deontic
 - form: dummy_form_29
-  lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (- (epistemic ))))
+  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (- (deontic ))))
   meaning:
   - strong+circumstantial
-  - strong+deontic
+  - strong+epistemic
   - weak+circumstantial
-  - weak+epistemic
+  - weak+deontic
 - form: dummy_form_30
-  lot: (- (* (strong ) (epistemic )))
+  lot: (- (* (strong ) (deontic )))
   meaning:
-  - weak+epistemic
-  - strong+circumstantial
-  - strong+deontic
+  - weak+deontic
   - weak+circumstantial
-  - weak+deontic
+  - strong+epistemic
+  - strong+circumstantial
+  - weak+epistemic
 - form: dummy_form_31
-  lot: (* (strong ) (epistemic ))
+  lot: (* (strong ) (deontic ))
   meaning:
-  - strong+epistemic
+  - strong+deontic
 - form: dummy_form_32
-  lot: (+ (* (strong ) (epistemic )) (* (weak ) (deontic )))
+  lot: (+ (* (strong ) (deontic )) (* (weak ) (epistemic )))
   meaning:
-  - strong+epistemic
-  - weak+deontic
+  - strong+deontic
+  - weak+epistemic
 - form: dummy_form_33
-  lot: (+ (* (strong ) (epistemic )) (* (weak ) (circumstantial )))
+  lot: (+ (* (strong ) (deontic )) (* (weak ) (circumstantial )))
   meaning:
-  - strong+epistemic
+  - strong+deontic
   - weak+circumstantial
 - form: dummy_form_34
-  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (epistemic )))
+  lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (deontic )))
   meaning:
-  - strong+epistemic
+  - strong+deontic
   - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_35
-  lot: (epistemic )
-  meaning:
-  - strong+epistemic
   - weak+epistemic
-- form: dummy_form_36
-  lot: (+ (epistemic ) (* (weak ) (deontic )))
+- form: dummy_form_35
+  lot: (deontic )
   meaning:
-  - strong+epistemic
+  - strong+deontic
+  - weak+deontic
+- form: dummy_form_36
+  lot: (+ (deontic ) (* (weak ) (epistemic )))
+  meaning:
+  - strong+deontic
   - weak+deontic
   - weak+epistemic
 - form: dummy_form_37
-  lot: (+ (epistemic ) (* (weak ) (circumstantial )))
+  lot: (+ (deontic ) (* (weak ) (circumstantial )))
   meaning:
-  - strong+epistemic
-  - weak+circumstantial
-  - weak+epistemic
-- form: dummy_form_38
-  lot: (- (* (strong ) (- (epistemic ))))
-  meaning:
-  - strong+epistemic
-  - weak+circumstantial
+  - strong+deontic
   - weak+deontic
+  - weak+circumstantial
+- form: dummy_form_38
+  lot: (- (* (strong ) (- (deontic ))))
+  meaning:
+  - strong+deontic
+  - weak+deontic
+  - weak+circumstantial
   - weak+epistemic
 - form: dummy_form_39
   lot: (* (strong ) (- (circumstantial )))
@@ -222,11 +222,11 @@ expressions:
   - strong+deontic
   - strong+epistemic
 - form: dummy_form_40
-  lot: (+ (deontic ) (* (strong ) (epistemic )))
+  lot: (+ (epistemic ) (* (strong ) (deontic )))
   meaning:
   - strong+deontic
   - strong+epistemic
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_41
   lot: (+ (* (strong ) (- (circumstantial ))) (* (weak ) (circumstantial )))
   meaning:
@@ -234,156 +234,156 @@ expressions:
   - strong+epistemic
   - weak+circumstantial
 - form: dummy_form_42
-  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (- (circumstantial ))))
-  meaning:
-  - strong+deontic
-  - strong+epistemic
-  - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_43
-  lot: (+ (epistemic ) (* (strong ) (deontic )))
-  meaning:
-  - strong+deontic
-  - strong+epistemic
-  - weak+epistemic
-- form: dummy_form_44
-  lot: (- (circumstantial ))
-  meaning:
-  - strong+deontic
-  - strong+epistemic
-  - weak+deontic
-  - weak+epistemic
-- form: dummy_form_45
   lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (- (circumstantial ))))
   meaning:
   - strong+deontic
   - strong+epistemic
   - weak+circumstantial
   - weak+epistemic
+- form: dummy_form_43
+  lot: (+ (deontic ) (* (strong ) (epistemic )))
+  meaning:
+  - strong+deontic
+  - strong+epistemic
+  - weak+deontic
+- form: dummy_form_44
+  lot: (- (circumstantial ))
+  meaning:
+  - weak+epistemic
+  - strong+deontic
+  - strong+epistemic
+  - weak+deontic
+- form: dummy_form_45
+  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (- (circumstantial ))))
+  meaning:
+  - strong+deontic
+  - strong+epistemic
+  - weak+circumstantial
+  - weak+deontic
 - form: dummy_form_46
   lot: (- (* (strong ) (circumstantial )))
   meaning:
-  - weak+epistemic
-  - strong+epistemic
-  - strong+deontic
+  - weak+deontic
   - weak+circumstantial
-  - weak+deontic
+  - strong+epistemic
+  - weak+epistemic
+  - strong+deontic
 - form: dummy_form_47
-  lot: (* (strong ) (- (deontic )))
+  lot: (* (strong ) (- (epistemic )))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
 - form: dummy_form_48
-  lot: (+ (* (strong ) (- (deontic ))) (* (weak ) (deontic )))
+  lot: (+ (* (strong ) (- (epistemic ))) (* (weak ) (epistemic )))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_49
-  lot: (+ (circumstantial ) (* (strong ) (epistemic )))
+  lot: (+ (circumstantial ) (* (strong ) (deontic )))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
   - weak+circumstantial
 - form: dummy_form_50
-  lot: (+ (* (weak ) (- (epistemic ))) (* (strong ) (- (deontic ))))
+  lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (- (epistemic ))))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
   - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_51
-  lot: (+ (epistemic ) (* (strong ) (circumstantial )))
-  meaning:
-  - strong+circumstantial
-  - strong+epistemic
   - weak+epistemic
-- form: dummy_form_52
-  lot: (+ (* (weak ) (- (circumstantial ))) (* (strong ) (- (deontic ))))
+- form: dummy_form_51
+  lot: (+ (deontic ) (* (strong ) (circumstantial )))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
+  - weak+deontic
+- form: dummy_form_52
+  lot: (+ (* (weak ) (- (circumstantial ))) (* (strong ) (- (epistemic ))))
+  meaning:
+  - strong+deontic
+  - strong+circumstantial
   - weak+deontic
   - weak+epistemic
 - form: dummy_form_53
-  lot: (- (deontic ))
+  lot: (- (epistemic ))
   meaning:
+  - strong+deontic
   - strong+circumstantial
-  - strong+epistemic
-  - weak+circumstantial
-  - weak+epistemic
-- form: dummy_form_54
-  lot: (- (* (strong ) (deontic )))
-  meaning:
-  - weak+epistemic
-  - strong+circumstantial
-  - strong+epistemic
-  - weak+circumstantial
   - weak+deontic
+  - weak+circumstantial
+- form: dummy_form_54
+  lot: (- (* (strong ) (epistemic )))
+  meaning:
+  - weak+deontic
+  - weak+circumstantial
+  - strong+circumstantial
+  - weak+epistemic
+  - strong+deontic
 - form: dummy_form_55
   lot: (strong )
   meaning:
-  - strong+circumstantial
   - strong+deontic
+  - strong+circumstantial
   - strong+epistemic
 - form: dummy_form_56
-  lot: (- (* (weak ) (- (deontic ))))
+  lot: (- (* (weak ) (- (epistemic ))))
   meaning:
-  - strong+circumstantial
   - strong+deontic
+  - strong+circumstantial
   - strong+epistemic
-  - weak+deontic
+  - weak+epistemic
 - form: dummy_form_57
   lot: (- (* (weak ) (- (circumstantial ))))
   meaning:
-  - strong+circumstantial
   - strong+deontic
+  - strong+circumstantial
   - strong+epistemic
   - weak+circumstantial
 - form: dummy_form_58
-  lot: (- (* (weak ) (epistemic )))
+  lot: (- (* (weak ) (deontic )))
   meaning:
-  - strong+circumstantial
-  - strong+epistemic
-  - strong+deontic
   - weak+circumstantial
-  - weak+deontic
-- form: dummy_form_59
-  lot: (- (* (weak ) (- (epistemic ))))
-  meaning:
-  - strong+circumstantial
-  - strong+deontic
   - strong+epistemic
+  - strong+circumstantial
   - weak+epistemic
+  - strong+deontic
+- form: dummy_form_59
+  lot: (- (* (weak ) (- (deontic ))))
+  meaning:
+  - strong+deontic
+  - strong+circumstantial
+  - strong+epistemic
+  - weak+deontic
 - form: dummy_form_60
   lot: (- (* (weak ) (circumstantial )))
   meaning:
-  - weak+epistemic
-  - strong+circumstantial
-  - strong+epistemic
-  - strong+deontic
   - weak+deontic
-- form: dummy_form_61
-  lot: (- (* (weak ) (deontic )))
-  meaning:
-  - weak+epistemic
-  - strong+circumstantial
   - strong+epistemic
+  - strong+circumstantial
+  - weak+epistemic
   - strong+deontic
+- form: dummy_form_61
+  lot: (- (* (weak ) (epistemic )))
+  meaning:
+  - weak+deontic
   - weak+circumstantial
+  - strong+epistemic
+  - strong+circumstantial
+  - strong+deontic
 - form: dummy_form_62
   lot: (1 )
   meaning:
-  - weak+epistemic
-  - strong+circumstantial
-  - strong+epistemic
-  - strong+deontic
-  - weak+circumstantial
   - weak+deontic
+  - weak+circumstantial
+  - strong+epistemic
+  - strong+circumstantial
+  - weak+epistemic
+  - strong+deontic
 flavors:
-- epistemic
-- circumstantial
 - deontic
+- circumstantial
+- epistemic
 forces:
 - strong
 - weak

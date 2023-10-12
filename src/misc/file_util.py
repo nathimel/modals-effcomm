@@ -27,25 +27,24 @@ def set_seed(seed: int) -> None:
 def get_original_fp(fn: str):
     return os.path.join(hydra.utils.get_original_cwd(), fn)
 
-def get_expressions_fn(config: dict):
-    expressions_dir = os.getcwd().replace(
-        config.filepaths.leaf_subdir, config.filepaths.expressions_subdir
+def get_subdir_fn(config: dict, subdir: str, fn: str):
+    """Get correct absolute path of a filename joined to a subdir, correcting for hydra run directory."""
+    absolute_subdir = os.getcwd().replace(
+        config.filepaths.leaf_subdir, subdir
     )
-    expressions_fn = os.path.join(expressions_dir, config.filepaths.expressions)
-    return expressions_fn
+    ensure_dir(absolute_subdir)    
+    expressions_fn = os.path.join(absolute_subdir, fn)
+    return expressions_fn    
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Setup
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-def make_path(fn: str) -> None:
-    """Creates the path recursively if it does not exist."""
-    dirname = os.path.dirname(fn)
-    if not os.path.exists(dirname):
-        os.makedirs(dirname)
-        print(f"Created folder {dirname}")
-
+def ensure_dir(path: str) -> None:
+    """Creates the dir recursively if it does not exist."""    
+    if not os.path.isdir(path):
+        os.makedirs(path)
+        print(f"Created directory {path}.")
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs

@@ -14,7 +14,7 @@ from tqdm import tqdm
 from experiment import Experiment
 
 import hydra
-from misc.file_util import set_seed, save_expressions, get_expressions_fn
+from misc.file_util import set_seed, save_expressions, get_subdir_fn
 from omegaconf import DictConfig
 
 
@@ -24,7 +24,7 @@ def main(config: DictConfig):
 
     # Load parameters for expression generation
     # TODO: consider checking if expressions already exist instead of regenerating every time
-    expressions_fn = get_expressions_fn(config)
+    expressions_fn = get_subdir_fn(config, config.filepaths.expressions_subdir, config.filepaths.expressions)
 
     experiment = Experiment.from_hydra(config)
 

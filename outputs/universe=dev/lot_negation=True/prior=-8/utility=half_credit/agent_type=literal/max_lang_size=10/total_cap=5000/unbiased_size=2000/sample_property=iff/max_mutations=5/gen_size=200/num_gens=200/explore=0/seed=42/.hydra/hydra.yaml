@@ -113,7 +113,7 @@ hydra:
     - hydra.mode=RUN
     task: []
   job:
-    name: generate_expressions
+    name: sample_languages
     chdir: true
     override_dirname: ''
     id: ???
@@ -133,7 +133,8 @@ hydra:
         - experiment.effcomm.inf.agent_type
         - experiment.sampling.maximum_lang_size
         - experiment.sampling.total_pool_cap
-        - experiment.sampling.unbiased_sample
+        - experiment.sampling.unbiased.sample_size
+        - experiment.sampling.unbiased.universal_property
         - experiment.sampling.evol.max_mutations
         - experiment.sampling.evol.generation_size
         - experiment.sampling.evol.num_generations
@@ -153,7 +154,7 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=dev/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/max_lang_size=10/total_cap=5000/unbiased_sample=2000/sample_property=iff/max_mutations=5/gen_size=200/num_gens=200/explore=0/seed=42
+    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=dev/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/max_lang_size=10/total_cap=5000/unbiased_size=2000/sample_property=iff/max_mutations=5/gen_size=200/num_gens=200/explore=0/seed=42
     choices:
       typology: can_express
       experiment: dev

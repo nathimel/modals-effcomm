@@ -74,14 +74,14 @@ filepaths:
   # Directory defined by informativeness params
   inf_subdir: ${filepaths.expressions_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
   
-  sampling_subdir: ${filepaths.inf_subdir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_sample=${experiment.sampling.unbiased.sample}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
-
-  language_subdir: ${filepaths.sampling_subdir}/languages
-
-  analysis_subdir: ${filepaths.sampling_subdir}/analysis
+  sampling_subdir: ${filepaths.inf_subdir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
 
   # where the current working directory will be when hydra is running
   leaf_subdir: ${filepaths.sampling_subdir}
+
+
+  language_subdir: ${filepaths.sampling_subdir}/languages
+  analysis_subdir: ${filepaths.sampling_subdir}/analysis
 
   # hydra run root directory
   hydra_run_root: outputs
@@ -107,7 +107,8 @@ hydra:
           - experiment.effcomm.inf.agent_type
           - experiment.sampling.maximum_lang_size
           - experiment.sampling.total_pool_cap
-          - experiment.sampling.unbiased_sample
+          - experiment.sampling.unbiased.sample_size
+          - experiment.sampling.unbiased.universal_property
           - experiment.sampling.evol.max_mutations
           - experiment.sampling.evol.generation_size
           - experiment.sampling.evol.num_generations
