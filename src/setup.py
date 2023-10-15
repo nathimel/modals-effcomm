@@ -11,7 +11,6 @@ from experiment import Experiment
 def main(config: DictConfig):
     set_seed(config.seed)
 
-    exp = Experiment.from_hydra(config)
-
+    exp = Experiment(config)
 if __name__ == "__main__":
     main()

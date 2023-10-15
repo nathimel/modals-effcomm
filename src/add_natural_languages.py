@@ -1,15 +1,17 @@
 """Script for extracting natural language modals data and adding to efficient communication experiment."""
 
+import hydra
 import os
 import sys
 import yaml
 from typing import Any
 import pandas as pd
-from misc.file_util import load_configs, load_expressions
-from misc.file_util import load_space, save_languages
+
+from experiment import Experiment
+from misc.file_util import set_seed, load_expressions, get_original_fp
+from omegaconf import DictConfig
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_meaning import ModalMeaning, ModalMeaningPoint
-
 
 ALLOWED_REFERENCE_TYPES = ["paper-journal", "elicitation"]
 REFERENCE_GRAMMAR = "reference-grammar"
@@ -44,28 +46,26 @@ def process_can_express(val: Any, can_express: dict):
     return False
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/add_natural_languages.py path_to_config_file")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+# def main():
+#     if len(sys.argv) != 2:
+#         print("Usage: python3 src/add_natural_languages.py path_to_config_file")
+#         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
-    # Load expressions and save path
-    config_fn = sys.argv[1]
-    configs = load_configs(config_fn)
-    expression_save_fn = configs["file_paths"]["expressions"]
-    space_fn = configs["file_paths"]["meaning_space"]
-    lang_save_fn = configs["file_paths"]["natural_languages"]
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
     ##########################################################################
     # Load in languages from cloned database
     ##########################################################################
 
-    language_data_dir = configs["file_paths"]["data"]
+    language_data_dir = get_original_fp(config.filepaths.typological_data)
     dirs = [
         x
         for x in os.listdir(language_data_dir)
         if os.path.isdir(os.path.join(language_data_dir, x))
     ]
+
 
     dataframes = dict()
     for dir in dirs:
@@ -92,18 +92,14 @@ def main():
             # Skip reference-grammar obtained data if incomplete.
             print(f"Data for {dir} is of type {reference_type}; skipping.")
 
-        # # Only filter by 'Complete-language: true'.
-        # if metadata[LANGUAGE_IS_COMPLETE_KEY]:
-        #     modals_fn = os.path.join(dirpath, MODALS_FN)
-        #     dataframes[dir] = pd.read_csv(modals_fn)
-
     ##########################################################################
     # Convert DataFrames to ModalLanguages
     ##########################################################################
 
     # Load possible expressions and meaning space to map natural vocabularies into
-    expressions = load_expressions(expression_save_fn)
-    space = load_space(space_fn)
+    experiment = Experiment(config, load_files=["expressions"])
+    expressions = experiment.expressions
+    universe = experiment.universe
 
     # Construct ModalLanguages for each natural language
     experiment_languages = []
@@ -128,10 +124,10 @@ def main():
 
             # Add only the flavors specified as possible for the experiment
             if (
-                row["flavor"] in configs["flavor_names"]
-                and row["force"] in configs["force_names"]
+                row["flavor"] in universe.flavors
+                and row["force"] in universe.forces
             ):
-                if process_can_express(row["can_express"], configs["can_express"]):
+                if process_can_express(row["can_express"], config.typology.can_express):
                     observation = f"{row['force']}+{row['flavor']}"
                     vocabulary[modal].add(observation)
 
@@ -143,7 +139,7 @@ def main():
                 points=[
                     ModalMeaningPoint.from_yaml_rep(name) for name in vocabulary[modal]
                 ],
-                meaning_space=space,
+                meaning_space=universe,
             )
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
@@ -159,7 +155,9 @@ def main():
         experiment_languages.append(lang)
 
     # save for analysis
-    save_languages(lang_save_fn, experiment_languages, id_start=None, kind="natural")
+    experiment.natural_languages = experiment_languages
+    experiment.write_files(["natural_languages"], id_start=None, kind="natural")
+    # save_languages(lang_save_fn, experiment_languages, id_start=None, kind="natural")
 
 
 if __name__ == "__main__":

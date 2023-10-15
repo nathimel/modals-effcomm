@@ -24,9 +24,12 @@ def main(config: DictConfig):
 
     # Load parameters for expression generation
     # TODO: consider checking if expressions already exist instead of regenerating every time
-    expressions_fn = get_subdir_fn(config, config.filepaths.expressions_subdir, config.filepaths.expressions)
 
-    experiment = Experiment.from_hydra(config)
+    experiment = Experiment(config, load_files=["expressions"])
+
+    if experiment.expressions is not None and not config.experiment.overwrite_expressions:
+        print(f"Expressions already generated, skipping.")
+        return
 
     # Generate lot expressions
     meanings = experiment.meanings
@@ -60,7 +63,8 @@ def main(config: DictConfig):
         for i, meaning in enumerate(meanings)
     ]
 
-    save_expressions(expressions_fn, modal_expressions)
+    experiment.expressions = modal_expressions
+    experiment.write_files(["expressions"])
     print("done.")
 
 if __name__ == "__main__":

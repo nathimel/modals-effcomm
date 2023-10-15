@@ -18,6 +18,8 @@ experiment:
       explore: 0
     total_pool_cap: 5000
   universe: dev
+  overwrite_expressions: false
+  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -29,6 +31,7 @@ seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
   prior_fn: data/prior/${experiment.prior}.csv
+  typological_data: data/natural_languages
   modality_corpus:
     0:
       dev: data/modality_corpus/0/dev.txt
@@ -63,7 +66,7 @@ filepaths:
   inf_subdir: ${filepaths.expressions_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
   sampling_subdir: ${filepaths.inf_subdir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
   leaf_subdir: ${filepaths.sampling_subdir}
-  language_subdir: ${filepaths.sampling_subdir}/languages
+  languages_subdir: ${filepaths.sampling_subdir}/languages
   analysis_subdir: ${filepaths.sampling_subdir}/analysis
   hydra_run_root: outputs
   hydra_sweep_root: multirun

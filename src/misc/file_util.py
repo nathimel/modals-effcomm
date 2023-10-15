@@ -5,6 +5,7 @@ import time
 import yaml
 import numpy as np
 import pandas as pd
+from omegaconf import DictConfig
 from typing import Any, Callable
 from modals.modal_meaning import ModalMeaningSpace, half_credit, indicator
 from modals.modal_language import ModalExpression, ModalLanguage
@@ -27,14 +28,22 @@ def set_seed(seed: int) -> None:
 def get_original_fp(fn: str):
     return os.path.join(hydra.utils.get_original_cwd(), fn)
 
-def get_subdir_fn(config: dict, subdir: str, fn: str):
+def get_subdir_fn(config: DictConfig, subdir: str, fn: str):
     """Get correct absolute path of a filename joined to a subdir, correcting for hydra run directory."""
     absolute_subdir = os.getcwd().replace(
         config.filepaths.leaf_subdir, subdir
     )
     ensure_dir(absolute_subdir)    
-    expressions_fn = os.path.join(absolute_subdir, fn)
-    return expressions_fn    
+    fullpath = os.path.join(absolute_subdir, fn)
+    return fullpath
+
+def get_subdir_fn_abbrev(config: DictConfig, subdir: str, filename: str):
+    """N.B.: this is an abbreviated version of get_subdir_fn."""
+    return get_subdir_fn(
+        config, 
+        getattr(config.filepaths, subdir),
+        getattr(config.filepaths, filename),
+    )
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Setup
@@ -206,7 +215,7 @@ def save_languages(
     if verbose:
         duration = time.time() - start
         duration = f"in {duration:.2f} seconds"
-    print(f"Saved {len(langs)}{kind}languages {duration}")
+    print(f"Saved {len(langs)}{kind}languages {duration} to {fn}")
 
 
 def load_languages(fn: str, verbose=True) -> dict[str, Any]:
