@@ -4,9 +4,10 @@ import sys
 from altk.language.sampling import generate_languages
 from modals import modal_language
 from modals.modal_language import ModalLanguage
+from experiment import Experiment
 
 import hydra
-from misc.file_util import set_seed, save_languages, load_expressions, get_subdir_fn
+from misc.file_util import set_seed
 from omegaconf import DictConfig
 
 
@@ -14,16 +15,18 @@ from omegaconf import DictConfig
 def main(config: DictConfig):
     set_seed(config.seed)
 
-    expressions_fn = get_subdir_fn(config, config.filepaths.expressions_subdir, config.filepaths.expressions)
-    lang_save_fn = get_subdir_fn(config, config.filepaths.language_subdir, config.filepaths.artificial_languages)
+    experiment = Experiment(
+        config, 
+        load_files=["expressions", "artificial_languages"]
+    )
 
     # Load parameters for languages
     lang_size = config.experiment.sampling.maximum_lang_size
     sample_size = config.experiment.sampling.unbiased.sample_size
 
     # Turn the knob on universal property
-    expressions = load_expressions(expressions_fn)
-    universal_property = getattr(modal_language, config.experiment.sampling.unbiased.universal_property)
+    expressions = experiment.expressions
+    universal_property = getattr(modal_language, config.experiment.universal_property)
 
     print("Sampling random languages ...")
     result = generate_languages(
@@ -37,7 +40,8 @@ def main(config: DictConfig):
     id_start = result["id_start"]
 
     languages = list(set(languages))
-    save_languages(lang_save_fn, languages, id_start, kind="sampled")
+    experiment.artificial_languages = {"languages": languages, "id_start": id_start}
+    experiment.write_files(["artificial_languages"], kinds=["sampled"])
     print("done.")
 
 

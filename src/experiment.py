@@ -3,10 +3,13 @@ import torch
 
 import pandas as pd
 
+from altk.effcomm.informativity import informativity
+
 from typing import Any
-from misc.file_util import get_original_fp, load_expressions, load_languages, get_subdir_fn, save_expressions, save_languages, get_subdir_fn_abbrev
-from modals.modal_meaning import ModalMeaningSpace
+from misc.file_util import get_original_fp, load_expressions, load_languages, save_expressions, save_languages, get_subdir_fn_abbrev
+from modals.modal_meaning import ModalMeaningSpace, half_credit, indicator
 from modals.modal_language_of_thought import ModalLOT
+from modals.modal_measures import language_complexity
 from omegaconf import DictConfig
 
 def random_stochastic_matrix(shape: tuple[int], beta: float = 1e-2):
@@ -65,23 +68,47 @@ class Experiment:
         if not torch.isclose(prior.sum(), torch.tensor([1.0])):
             raise Exception(f"Prior does not sum to 1.0. (sum={prior.sum()})")
 
+        # Construct the utility function for the experiment        
+        utility = None
+        name = config.experiment.effcomm.inf.utility
+        if name == "indicator":
+            utility = indicator
+        elif name == "half_credit":
+            utility = half_credit
+        else:
+            raise ValueError(f"No utility function named {name}.")
+        
         ######################################################################
         # Initialize experiment parameters
         ######################################################################
 
         self.config = config
         self.universe = universe
+        self.prior = universe._prior
         self.lot_negation = config.experiment.effcomm.comp.lot_negation
         self.mlot = ModalLOT(self.universe, self.lot_negation)
         self.meanings = [x for x in self.universe.generate_meanings()]
 
+        # Measures of Complexity and Informativeness
+        self.complexity_measure = lambda lang: language_complexity(lang, self.mlot)
+        self.informativity_measure = lambda lang: informativity(
+            language=lang,
+            prior=prior,
+            utility=utility,
+            agent_type=config.experiment.effcomm.inf.agent_type,
+        )
+
         self.filenames = {
-            "expressions": None,
-            "artificial_languages": None,
-            "natural_languages": None,
-            "dominant_languages": None,
+            "expressions",
+            "artificial_languages",
+            "natural_languages",
+            "dominant_languages",
         }
+
+        # list of ModalExpressions
         self.expressions = None
+
+        # Each a dict of form {"languages": ..., "id_start": ..}
         self.artificial_languages = None
         self.natural_languages = None
         self.dominant_languages = None
@@ -114,9 +141,9 @@ class Experiment:
                     print(f"Filepath {fullpath} does not exist yet.")
             setattr(self, key, result)
 
-    def write_files(self, files: list[str], *args, **kwargs) -> None:
+    def write_files(self, files: list[str], kinds = []) -> None:
 
-        for key in files:
+        for i, key in enumerate(files):
 
             if key not in self.filenames:
                 raise KeyError(f"The file {key} cannot be written to because it is not one of {self.filenames.keys()}.")
@@ -125,8 +152,9 @@ class Experiment:
             if key == "expressions":
                 fullpath = get_subdir_fn_abbrev(self.config, "expressions_subdir", key)
                 data = getattr(self, key)
-                if data is not None and self.config.experiment.overwrite_expressions:
-                    save_expressions(fullpath, data)
+                if not os.path.exists(fullpath) or self.config.experiment.overwrite_expressions:
+                    if data is not None:
+                        save_expressions(fullpath, data)
                 else:
                     print(f"File {fullpath} already exists.")
 
@@ -134,7 +162,11 @@ class Experiment:
             else:
                 fullpath = get_subdir_fn_abbrev(self.config, "languages_subdir", key)
                 data = getattr(self, key)
-                if data is not None and self.config.experiment.overwrite_languages:
-                    save_languages(fullpath, data, *args, **kwargs)
+                if not os.path.exists(fullpath) or self.config.experiment.overwrite_languages:
+                    if data is not None:
+                        langs = data["languages"]
+                        id_start = data["id_start"]
+                        print(f"{key}...")
+                        save_languages(fullpath, langs, id_start, kinds[i])
                 else:
                     print(f"File {fullpath} already exists.")

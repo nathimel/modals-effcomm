@@ -95,9 +95,9 @@ class Remove_Point(Mutation):
     def mutate(
         self, language: ModalLanguage, expressions: list[ModalExpression]
     ) -> ModalLanguage:
-        """Choose a random modal from the langauge and replace it with a modal that is less ambiguous by point point."""
+        """Choose a random modal from the langauge and replace it with a modal that is less ambiguous by a single point."""
         # randomly select an modal with more than one meaning
-        vocab = language.expressions.copy()
+        vocab = list(language.expressions).copy()
         random.shuffle(vocab)
 
         expression_to_remove = None
@@ -122,8 +122,9 @@ class Remove_Point(Mutation):
                 break
 
         # Replace the ambiguous expression with the more precise one
-        language.expressions.remove(expression_to_remove)
-        language.add_expression(new_expression)
+        lang_expressions = list(language.expressions).copy()
+        lang_expressions.remove(expression_to_remove)
+        language.expressions = sorted(tuple(lang_expressions + [new_expression]))
         return language
 
 

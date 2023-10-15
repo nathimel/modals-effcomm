@@ -1,4 +1,5 @@
-import sys
+import hydra
+import os
 import pandas as pd
 import plotnine as pn
 from altk.effcomm.tradeoff import interpolate_data
@@ -7,7 +8,8 @@ from altk.effcomm.analysis import (
     trade_off_means,
     trade_off_ttest,
 )
-from misc.file_util import load_configs, set_seed
+from misc.file_util import set_seed, ensure_dir, get_subdir_fn, get_original_fp
+from omegaconf import DictConfig
 
 
 def get_modals_plot(
@@ -114,26 +116,25 @@ def get_modals_plot(
 ##############################################################################
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/analysis.py path_to_config")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
-    config_fn = sys.argv[1]
-    configs = load_configs(config_fn)
-    set_seed(configs["random_seed"])
     # tell pandas to output all columns
     pd.set_option("display.max_columns", None)
 
+    ensure_dir(get_original_fp(config.filepaths.analysis_subdir))
+    get_analysis_fn = lambda fn: get_subdir_fn(config, config.filepaths.analysis_subdir, fn)
+
     # Load analysis files
-    analysis_fns = configs["file_paths"]["analysis"]
-    df_fn = analysis_fns["data"]
-    pareto_df_fn = analysis_fns["pareto_data"]
-    plot_fn = analysis_fns["plot"]
-    correlations_fn = analysis_fns["correlations"]
-    means_fn = analysis_fns["means"]
-    ttest_natural_fn = analysis_fns["ttest_natural"]
-    ttest_dlsav_fn = analysis_fns["ttest_dlsav"]
+    analysis_fns = config.filepaths.analysis
+    df_fn = get_analysis_fn(analysis_fns.data)
+    pareto_df_fn = get_analysis_fn(analysis_fns.pareto_data)
+    plot_fn = get_analysis_fn(analysis_fns.plot)
+    correlations_fn = get_analysis_fn(analysis_fns.correlations)
+    means_fn = get_analysis_fn(analysis_fns.means)
+    ttest_natural_fn = get_analysis_fn(analysis_fns.ttest_natural)
+    ttest_dlsav_fn = get_analysis_fn(analysis_fns.ttest_dlsav)
 
     ############################################################################
     # Fetch main dataframe and plot
@@ -148,7 +149,7 @@ def main():
     natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # Plot
-    naturalness = configs["universal_property"]
+    naturalness = config.experiment.universal_property
 
     # Add counts only for plot
     plot_data = data.copy()
@@ -167,6 +168,7 @@ def main():
         # axis_titles=False,
     )
     plot.save(plot_fn, width=10, height=10, dpi=300)
+    print(f"Saved plot to {plot_fn}.")
 
     ############################################################################
     # Statistics
@@ -230,8 +232,9 @@ def main():
     means_df.to_csv(means_fn)
     ttest_natural_df.to_csv(ttest_natural_fn, index=False)
     ttest_dlsav_df.to_csv(ttest_dlsav_fn, index=False)
+    ensure_dir(os.path.abspath(os.path.join(correlations_fn, os.pardir)))
     [
-        intervals.to_csv(f"{correlations_fn.replace('property', prop)}", index=False)
+        intervals.to_csv(f"{correlations_fn.replace('correlation_property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
     ]
     pareto_data.to_csv(pareto_df_fn)

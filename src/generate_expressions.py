@@ -14,7 +14,7 @@ from tqdm import tqdm
 from experiment import Experiment
 
 import hydra
-from misc.file_util import set_seed, save_expressions, get_subdir_fn
+from misc.file_util import set_seed
 from omegaconf import DictConfig
 
 

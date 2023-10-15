@@ -8,7 +8,7 @@ from typing import Any
 import pandas as pd
 
 from experiment import Experiment
-from misc.file_util import set_seed, load_expressions, get_original_fp
+from misc.file_util import set_seed, get_original_fp
 from omegaconf import DictConfig
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_meaning import ModalMeaning, ModalMeaningPoint
@@ -155,9 +155,8 @@ def main(config: DictConfig):
         experiment_languages.append(lang)
 
     # save for analysis
-    experiment.natural_languages = experiment_languages
-    experiment.write_files(["natural_languages"], id_start=None, kind="natural")
-    # save_languages(lang_save_fn, experiment_languages, id_start=None, kind="natural")
+    experiment.natural_languages = {"languages": experiment_languages, "id_start": None}
+    experiment.write_files(["natural_languages"], kinds=["natural"])
 
 
 if __name__ == "__main__":

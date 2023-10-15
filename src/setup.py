@@ -12,5 +12,6 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     exp = Experiment(config)
+
 if __name__ == "__main__":
     main()

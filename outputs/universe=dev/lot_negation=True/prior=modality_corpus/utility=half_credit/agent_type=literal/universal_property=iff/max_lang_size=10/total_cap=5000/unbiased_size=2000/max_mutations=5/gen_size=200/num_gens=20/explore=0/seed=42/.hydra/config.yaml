@@ -3,21 +3,21 @@ experiment:
     comp:
       lot_negation: true
     'inf':
-      prior: -8
+      prior: modality_corpus
       utility: half_credit
       agent_type: literal
   sampling:
     maximum_lang_size: 10
     unbiased:
       sample_size: 2000
-      universal_property: iff
     evol:
       generation_size: 200
-      num_generations: 200
+      num_generations: 20
       max_mutations: 5
       explore: 0
     total_pool_cap: 5000
   universe: dev
+  universal_property: iff
   overwrite_expressions: false
   overwrite_languages: true
 typology:
@@ -30,7 +30,7 @@ typology:
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
-  prior_fn: data/prior/${experiment.prior}.csv
+  prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
   typological_data: data/natural_languages
   modality_corpus:
     0:
@@ -55,8 +55,8 @@ filepaths:
   natural_languages: natural.yml
   dominant_languages: dominant.yml
   analysis:
-    correlations: correlations/property.csv
-    all_data: all_data.csv
+    correlations: correlations/correlation_property.csv
+    data: all_data.csv
     pareto_data: pareto_data.csv
     plot: plot.png
     means: means.csv
@@ -64,9 +64,9 @@ filepaths:
     ttest_dlsav: ttest_dlsav.csv
   expressions_subdir: universe=${experiment.universe}/lot_negation=${experiment.effcomm.comp.lot_negation}
   inf_subdir: ${filepaths.expressions_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
-  sampling_subdir: ${filepaths.inf_subdir}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/sample_property=${experiment.sampling.unbiased.universal_property}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
+  sampling_subdir: ${filepaths.inf_subdir}/universal_property=${experiment.universal_property}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
   leaf_subdir: ${filepaths.sampling_subdir}
-  languages_subdir: ${filepaths.sampling_subdir}/languages
-  analysis_subdir: ${filepaths.sampling_subdir}/analysis
+  languages_subdir: ${filepaths.leaf_subdir}/languages
+  analysis_subdir: ${filepaths.leaf_subdir}/analysis
   hydra_run_root: outputs
   hydra_sweep_root: multirun

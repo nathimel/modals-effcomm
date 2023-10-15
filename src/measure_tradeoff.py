@@ -1,75 +1,56 @@
 """Script for analyzing the results of the trade-off."""
 
-import sys
+import hydra
 import pandas as pd
-from misc import file_util
-from modals.modal_measures import language_complexity
-from modals.modal_language_of_thought import ModalLOT
-from modals.modal_language import iff, sav, dlsav
+
 from altk.effcomm.analysis import get_dataframe
-from altk.effcomm.informativity import informativity
 from altk.effcomm.tradeoff import tradeoff
 
+from experiment import Experiment
+from misc.file_util import set_seed, get_subdir_fn
+from modals.modal_language import iff, sav, dlsav
+from omegaconf import DictConfig
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/measure_tradeoff.py path_to_config")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
     print("Measuring tradeoff ...")
 
     # Load the experimental data and paths to save results
-    config_fn = sys.argv[1]
-    configs = file_util.load_configs(config_fn)
 
-    paths = configs["file_paths"]
-    space_fn = paths["meaning_space"]
-    prior_fn = paths["prior"]
-    sampled_languages_fn = paths["artificial_languages"]
-    natural_languages_fn = paths["natural_languages"]
-    dominant_languages_fn = paths["dominant_languages"]
-    df_fn = paths["analysis"]["data"]
-
-    file_util.set_seed(configs["random_seed"])
+    df_fn = get_subdir_fn(config, config.filepaths.analysis_subdir, config.filepaths.analysis.data)
 
     # load languages
     print("Loading all languages:")
-    print("sampled...")
-    sampled_result = file_util.load_languages(sampled_languages_fn)
-    print("dominant...")
-    dominant_result = file_util.load_languages(dominant_languages_fn)
-    print("natural...")
-    natural_result = file_util.load_languages(natural_languages_fn)
 
-    id_start = sampled_result["id_start"]
-    sampled_languages = sampled_result["languages"]
-    dominant_languages = dominant_result["languages"]
-    natural_languages = natural_result["languages"]
+    experiment = Experiment(config)
+
+    print("sampled...")
+    experiment.load_files(["artificial_languages"])    
+    print("dominant...")
+    experiment.load_files(["dominant_languages"])    
+    print("natural...")
+    experiment.load_files(["natural_languages"])
+
+    id_start = experiment.artificial_languages["id_start"]
+    sampled_languages = experiment.artificial_languages["languages"]
+    dominant_languages = experiment.dominant_languages["languages"]
+    natural_languages = experiment.natural_languages["languages"]
 
     langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")
 
-    # Load trade-off criteria
-    space = file_util.load_space(space_fn)
-    prior = file_util.load_prior(prior_fn)
-
-    comp_measure = lambda lang: language_complexity(
-        language=lang, mlot=ModalLOT(space, configs["language_of_thought"])
-    )
-
-    inf_measure = lambda lang: informativity(
-        language=lang,
-        prior=space.prior_to_array(prior),
-        utility=file_util.load_utility(configs["utility"]),
-        agent_type=configs["agent_type"],
-    )
+    comp = experiment.complexity_measure
+    inf = experiment.informativity_measure
 
     # Get trade-off results
     properties_to_measure = {
-        "complexity": comp_measure,
+        "complexity": comp,
         "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
-        "informativity": inf_measure,
-        "comm_cost": lambda lang: 1 - inf_measure(lang),
+        "informativity": inf,
+        "comm_cost": lambda lang: 1 - inf(lang),
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav,
@@ -87,13 +68,10 @@ def main():
     nat_langs = [lang for lang in langs if lang.natural]
 
     print("Saving languages...")
-    file_util.save_languages(sampled_languages_fn, langs, id_start, kind="sampled")
-    file_util.save_languages(
-        dominant_languages_fn, dom_langs, id_start, kind="dominant"
-    )
-    file_util.save_languages(
-        natural_languages_fn, nat_langs, id_start=None, kind="natural"
-    )
+    experiment.artificial_languages = {"languages": langs, "id_start": id_start}
+    experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
+    experiment.natural_languages = {"languages": nat_langs, "id_start": None}
+    experiment.write_files(["artificial_languages", "dominant_languages", "natural_languages"], kinds=["explored", "dominant", "natural"])
     print("saved languages.")
 
     # TODO: store the language.data fields in a common spot for repeat access in a uniform way

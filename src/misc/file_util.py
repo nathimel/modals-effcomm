@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from omegaconf import DictConfig
 from typing import Any, Callable
-from modals.modal_meaning import ModalMeaningSpace, half_credit, indicator
+from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language import ModalExpression, ModalLanguage
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,20 +68,6 @@ def load_configs(fn: str) -> dict:
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Measures
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-def load_utility(name: str) -> Callable:
-    """Loads the utility function for the experiment."""
-    if name == "indicator":
-        return indicator
-    elif name == "half_credit":
-        return half_credit
-    raise ValueError(f"No utility function named {name}.")
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Modal Meaning Space
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,35 +84,6 @@ def load_space(fn: str) -> ModalMeaningSpace:
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
     return ModalMeaningSpace(d["forces"], d["flavors"])
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Prior
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-def save_prior(fn: str, prior: dict[str, float]) -> None:
-    """Save an estimated prior over modal meaning points to a YAML file.
-
-    Args:
-        fn: the file to save the probability distribution dict to.
-
-        prior: a dict representing the distribution over meaning points with
-            string keys = meaning point names,
-            float values = weights e.g. frequencies or probabilities.
-    """
-    with open(fn, "w") as outfile:
-        yaml.safe_dump(prior, outfile)
-
-
-def load_prior(fn: str) -> dict[str, float]:
-    """Load a prior communicative need probability distribution over modal meaning points from a saved YAML file."""
-    with open(fn, "r") as stream:
-        d = yaml.safe_load(stream)
-    d = {
-        tuple(key.split("+")): value for key, value in d.items()
-    }  # convert from strings to tuples
-    return d
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Expressions

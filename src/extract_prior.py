@@ -2,11 +2,17 @@
 import itertools
 import sys
 import spacy
+import hydra
 import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
 from spacy.tokens import Doc
 from misc import file_util
 from modals.modal_meaning import ModalMeaningSpace
 from tqdm import tqdm
+
+from experiment import Experiment
+from misc.file_util import set_seed, get_original_fp
+from omegaconf import DictConfig
 
 
 def generate_uniform(space: ModalMeaningSpace) -> dict[str, float]:
@@ -73,33 +79,26 @@ token_to_force = {
 ##############################################################################
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
-
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
     print("Estimating prior...")
 
-    config_fn = sys.argv[1]
-    configs = file_util.load_configs(config_fn)
-    prior_fn = configs["file_paths"]["prior"]
-    prior_df_fn = configs["file_paths"]["prior_df"]
-    space = file_util.load_space(configs["file_paths"]["meaning_space"])
-    modality_corpus = configs["file_paths"]["modality_corpus"]
+    modality_corpus = config.filepaths.modality_corpus
 
-    print("Constructing uniform prior")
-    prior = generate_uniform(space)
-    
-    if configs["prior"] == "estimated":
+    if config.experiment.effcomm.inf.prior == "modality_corpus":
 
-        ##########################################################################
+        experiment = Experiment(config)
+        space = experiment.universe
+
+        ########################################################################
         # Load and parse corpus to extract auxiliaries
-        ##########################################################################
+        ########################################################################
 
         print("Loading dataframes...")
         # list of filenames of each dataset used
         fns = [
-            fn for folder in modality_corpus for fn in modality_corpus[folder].values()
+            get_original_fp(fn) for folder in modality_corpus for fn in modality_corpus[folder].values()
         ]
         # load dataframe of all files concatenated
         df_all = pd.concat(
@@ -107,7 +106,7 @@ def main():
         )
 
         # for dev
-        # df_all = df_all.head(n=1000)
+        df_all = df_all.head(n=1000)
 
         # run sentences through a parser to extract the verbal auxiliaries
         nlp = spacy.load("en_core_web_md")
@@ -139,9 +138,9 @@ def main():
         # lowercase all auxiliaries to collapse e.g, Can and can
         df_aux["token"] = df_aux["token"].str.lower()
 
-        ##########################################################################
+        ########################################################################
         # Estimate relative frequencies of flavors
-        ##########################################################################
+        ########################################################################
 
         # replace gold_modal annotations with our flavors
         for label in labels_to_flavors:
@@ -177,12 +176,6 @@ def main():
             point = f"{force}+{flavor}"
             point_counts[point] = len(df_point)
 
-        # Save a minimal dataframe of counts for later easy reference
-        df_points = pd.concat(points_dfs)
-        df_points = df_points.drop(columns=["sentence_id", "POS"])
-        # save dataframe of counts
-        df_points.to_csv(prior_df_fn, index=False)
-
         total = sum(point_counts.values())
         # convert counts to relative frequencies
         prior = {point: point_counts[point] / total for point in point_counts}
@@ -192,7 +185,12 @@ def main():
     ##########################################################################
 
     # save prior for experiment
-    file_util.save_prior(prior_fn, prior)
+    prior_fn = get_original_fp(config.filepaths.prior_fn)
+    pd.DataFrame(
+        list(prior.items()), 
+        columns=["name", "probability",]
+    ).to_csv(prior_fn, index=False)
+    print(f"Wrote prior to {prior_fn}.")
 
     print("done.")
 

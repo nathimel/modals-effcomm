@@ -1,12 +1,11 @@
 """Script for estimating the pareto frontier of languages optimizing the simplicity/informativeness trade-off, and robust exploration of the 2D space of possible modal languages."""
 
+import hydra
 import random
-import sys
 from altk.effcomm.optimization import EvolutionaryOptimizer
-from misc import file_util
-from modals.modal_language_of_thought import ModalLOT
+from experiment import Experiment
+from misc.file_util import set_seed
 from modals.modal_language import ModalLanguage
-from modals.modal_measures import language_complexity
 from sample_languages import generate_languages
 from modals.modal_mutations import (
     Add_Modal,
@@ -15,45 +14,35 @@ from modals.modal_mutations import (
     Remove_Point,
     Interchange_Modal,
 )
-from altk.effcomm.informativity import informativity
+from omegaconf import DictConfig
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 src/estimate_pareto_frontier.py path_to_config_file")
-        raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
+@hydra.main(version_base=None, config_path="../conf", config_name="config")
+def main(config: DictConfig):
+    set_seed(config.seed)
 
     print("Estimating pareto frontier ...")
-
-    config_fn = sys.argv[1]
-    configs = file_util.load_configs(config_fn)
-    expressions_fn = configs["file_paths"]["expressions"]
-    space_fn = configs["file_paths"]["meaning_space"]
-    prior_fn = configs["file_paths"]["prior"]
-    artificial_langs_fn = configs["file_paths"]["artificial_languages"]
-    dom_langs_fn = configs["file_paths"]["dominant_languages"]
-
     # Load optimization params
-    evolutionary_alg_configs = configs["evolutionary_alg"]
-    agent_type = configs["agent_type"]
-    sample_size = evolutionary_alg_configs["generation_size"]
-    max_mutations = evolutionary_alg_configs["max_mutations"]
-    generations = evolutionary_alg_configs["num_generations"]
-    processes = evolutionary_alg_configs["num_processes"]
-    lang_size = evolutionary_alg_configs["maximum_lang_size"]
-    explore = evolutionary_alg_configs["explore"]
-
-    file_util.set_seed(configs["random_seed"])
+    evolutionary_alg_configs = config.experiment.sampling.evol
+    sample_size = evolutionary_alg_configs.generation_size
+    max_mutations = evolutionary_alg_configs.max_mutations
+    generations = evolutionary_alg_configs.num_generations
+    explore = evolutionary_alg_configs.explore
+    lang_size = config.experiment.sampling.maximum_lang_size    
 
     # Create the first generation of languages
+    print("Loading existing sampled languages...")
 
-    print("Loading existing sampled langauges...")
-    result = file_util.load_languages(artificial_langs_fn)
+    experiment = Experiment(
+        config, 
+        load_files=["expressions", "artificial_languages", "natural_languages"]
+    )
+    expressions = experiment.expressions    
+    result = experiment.artificial_languages
     sampled_languages = result["languages"]
     id_start = result["id_start"]
 
     print("Sampling seed generation...")
-    expressions = file_util.load_expressions(expressions_fn)
     result = generate_languages(
         language_class=ModalLanguage,
         expressions=expressions,
@@ -64,21 +53,8 @@ def main():
     seed_population = result["languages"]
     id_start = result["id_start"]
 
-    # construct measures of complexity and informativity as optimization objectives
-    space = file_util.load_space(space_fn)
-    prior = space.prior_to_array(file_util.load_prior(prior_fn))
-
-    complexity_measure = lambda lang: language_complexity(
-        language=lang,
-        mlot=ModalLOT(space, configs["language_of_thought"]),
-    )
-
-    informativity_measure = lambda lang: informativity(
-        language=lang,
-        prior=prior,
-        utility=file_util.load_utility(configs["utility"]),
-        agent_type=agent_type,
-    )
+    comp = experiment.complexity_measure
+    inf = experiment.informativity_measure
 
     # Use optimizer as an exploration / sampling method as follows:
     # estimate FOUR pareto frontiers using the evolutionary algorithm; one for each corner of the 2D space of possible langs
@@ -89,11 +65,11 @@ def main():
         "upper_right": ("informativity", "simplicity"),
     }
     objectives = {
-        "comm_cost": lambda lang: 1 - informativity_measure(lang),
-        "informativity": informativity_measure,
-        "complexity": complexity_measure,
+        "comm_cost": lambda lang: 1 - inf(lang),
+        "informativity": inf,
+        "complexity": comp,
         "simplicity": lambda lang: 1
-        / complexity_measure(
+        / comp(
             lang
         ),  # this is different from the simplicity value computed during analysis. The data['simplicity'] field will be reset to None before then, in measure_tradeoff.
     }
@@ -124,20 +100,19 @@ def main():
     for direction in directions:
         # set directions of optimization
         x, y = directions[direction]
-        optimizer.x = x
-        optimizer.y = y
+        optimizer.objectives = [objectives[x], objectives[y]]
         print(f"Minimizing for {x}, {y} ...")
 
         # run algorithm
         result = optimizer.fit(
             seed_population=seed_population,
-            id_start=id_start,
+            # id_start=id_start,
             explore=explore,
         )
 
         # collect results
         results[direction] = result
-        id_start = result["id_start"]
+        id_start += len(result["explored_languages"])
         pool.extend(results[direction]["explored_languages"])
 
     # the Pareto langs for the complexity/comm_cost trade-off.
@@ -150,22 +125,17 @@ def main():
     dominant_langs = list(set(dominant_langs))
 
     # remove some non-dominant to limit final pool to a standard size
-    # TODO: get rid of this hack
-    num_natural_langs = 28
-    cap = configs["total_pool_cap"] - len(dominant_langs) - num_natural_langs
+    num_natural_langs = len(experiment.natural_languages["languages"])
+    cap = config.experiment.sampling.total_pool_cap - len(dominant_langs) - num_natural_langs
     candidate_langs = [lang for lang in pool if lang not in dominant_langs]
     if len(pool) > cap:
         reduced_pool = random.sample(candidate_langs, cap)
         pool = reduced_pool + dominant_langs
     
     print("Saving languages...")
-    file_util.save_languages(
-        artificial_langs_fn, pool, id_start=id_start, kind="explored"
-    )
-    file_util.save_languages(
-        dom_langs_fn, dominant_langs, id_start=id_start, kind="dominant"
-    )
-
+    experiment.artificial_languages = {"languages": pool, "id_start": id_start}
+    experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}
+    experiment.write_files(["artificial_languages", "dominant_languages"], kinds=["explored", "dominant"])
     print("done.")
 
 
