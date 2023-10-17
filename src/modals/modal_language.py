@@ -269,15 +269,12 @@ def iff(e: ModalExpression) -> bool:
     forces = set()
     flavors = set()
     for point in points:
-        # force, flavor = point.name.split("+")
         force, flavor = point.data
         forces.add(force)
         flavors.add(flavor)
 
     for (force, flavor) in product(forces, flavors):
-        # name = f"{force}+{flavor}"
         pair = (force, flavor)
-        # if name not in [point.name for point in points]:
         if pair not in [point.data for point in points]:
             return False
     return True
@@ -290,7 +287,6 @@ def sav(e: ModalExpression) -> bool:
     forces = set()
     flavors = set()
     for point in points:
-        # force, flavor = point.name.split("+")
         force, flavor = point.data
         forces.add(force)
         flavors.add(flavor)
@@ -335,3 +331,24 @@ def dlsav(language: ModalLanguage) -> bool:
     if not (row_ambigs and col_ambigs):
         return True
     return False
+
+IMPOSSIBILITY = "impossibility"
+EPISTEMIC = "epistemic"
+DEONTIC = "deontic"
+
+def deontic_priority(language: ModalLanguage) -> bool:
+    """The deontic priority universal: 'If a language lexicalizes any impossibility, it lexicalizes deontic impossibility'. 
+    
+    Equivalently: A language lexicalizes no impossibilities or it lexicalizes deontic impossiblity.
+    """
+    impossibility = False
+    deontic_impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data[0] == IMPOSSIBILITY:
+                impossibility = True
+            if point.data == (IMPOSSIBILITY, DEONTIC,):
+                deontic_impossibility = True
+    
+    return (not impossibility) or deontic_impossibility

@@ -5,6 +5,7 @@
 defaults:
   - experiment: dev
   - typology: can_express
+  - plot: aes
   - _self_ # stuff below can override stuff above  
 
 seed: 42
@@ -21,6 +22,8 @@ filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
   # prior; see experiment.prior
   prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
+  # utiltiy; see experiment.utility
+  utility_fn: data/utility/${experiment.effcomm.inf.utility}.csv
 
   # Typological data
   typological_data: data/natural_languages
@@ -64,6 +67,7 @@ filepaths:
     means: means.csv
     ttest_natural: ttest_natural.csv
     ttest_dlsav: ttest_dlsav.csv  
+    ttest_dp: ttest_deontic_priority.csv    # deontic priority
   
   ############################################################################
   # Hydra automatic folder naming
@@ -77,7 +81,7 @@ filepaths:
   # Directory defined by informativeness params
   inf_subdir: ${filepaths.expressions_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
   
-  sampling_subdir: ${filepaths.inf_subdir}/universal_property=${experiment.universal_property}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
+  sampling_subdir: ${filepaths.inf_subdir}/universal_property=${experiment.sampling.unbiased.lexeme_property}/max_lang_size=${experiment.sampling.maximum_lang_size}/total_cap=${experiment.sampling.total_pool_cap}/unbiased_size=${experiment.sampling.unbiased.sample_size}/max_mutations=${experiment.sampling.evol.max_mutations}/gen_size=${experiment.sampling.evol.generation_size}/num_gens=${experiment.sampling.evol.num_generations}/explore=${experiment.sampling.evol.explore}/seed=${seed}
 
   # where the current working directory will be when hydra is running
   leaf_subdir: ${filepaths.sampling_subdir}
@@ -103,7 +107,7 @@ hydra:
       override_dirname:
         exclude_keys:
           - experiment.universe
-          - experiment.universal_property          
+          - experiment.sampling.unbiased.lexeme_property          
           - experiment.effcomm.comp.lot_negation
           - experiment.effcomm.inf.prior
           - experiment.effcomm.inf.utility

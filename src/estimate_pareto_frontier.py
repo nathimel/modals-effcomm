@@ -31,8 +31,6 @@ def main(config: DictConfig):
     lang_size = config.experiment.sampling.maximum_lang_size    
 
     # Create the first generation of languages
-    print("Loading existing sampled languages...")
-
     experiment = Experiment(
         config, 
         load_files=["expressions", "artificial_languages", "natural_languages"]
@@ -125,7 +123,7 @@ def main(config: DictConfig):
     dominant_langs = list(set(dominant_langs))
 
     # remove some non-dominant to limit final pool to a standard size
-    num_natural_langs = len(experiment.natural_languages["languages"])
+    num_natural_langs = len(experiment.natural_languages["languages"]) if experiment.natural_languages is not None else 0
     cap = config.experiment.sampling.total_pool_cap - len(dominant_langs) - num_natural_langs
     candidate_langs = [lang for lang in pool if lang not in dominant_langs]
     if len(pool) > cap:

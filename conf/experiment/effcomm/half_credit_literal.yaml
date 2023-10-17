@@ -9,7 +9,11 @@ inf:
   # Prior / communicative need distribution over meaning points
   prior: modality_corpus
   # if int, represents a temperature parameter (exponentiated by 10) for an energy-based initialization. int or filename.
-  # if string, specify the name of a file located at data/prior at the root of this repository.
+  # if string, specify the name of a file (EXCLUDING file extension) located at data/prior at the root of this repository.
 
-  utility: half_credit # half_credit or indicator
+  # Utility function
+  utility: half_credit
+  # typically 'half_credit' or 'indicator', which are functions in the modals.modal_meaning submodule
+  # otherwise, specify the name of a file (EXCLUDING file extension) located at data/utility at the root of this repository.
+
   agent_type: literal # literal or pragmatic

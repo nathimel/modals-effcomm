@@ -24,9 +24,9 @@ def main(config: DictConfig):
     lang_size = config.experiment.sampling.maximum_lang_size
     sample_size = config.experiment.sampling.unbiased.sample_size
 
-    # Turn the knob on universal property
+    # Turn the knob on lexeme-level property
     expressions = experiment.expressions
-    universal_property = getattr(modal_language, config.experiment.universal_property)
+    lexeme_property = getattr(modal_language, config.experiment.sampling.unbiased.lexeme_property)
 
     print("Sampling random languages ...")
     result = generate_languages(
@@ -34,7 +34,7 @@ def main(config: DictConfig):
         expressions=expressions,
         lang_size=lang_size,
         sample_size=sample_size,
-        criterion=universal_property,
+        criterion=lexeme_property,
     )
     languages = result["languages"]
     id_start = result["id_start"]

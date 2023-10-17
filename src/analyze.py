@@ -15,11 +15,11 @@ from omegaconf import DictConfig
 def get_modals_plot(
     data: pd.DataFrame,
     pareto_data: pd.DataFrame,
-    naturalness: str,
+    lexeme_property: str = None,
     natural_data: pd.DataFrame = None,
     counts=False,
     axis_titles = True,
-    dlsav=False,
+    lexicon_property: str = None,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
 
@@ -28,13 +28,15 @@ def get_modals_plot(
 
         pareto_data: a DataFrame representing the measurements of the best solutions to the tradeoff.
 
+        lexeme_property: {'iff', 'sav'}; the lexeme-level universal property to measure as a continuous aesthetic
+
         natural_data: a DataFrame representing the measurements of the natural languages.
 
         counts: whether to add the counts of (complexity, comm_cost) as an aesthetic.
 
         axis_titles: whether to include axis titles. True by default, but pass False to obtain plot for main paper figure.
 
-        dlsav: whether to add the categorical DLSAV universal property as an aesthetic.
+        lexicon_property: {'dlsav', 'deontic_priority'}; the categorical, language-level universal property to add as a discrete aesthetic
 
     Returns:
         plot: a plotnine 2D plot of the trade-off.
@@ -51,12 +53,12 @@ def get_modals_plot(
 
     # aesthetics for all data
     kwargs = {
-        "color": naturalness,
+        # "color": lexeme_property,
     }
 
-    if dlsav:
-        kwargs["shape"] = dlsav
-        kwargs["size"] = dlsav
+    kwargs["shape"] = lexicon_property
+    kwargs["size"] = lexicon_property
+    kwargs["color"] = lexicon_property
 
     if counts:
         kwargs["size"] = "counts"
@@ -72,7 +74,8 @@ def get_modals_plot(
             alpha=1,
             mapping=pn.aes(**kwargs),
         )
-        + pn.scale_color_cmap("cividis")
+        # + pn.scale_color_cmap("cividis")
+        + pn.scale_color_discrete()
         + pn.theme_classic()
     )
 
@@ -135,6 +138,9 @@ def main(config: DictConfig):
     means_fn = get_analysis_fn(analysis_fns.means)
     ttest_natural_fn = get_analysis_fn(analysis_fns.ttest_natural)
     ttest_dlsav_fn = get_analysis_fn(analysis_fns.ttest_dlsav)
+    ttest_dp_fn = get_analysis_fn(analysis_fns.ttest_dp)
+
+    # TODO: parameterize stat tests and legends, instead of hardcoding dlsav, so we can test deontic_priority
 
     ############################################################################
     # Fetch main dataframe and plot
@@ -149,7 +155,8 @@ def main(config: DictConfig):
     natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # Plot
-    naturalness = config.experiment.universal_property
+    lexeme_property = config.plot.lexeme_property
+    lexicon_property = config.plot.lexicon_property
 
     # Add counts only for plot
     plot_data = data.copy()
@@ -163,8 +170,9 @@ def main(config: DictConfig):
         data=plot_data,
         pareto_data=pareto_data,
         natural_data=natural_data,
-        naturalness=naturalness,
-        counts=True,
+        lexeme_property=lexeme_property,
+        counts=config.plot.counts,
+        lexicon_property=lexicon_property,
         # axis_titles=False,
     )
     plot.save(plot_fn, width=10, height=10, dpi=300)
@@ -189,7 +197,7 @@ def main(config: DictConfig):
     for prop in properties:
         d = pearson_analysis(
             data=data,
-            predictor=naturalness,
+            predictor=lexeme_property,
             property=prop,
         )
         rhos.append(d["rho"])
@@ -197,22 +205,25 @@ def main(config: DictConfig):
 
     # Means and ttest for natural, dlsav, population
     dlsav_data = data[data["dlsav"] == True]
+    dp_data = data[data["deontic_priority"] == True]
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
+    dp_means = trade_off_means("deontic_priority_means", dp_data, properties)
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, dlsav_means, population_means]).set_index(
+    means_df = pd.concat([natural_means, dlsav_means, dp_means, population_means]).set_index(
         "name"
     )
     pop_means_dict = population_means.iloc[0].to_dict()
     ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
     ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
+    ttest_dp_df = trade_off_ttest(dp_data, pop_means_dict, properties)
 
     ############################################################################
     # Print report to stdout and save
     ############################################################################
 
     # visualize
-    print(f"Degree {naturalness} pearson correlations:")
+    print(f"Degree {lexeme_property} pearson correlations:")
     [print(f"{prop}: {rho}") for rho, prop in zip(*[rhos, properties])]
 
     print()
@@ -227,11 +238,15 @@ def main(config: DictConfig):
     print(f"dlsav languages ({len(dlsav_data)}) against population ({len(data)})")
     print(ttest_dlsav_df)
     print()
+    print(f"deontic priority languages ({len(dp_data)}) against population ({len(data)})")
+    print(ttest_dp_df)
+    print()    
 
     # Save results
     means_df.to_csv(means_fn)
     ttest_natural_df.to_csv(ttest_natural_fn, index=False)
     ttest_dlsav_df.to_csv(ttest_dlsav_fn, index=False)
+    ttest_dp_df.to_csv(ttest_dp_fn, index=False)
     ensure_dir(os.path.abspath(os.path.join(correlations_fn, os.pardir)))
     [
         intervals.to_csv(f"{correlations_fn.replace('correlation_property', prop)}", index=False)

@@ -8,7 +8,7 @@ from altk.effcomm.tradeoff import tradeoff
 
 from experiment import Experiment
 from misc.file_util import set_seed, get_subdir_fn
-from modals.modal_language import iff, sav, dlsav
+from modals.modal_language import iff, sav, dlsav, deontic_priority
 from omegaconf import DictConfig
 
 
@@ -37,7 +37,7 @@ def main(config: DictConfig):
     id_start = experiment.artificial_languages["id_start"]
     sampled_languages = experiment.artificial_languages["languages"]
     dominant_languages = experiment.dominant_languages["languages"]
-    natural_languages = experiment.natural_languages["languages"]
+    natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
 
     langs = list(set(sampled_languages + dominant_languages + natural_languages))
     print(f"{len(langs)} total langs.")
@@ -46,6 +46,7 @@ def main(config: DictConfig):
     inf = experiment.informativity_measure
 
     # Get trade-off results
+    # TODO: outsource this to config
     properties_to_measure = {
         "complexity": comp,
         "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
@@ -54,6 +55,7 @@ def main(config: DictConfig):
         "iff": lambda lang: lang.degree_property(iff),
         "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav,
+        "deontic_priority": deontic_priority,
     }
 
     result = tradeoff(
@@ -71,7 +73,12 @@ def main(config: DictConfig):
     experiment.artificial_languages = {"languages": langs, "id_start": id_start}
     experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
     experiment.natural_languages = {"languages": nat_langs, "id_start": None}
-    experiment.write_files(["artificial_languages", "dominant_languages", "natural_languages"], kinds=["explored", "dominant", "natural"])
+    save_files = ["artificial_languages", "dominant_languages"]
+    kinds = ["explored", "dominant"]
+    if nat_langs:
+        save_files += ["natural_languages"]
+        kinds += ["natural"]
+    experiment.write_files(save_files, kinds=kinds)
     print("saved languages.")
 
     # TODO: store the language.data fields in a common spot for repeat access in a uniform way

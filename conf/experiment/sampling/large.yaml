@@ -1,0 +1,15 @@
+# Parameters for generating languages via unbiased sampling and evolutionary algorithm
+
+# Maximum number of expressions per language permitted in both sampling procedures
+maximum_lang_size: 10
+# Unbiased Sampling
+unbiased: 
+  sample_size: 40000 # How many languages to generate via unbiased sampling
+  lexeme_property: iff # the lexeme-level (degree) property to sample languages by  
+# Evolutionary Algorithm
+evol:
+  generation_size: 2000
+  num_generations: 200
+  max_mutations: 5
+  explore: 0 # what fraction [0,1] to include of dominated population to seed next generation
+total_pool_cap: 75000  # maximum total size of all languages generated via sampling and evol alg

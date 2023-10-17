@@ -7,7 +7,8 @@ from altk.effcomm.informativity import informativity
 
 from typing import Any
 from misc.file_util import get_original_fp, load_expressions, load_languages, save_expressions, save_languages, get_subdir_fn_abbrev
-from modals.modal_meaning import ModalMeaningSpace, half_credit, indicator
+from modals.modal_meaning import ModalMeaningSpace
+from modals.modal_utility_measures import half_credit, indicator, utility_func_from_csv
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_measures import language_complexity
 from omegaconf import DictConfig
@@ -71,12 +72,15 @@ class Experiment:
         # Construct the utility function for the experiment        
         utility = None
         name = config.experiment.effcomm.inf.utility
+        fn = get_original_fp(config.filepaths.utility_fn)
         if name == "indicator":
             utility = indicator
         elif name == "half_credit":
             utility = half_credit
+        elif os.path.exists(fn):
+            utility = utility_func_from_csv(fn)
         else:
-            raise ValueError(f"No utility function named {name}.")
+            raise ValueError(f"Invalid utility function name. You must pass either 'indicator' or 'half_credit' or the name of a file located at the data/utility folder.")
         
         ######################################################################
         # Initialize experiment parameters
@@ -136,6 +140,7 @@ class Experiment:
             else:
                 fullpath = get_subdir_fn_abbrev(self.config, "languages_subdir", key)
                 if os.path.exists(fullpath):
+                    print(f"Loading {key}...")
                     result = load_languages(fullpath)
                 else:
                     print(f"Filepath {fullpath} does not exist yet.")
@@ -166,7 +171,7 @@ class Experiment:
                     if data is not None:
                         langs = data["languages"]
                         id_start = data["id_start"]
-                        print(f"{key}...")
+                        print(f"Saving {key}...")
                         save_languages(fullpath, langs, id_start, kinds[i])
                 else:
                     print(f"File {fullpath} already exists.")

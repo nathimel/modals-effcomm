@@ -5,6 +5,7 @@ maximum_lang_size: 10
 # Unbiased Sampling
 unbiased: 
   sample_size: 2000 # How many languages to generate via unbiased sampling
+  lexeme_property: iff # the lexeme-level (degree) property to sample languages by  
 # Evolutionary Algorithm
 evol:
   generation_size: 200
