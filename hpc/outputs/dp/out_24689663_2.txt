@@ -1,0 +1,52 @@
+Running job on host hpc3-22-02
+SLURM_NTASKS is 1
+I am task SLURM_ARRAY_TASK_ID = 2
+I am job SLURM_JOB_ID = 24689663
+I am array job SLURM_ARRAY_JOB_ID = 24689663
+no change     /opt/apps/miniconda3/4.8.5/condabin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda-env
+no change     /opt/apps/miniconda3/4.8.5/bin/activate
+no change     /opt/apps/miniconda3/4.8.5/bin/deactivate
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.sh
+no change     /opt/apps/miniconda3/4.8.5/etc/fish/conf.d/conda.fish
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/Conda.psm1
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/conda-hook.ps1
+no change     /opt/apps/miniconda3/4.8.5/lib/python3.8/site-packages/xontrib/conda.xsh
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.csh
+no change     /data/homezvol0/nimel/.bashrc
+No action taken.
+
+python src/setup.py "$@"
+
+src/generate_expressions.py "$@"
+Expressions already generated, skipping.
+
+python src/sample_languages.py "$@"
+Loading artificial_languages...
+Loaded 33540 languages in 130.94 seconds
+Sampling random languages ...
+Saving artificial_languages...
+Saved 33540 sampled languages in 69.22 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/artificial.yml
+done.
+
+src/estimate_pareto_frontier.py "$@"
+Estimating pareto frontier ...
+Loading artificial_languages...
+Loaded 33540 languages in 131.43 seconds
+Filepath /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/natural.yml does not exist yet.
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+
+python src/measure_tradeoff.py "$@"
+Measuring tradeoff ...
+Loading all languages:
+sampled...
+Loading artificial_languages...
+Loaded 33540 languages in 133.15 seconds
+dominant...
+Filepath /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/dominant.yml does not exist yet.
+natural...
+Filepath /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/natural.yml does not exist yet.
+
+src/analyze.py "$@"

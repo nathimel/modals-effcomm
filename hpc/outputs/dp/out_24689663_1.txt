@@ -1,0 +1,93 @@
+Running job on host hpc3-22-02
+SLURM_NTASKS is 1
+I am task SLURM_ARRAY_TASK_ID = 1
+I am job SLURM_JOB_ID = 24689665
+I am array job SLURM_ARRAY_JOB_ID = 24689663
+no change     /opt/apps/miniconda3/4.8.5/condabin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda-env
+no change     /opt/apps/miniconda3/4.8.5/bin/activate
+no change     /opt/apps/miniconda3/4.8.5/bin/deactivate
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.sh
+no change     /opt/apps/miniconda3/4.8.5/etc/fish/conf.d/conda.fish
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/Conda.psm1
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/conda-hook.ps1
+no change     /opt/apps/miniconda3/4.8.5/lib/python3.8/site-packages/xontrib/conda.xsh
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.csh
+no change     /data/homezvol0/nimel/.bashrc
+No action taken.
+
+python src/setup.py "$@"
+
+src/generate_expressions.py "$@"
+Expressions already generated, skipping.
+
+python src/sample_languages.py "$@"
+Loading artificial_languages...
+Loaded 33540 languages in 139.38 seconds
+Sampling random languages ...
+Saving artificial_languages...
+Saved 33540 sampled languages in 75.43 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=importance/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/artificial.yml
+done.
+
+src/estimate_pareto_frontier.py "$@"
+Estimating pareto frontier ...
+Loading artificial_languages...
+Loaded 33540 languages in 137.31 seconds
+Filepath /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=importance/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/natural.yml does not exist yet.
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+
+python src/measure_tradeoff.py "$@"
+Measuring tradeoff ...
+Loading all languages:
+sampled...
+Loading artificial_languages...
+Loaded 33540 languages in 135.38 seconds
+dominant...
+Loading dominant_languages...
+Loaded 11 languages in 0.06 seconds
+natural...
+Filepath /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=importance/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/languages/natural.yml does not exist yet.
+33540 total langs.
+
+src/analyze.py "$@"
+Excluding Thai from final analysis.
+NATURAL DATA
+Empty DataFrame
+Columns: [complexity, simplicity, informativity, comm_cost, iff, sav, dlsav, deontic_priority, optimality, natural, dominant, name]
+Index: []
+[2023-10-17 18:25:37,881][matplotlib.font_manager][INFO] - Fontsize 0.00 < 1.0 pt not allowed by FreeType. Setting fontsize = 1 pt
+Saved plot to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=importance/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42/analysis/plot.png.
+Degree iff pearson correlations:
+simplicity: 0.41137665052390116
+informativity: 0.6043751506217234
+optimality: 0.6033303954529674
+
+MEANS
+                        simplicity  informativity  optimality
+name                                                         
+natural_means                  NaN            NaN         NaN
+dlsav_means               0.818261       0.361608    0.930416
+deontic_priority_means    0.589408       0.345222    0.814662
+population_means          0.597740       0.341084    0.816852
+
+TTEST STATS
+natural languages (0) against population (35130)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic               NaN            NaN         NaN
+Two-sided p-value         NaN            NaN         NaN
+
+dlsav languages (780) against population (35130)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic         78.623763   5.732598e+00  106.466617
+Two-sided p-value    0.000000   1.414134e-08    0.000000
+
+deontic priority languages (33632) against population (35130)
+                     simplicity  informativity    optimality
+stat                                                        
+t-statistic       -8.306270e+00   1.521938e+01 -5.009087e+00
+Two-sided p-value  1.024139e-16   3.925468e-52  5.496538e-07
+

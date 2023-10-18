@@ -1,6 +1,6 @@
 import os
-import torch
 
+import numpy as np
 import pandas as pd
 
 from altk.effcomm.informativity import informativity
@@ -13,10 +13,12 @@ from modals.modal_language_of_thought import ModalLOT
 from modals.modal_measures import language_complexity
 from omegaconf import DictConfig
 
+from scipy.special import softmax
+
 def random_stochastic_matrix(shape: tuple[int], beta: float = 1e-2):
     """Generate a random stochastic matrix using energy-based initialization, where lower `beta` -> more uniform initialization."""
-    energies = beta * torch.randn(*shape)
-    return torch.softmax(energies, dim=-1)
+    energies = beta * np.random.randn(*shape)
+    return softmax(energies, axis=-1)
 
 class Experiment:
     """A simple data structure to contain initialized constructs for effcomm experiment, i.e. universe, prior, complexity and informativeness measures, etc."""
@@ -48,25 +50,25 @@ class Experiment:
             referents_df = pd.read_csv(fn)
         else:
             raise ValueError(
-                f"The value of config.game.universe must be the number of natural number states (int) or the name of a file located at data/universe (str). Received type: {type(universe)}."
+                f"The value of config.experiment.universe must be the name of a file located at data/universe (str). Received type: {type(universe)}."
             )
         # Set Prior
         prior = config.experiment.effcomm.inf.prior
         if isinstance(prior, str):
             fn = get_original_fp(config.filepaths.prior_fn)
             prior_df = pd.read_csv(fn)
-        else:
+        else: # is an int or float
             prior_df = referents_df.copy()[["name"]]
             prior_df["probability"] = random_stochastic_matrix(
-                (len(referents_df),), beta=10**prior
+                (len(referents_df),), beta=prior
             ).tolist()
         
         # Construct Universe
         universe = ModalMeaningSpace.from_dataframe(referents_df)
 
         # Check prior is valid distribution
-        prior = torch.from_numpy(universe.prior_numpy()).float()
-        if not torch.isclose(prior.sum(), torch.tensor([1.0])):
+        prior = universe.prior_numpy()
+        if not np.isclose(prior.sum(), 1.0):
             raise Exception(f"Prior does not sum to 1.0. (sum={prior.sum()})")
 
         # Construct the utility function for the experiment        

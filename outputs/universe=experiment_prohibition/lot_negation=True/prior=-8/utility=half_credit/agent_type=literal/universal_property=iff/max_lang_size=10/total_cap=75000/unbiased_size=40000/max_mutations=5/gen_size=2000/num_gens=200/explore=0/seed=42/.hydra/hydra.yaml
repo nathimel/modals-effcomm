@@ -113,7 +113,7 @@ hydra:
     - hydra.mode=RUN
     task:
     - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.utility=importance
+    - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.prior=-8
     - experiment/sampling=large
   job:
@@ -158,7 +158,7 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=importance/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42
+    output_dir: /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=experiment_prohibition/lot_negation=True/prior=-8/utility=half_credit/agent_type=literal/universal_property=iff/max_lang_size=10/total_cap=75000/unbiased_size=40000/max_mutations=5/gen_size=2000/num_gens=200/explore=0/seed=42
     choices:
       plot: aes
       typology: can_express
