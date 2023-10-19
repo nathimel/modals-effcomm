@@ -32,8 +32,8 @@ def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
     Returns:
         an float, either 0, 0.5, or 1.0 corresponding to the fraction of correctly recovered features of the speaker's meaning point.
     """
-    intended = m.name.split("+")
-    guess = m_.name.split("+")
+    intended = m.data
+    guess = m_.data
     score = 0.
     for feature in intended:
         if feature in guess:
@@ -68,7 +68,6 @@ def utility_func_from_csv(
     weights = {point: weight / total for point, weight in weights.items()}
 
     def utility(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
-        force, flavor = m.name.split("+")
 
         if base_util == half_credit:
             reward = half_credit(m, m_)
@@ -76,6 +75,6 @@ def utility_func_from_csv(
             reward = indicator(m, m_)
 
         # get w_{m}, the weight for the speaker's meaning point
-        return weights[(force, flavor)] * reward
+        return weights[(m.force, m.flavor)] * reward
 
     return utility
