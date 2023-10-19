@@ -67,14 +67,4 @@ def utility_func_from_csv(
     total = max(list(weights.values())) # Heaviest weight is 1.
     weights = {point: weight / total for point, weight in weights.items()}
 
-    def utility(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
-
-        if base_util == half_credit:
-            reward = half_credit(m, m_)
-        if base_util == indicator:
-            reward = indicator(m, m_)
-
-        # get w_{m}, the weight for the speaker's meaning point
-        return weights[(m.force, m.flavor)] * reward
-
-    return utility
+    return lambda m, m_: weights[(m.force, m.flavor)] * base_util(m, m_)
