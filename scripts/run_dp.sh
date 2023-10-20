@@ -6,7 +6,7 @@ python src/generate_expressions.py "$@"
 
 python src/sample_languages.py "$@"
 
-python src/estimate_pareto_frontier.py "$@"
+python src/explore_languages.py "$@"
 
 python src/measure_tradeoff.py "$@"
 

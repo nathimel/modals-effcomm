@@ -1,0 +1,74 @@
+flavors:
+- epistemic
+- circumstantial
+- deontic
+forces:
+- strong
+- weak
+id_start: 3855
+languages:
+- sampled_lang_2894:
+    data:
+      Language: artificial
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: sampled_lang_2894
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: dummy_form_0
+      lot: (* (weak ) (deontic ))
+      meaning:
+      - weak+deontic
+    - form: dummy_form_15_1
+      lot: (* (strong ) (circumstantial ))
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_26
+      lot: (- (epistemic ))
+      meaning:
+      - weak+circumstantial
+      - strong+deontic
+      - strong+circumstantial
+      - weak+deontic
+    - form: dummy_form_45
+      lot: (+ (* (weak ) (- (deontic ))) (* (strong ) (- (circumstantial ))))
+      meaning:
+      - weak+circumstantial
+      - strong+epistemic
+      - strong+deontic
+      - weak+epistemic
+    - form: dummy_form_51
+      lot: (+ (epistemic ) (* (strong ) (circumstantial )))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - weak+epistemic
+    - form: dummy_form_54
+      lot: (- (* (strong ) (deontic )))
+      meaning:
+      - strong+circumstantial
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
+      - strong+epistemic
+    - form: dummy_form_6
+      lot: (weak )
+      meaning:
+      - weak+circumstantial
+      - weak+epistemic
+      - weak+deontic
+    - form: dummy_form_60
+      lot: (- (* (weak ) (circumstantial )))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+      - weak+epistemic
+      - weak+deontic
+      - strong+epistemic
+    length: 8

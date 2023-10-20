@@ -33,8 +33,15 @@ def main(config: DictConfig):
     # Create the first generation of languages
     experiment = Experiment(
         config, 
-        load_files=["expressions", "artificial_languages", "natural_languages"]
     )
+
+    experiment.set_filepaths(["artificial_languages"])
+    if not config.experiment.overwrite_languages and experiment.path_exists("artificial_languages"):
+        print(" found and will not be overwritten; skipping evolutionary algorithm exploration of languages.")
+        return
+
+    experiment.load_files(["expressions", "artificial_languages", "natural_languages"])
+
     expressions = experiment.expressions    
     result = experiment.artificial_languages
     sampled_languages = result["languages"]

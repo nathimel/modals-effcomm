@@ -1,12 +1,13 @@
 """Script for sampling languages."""
 
-import sys
+import os
+import hydra
+
 from altk.language.sampling import generate_languages
 from modals import modal_language
 from modals.modal_language import ModalLanguage
 from experiment import Experiment
 
-import hydra
 from misc.file_util import set_seed
 from omegaconf import DictConfig
 
@@ -17,8 +18,14 @@ def main(config: DictConfig):
 
     experiment = Experiment(
         config, 
-        load_files=["expressions", "artificial_languages"]
     )
+    lang_fn = "artificial_languages"
+    experiment.set_filepaths([lang_fn])
+    if not config.experiment.overwrite_languages and experiment.path_exists(lang_fn):
+        print("Language file found and will not be overwritten; skipping sampling of languages.")
+        return
+
+    experiment.load_files(["expressions", lang_fn])
 
     # Load parameters for languages
     lang_size = config.experiment.sampling.maximum_lang_size
@@ -41,7 +48,7 @@ def main(config: DictConfig):
 
     languages = list(set(languages))
     experiment.artificial_languages = {"languages": languages, "id_start": id_start}
-    experiment.write_files(["artificial_languages"], kinds=["sampled"])
+    experiment.write_files([lang_fn], kinds=["sampled"])
     print("done.")
 
 

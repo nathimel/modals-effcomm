@@ -33,7 +33,7 @@ class Experiment:
         Args:
             config: a Hydra config
 
-            load_files: the list of files to load when upon construction. By default is empty for efficiency, but possible values are all keys of `self.filenames`, i.e. `["expressions", "artificial_languages", "natural_languages", "dominant_languages"]`
+            load_files: the list of files to load when upon construction. By default is empty for efficiency, but possible values are all keys of `self.paths`, i.e. `["expressions", "artificial_languages", "natural_languages", "dominant_languages"]`
         """
 
         ######################################################################
@@ -104,11 +104,12 @@ class Experiment:
             agent_type=config.experiment.effcomm.inf.agent_type,
         )
 
-        self.filenames = {
-            "expressions",
-            "artificial_languages",
-            "natural_languages",
-            "dominant_languages",
+        # dict containing absolute paths to language data files
+        self.paths = {
+            "expressions": None,
+            "artificial_languages": None,
+            "natural_languages": None,
+            "dominant_languages": None,
         }
 
         # list of ModalExpressions
@@ -121,59 +122,71 @@ class Experiment:
 
         self.load_files(load_files)
 
+    def ensure_paths(self, keys: str) -> None:
+        if not all(self.paths[key] is not None for key in keys):
+            self.set_filepaths(keys)
+
+    def path_exists(self, path: str, absolute=False) -> bool: 
+        """Check whether the absolute path corresponding to the file key exists."""
+        path = path if absolute else self.paths[path]
+        return os.path.exists(path)
+
+    def set_filepaths(self, keys: list[str]) -> None:
+        """Infer the absolute paths of language data filenames relative to hydra interpolations."""
+        for key in keys:
+            if key not in self.paths:
+                raise KeyError(f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}.")
+
+            subdir = "generate_subdir" if key == "expressions" else "languages_subdir"
+            self.paths[key] = get_subdir_fn_abbrev(self.config, subdir, key)
+
 
     def load_files(self, files: list[str]) -> None:
+        """Load language data from filenames."""
+        self.ensure_paths(files)
 
         for key in files:
+            if key not in self.paths:
+                raise KeyError(f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}.")
 
-            if key not in self.filenames:
-                raise KeyError(f"The file {key} cannot be loaded because it is not one of {self.filenames.keys()}.")
-
-            filename = getattr(self.config.filepaths, key)
             result = None
-            # Load expressions from file
-            if key == "expressions":
-                fullpath = get_subdir_fn_abbrev(self.config, "expressions_subdir", key)
-                if os.path.exists(fullpath):
-                    result = load_expressions(fullpath)
-                else:
-                    print(f"Filepath {fullpath} does not exist yet.")
-            # Load language from file
+            loader = load_expressions if key == "expressions" else load_languages
+            if self.path_exists(key):
+                print(f"Loading {key}...")
+                result = loader(self.paths[key])
+                print("done.")
             else:
-                fullpath = get_subdir_fn_abbrev(self.config, "languages_subdir", key)
-                if os.path.exists(fullpath):
-                    print(f"Loading {key}...")
-                    result = load_languages(fullpath)
-                else:
-                    print(f"Filepath {fullpath} does not exist yet.")
+                print(f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None.")
             setattr(self, key, result)
 
     def write_files(self, files: list[str], kinds = []) -> None:
+        """Write the language data contained in the Experiment to the corresponding files."""
+
+        self.ensure_paths(files)
 
         for i, key in enumerate(files):
 
-            if key not in self.filenames:
-                raise KeyError(f"The file {key} cannot be written to because it is not one of {self.filenames.keys()}.")
+            if key not in self.paths:
+                raise KeyError(f"The file {key} cannot be written to because it is not one of {self.paths.keys()}.")
+            
+            fullpath = self.paths[key]
+            data = getattr(self, key)
+            if data is None:
+                print(f"{key} was None; skipping.")
 
-            # Load expressions from file
             if key == "expressions":
-                fullpath = get_subdir_fn_abbrev(self.config, "expressions_subdir", key)
-                data = getattr(self, key)
-                if not os.path.exists(fullpath) or self.config.experiment.overwrite_expressions:
-                    if data is not None:
-                        save_expressions(fullpath, data)
-                else:
-                    print(f"File {fullpath} already exists.")
-
-            # Load language from file
+                saver = save_expressions
+                overwrite = self.config.experiment.overwrite_expressions
+                save_args = [fullpath, data]
+                save_kwargs = dict()
             else:
-                fullpath = get_subdir_fn_abbrev(self.config, "languages_subdir", key)
-                data = getattr(self, key)
-                if not os.path.exists(fullpath) or self.config.experiment.overwrite_languages:
-                    if data is not None:
-                        langs = data["languages"]
-                        id_start = data["id_start"]
-                        print(f"Saving {key}...")
-                        save_languages(fullpath, langs, id_start, kinds[i])
-                else:
-                    print(f"File {fullpath} already exists.")
+                saver = save_languages
+                overwrite = self.config.experiment.overwrite_languages
+                save_args = [fullpath] + list(data.values()) # langs, id_start
+                save_kwargs = {"kind":kinds[i]}
+            
+            if not self.path_exists(key) or overwrite:
+                saver(*save_args, **save_kwargs)
+            else:
+                print(f"File {fullpath} already exists, not overwriting.")
+
