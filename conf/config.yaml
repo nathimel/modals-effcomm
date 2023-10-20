@@ -5,7 +5,8 @@
 defaults:
   - experiment: dev
   - typology: can_express
-  - plot: aes
+  - plot: custom
+  - override hydra/job_logging: custom    
   - _self_ # stuff below can override stuff above  
 
 seed: 42

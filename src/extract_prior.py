@@ -106,7 +106,7 @@ def main(config: DictConfig):
         )
 
         # for dev
-        df_all = df_all.head(n=1000)
+        # df_all = df_all.head(n=1000)
 
         # run sentences through a parser to extract the verbal auxiliaries
         nlp = spacy.load("en_core_web_md")

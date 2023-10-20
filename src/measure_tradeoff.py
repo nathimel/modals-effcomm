@@ -29,17 +29,17 @@ def main(config: DictConfig):
 
     print("sampled...")
     experiment.load_files(["artificial_languages"])    
-    print("dominant...")
-    experiment.load_files(["dominant_languages"])    
+    # print("dominant...") # these aren't that important
+    # experiment.load_files(["dominant_languages"])
     print("natural...")
     experiment.load_files(["natural_languages"])
 
     id_start = experiment.artificial_languages["id_start"]
     sampled_languages = experiment.artificial_languages["languages"]
-    dominant_languages = experiment.dominant_languages["languages"]
+    # dominant_languages = experiment.dominant_languages["languages"]
     natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
 
-    langs = list(set(sampled_languages + dominant_languages + natural_languages))
+    langs = list(set(sampled_languages + natural_languages))
     print(f"{len(langs)} total langs.")
 
     comp = experiment.complexity_measure

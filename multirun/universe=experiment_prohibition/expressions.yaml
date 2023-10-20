@@ -1,0 +1,403 @@
+expressions:
+- form: dummy_form_0
+  lot: (* (possibility ) (deontic ))
+  meaning:
+  - possibility+deontic
+- form: dummy_form_1
+  lot: (* (possibility ) (epistemic ))
+  meaning:
+  - possibility+epistemic
+- form: dummy_form_2
+  lot: (* (possibility ) (- (circumstantial )))
+  meaning:
+  - possibility+epistemic
+  - possibility+deontic
+- form: dummy_form_3
+  lot: (* (possibility ) (circumstantial ))
+  meaning:
+  - possibility+circumstantial
+- form: dummy_form_4
+  lot: (* (possibility ) (- (epistemic )))
+  meaning:
+  - possibility+deontic
+  - possibility+circumstantial
+- form: dummy_form_5
+  lot: (* (possibility ) (- (deontic )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_6
+  lot: (possibility )
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_7
+  lot: (* (impossibility ) (deontic ))
+  meaning:
+  - impossibility+deontic
+- form: dummy_form_8
+  lot: (deontic )
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+- form: dummy_form_9
+  lot: (+ (* (impossibility ) (deontic )) (* (possibility ) (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+- form: dummy_form_10
+  lot: (+ (deontic ) (* (possibility ) (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+deontic
+- form: dummy_form_11
+  lot: "(+\n  (* (impossibility ) (deontic ))\n  (* (possibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - possibility+circumstantial
+- form: dummy_form_12
+  lot: (+ (deontic ) (* (possibility ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - possibility+circumstantial
+- form: dummy_form_13
+  lot: (+ (* (possibility ) (- (deontic ))) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_14
+  lot: (- (* (impossibility ) (- (deontic ))))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+deontic
+  - possibility+circumstantial
+- form: dummy_form_15
+  lot: (* (impossibility ) (epistemic ))
+  meaning:
+  - impossibility+epistemic
+- form: dummy_form_16
+  lot: (+ (* (impossibility ) (epistemic )) (* (possibility ) (deontic )))
+  meaning:
+  - possibility+deontic
+  - impossibility+epistemic
+- form: dummy_form_17
+  lot: (epistemic )
+  meaning:
+  - possibility+epistemic
+  - impossibility+epistemic
+- form: dummy_form_18
+  lot: (+ (epistemic ) (* (possibility ) (deontic )))
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+- form: dummy_form_19
+  lot: "(+\n  (* (impossibility ) (epistemic ))\n  (* (possibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_20
+  lot: "(+\n  (* (possibility ) (- (epistemic )))\n  (* (impossibility ) (epistemic\
+    \ )))"
+  meaning:
+  - possibility+deontic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_21
+  lot: (+ (epistemic ) (* (possibility ) (circumstantial )))
+  meaning:
+  - possibility+epistemic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_22
+  lot: (- (* (impossibility ) (- (epistemic ))))
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_23
+  lot: (* (impossibility ) (- (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+- form: dummy_form_24
+  lot: (+ (deontic ) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - impossibility+epistemic
+- form: dummy_form_25
+  lot: (+ (epistemic ) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+- form: dummy_form_26
+  lot: (- (circumstantial ))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+deontic
+  - impossibility+epistemic
+- form: dummy_form_27
+  lot: "(+\n  (* (impossibility ) (- (circumstantial )))\n  (* (possibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_28
+  lot: "(+\n  (* (possibility ) (- (epistemic )))\n  (* (impossibility ) (- (circumstantial\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_29
+  lot: "(+\n  (* (possibility ) (- (deontic )))\n  (* (impossibility ) (- (circumstantial\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+  - possibility+circumstantial
+- form: dummy_form_30
+  lot: (- (* (impossibility ) (circumstantial )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+deontic
+  - impossibility+epistemic
+  - possibility+deontic
+- form: dummy_form_31
+  lot: (* (impossibility ) (circumstantial ))
+  meaning:
+  - impossibility+circumstantial
+- form: dummy_form_32
+  lot: "(+\n  (* (impossibility ) (circumstantial ))\n  (* (possibility ) (deontic\
+    \ )))"
+  meaning:
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_33
+  lot: "(+\n  (* (impossibility ) (circumstantial ))\n  (* (possibility ) (epistemic\
+    \ )))"
+  meaning:
+  - possibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_34
+  lot: "(+\n  (* (possibility ) (- (circumstantial )))\n  (* (impossibility ) (circumstantial\
+    \ )))"
+  meaning:
+  - possibility+epistemic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_35
+  lot: (circumstantial )
+  meaning:
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_36
+  lot: (+ (circumstantial ) (* (possibility ) (deontic )))
+  meaning:
+  - possibility+deontic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_37
+  lot: (+ (circumstantial ) (* (possibility ) (epistemic )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_38
+  lot: (- (* (impossibility ) (- (circumstantial ))))
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_39
+  lot: (* (impossibility ) (- (epistemic )))
+  meaning:
+  - impossibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_40
+  lot: (+ (deontic ) (* (impossibility ) (circumstantial )))
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_41
+  lot: "(+\n  (* (impossibility ) (- (epistemic )))\n  (* (possibility ) (epistemic\
+    \ )))"
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_42
+  lot: "(+\n  (* (possibility ) (- (circumstantial )))\n  (* (impossibility ) (- (epistemic\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_43
+  lot: (+ (circumstantial ) (* (impossibility ) (deontic )))
+  meaning:
+  - impossibility+deontic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_44
+  lot: (- (epistemic ))
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_45
+  lot: "(+\n  (* (possibility ) (- (deontic )))\n  (* (impossibility ) (- (epistemic\
+    \ ))))"
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_46
+  lot: (- (* (impossibility ) (epistemic )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+deontic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_47
+  lot: (* (impossibility ) (- (deontic )))
+  meaning:
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_48
+  lot: (+ (* (impossibility ) (- (deontic ))) (* (possibility ) (deontic )))
+  meaning:
+  - possibility+deontic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_49
+  lot: (+ (epistemic ) (* (impossibility ) (circumstantial )))
+  meaning:
+  - possibility+epistemic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_50
+  lot: "(+\n  (* (possibility ) (- (circumstantial )))\n  (* (impossibility ) (- (deontic\
+    \ ))))"
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_51
+  lot: (+ (circumstantial ) (* (impossibility ) (epistemic )))
+  meaning:
+  - impossibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_52
+  lot: "(+\n  (* (possibility ) (- (epistemic )))\n  (* (impossibility ) (- (deontic\
+    \ ))))"
+  meaning:
+  - possibility+deontic
+  - impossibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_53
+  lot: (- (deontic ))
+  meaning:
+  - possibility+epistemic
+  - impossibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_54
+  lot: (- (* (impossibility ) (deontic )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+epistemic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_55
+  lot: (impossibility )
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_56
+  lot: (- (* (possibility ) (- (deontic ))))
+  meaning:
+  - impossibility+deontic
+  - possibility+deontic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_57
+  lot: (- (* (possibility ) (- (epistemic ))))
+  meaning:
+  - impossibility+deontic
+  - possibility+epistemic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_58
+  lot: (- (* (possibility ) (circumstantial )))
+  meaning:
+  - possibility+epistemic
+  - impossibility+deontic
+  - impossibility+epistemic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_59
+  lot: (- (* (possibility ) (- (circumstantial ))))
+  meaning:
+  - impossibility+deontic
+  - impossibility+epistemic
+  - possibility+circumstantial
+  - impossibility+circumstantial
+- form: dummy_form_60
+  lot: (- (* (possibility ) (epistemic )))
+  meaning:
+  - possibility+circumstantial
+  - impossibility+deontic
+  - impossibility+epistemic
+  - possibility+deontic
+  - impossibility+circumstantial
+- form: dummy_form_61
+  lot: (- (* (possibility ) (deontic )))
+  meaning:
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+- form: dummy_form_62
+  lot: (1 )
+  meaning:
+  - possibility+deontic
+  - possibility+epistemic
+  - possibility+circumstantial
+  - impossibility+deontic
+  - impossibility+epistemic
+  - impossibility+circumstantial
+flavors:
+- circumstantial
+- epistemic
+- deontic
+forces:
+- impossibility
+- possibility

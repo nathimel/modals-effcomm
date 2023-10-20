@@ -87,21 +87,15 @@ hydra:
     version: 1
     formatters:
       simple:
-        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+        format: '[%(levelname)s] - %(message)s'
     handlers:
       console:
         class: logging.StreamHandler
         formatter: simple
         stream: ext://sys.stdout
-      file:
-        class: logging.FileHandler
-        formatter: simple
-        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
     root:
-      level: INFO
       handlers:
       - console
-      - file
     disable_existing_loggers: false
   env: {}
   mode: RUN
@@ -113,7 +107,7 @@ hydra:
     - hydra.mode=RUN
     task: []
   job:
-    name: analyze
+    name: setup
     chdir: true
     override_dirname: ''
     id: ???
@@ -163,7 +157,7 @@ hydra:
       experiment/effcomm: half_credit_literal
       hydra/env: default
       hydra/callbacks: null
-      hydra/job_logging: default
+      hydra/job_logging: custom
       hydra/hydra_logging: default
       hydra/hydra_help: default
       hydra/help: default

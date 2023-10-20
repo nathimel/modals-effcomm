@@ -1,0 +1,248 @@
+hydra:
+  run:
+    dir: ${filepaths.hydra_run_root}/${filepaths.leaf_subdir}
+  sweep:
+    dir: ${filepaths.hydra_sweep_root}
+    subdir: ${filepaths.leaf_subdir}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      handlers:
+      - console
+    disable_existing_loggers: false
+  env: {}
+  mode: MULTIRUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.mode=MULTIRUN
+    task:
+    - experiment.universe=experiment_prohibition
+    - experiment.effcomm.inf.utility=importance,half_credit
+    - experiment.effcomm.inf.prior=-8,semi_estimated
+    - plot.lexicon_property=deontic_priority
+  job:
+    name: analyze
+    chdir: true
+    override_dirname: plot.lexicon_property=deontic_priority
+    id: ???
+    num: ???
+    config_name: config
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys:
+        - experiment.universe
+        - experiment.sampling.unbiased.lexeme_property
+        - experiment.effcomm.comp.lot_negation
+        - experiment.effcomm.inf.prior
+        - experiment.effcomm.inf.utility
+        - experiment.effcomm.inf.agent_type
+        - experiment.sampling.maximum_lang_size
+        - experiment.sampling.total_pool_cap
+        - experiment.sampling.unbiased.sample_size
+        - experiment.sampling.evol.max_mutations
+        - experiment.sampling.evol.generation_size
+        - experiment.sampling.evol.num_generations
+        - experiment.sampling.evol.explore
+        - seed
+  runtime:
+    version: 1.3.2
+    version_base: '1.3'
+    cwd: /Users/nathanielimel/uw/projects/modals-effcomm
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /Users/nathanielimel/uw/projects/modals-effcomm/conf
+      schema: file
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: ???
+    choices:
+      plot: custom
+      typology: can_express
+      experiment: dev
+      experiment/sampling: small
+      experiment/effcomm: half_credit_literal
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: custom
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false
+experiment:
+  effcomm:
+    comp:
+      lot_negation: true
+    'inf':
+      prior: modality_corpus
+      utility: half_credit
+      agent_type: literal
+  sampling:
+    maximum_lang_size: 10
+    unbiased:
+      sample_size: 2000
+      lexeme_property: iff
+    evol:
+      generation_size: 200
+      num_generations: 20
+      max_mutations: 5
+      explore: 0
+    total_pool_cap: 5000
+  universe: experiment_prohibition
+  overwrite_expressions: false
+  overwrite_languages: false
+typology:
+  can_express:
+    true:
+    - 1
+    false:
+    - '?'
+    - 0
+plot:
+  lexeme_property: iff
+  lexicon_property: deontic_priority
+  counts: true
+seed: 42
+filepaths:
+  universe_fn: data/universe/${experiment.universe}.csv
+  prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
+  utility_fn: data/utility/${experiment.effcomm.inf.utility}.csv
+  typological_data: data/natural_languages
+  modality_corpus:
+    0:
+      dev: data/modality_corpus/0/dev.txt
+      train: data/modality_corpus/0/train.txt
+    1:
+      dev: data/modality_corpus/1/dev.txt
+      train: data/modality_corpus/1/train.txt
+    2:
+      dev: data/modality_corpus/2/dev.txt
+      train: data/modality_corpus/2/train.txt
+    3:
+      dev: data/modality_corpus/3/dev.txt
+      train: data/modality_corpus/3/train.txt
+    4:
+      dev: data/modality_corpus/4/dev.txt
+      train: data/modality_corpus/4/train.txt
+    test:
+      test: data/modality_corpus/test/test.txt
+  expressions: expressions.yaml
+  artificial_languages: artificial.yml
+  natural_languages: natural.yml
+  dominant_languages: dominant.yml
+  analysis:
+    correlations: correlations/correlation_property.csv
+    data: all_data.csv
+    pareto_data: pareto_data.csv
+    plot: plot.png
+    means: means.csv
+    ttest_natural: ttest_natural.csv
+    ttest_dlsav: ttest_dlsav.csv
+    ttest_dp: ttest_deontic_priority.csv
+  generate_subdir: universe=${experiment.universe}
+  measure_subdir: ${filepaths.generate_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
+  leaf_subdir: ${filepaths.measure_subdir}
+  languages_subdir: ${filepaths.generate_subdir}/languages
+  analysis_subdir: ${filepaths.measure_subdir}/analysis
+  hydra_run_root: outputs
+  hydra_sweep_root: multirun

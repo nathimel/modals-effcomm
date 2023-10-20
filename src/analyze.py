@@ -66,8 +66,8 @@ def get_modals_plot(
     plot = (
         # Set data and the axes
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
-        + pn.scale_y_continuous(limits=[0, 1])
-        + pn.geom_point(data=pareto_data)
+        # + pn.scale_y_continuous(limits=[0, 1])
+        + pn.geom_line(data=pareto_data)
         + pn.geom_point(  # all langs
             data=data,
             stroke=0,
