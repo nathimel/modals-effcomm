@@ -56,7 +56,7 @@ def utility_func_from_csv(
     """
     df = pd.read_csv(fn)
 
-    # Normalize weights of flavors in df so maximum is 1.
+    # Normalize weights of meaning points in df so maximum is 1.
     weights = {
         (force, flavor):  df.loc[
             (df['force'] == force) & (df['flavor'] == flavor), 
@@ -64,7 +64,7 @@ def utility_func_from_csv(
             ].iloc[0]
         for force in set(df.force.values) for flavor in set(df.flavor.values)
     }
-    total = max(list(weights.values())) # Heaviest weight is 1.
+    total = max(list(weights.values()))
     weights = {point: weight / total for point, weight in weights.items()}
 
     return lambda m, m_: weights[(m.force, m.flavor)] * base_util(m, m_)
