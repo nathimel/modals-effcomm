@@ -8,7 +8,7 @@ from altk.effcomm.tradeoff import tradeoff
 
 from experiment import Experiment
 from misc.file_util import set_seed, get_subdir_fn
-from modals.modal_language import iff, sav, dlsav, deontic_priority
+from modals.modal_language import iff, sav, dlsav, deontic_priority, dp_trivial, dp_nontrivial
 from omegaconf import DictConfig
 
 
@@ -22,11 +22,9 @@ def main(config: DictConfig):
 
     df_fn = get_subdir_fn(config, config.filepaths.analysis_subdir, config.filepaths.analysis.data)
 
-    # load languages
-    print("Loading all languages:")
-
     experiment = Experiment(config)
-
+    
+    # load languages
     print("sampled...")
     experiment.load_files(["artificial_languages"])    
     # print("dominant...") # these aren't that important
@@ -56,6 +54,8 @@ def main(config: DictConfig):
         "sav": lambda lang: lang.degree_property(sav),
         "dlsav": dlsav,
         "deontic_priority": deontic_priority,
+        "dp_trivial": dp_trivial,
+        "dp_nontrivial": dp_nontrivial,
     }
 
     result = tradeoff(

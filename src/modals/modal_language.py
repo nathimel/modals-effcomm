@@ -352,3 +352,23 @@ def deontic_priority(language: ModalLanguage) -> bool:
                 deontic_impossibility = True
     
     return (not impossibility) or deontic_impossibility
+
+def dp_trivial(language: ModalLanguage) -> bool:
+    """The trivial disjunct of dp: a language lexicalizes no impossibilities."""
+    return not any(
+        [
+            point.data[0] == IMPOSSIBILITY 
+            for expression in language.expressions
+            for point in expression.meaning.referents
+        ]
+    )
+
+def dp_nontrivial(language: ModalLanguage) -> bool:
+    """The nontrivial disjunct of dp: a language lexicalizes deontic impossibility."""
+    return any(
+        [
+            point.data == (IMPOSSIBILITY, DEONTIC,)
+            for expression in language.expressions
+            for point in expression.meaning.referents
+        ]
+    )    

@@ -109,11 +109,10 @@ hydra:
     - experiment.universe=experiment_prohibition
     - experiment.effcomm.inf.utility=importance,half_credit
     - experiment.effcomm.inf.prior=-8,semi_estimated
-    - plot.lexicon_property=deontic_priority
   job:
     name: analyze
     chdir: true
-    override_dirname: plot.lexicon_property=deontic_priority
+    override_dirname: ''
     id: ???
     num: ???
     config_name: config
@@ -200,7 +199,7 @@ typology:
     - 0
 plot:
   lexeme_property: iff
-  lexicon_property: deontic_priority
+  lexicon_property: dlsav
   counts: true
 seed: 42
 filepaths:

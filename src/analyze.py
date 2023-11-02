@@ -57,7 +57,7 @@ def get_modals_plot(
     }
 
     kwargs["shape"] = lexicon_property
-    kwargs["size"] = lexicon_property
+    # kwargs["size"] = lexicon_property
     kwargs["color"] = lexicon_property
 
     if counts:
@@ -154,9 +154,24 @@ def main(config: DictConfig):
     print("Excluding Thai from final analysis.")
     natural_data = natural_data[natural_data["name"] != "Thai"]
 
+    # TEMP: add a column for which kind of dp is satisfied
+    # 1. DP-nontriial, DP-trivial, and DP-false
+    def label_dp(row):
+        if row["dp_trivial"] == True:
+            return "trivial"
+        if row["dp_nontrivial"] == True:
+            return "nontrivial"
+        if row["deontic_priority"] == False:
+            return "false"
+    
+    dp = data.apply(label_dp, axis=1)
+    data["dp"] = dp
+
     # Plot
     lexeme_property = config.plot.lexeme_property
     lexicon_property = config.plot.lexicon_property
+
+    lexicon_property = "dp"
 
     # Add counts only for plot
     plot_data = data.copy()

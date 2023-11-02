@@ -109,11 +109,10 @@ hydra:
     - experiment.universe=experiment_prohibition
     - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.prior=-8
-    - plot.lexicon_property=deontic_priority
   job:
     name: analyze
     chdir: true
-    override_dirname: plot.lexicon_property=deontic_priority
+    override_dirname: ''
     id: '2'
     num: 2
     config_name: config
