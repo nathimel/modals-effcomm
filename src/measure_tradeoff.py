@@ -8,7 +8,8 @@ from altk.effcomm.tradeoff import tradeoff
 
 from experiment import Experiment
 from misc.file_util import set_seed, get_subdir_fn
-from modals.modal_language import iff, sav, dlsav, deontic_priority, dp_trivial, dp_nontrivial
+# from modals.modal_language import iff, sav, dlsav, deontic_priority, dp_trivial, dp_nontrivial
+from modals import modal_language as ml
 from omegaconf import DictConfig
 
 
@@ -23,7 +24,7 @@ def main(config: DictConfig):
     df_fn = get_subdir_fn(config, config.filepaths.analysis_subdir, config.filepaths.analysis.data)
 
     experiment = Experiment(config)
-    
+
     # load languages
     print("sampled...")
     experiment.load_files(["artificial_languages"])    
@@ -38,6 +39,41 @@ def main(config: DictConfig):
     natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
 
     langs = list(set(sampled_languages + natural_languages))
+
+    # wataru sanity check
+    from modals.modal_language import ModalExpression, ModalLanguage, ModalMeaning, ModalMeaningPoint
+    lang1 = ModalLanguage(
+        expressions=[
+            ModalExpression(
+                form=f"wataru_expression_1", 
+                meaning=ModalMeaning([
+                    ModalMeaningPoint(force="possibility", flavor="epistemic"),
+                    ModalMeaningPoint(force="impossibility", flavor="epistemic")
+                    ],
+                    meaning_space=experiment.universe,
+                    ),
+                lot_expression="(epistemic )",
+            )
+        ],
+        name="wataru_language_1",
+    )
+    lang2 = ModalLanguage(
+        expressions=[
+            ModalExpression(
+                form=f"wataru_expression_2", 
+                meaning=ModalMeaning([
+                    ModalMeaningPoint(force="possibility", flavor="deontic"),
+                    ModalMeaningPoint(force="impossibility", flavor="deontic")
+                    ],
+                    meaning_space=experiment.universe,
+                    ),
+                lot_expression="(deontic )",
+            )
+        ],
+        name="wataru_language_2",
+    )
+    langs = langs + [lang1, lang2]
+
     print(f"{len(langs)} total langs.")
 
     comp = experiment.complexity_measure
@@ -50,12 +86,14 @@ def main(config: DictConfig):
         "simplicity": lambda lang: None,  # reset simplicity from evol alg exploration
         "informativity": inf,
         "comm_cost": lambda lang: 1 - inf(lang),
-        "iff": lambda lang: lang.degree_property(iff),
-        "sav": lambda lang: lang.degree_property(sav),
-        "dlsav": dlsav,
-        "deontic_priority": deontic_priority,
-        "dp_trivial": dp_trivial,
-        "dp_nontrivial": dp_nontrivial,
+        "iff": lambda lang: lang.degree_property(ml.iff),
+        "sav": lambda lang: lang.degree_property(ml.sav),
+        "dlsav": ml.dlsav,
+        "deontic_priority": ml.deontic_priority,
+        "dp_trivial": ml.dp_trivial,
+        "dp_nontrivial": ml.dp_nontrivial,
+        "epistemic_priority": ml.epistemic_priority,
+        "circ_priority": ml.circ_priority,
     }
 
     result = tradeoff(

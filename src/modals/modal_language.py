@@ -335,6 +335,7 @@ def dlsav(language: ModalLanguage) -> bool:
 IMPOSSIBILITY = "impossibility"
 EPISTEMIC = "epistemic"
 DEONTIC = "deontic"
+CIRCUMSTANTIAL = "circumstantial"
 
 def deontic_priority(language: ModalLanguage) -> bool:
     """The deontic priority universal: 'If a language lexicalizes any impossibility, it lexicalizes deontic impossibility'. 
@@ -372,3 +373,31 @@ def dp_nontrivial(language: ModalLanguage) -> bool:
             for point in expression.meaning.referents
         ]
     )    
+
+# Some sanity checks: other priorities.
+
+def epistemic_priority(language: ModalLanguage) -> bool:
+    impossibility = False
+    epistemic_impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data[0] == IMPOSSIBILITY:
+                impossibility = True
+            if point.data == (IMPOSSIBILITY, EPISTEMIC,):
+                epistemic_impossibility = True
+    
+    return (not impossibility) or epistemic_impossibility
+
+def circ_priority(language: ModalLanguage) -> bool:
+    impossibility = False
+    circ_impossibility = False
+
+    for expression in language.expressions:
+        for point in expression.meaning.referents:
+            if point.data[0] == IMPOSSIBILITY:
+                impossibility = True
+            if point.data == (IMPOSSIBILITY, CIRCUMSTANTIAL,):
+                circ_impossibility = True
+    
+    return (not impossibility) or circ_impossibility

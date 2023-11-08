@@ -107,8 +107,8 @@ hydra:
     - hydra.mode=MULTIRUN
     task:
     - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.utility=importance,half_credit
-    - experiment.effcomm.inf.prior=-8,semi_estimated
+    - experiment.effcomm.inf.utility=half_credit
+    - experiment.effcomm.inf.prior=-8
   job:
     name: analyze
     chdir: true
@@ -173,7 +173,7 @@ experiment:
     comp:
       lot_negation: true
     'inf':
-      prior: modality_corpus
+      prior: -8
       utility: half_credit
       agent_type: literal
   sampling:
@@ -199,7 +199,7 @@ typology:
     - 0
 plot:
   lexeme_property: iff
-  lexicon_property: dlsav
+  lexicon_property: deontic_priority
   counts: true
 seed: 42
 filepaths:

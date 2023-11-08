@@ -63,6 +63,10 @@ def get_modals_plot(
     if counts:
         kwargs["size"] = "counts"
 
+    # wataru sanity check
+    df_wataru = data[data["name"].isin(["wataru_language_1", "wataru_language_2"])]
+
+
     plot = (
         # Set data and the axes
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
@@ -93,6 +97,10 @@ def get_modals_plot(
             axis_title_y=pn.element_blank(),
         )
         )
+
+    # wataru sanity check
+    # breakpoint()
+    plot = plot + pn.geom_point(data=df_wataru, size=10, shape="X",)
 
     if natural_data is not None:
         plot = (
@@ -171,7 +179,11 @@ def main(config: DictConfig):
     lexeme_property = config.plot.lexeme_property
     lexicon_property = config.plot.lexicon_property
 
-    lexicon_property = "dp"
+    # lexicon_property = "dp"
+
+    # wataru sanity check
+    df_wataru = data[data["name"].isin(["wataru_language_1", "wataru_language_2"])]
+    df_wataru["counts"] = 1
 
     # Add counts only for plot
     plot_data = data.copy()
@@ -180,6 +192,8 @@ def main(config: DictConfig):
     plot_data = data.drop_duplicates(subset=subset)  # drop dupes from original
     plot_data = plot_data.sort_values(by=subset)
     plot_data["counts"] = vcs.values
+
+    plot_data = pd.concat([plot_data, df_wataru])
 
     plot = get_modals_plot(
         data=plot_data,
@@ -221,17 +235,25 @@ def main(config: DictConfig):
     # Means and ttest for natural, dlsav, population
     dlsav_data = data[data["dlsav"] == True]
     dp_data = data[data["deontic_priority"] == True]
+    ep_data = data[data["epistemic_priority"] == True]
+    cp_data = data[data["circ_priority"] == True]
+
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     dp_means = trade_off_means("deontic_priority_means", dp_data, properties)
+    ep_means = trade_off_means("epistemic_priority_means", ep_data, properties)
+    cp_means = trade_off_means("circ_priority_means", cp_data, properties)
+
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, dlsav_means, dp_means, population_means]).set_index(
+    means_df = pd.concat([natural_means, dlsav_means, dp_means, ep_means, cp_means, population_means]).set_index(
         "name"
     )
     pop_means_dict = population_means.iloc[0].to_dict()
     ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
     ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
     ttest_dp_df = trade_off_ttest(dp_data, pop_means_dict, properties)
+    ttest_ep_df = trade_off_ttest(ep_data, pop_means_dict, properties)
+    ttest_cp_df = trade_off_ttest(cp_data, pop_means_dict, properties)
 
     ############################################################################
     # Print report to stdout and save
@@ -256,6 +278,13 @@ def main(config: DictConfig):
     print(f"deontic priority languages ({len(dp_data)}) against population ({len(data)})")
     print(ttest_dp_df)
     print()    
+    print()
+    print(f"epistemic priority languages ({len(ep_data)}) against population ({len(data)})")
+    print(ttest_ep_df)
+    print()        
+    print(f"circ priority languages ({len(cp_data)}) against population ({len(data)})")
+    print(ttest_cp_df)
+    print()            
 
     # Save results
     means_df.to_csv(means_fn)
@@ -267,7 +296,8 @@ def main(config: DictConfig):
         intervals.to_csv(f"{correlations_fn.replace('correlation_property', prop)}", index=False)
         for prop, intervals in zip(*[properties, confidence_intervals])
     ]
-    pareto_data.to_csv(pareto_df_fn)
+    pareto_data.to_csv(pareto_df_fn, index=False)
+    data.to_csv(df_fn, index=False)
 
 
 if __name__ == "__main__":
