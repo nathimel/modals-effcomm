@@ -107,12 +107,13 @@ hydra:
     - hydra.mode=MULTIRUN
     task:
     - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.utility=half_credit
+    - experiment.effcomm.inf.utility=importance
     - experiment.effcomm.inf.prior=-8
+    - experiment.overwrite_languages=True
   job:
-    name: analyze
+    name: measure_tradeoff
     chdir: true
-    override_dirname: ''
+    override_dirname: experiment.overwrite_languages=True
     id: ???
     num: ???
     config_name: config
@@ -174,7 +175,7 @@ experiment:
       lot_negation: true
     'inf':
       prior: -8
-      utility: half_credit
+      utility: importance
       agent_type: literal
   sampling:
     maximum_lang_size: 10
@@ -189,7 +190,7 @@ experiment:
     total_pool_cap: 5000
   universe: experiment_prohibition
   overwrite_expressions: false
-  overwrite_languages: false
+  overwrite_languages: true
 typology:
   can_express:
     true:

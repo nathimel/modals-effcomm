@@ -401,3 +401,12 @@ def circ_priority(language: ModalLanguage) -> bool:
                 circ_impossibility = True
     
     return (not impossibility) or circ_impossibility
+
+def dp_restricted(language: ModalLanguage) -> bool:
+    """A language doesn’t have impossibility, or if it has impossibility, *all* forms that have an impossibility meaning have a deontic impossibility meaning."""
+    for expression in language.expressions:
+        # check at least one of the points is deontic, if an impossibility force
+        flavors = [point.data[1] for point in expression.meaning.referents if point.data[0] == IMPOSSIBILITY]
+        if (flavors) and (not any(fl == DEONTIC for fl in flavors)):
+            return False
+    return True

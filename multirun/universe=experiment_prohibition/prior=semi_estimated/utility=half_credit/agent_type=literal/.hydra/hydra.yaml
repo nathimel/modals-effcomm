@@ -109,12 +109,13 @@ hydra:
     - experiment.universe=experiment_prohibition
     - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.prior=semi_estimated
+    - plot.lexicon_property=circ_priority
   job:
     name: analyze
     chdir: true
-    override_dirname: ''
-    id: '3'
-    num: 3
+    override_dirname: plot.lexicon_property=circ_priority
+    id: '1'
+    num: 1
     config_name: config
     env_set: {}
     env_copy: []

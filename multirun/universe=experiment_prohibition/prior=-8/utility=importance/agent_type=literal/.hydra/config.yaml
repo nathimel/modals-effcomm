@@ -19,7 +19,7 @@ experiment:
     total_pool_cap: 5000
   universe: experiment_prohibition
   overwrite_expressions: false
-  overwrite_languages: false
+  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -29,7 +29,7 @@ typology:
     - 0
 plot:
   lexeme_property: iff
-  lexicon_property: circ_priority
+  lexicon_property: deontic_priority
   counts: true
 seed: 42
 filepaths:

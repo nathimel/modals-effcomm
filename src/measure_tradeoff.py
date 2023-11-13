@@ -94,6 +94,7 @@ def main(config: DictConfig):
         "dp_nontrivial": ml.dp_nontrivial,
         "epistemic_priority": ml.epistemic_priority,
         "circ_priority": ml.circ_priority,
+        "dp_restricted": ml.dp_restricted,
     }
 
     result = tradeoff(

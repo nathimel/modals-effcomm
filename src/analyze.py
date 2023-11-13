@@ -75,7 +75,7 @@ def get_modals_plot(
         + pn.geom_point(  # all langs
             data=data,
             stroke=0,
-            alpha=1,
+            # alpha=.5,
             mapping=pn.aes(**kwargs),
         )
         # + pn.scale_color_cmap("cividis")
@@ -99,8 +99,7 @@ def get_modals_plot(
         )
 
     # wataru sanity check
-    # breakpoint()
-    plot = plot + pn.geom_point(data=df_wataru, size=10, shape="X",)
+    # plot = plot + pn.geom_point(data=df_wataru, size=10, shape="X",)
 
     if natural_data is not None:
         plot = (
@@ -163,8 +162,10 @@ def main(config: DictConfig):
     natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # TEMP: add a column for which kind of dp is satisfied
-    # 1. DP-nontriial, DP-trivial, and DP-false
+    # DP-restricted, DP-nontriial, DP-trivial, and DP-false
     def label_dp(row):
+        if row["dp_restricted"] == True:
+            return "dp_restricted"
         if row["dp_trivial"] == True:
             return "trivial"
         if row["dp_nontrivial"] == True:
@@ -180,6 +181,7 @@ def main(config: DictConfig):
     lexicon_property = config.plot.lexicon_property
 
     # lexicon_property = "dp"
+    # lexicon_property = "dp_restricted"
 
     # wataru sanity check
     df_wataru = data[data["name"].isin(["wataru_language_1", "wataru_language_2"])]
@@ -237,15 +239,25 @@ def main(config: DictConfig):
     dp_data = data[data["deontic_priority"] == True]
     ep_data = data[data["epistemic_priority"] == True]
     cp_data = data[data["circ_priority"] == True]
+    dpr_data = data[data["dp_restricted"] == True] 
 
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     dp_means = trade_off_means("deontic_priority_means", dp_data, properties)
     ep_means = trade_off_means("epistemic_priority_means", ep_data, properties)
     cp_means = trade_off_means("circ_priority_means", cp_data, properties)
+    dpr_means = trade_off_means("dp_restricted_means", dpr_data, properties)
 
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([natural_means, dlsav_means, dp_means, ep_means, cp_means, population_means]).set_index(
+    means_df = pd.concat([
+        natural_means, 
+        dlsav_means, 
+        dp_means, 
+        ep_means, 
+        cp_means, 
+        dpr_means, 
+        population_means,
+    ]).set_index(
         "name"
     )
     pop_means_dict = population_means.iloc[0].to_dict()
@@ -254,6 +266,7 @@ def main(config: DictConfig):
     ttest_dp_df = trade_off_ttest(dp_data, pop_means_dict, properties)
     ttest_ep_df = trade_off_ttest(ep_data, pop_means_dict, properties)
     ttest_cp_df = trade_off_ttest(cp_data, pop_means_dict, properties)
+    ttest_dpr_df = trade_off_ttest(dpr_data, pop_means_dict, properties)
 
     ############################################################################
     # Print report to stdout and save
@@ -284,13 +297,16 @@ def main(config: DictConfig):
     print()        
     print(f"circ priority languages ({len(cp_data)}) against population ({len(data)})")
     print(ttest_cp_df)
-    print()            
+    print()
+    print(f"deontic priority restricted languages ({len(cp_data)}) against population ({len(data)})")
+    print(ttest_cp_df)
+    print()    
 
     # Save results
     means_df.to_csv(means_fn)
-    ttest_natural_df.to_csv(ttest_natural_fn, index=False)
-    ttest_dlsav_df.to_csv(ttest_dlsav_fn, index=False)
-    ttest_dp_df.to_csv(ttest_dp_fn, index=False)
+    ttest_natural_df.to_csv(ttest_natural_fn)
+    ttest_dlsav_df.to_csv(ttest_dlsav_fn)
+    ttest_dp_df.to_csv(ttest_dp_fn)
     ensure_dir(os.path.abspath(os.path.join(correlations_fn, os.pardir)))
     [
         intervals.to_csv(f"{correlations_fn.replace('correlation_property', prop)}", index=False)

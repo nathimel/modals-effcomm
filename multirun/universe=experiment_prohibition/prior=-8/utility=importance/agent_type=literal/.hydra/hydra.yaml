@@ -109,10 +109,11 @@ hydra:
     - experiment.universe=experiment_prohibition
     - experiment.effcomm.inf.utility=importance
     - experiment.effcomm.inf.prior=-8
+    - experiment.overwrite_languages=True
   job:
-    name: analyze
+    name: measure_tradeoff
     chdir: true
-    override_dirname: ''
+    override_dirname: experiment.overwrite_languages=True
     id: '0'
     num: 0
     config_name: config
