@@ -7,12 +7,12 @@ forces:
 - impossibility
 id_start: 43282
 languages:
-- sampled_lang_9632:
+- sampled_lang_13997:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.4970128110372014
-      complexity: 10
+      comm_cost: 0.44710827790096086
+      complexity: 18
       deontic_priority: true
       dlsav: false
       dp_nontrivial: true
@@ -21,9 +21,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.5029871889627986
-      name: sampled_lang_9632
-      optimality: 0.999998251553506
+      informativity: 0.5528917220990391
+      name: sampled_lang_13997
+      optimality: 0.9998864200659429
       sav: 1.0
       simplicity: null
     expressions:
@@ -31,99 +31,25 @@ languages:
       lot: (* (impossibility ) (deontic ))
       meaning:
       - impossibility+deontic
+    - form: dummy_form_1
+      lot: (* (impossibility ) (circumstantial ))
+      meaning:
+      - impossibility+circumstantial
     - form: dummy_form_17
       lot: (circumstantial )
       meaning:
       - impossibility+circumstantial
       - possibility+circumstantial
-    - form: dummy_form_35
-      lot: (epistemic )
+    - form: dummy_form_3
+      lot: (* (impossibility ) (epistemic ))
       meaning:
       - impossibility+epistemic
-      - possibility+epistemic
-    - form: dummy_form_55
-      lot: (possibility )
+    - form: dummy_form_39
+      lot: (* (possibility ) (- (circumstantial )))
       meaning:
       - possibility+epistemic
-      - possibility+circumstantial
       - possibility+deontic
-    length: 4
-- sampled_lang_5711:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.539849716678985
-      complexity: 8
-      deontic_priority: true
-      dlsav: false
-      dp_nontrivial: true
-      dp_restricted: false
-      dp_trivial: false
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.46015028332101504
-      name: sampled_lang_5711
-      optimality: 0.9999394259357667
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_5
-      lot: (* (impossibility ) (- (deontic )))
-      meaning:
-      - impossibility+circumstantial
-      - impossibility+epistemic
-    - form: dummy_form_55
-      lot: (possibility )
-      meaning:
-      - possibility+epistemic
-      - possibility+circumstantial
-      - possibility+deontic
-    - form: dummy_form_8
-      lot: (deontic )
-      meaning:
-      - possibility+deontic
-      - impossibility+deontic
-    length: 3
-- sampled_lang_9650:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.44733924611973397
-      complexity: 16
-      deontic_priority: true
-      dlsav: true
-      dp_nontrivial: true
-      dp_restricted: false
-      dp_trivial: false
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.552660753880266
-      name: sampled_lang_9650
-      optimality: 0.9999615540153469
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_0
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_47
-      lot: (* (possibility ) (- (deontic )))
-      meaning:
-      - possibility+epistemic
-      - possibility+circumstantial
-    - form: dummy_form_5
-      lot: (* (impossibility ) (- (deontic )))
-      meaning:
-      - impossibility+circumstantial
-      - impossibility+epistemic
-    - form: dummy_form_7
-      lot: (* (possibility ) (deontic ))
-      meaning:
-      - possibility+deontic
-    length: 4
+    length: 5
 - sampled_lang_13467:
     data:
       Language: artificial
@@ -169,41 +95,6 @@ languages:
       - possibility+deontic
       - impossibility+deontic
     length: 5
-- sampled_lang_585:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.6847437792559743
-      complexity: 3
-      deontic_priority: true
-      dlsav: false
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.31525622074402565
-      name: sampled_lang_585
-      optimality: 0.999933193769347
-      sav: 0.5
-      simplicity: null
-    expressions:
-    - form: dummy_form_62
-      lot: (1 )
-      meaning:
-      - possibility+circumstantial
-      - impossibility+circumstantial
-      - possibility+epistemic
-      - impossibility+deontic
-      - impossibility+epistemic
-      - possibility+deontic
-    - form: dummy_form_8
-      lot: (deontic )
-      meaning:
-      - possibility+deontic
-      - impossibility+deontic
-    length: 2
 - sampled_lang_17898:
     data:
       Language: artificial
@@ -250,6 +141,115 @@ languages:
       - possibility+deontic
       - impossibility+deontic
     length: 6
+- sampled_lang_5711:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5398497166789851
+      complexity: 8
+      deontic_priority: true
+      dlsav: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.460150283321015
+      name: sampled_lang_5711
+      optimality: 0.9999394259357668
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_5
+      lot: (* (impossibility ) (- (deontic )))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+epistemic
+    - form: dummy_form_55
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: dummy_form_8
+      lot: (deontic )
+      meaning:
+      - possibility+deontic
+      - impossibility+deontic
+    length: 3
+- sampled_lang_469:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5745257452574526
+      complexity: 4
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.42547425474254746
+      name: sampled_lang_469
+      optimality: 0.9999376322685363
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_55
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: dummy_form_6
+      lot: (impossibility )
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+epistemic
+      - impossibility+deontic
+    length: 2
+- sampled_lang_9650:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.44733924611973397
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.552660753880266
+      name: sampled_lang_9650
+      optimality: 0.9999615540153469
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_0
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_47
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    - form: dummy_form_5
+      lot: (* (impossibility ) (- (deontic )))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+epistemic
+    - form: dummy_form_7
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    length: 4
 - sampled_lang_5718:
     data:
       Language: artificial
@@ -288,87 +288,41 @@ languages:
       - possibility+deontic
       - impossibility+deontic
     length: 3
-- sampled_lang_469:
+- sampled_lang_63:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.5745257452574526
-      complexity: 4
+      comm_cost: 0.7340785907859078
+      complexity: 1
       deontic_priority: true
-      dlsav: true
+      dlsav: false
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.4254742547425474
-      name: sampled_lang_469
-      optimality: 0.9999376322685363
-      sav: 1.0
+      informativity: 0.26592140921409224
+      name: sampled_lang_63
+      optimality: 0.9999744814877493
+      sav: 0.0
       simplicity: null
     expressions:
-    - form: dummy_form_55
-      lot: (possibility )
+    - form: dummy_form_62
+      lot: (1 )
       meaning:
-      - possibility+epistemic
       - possibility+circumstantial
-      - possibility+deontic
-    - form: dummy_form_6
-      lot: (impossibility )
-      meaning:
       - impossibility+circumstantial
-      - impossibility+epistemic
-      - impossibility+deontic
-    length: 2
-- sampled_lang_13997:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.44710827790096075
-      complexity: 18
-      deontic_priority: true
-      dlsav: false
-      dp_nontrivial: true
-      dp_restricted: false
-      dp_trivial: false
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.5528917220990393
-      name: sampled_lang_13997
-      optimality: 0.9998864200659431
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_0
-      lot: (* (impossibility ) (deontic ))
-      meaning:
-      - impossibility+deontic
-    - form: dummy_form_1
-      lot: (* (impossibility ) (circumstantial ))
-      meaning:
-      - impossibility+circumstantial
-    - form: dummy_form_17
-      lot: (circumstantial )
-      meaning:
-      - impossibility+circumstantial
-      - possibility+circumstantial
-    - form: dummy_form_3
-      lot: (* (impossibility ) (epistemic ))
-      meaning:
-      - impossibility+epistemic
-    - form: dummy_form_39
-      lot: (* (possibility ) (- (circumstantial )))
-      meaning:
       - possibility+epistemic
+      - impossibility+deontic
+      - impossibility+epistemic
       - possibility+deontic
-    length: 5
+    length: 1
 - sampled_lang_9594:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.49408721359940877
+      comm_cost: 0.49408721359940866
       complexity: 12
       deontic_priority: true
       dlsav: false
@@ -378,9 +332,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.5059127864005912
+      informativity: 0.5059127864005913
       name: sampled_lang_9594
-      optimality: 0.999954219294718
+      optimality: 0.9999542192947183
       sav: 1.0
       simplicity: null
     expressions:
@@ -404,12 +358,53 @@ languages:
       - possibility+deontic
       - impossibility+deontic
     length: 4
-- sampled_lang_63:
+- sampled_lang_9632:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.7340785907859078
-      complexity: 1
+      comm_cost: 0.4970128110372013
+      complexity: 10
+      deontic_priority: true
+      dlsav: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.5029871889627987
+      name: sampled_lang_9632
+      optimality: 0.9999982515535059
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_0
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_17
+      lot: (circumstantial )
+      meaning:
+      - impossibility+circumstantial
+      - possibility+circumstantial
+    - form: dummy_form_35
+      lot: (epistemic )
+      meaning:
+      - impossibility+epistemic
+      - possibility+epistemic
+    - form: dummy_form_55
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    length: 4
+- sampled_lang_585:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6847437792559743
+      complexity: 3
       deontic_priority: true
       dlsav: false
       dp_nontrivial: true
@@ -418,10 +413,10 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.2659214092140922
-      name: sampled_lang_63
-      optimality: 0.9999744814877493
-      sav: 0.0
+      informativity: 0.31525622074402565
+      name: sampled_lang_585
+      optimality: 0.999933193769347
+      sav: 0.5
       simplicity: null
     expressions:
     - form: dummy_form_62
@@ -433,4 +428,9 @@ languages:
       - impossibility+deontic
       - impossibility+epistemic
       - possibility+deontic
-    length: 1
+    - form: dummy_form_8
+      lot: (deontic )
+      meaning:
+      - possibility+deontic
+      - impossibility+deontic
+    length: 2
