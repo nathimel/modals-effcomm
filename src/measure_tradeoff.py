@@ -40,39 +40,39 @@ def main(config: DictConfig):
 
     langs = list(set(sampled_languages + natural_languages))
 
-    # wataru sanity check
-    from modals.modal_language import ModalExpression, ModalLanguage, ModalMeaning, ModalMeaningPoint
-    lang1 = ModalLanguage(
-        expressions=[
-            ModalExpression(
-                form=f"wataru_expression_1", 
-                meaning=ModalMeaning([
-                    ModalMeaningPoint(force="possibility", flavor="epistemic"),
-                    ModalMeaningPoint(force="impossibility", flavor="epistemic")
-                    ],
-                    meaning_space=experiment.universe,
-                    ),
-                lot_expression="(epistemic )",
-            )
-        ],
-        name="wataru_language_1",
-    )
-    lang2 = ModalLanguage(
-        expressions=[
-            ModalExpression(
-                form=f"wataru_expression_2", 
-                meaning=ModalMeaning([
-                    ModalMeaningPoint(force="possibility", flavor="deontic"),
-                    ModalMeaningPoint(force="impossibility", flavor="deontic")
-                    ],
-                    meaning_space=experiment.universe,
-                    ),
-                lot_expression="(deontic )",
-            )
-        ],
-        name="wataru_language_2",
-    )
-    langs = langs + [lang1, lang2]
+    # # wataru sanity check
+    # from modals.modal_language import ModalExpression, ModalLanguage, ModalMeaning, ModalMeaningPoint
+    # lang1 = ModalLanguage(
+    #     expressions=[
+    #         ModalExpression(
+    #             form=f"wataru_expression_1", 
+    #             meaning=ModalMeaning([
+    #                 ModalMeaningPoint(force="possibility", flavor="epistemic"),
+    #                 ModalMeaningPoint(force="impossibility", flavor="epistemic")
+    #                 ],
+    #                 meaning_space=experiment.universe,
+    #                 ),
+    #             lot_expression="(epistemic )",
+    #         )
+    #     ],
+    #     name="wataru_language_1",
+    # )
+    # lang2 = ModalLanguage(
+    #     expressions=[
+    #         ModalExpression(
+    #             form=f"wataru_expression_2", 
+    #             meaning=ModalMeaning([
+    #                 ModalMeaningPoint(force="possibility", flavor="deontic"),
+    #                 ModalMeaningPoint(force="impossibility", flavor="deontic")
+    #                 ],
+    #                 meaning_space=experiment.universe,
+    #                 ),
+    #             lot_expression="(deontic )",
+    #         )
+    #     ],
+    #     name="wataru_language_2",
+    # )
+    # langs = langs + [lang1, lang2]
 
     print(f"{len(langs)} total langs.")
 

@@ -18,6 +18,7 @@ experiment:
       explore: 0
     total_pool_cap: 5000
   universe: dev
+  lot_estimation: altk
   overwrite_expressions: false
   overwrite_languages: false
 typology:
@@ -30,7 +31,7 @@ typology:
 plot:
   lexeme_property: iff
   lexicon_property: dlsav
-  counts: false
+  counts: true
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv

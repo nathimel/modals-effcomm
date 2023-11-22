@@ -5,6 +5,7 @@ Every possible modal meaning that can be expressed by a language is given exactl
 
 import sys
 import os
+from modals.modal_grammar_enumeration import get_all_expressions
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_language_of_thought import ModalLOT
 from modals.modal_language import ModalExpression
@@ -30,38 +31,42 @@ def main(config: DictConfig):
     if experiment.expressions is not None and not config.experiment.overwrite_expressions:
         print(f"Expressions already generated, skipping.")
         return
+    
+    if config.experiment.lot_estimation == 'altk':
+        modal_expressions = get_all_expressions(experiment.grammar, experiment.universe)
 
-    # Generate lot expressions
-    meanings = experiment.meanings
-    mdl = experiment.mlot.minimum_lot_description
-
-    print("Generating lot expressions...")
-
-    # Measure expressions for complexity
-    with Pool(cpu_count()) as p:
-        lot_expressions = list(
-            tqdm(p.imap(mdl, meanings), total=len(meanings))
-        )
-
-    # Check if negation shouldn't be there
-    # N.B.: this is old stuff just for debugging
-    negation = experiment.lot_negation
-    if not negation:
-        lots = [formula for formula in lot_expressions if "-" in formula]
-        if len(lots) != 0:
-            raise ValueError(
-                f"Negation shouldn't be in lot but found the following formulae with negation: {lots}"
+    elif config.experiment.lot_estimation == 'homebuilt':
+        # Generate lot expressions
+        meanings = experiment.meanings
+        mdl = experiment.mlot.minimum_lot_description
+        print("Generating lot expressions...")
+        # Measure expressions for complexity
+        with Pool(cpu_count()) as p:
+            lot_expressions = list(
+                tqdm(p.imap(mdl, meanings), total=len(meanings))
             )
 
-    # Save
-    modal_expressions = [
-        ModalExpression(
-            form=f"dummy_form_{i}",
-            meaning=meaning,
-            lot_expression=lot_expressions[i],
-        )
-        for i, meaning in enumerate(meanings)
-    ]
+        # Check if negation shouldn't be there
+        # N.B.: this is old stuff just for debugging
+        negation = experiment.lot_negation
+        if not negation:
+            lot_expressions = [formula for formula in lot_expressions if "-" in formula]
+            if len(lot_expressions) != 0:
+                raise ValueError(
+                    f"Negation shouldn't be in lot but found the following formulae with negation: {lot_expressions}"
+                )
+
+        # Save
+        modal_expressions = [
+            ModalExpression(
+                form=f"dummy_form_{i}",
+                meaning=meaning,
+                lot_expression=lot_expressions[i],
+            )
+            for i, meaning in enumerate(meanings)
+        ]
+    else:
+        raise ValueError(f"Incorrect config for lot_estimation; possible values are 'altk' or 'homebuilt'.")
 
     experiment.expressions = modal_expressions
     experiment.write_files(["expressions"])

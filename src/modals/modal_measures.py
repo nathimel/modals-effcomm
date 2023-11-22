@@ -4,6 +4,8 @@ from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_language_of_thought import ExpressionTree, ModalLOT
 from modals.modal_meaning import ModalMeaningPoint
 
+from altk.language.grammar import Grammar
+
 ##############################################################################
 # Complexity measure for modals
 ##############################################################################
@@ -12,9 +14,17 @@ from modals.modal_meaning import ModalMeaningPoint
 """
 
 
-def language_complexity(language: ModalLanguage, mlot: ModalLOT) -> float:
-    """Sum of the language's item complexities."""
-    return sum([item_complexity(e, mlot) for e in language.expressions])
+# def language_complexity(language: ModalLanguage, mlot: ModalLOT) -> float:
+#     """Sum of the language's item complexities."""
+#     return sum([item_complexity(e, mlot) for e in language.expressions])
+
+# TODO: this is so hacky, clean it up
+def language_complexity(language: ModalLanguage, mlot: ModalLOT, grammar: Grammar, config) -> float:
+    """Sum of all the language's item's (prerecorded) complexitites."""
+    if config.experiment.lot_estimation == 'altk':
+        return sum([len(grammar.parse(e.lot_expression)) for e in language.expressions])
+    elif config.experiment.lot_estimation == 'homebuilt':
+        return sum([item_complexity(e, mlot) for e in language.expressions])
 
 
 def item_complexity(item: ModalExpression, mlot: ModalLOT) -> int:

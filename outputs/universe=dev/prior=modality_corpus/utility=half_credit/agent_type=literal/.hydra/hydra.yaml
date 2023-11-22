@@ -105,11 +105,12 @@ hydra:
   overrides:
     hydra:
     - hydra.mode=RUN
-    task: []
+    task:
+    - plot.lexicon_property=dlsav
   job:
-    name: setup
+    name: analyze
     chdir: true
-    override_dirname: ''
+    override_dirname: plot.lexicon_property=dlsav
     id: ???
     num: ???
     config_name: config
@@ -150,7 +151,7 @@ hydra:
       provider: schema
     output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=dev/prior=modality_corpus/utility=half_credit/agent_type=literal
     choices:
-      plot: aes
+      plot: custom
       typology: can_express
       experiment: dev
       experiment/sampling: small

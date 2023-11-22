@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 from altk.effcomm.informativity import informativity
+from altk.language.grammar import Grammar, Rule
 
 from typing import Any
 from misc.file_util import get_original_fp, load_expressions, load_languages, save_expressions, save_languages, get_subdir_fn_abbrev
@@ -88,15 +89,40 @@ class Experiment:
         # Initialize experiment parameters
         ######################################################################
 
+        modal_grammar = Grammar(bool)
+        # basic propositional logic
+        modal_grammar.add_rule(Rule("and", bool, (bool, bool), lambda p1, p2: p1 and p2))
+        modal_grammar.add_rule(Rule("or", bool, (bool, bool), lambda p1, p2: p1 or p2))
+        modal_grammar.add_rule(Rule("not", bool, (bool,), lambda p1: not p1))
+        # primitive features for forces
+
+        # TODO: why did looping over `forces` and `flavors` not work here?
+        # I think this has to do with call-by-name vs call-by-value and lambdas and stuff...
+        modal_grammar.add_rule(
+            Rule("strong", bool, None, lambda point: point.force == "strong")
+        )
+        modal_grammar.add_rule(Rule("weak", bool, None, lambda point: point.force == "weak"))
+        # primitive features for flavors
+        modal_grammar.add_rule(
+            Rule("epistemic", bool, None, lambda point: point.flavor == "epistemic")
+        )
+        modal_grammar.add_rule(
+            Rule("deontic", bool, None, lambda point: point.flavor == "deontic")
+        )
+        modal_grammar.add_rule(
+            Rule("circumstantial", bool, None, lambda point: point.flavor == "circumstantial")
+        )
+
         self.config = config
         self.universe = universe
         self.prior = universe._prior
         self.lot_negation = config.experiment.effcomm.comp.lot_negation
         self.mlot = ModalLOT(self.universe, self.lot_negation)
         self.meanings = [x for x in self.universe.generate_meanings()]
+        self.grammar = modal_grammar
 
         # Measures of Complexity and Informativeness
-        self.complexity_measure = lambda lang: language_complexity(lang, self.mlot)
+        self.complexity_measure = lambda lang: language_complexity(lang, self.mlot, self.grammar, config)
         self.informativity_measure = lambda lang: informativity(
             language=lang,
             prior=prior,
