@@ -1,0 +1,907 @@
+flavors:
+- epistemic
+- circumstantial
+- deontic
+forces:
+- possibility
+- impossibility
+id_start: null
+languages:
+- Dutch:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Dutch
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: kan/kunnen
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: mag/mogen
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: misschien
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: 'waarschijnlijk '
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: zou/zouden ... kunnen
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 5
+- Korean:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Korean
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -to + toy-
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: ci(-to) molun-
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: swu(-to) iss-
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 3
+- Mapudungun:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Mapudungun
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -pelayafuy
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: "m\xFCleyafuy kam"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: pepi-
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: pepi-_-a-
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: pepi-_-afu
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 5
+- Lillooet-Salish:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Lillooet-Salish
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -pelayafuy
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: "m\xFCleyafuy kam"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: pepi-
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: pepi-_-a-
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: pepi-_-afu
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 5
+- Vietnamese:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Vietnamese
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: "th\u1EC3"
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "\u0111\u01B0\u1EE3c1"
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    length: 2
+- Hindi:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Hindi
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: sakte/sakti/sakta hai
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: sakte/sakti/sakta ho
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: shayad
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Japanese:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Japanese
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: e
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: hazu
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: kamoshirenai
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: koto-ga deki
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: koto-ga dekiru
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: temo ii
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    length: 6
+- Thai:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Thai
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: '... dai'
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: Aat (ca)
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: Anuyard
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: Harm
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: Kong ca
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: saamaat
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: saamaat... dai
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    length: 7
+- Hungarian:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Hungarian
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -het-
+      lot: (* (possibility ) (- (circumstantial )))
+      meaning:
+      - possibility+epistemic
+      - possibility+deontic
+    - form: kep-
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: lehet
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: tilos
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: tud-
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    length: 5
+- Mandarin:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Mandarin
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: keneng
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: keyi
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: neng
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: yexu
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 4
+- Telugu:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Telugu
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: V-ccu
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: v-anakuntaa
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: v-gala
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    length: 3
+- Hausa:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Hausa
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: Za ... iya
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "wata\u0199ila"
+      lot: (* (possibility ) (- (circumstantial )))
+      meaning:
+      - possibility+epistemic
+      - possibility+deontic
+    length: 2
+- Turkish:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Turkish
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -abil // -ebil
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "m\xFCmk\xFCn"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 2
+- Russian:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Russian
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: "Nel\u2019zya"
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: "mo\u017Eet"
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "mo\u017Eno"
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: "vozmo\u017Eno"
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 4
+- Tlingit:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Tlingit
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: giwe
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: "gw\xE1l"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: potential mode
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: prohibitive mode
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: "sh\xE1kd\xE9"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 5
+- Tagalog:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Tagalog
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: kaya
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: maka-
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: pwede
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: siguro
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 4
+- Greek:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Greek
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: Isos
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: Mporei
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: Prepei
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Gitksan:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Gitksan
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: Isos
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: Mporei
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: Prepei
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Hebrew:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Hebrew
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: asur
+      lot: (* (impossibility ) (deontic ))
+      meaning:
+      - impossibility+deontic
+    - form: mesugelet
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: oolay
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: yakhol
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: yitakhen
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 5
+- Khmer:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Khmer
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: ac
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: prohai
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 2
+- Logoori:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Logoori
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: ac
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: prohai
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 2
+- Igbo:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Igbo
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: Nwe-rV ike
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: ga-v-ni
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    length: 2
+- Akan:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Akan
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: (be)-tumi
+      lot: (possibility )
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: ebia
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: gyama
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Kiitharaka:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Kiitharaka
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: n'wa + ka
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: 'n''wa +verb '
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "w\xEEgue"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Javanese-Paciran:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Javanese-Paciran
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: n'wa + ka
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: 'n''wa +verb '
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: "w\xEEgue"
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 3
+- Cantonese:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Cantonese
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: '... dou'
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: Dak
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: Hoji
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: Honang
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: Jinggoi
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    - form: bei
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    length: 6
+- Farsi:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Farsi
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: -shav-
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: -tavan-
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: 'balad ast '
+      lot: (* (possibility ) (circumstantial ))
+      meaning:
+      - possibility+circumstantial
+    - form: ejaze dad/dasht
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: emkand ast
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: momken ast
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    - form: shayad
+      lot: (* (possibility ) (epistemic ))
+      meaning:
+      - possibility+epistemic
+    length: 7
+- Basque:
+    data:
+      Language: natural
+      comm_cost: null
+      complexity: null
+      dlsav: null
+      family: artificial
+      iff: null
+      informativity: null
+      name: Basque
+      optimality: null
+      sav: null
+      simplicity: null
+    expressions:
+    - form: ahal
+      lot: (* (possibility ) (deontic ))
+      meaning:
+      - possibility+deontic
+    - form: daiteke
+      lot: (* (possibility ) (- (epistemic )))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: ezin
+      lot: (impossibility )
+      meaning:
+      - impossibility+epistemic
+      - impossibility+deontic
+      - impossibility+circumstantial
+    - form: liteke
+      lot: (* (possibility ) (- (deontic )))
+      meaning:
+      - possibility+epistemic
+      - possibility+circumstantial
+    length: 4

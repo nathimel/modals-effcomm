@@ -4,7 +4,9 @@ python src/setup.py "$@"
 
 python src/generate_expressions.py "$@"
 
-python src/sample_languages.py "$@"
+# python src/sample_languages.py "$@"
+
+python src/add_natural_languages.py "$@"
 
 python src/explore_languages.py "$@"
 

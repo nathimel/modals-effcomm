@@ -107,15 +107,14 @@ hydra:
     - hydra.mode=MULTIRUN
     task:
     - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.utility=importance
     - experiment.effcomm.inf.prior=semi_estimated
-    - plot.lexicon_property=circ_priority
+    - experiment.effcomm.inf.utility=importance
   job:
-    name: analyze
+    name: add_dp_natural_languages
     chdir: true
-    override_dirname: plot.lexicon_property=circ_priority
-    id: '3'
-    num: 3
+    override_dirname: ''
+    id: '0'
+    num: 0
     config_name: config
     env_set: {}
     env_copy: []
@@ -155,7 +154,7 @@ hydra:
     output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/multirun/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal
     choices:
       plot: custom
-      typology: can_express
+      typology: dev
       experiment: dev
       experiment/sampling: small
       experiment/effcomm: half_credit_literal

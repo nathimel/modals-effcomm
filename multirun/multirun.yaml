@@ -107,13 +107,12 @@ hydra:
     - hydra.mode=MULTIRUN
     task:
     - experiment.universe=experiment_prohibition
+    - experiment.effcomm.inf.prior=semi_estimated
     - experiment.effcomm.inf.utility=importance
-    - experiment.effcomm.inf.prior=-8
-    - experiment.overwrite_languages=True
   job:
-    name: measure_tradeoff
+    name: add_dp_natural_languages
     chdir: true
-    override_dirname: experiment.overwrite_languages=True
+    override_dirname: ''
     id: ???
     num: ???
     config_name: config
@@ -155,7 +154,7 @@ hydra:
     output_dir: ???
     choices:
       plot: custom
-      typology: can_express
+      typology: dev
       experiment: dev
       experiment/sampling: small
       experiment/effcomm: half_credit_literal
@@ -174,7 +173,7 @@ experiment:
     comp:
       lot_negation: true
     'inf':
-      prior: -8
+      prior: semi_estimated
       utility: importance
       agent_type: literal
   sampling:
@@ -189,8 +188,9 @@ experiment:
       explore: 0
     total_pool_cap: 5000
   universe: experiment_prohibition
+  lot_estimation: homebuilt
   overwrite_expressions: false
-  overwrite_languages: true
+  overwrite_languages: false
 typology:
   can_express:
     true:
@@ -198,6 +198,8 @@ typology:
     false:
     - '?'
     - 0
+  polarity: null
+  syn_neg: na
 plot:
   lexeme_property: iff
   lexicon_property: deontic_priority

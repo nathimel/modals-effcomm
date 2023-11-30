@@ -33,6 +33,7 @@ def main(config: DictConfig):
         return
     
     if config.experiment.lot_estimation == 'altk':
+        # TODO: perform systematic comparison of complexities of expressions under both measures
         modal_expressions = get_all_expressions(experiment.grammar, experiment.universe)
 
     elif config.experiment.lot_estimation == 'homebuilt':

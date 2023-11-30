@@ -1,0 +1,14 @@
+# How to interpret the modal database can_express values as booleans
+can_express:
+  True:
+    - 1
+  False:
+    - "?" # the '?' must be enclosed in quotes
+    - 0
+
+# restrict the polarity of modals to extract from database
+polarity: null # null by default, includes both 'positive', 'negative'
+
+# restrict by syntactic negation
+syn_neg: na # 'na' by default, otherwise, 'no', 'low', 'high'
+

@@ -105,12 +105,11 @@ hydra:
   overrides:
     hydra:
     - hydra.mode=RUN
-    task:
-    - plot.lexicon_property=dlsav
+    task: []
   job:
-    name: analyze
+    name: measure_tradeoff
     chdir: true
-    override_dirname: plot.lexicon_property=dlsav
+    override_dirname: ''
     id: ???
     num: ???
     config_name: config
@@ -152,7 +151,7 @@ hydra:
     output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=dev/prior=modality_corpus/utility=half_credit/agent_type=literal
     choices:
       plot: custom
-      typology: can_express
+      typology: dev
       experiment: dev
       experiment/sampling: small
       experiment/effcomm: half_credit_literal
