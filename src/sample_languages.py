@@ -3,7 +3,7 @@
 import os
 import hydra
 
-from altk.language.sampling import generate_languages
+from ultk.language.sampling import generate_languages
 from modals import modal_language
 from modals.modal_language import ModalLanguage
 from experiment import Experiment

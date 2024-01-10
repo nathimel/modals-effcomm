@@ -2,7 +2,7 @@
 
 import hydra
 import random
-from altk.effcomm.optimization import EvolutionaryOptimizer
+from ultk.effcomm.optimization import EvolutionaryOptimizer
 from experiment import Experiment
 from misc.file_util import set_seed
 from modals.modal_language import ModalLanguage
@@ -42,10 +42,10 @@ def main(config: DictConfig):
 
     experiment.load_files(["expressions", "artificial_languages", "natural_languages"])
 
-    expressions = experiment.expressions    
+    expressions = experiment.expressions
     result = experiment.artificial_languages
-    sampled_languages = result["languages"]
-    id_start = result["id_start"]
+    # sampled_languages = result["languages"]
+    # id_start = result["id_start"]
 
     print("Sampling seed generation...")
     result = generate_languages(
@@ -53,7 +53,7 @@ def main(config: DictConfig):
         expressions=expressions,
         lang_size=lang_size,
         sample_size=sample_size,
-        id_start=id_start,
+        # id_start=id_start if id_start is not None else 0,
     )
     seed_population = result["languages"]
     id_start = result["id_start"]
@@ -108,6 +108,8 @@ def main(config: DictConfig):
         optimizer.objectives = [objectives[x], objectives[y]]
         print(f"Minimizing for {x}, {y} ...")
 
+        # breakpoint()
+
         # run algorithm
         result = optimizer.fit(
             seed_population=seed_population,
@@ -125,7 +127,7 @@ def main(config: DictConfig):
 
     print(f"Discovered {len(pool)} languages.")
     print(f"Filtering languages...")
-    pool.extend(sampled_languages)
+    # pool.extend(sampled_languages)
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 

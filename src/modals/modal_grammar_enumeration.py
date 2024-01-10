@@ -1,7 +1,7 @@
 import itertools
 
-from altk.language.grammar import Grammar, Rule
-from altk.language.semantics import Referent, Universe
+from ultk.language.grammar import Grammar, Rule
+from ultk.language.semantics import Referent, Universe
 
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
 from modals.modal_language import ModalExpression
@@ -17,10 +17,12 @@ def get_all_expressions(
 
     expressions_by_meaning = modal_grammar.get_unique_expressions(
         depth=depth,
-        max_size=2 ** len(modal_universe),
+        max_size=2 ** len(modal_universe) + 1,
         unique_key=lambda expr: expr.evaluate(modal_universe),
         compare_func=lambda e1, e2: len(e1) < len(e2),
     )
+    # TODO: this is weird, only 8 expressions yielded. Try installing ultk locally (and making name changes) and see if that fixes
+    # breakpoint()
 
     modal_expressions = [
         ModalExpression(

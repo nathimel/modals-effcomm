@@ -2,7 +2,7 @@
 
 import random
 
-from altk.effcomm.optimization import Mutation
+from ultk.effcomm.optimization import Mutation
 from modals.modal_language import ModalExpression, ModalLanguage
 from modals.modal_meaning import ModalMeaning
 

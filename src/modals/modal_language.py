@@ -4,7 +4,7 @@ from collections import Counter
 from copy import deepcopy
 from itertools import product
 
-from altk.language.language import Expression, Language
+from ultk.language.language import Expression, Language
 from modals.modal_meaning import ModalMeaning, ModalMeaningSpace
 from modals.modal_meaning import ModalMeaningPoint
 

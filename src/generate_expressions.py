@@ -32,7 +32,8 @@ def main(config: DictConfig):
         print(f"Expressions already generated, skipping.")
         return
     
-    if config.experiment.lot_estimation == 'altk':
+    if config.experiment.lot_estimation == 'ultk':
+        print("Evaluating lot expressions via ultk grammar...")
         # TODO: perform systematic comparison of complexities of expressions under both measures
         modal_expressions = get_all_expressions(experiment.grammar, experiment.universe)
 
@@ -40,7 +41,7 @@ def main(config: DictConfig):
         # Generate lot expressions
         meanings = experiment.meanings
         mdl = experiment.mlot.minimum_lot_description
-        print("Generating lot expressions...")
+        print("Evaluating lot expressions via homebuilt heuristic...")
         # Measure expressions for complexity
         with Pool(cpu_count()) as p:
             lot_expressions = list(

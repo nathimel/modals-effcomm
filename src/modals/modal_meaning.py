@@ -2,7 +2,7 @@ from itertools import product
 from typing import Iterable, Callable
 import numpy as np
 import pandas as pd
-from altk.language.semantics import Universe, Meaning, Referent
+from ultk.language.semantics import Universe, Meaning, Referent
 
 
 class ModalMeaningPoint(Referent):

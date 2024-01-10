@@ -3,8 +3,8 @@ import os
 import numpy as np
 import pandas as pd
 
-from altk.effcomm.informativity import informativity
-from altk.language.grammar import Grammar, Rule
+from ultk.effcomm.informativity import informativity
+from ultk.language.grammar import Grammar, Rule
 
 from typing import Any
 from misc.file_util import get_original_fp, load_expressions, load_languages, save_expressions, save_languages, get_subdir_fn_abbrev
@@ -97,12 +97,15 @@ class Experiment:
         # primitive features for forces
 
         # TODO: why did looping over `forces` and `flavors` not work here?
-        # I think this has to do with call-by-name vs call-by-value and lambdas and stuff...
+        # Shane thinks this has to do with call-by-name vs call-by-value w lambdas
+
         modal_grammar.add_rule(
-            Rule("strong", bool, None, lambda point: point.force == "strong")
-        )
-        modal_grammar.add_rule(Rule("weak", bool, None, lambda point: point.force == "weak"))
-        # primitive features for flavors
+            Rule("possibility", bool, None, lambda point: point.force == "possibility")
+        )        
+        modal_grammar.add_rule(
+            Rule("impossibility", bool, None, lambda point: point.force == "impossibility")
+        )                
+
         modal_grammar.add_rule(
             Rule("epistemic", bool, None, lambda point: point.flavor == "epistemic")
         )

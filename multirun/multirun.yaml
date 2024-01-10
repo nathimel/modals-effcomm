@@ -109,10 +109,13 @@ hydra:
     - experiment.universe=experiment_prohibition
     - experiment.effcomm.inf.prior=semi_estimated
     - experiment.effcomm.inf.utility=importance
+    - experiment.overwrite_expressions=True
+    - experiment.overwrite_languages=True
+    - plot.counts=False
   job:
-    name: add_dp_natural_languages
+    name: analyze
     chdir: true
-    override_dirname: ''
+    override_dirname: experiment.overwrite_expressions=True,experiment.overwrite_languages=True,plot.counts=False
     id: ???
     num: ???
     config_name: config
@@ -187,10 +190,12 @@ experiment:
       max_mutations: 5
       explore: 0
     total_pool_cap: 5000
+    shuffling:
+      num_variants_per_language: 10
   universe: experiment_prohibition
-  lot_estimation: homebuilt
-  overwrite_expressions: false
-  overwrite_languages: false
+  lot_estimation: ultk
+  overwrite_expressions: true
+  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -202,8 +207,8 @@ typology:
   syn_neg: na
 plot:
   lexeme_property: iff
-  lexicon_property: deontic_priority
-  counts: true
+  lexicon_property: dp_restricted
+  counts: false
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv

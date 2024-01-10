@@ -110,7 +110,7 @@ def main(config: DictConfig):
             # initialize an expression's set of meanings
             if modal not in vocabulary:
                 vocabulary[modal] = set()
-
+            
             # Add only the flavors specified as possible for the experiment
             if (
                 row["flavor"] in universe.flavors
@@ -139,6 +139,8 @@ def main(config: DictConfig):
                 ],
                 meaning_space=universe,
             )
+            if not meaning.referents: # often there will be no usable referents due to can_express being False, above
+                continue
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
                 if expression.meaning == meaning:

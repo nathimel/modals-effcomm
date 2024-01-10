@@ -3,8 +3,8 @@
 import hydra
 import pandas as pd
 
-from altk.effcomm.analysis import get_dataframe
-from altk.effcomm.tradeoff import tradeoff
+from ultk.effcomm.analysis import get_dataframe
+from ultk.effcomm.tradeoff import tradeoff
 
 from experiment import Experiment
 from misc.file_util import set_seed, get_subdir_fn
@@ -28,51 +28,17 @@ def main(config: DictConfig):
     # load languages
     print("sampled...")
     experiment.load_files(["artificial_languages"])    
-    # print("dominant...") # these aren't that important
-    # experiment.load_files(["dominant_languages"])
+    print("dominant...")
+    experiment.load_files(["dominant_languages"])
     print("natural...")
     experiment.load_files(["natural_languages"])
 
     id_start = experiment.artificial_languages["id_start"]
     sampled_languages = experiment.artificial_languages["languages"]
-    # dominant_languages = experiment.dominant_languages["languages"]
+    dominant_languages = experiment.dominant_languages["languages"]
     natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
 
-    langs = list(set(sampled_languages + natural_languages))
-
-    # # wataru sanity check
-    # from modals.modal_language import ModalExpression, ModalLanguage, ModalMeaning, ModalMeaningPoint
-    # lang1 = ModalLanguage(
-    #     expressions=[
-    #         ModalExpression(
-    #             form=f"wataru_expression_1", 
-    #             meaning=ModalMeaning([
-    #                 ModalMeaningPoint(force="possibility", flavor="epistemic"),
-    #                 ModalMeaningPoint(force="impossibility", flavor="epistemic")
-    #                 ],
-    #                 meaning_space=experiment.universe,
-    #                 ),
-    #             lot_expression="(epistemic )",
-    #         )
-    #     ],
-    #     name="wataru_language_1",
-    # )
-    # lang2 = ModalLanguage(
-    #     expressions=[
-    #         ModalExpression(
-    #             form=f"wataru_expression_2", 
-    #             meaning=ModalMeaning([
-    #                 ModalMeaningPoint(force="possibility", flavor="deontic"),
-    #                 ModalMeaningPoint(force="impossibility", flavor="deontic")
-    #                 ],
-    #                 meaning_space=experiment.universe,
-    #                 ),
-    #             lot_expression="(deontic )",
-    #         )
-    #     ],
-    #     name="wataru_language_2",
-    # )
-    # langs = langs + [lang1, lang2]
+    langs = list(set(sampled_languages + natural_languages + dominant_languages))
 
     print(f"{len(langs)} total langs.")
 

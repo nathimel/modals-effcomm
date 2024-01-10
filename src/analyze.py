@@ -2,8 +2,8 @@ import hydra
 import os
 import pandas as pd
 import plotnine as pn
-from altk.effcomm.tradeoff import interpolate_data
-from altk.effcomm.analysis import (
+from ultk.effcomm.tradeoff import interpolate_data
+from ultk.effcomm.analysis import (
     pearson_analysis,
     trade_off_means,
     trade_off_ttest,
@@ -63,10 +63,6 @@ def get_modals_plot(
     if counts:
         kwargs["size"] = "counts"
 
-    # wataru sanity check
-    df_wataru = data[data["name"].isin(["wataru_language_1", "wataru_language_2"])]
-
-
     plot = (
         # Set data and the axes
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
@@ -77,6 +73,7 @@ def get_modals_plot(
             stroke=0,
             # alpha=.5,
             mapping=pn.aes(**kwargs),
+            size=4,
         )
         # + pn.scale_color_cmap("cividis")
         + pn.scale_color_discrete()
@@ -105,8 +102,9 @@ def get_modals_plot(
         plot = (
             plot
             + pn.geom_point(  # The natural languages
-                natural_data,
-                color="red",
+                data=natural_data,
+                # mapping=pn.aes(**kwargs),
+                # color="red",
                 shape="+",
                 size=4,
             )
