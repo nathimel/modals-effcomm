@@ -23,6 +23,7 @@ def get_all_expressions(
     )
     # TODO: this is weird, only 8 expressions yielded. Try installing ultk locally (and making name changes) and see if that fixes
     # breakpoint()
+    # Now only 7 expressions yielded. Why?
 
     modal_expressions = [
         ModalExpression(

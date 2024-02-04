@@ -89,32 +89,9 @@ class Experiment:
         # Initialize experiment parameters
         ######################################################################
 
-        modal_grammar = Grammar(bool)
-        # basic propositional logic
-        modal_grammar.add_rule(Rule("and", bool, (bool, bool), lambda p1, p2: p1 and p2))
-        modal_grammar.add_rule(Rule("or", bool, (bool, bool), lambda p1, p2: p1 or p2))
-        modal_grammar.add_rule(Rule("not", bool, (bool,), lambda p1: not p1))
-        # primitive features for forces
+        grammar_fn = get_original_fp(config.filepaths.grammar_fn)
+        modal_grammar = Grammar.from_yaml(grammar_fn)
 
-        # TODO: why did looping over `forces` and `flavors` not work here?
-        # Shane thinks this has to do with call-by-name vs call-by-value w lambdas
-
-        modal_grammar.add_rule(
-            Rule("possibility", bool, None, lambda point: point.force == "possibility")
-        )        
-        modal_grammar.add_rule(
-            Rule("impossibility", bool, None, lambda point: point.force == "impossibility")
-        )                
-
-        modal_grammar.add_rule(
-            Rule("epistemic", bool, None, lambda point: point.flavor == "epistemic")
-        )
-        modal_grammar.add_rule(
-            Rule("deontic", bool, None, lambda point: point.flavor == "deontic")
-        )
-        modal_grammar.add_rule(
-            Rule("circumstantial", bool, None, lambda point: point.flavor == "circumstantial")
-        )
 
         self.config = config
         self.universe = universe

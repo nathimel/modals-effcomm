@@ -1,5 +1,6 @@
 """Script to shuffle natural languages' vocabularies."""
 
+import copy
 import os
 import hydra
 import random
@@ -39,6 +40,8 @@ def shuffle_languages_by_expression(
     for language in languages:
         for i in range(num_variants_per_language):
             new_vocab = []
+
+            # Obtain a hypothetical variant of a language
             for expression in language.expressions:
                 new_referents = []
                 for referent in expression.meaning.referents:
@@ -74,6 +77,65 @@ def shuffle_languages_by_expression(
     
     return variants
 
+def perturb_meaning_space(
+    universe: ModalMeaningSpace,
+    languages: list[ModalLanguage],
+    expressions: list[ModalExpression],
+    num_variants_per_language: int = 1, 
+) -> dict[str, Any]:
+    """Rotate a modal meaning space and obtain the resulting hypothetical variants resulting new meaning for each expression, for each language. Since there is no similarity structure within each axis, a 'rotation' of the meaning space amounts to shuffling the space of referents in the meaning space."""
+    referents = universe.referents
+
+    # A 'rotation' of the meaning space
+    mappings = []
+    for i in range(num_variants_per_language):
+        shuffled_referents = copy.deepcopy(referents)
+        random.shuffle(shuffled_referents)
+        mappings.append(
+            # Need to map each current meaning to the new meaning induced by the rotated meaning space
+            {referents[idx]: shuffled_referents[idx] for idx in range(len(referents))}
+        )
+
+    # Iterate over languages and obtain their variants
+    variants = []
+    for language in languages:
+
+        # TODO: you won't get more than one possible variant per language unless you shuffle the referents more than once. So do the shuffling num_variants times, and have a list of dicts, and iterate over it here.
+        for referent_mapping in mappings:
+            new_vocab = []
+
+            # Obtain a hypothetical variant of a language induced by the referent_mapping
+            for expression in language.expressions:
+
+                new_referents = tuple(referent_mapping[referent] for referent in expression.meaning.referents)
+
+                new_meaning = ModalMeaning(points=new_referents, meaning_space=language.universe)
+
+                # search the expressions for correct lot
+                for candidate in expressions:
+                    if candidate.meaning == new_meaning:
+                        lot_expression = candidate.lot_expression
+
+                new_expression = ModalExpression(
+                    form=f"perturbed_{expression.form}_{i}",
+                    meaning=new_meaning,
+                    lot_expression=lot_expression,
+                )
+                new_vocab.append(new_expression)
+
+            variant = ModalLanguage(
+                expressions=new_vocab,
+                name=f"{language.data['name']}_variant_{i}",
+            )
+
+            variants.append(variant)
+
+    variants = list(set(variants)) # weak guard against getting same lang again
+        
+    return variants
+
+
+
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     set_seed(config.seed)
@@ -92,11 +154,18 @@ def main(config: DictConfig):
 
     print("Shuffling natural languages ...")
 
-    languages = shuffle_languages_by_expression(
+    languages = perturb_meaning_space(
+        universe=experiment.universe,
         languages=experiment.natural_languages["languages"],
         expressions=experiment.expressions,
-        num_variants_per_language=config.experiment.sampling.shuffling.num_variants_per_language,
-        )
+        num_variants_per_language=config.experiment.sampling.variants.num_variants_per_language,
+    )
+
+    # languages = shuffle_languages_by_expression(
+    #     languages=experiment.natural_languages["languages"],
+    #     expressions=experiment.expressions,
+    #     num_variants_per_language=config.experiment.sampling.shuffling.num_variants_per_language,
+    #     )
 
     languages = list(set(languages))
     experiment.artificial_languages = {"languages": languages, "id_start": None}

@@ -1,19 +1,4 @@
-# Language measures
-
-# complexity
-comp: 
-  lot_negation: True # whether to include negation in the LoT
-
-# informativeness
-inf:
-  # Prior / communicative need distribution over meaning points
-  prior: modality_corpus
-  # if float (i.e. 1e-8), represents a temperature parameter for an energy-based initialization. int or filename.
-  # if string, specify the name of a file (EXCLUDING file extension) located at data/prior at the root of this repository.
-
-  # Utility function
-  utility: half_credit
-  # typically 'half_credit' or 'indicator', which are functions in the modals.modal_meaning submodule
-  # otherwise, specify the name of a file (EXCLUDING file extension) located at data/utility at the root of this repository.
-
-  agent_type: literal # literal or pragmatic
+defaults:
+  - comp: default
+  - inf: hcl
+  - _self_ # stuff below can override stuff above  

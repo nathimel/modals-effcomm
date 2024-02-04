@@ -1,0 +1,279 @@
+flavors:
+- circumstantial
+- deontic
+- epistemic
+forces:
+- impossibility
+- possibility
+id_start: null
+languages:
+- Thai_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.529440748952944
+      complexity: 22
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.4705592510470559
+      name: Thai_variant_99
+      optimality: 0.9965210325716918
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_... dai_99
+      lot: and(possibility, not(epistemic))
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+    - form: perturbed_Aat (ca)_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_Anuyard_99
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: perturbed_Harm_99
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: perturbed_Kong ca_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_saamaat... dai_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_saamaat_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    length: 7
+- Russian_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6122505543237251
+      complexity: 11
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.38774944567627495
+      name: Russian_variant_99
+      optimality: 0.9999887797448818
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "perturbed_Nel\u2019zya_99"
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: "perturbed_mo\u017Eet_99"
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+      - impossibility+deontic
+    - form: "perturbed_mo\u017Eno_99"
+      lot: and(impossibility, epistemic)
+      meaning:
+      - impossibility+epistemic
+    - form: "perturbed_vozmo\u017Eno_99"
+      lot: and(impossibility, not(epistemic))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 4
+- Basque_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5316118502094112
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.4683881497905889
+      name: Basque_variant_99
+      optimality: 0.9999744830308352
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_ahal_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_daiteke_99
+      lot: and(impossibility, not(deontic))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+epistemic
+    - form: perturbed_ezin_99
+      lot: possibility
+      meaning:
+      - possibility+circumstantial
+      - possibility+epistemic
+      - possibility+deontic
+    - form: perturbed_liteke_99
+      lot: and(impossibility, not(circumstantial))
+      meaning:
+      - impossibility+epistemic
+      - impossibility+deontic
+    length: 4
+- Khmer_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6861603843311159
+      complexity: 4
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.313839615668884
+      name: Khmer_variant_99
+      optimality: 0.9999954810933986
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_ac_99
+      lot: circumstantial
+      meaning:
+      - impossibility+circumstantial
+      - possibility+circumstantial
+    - form: perturbed_prohai_99
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    length: 2
+- Basque_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5316118502094112
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.4683881497905889
+      name: Basque_variant_99
+      optimality: 0.9999744830308352
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_ahal_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_daiteke_99
+      lot: and(impossibility, not(epistemic))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+deontic
+    - form: perturbed_ezin_99
+      lot: possibility
+      meaning:
+      - possibility+circumstantial
+      - possibility+deontic
+      - possibility+epistemic
+    - form: perturbed_liteke_99
+      lot: and(impossibility, not(circumstantial))
+      meaning:
+      - impossibility+deontic
+      - impossibility+epistemic
+    length: 4
+- Korean_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6528085735402809
+      complexity: 7
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.3471914264597191
+      name: Korean_variant_99
+      optimality: 0.9998808202185581
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_-to + toy-_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_ci(-to) molun-_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_swu(-to) iss-_99
+      lot: deontic
+      meaning:
+      - impossibility+deontic
+      - possibility+deontic
+    length: 3
+- Korean_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6430617147080562
+      complexity: 10
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.3569382852919438
+      name: Korean_variant_99
+      optimality: 0.999952851151048
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_-to + toy-_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_ci(-to) molun-_99
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: perturbed_swu(-to) iss-_99
+      lot: and(impossibility, not(epistemic))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 3

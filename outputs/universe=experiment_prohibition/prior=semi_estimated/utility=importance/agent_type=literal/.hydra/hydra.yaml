@@ -106,13 +106,13 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.prior=semi_estimated
-    - experiment.effcomm.inf.utility=importance
+    - experiment=dp
+    - experiment.overwrite_expressions=True
+    - experiment.overwrite_languages=True
   job:
-    name: measure_tradeoff
+    name: analyze
     chdir: true
-    override_dirname: ''
+    override_dirname: experiment.overwrite_expressions=True,experiment.overwrite_languages=True,experiment=dp
     id: ???
     num: ???
     config_name: config
@@ -155,9 +155,9 @@ hydra:
     choices:
       plot: custom
       typology: dev
-      experiment: dev
+      experiment: dp
+      experiment/effcomm/inf: hcl
       experiment/sampling: small
-      experiment/effcomm: half_credit_literal
       hydra/env: default
       hydra/callbacks: null
       hydra/job_logging: custom

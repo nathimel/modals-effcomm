@@ -61,7 +61,8 @@ def get_modals_plot(
     kwargs["color"] = lexicon_property
 
     if counts:
-        kwargs["size"] = "counts"
+        pass
+        # kwargs["size"] = "counts"
 
     plot = (
         # Set data and the axes

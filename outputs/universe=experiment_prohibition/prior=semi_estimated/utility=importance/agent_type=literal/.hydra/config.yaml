@@ -1,11 +1,4 @@
 experiment:
-  effcomm:
-    comp:
-      lot_negation: true
-    'inf':
-      prior: semi_estimated
-      utility: importance
-      agent_type: literal
   sampling:
     maximum_lang_size: 10
     unbiased:
@@ -17,10 +10,20 @@ experiment:
       max_mutations: 5
       explore: 0
     total_pool_cap: 5000
+    variants:
+      num_variants_per_language: 100
+  effcomm:
+    'inf':
+      prior: semi_estimated
+      utility: importance
+      agent_type: literal
+    comp:
+      lot_negation: true
+      grammar: dp_grammar
   universe: experiment_prohibition
-  lot_estimation: altk
-  overwrite_expressions: false
-  overwrite_languages: false
+  lot_estimation: ultk
+  overwrite_expressions: true
+  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -29,16 +32,17 @@ typology:
     - '?'
     - 0
   polarity: null
-  syn_neg: false
+  syn_neg: na
 plot:
   lexeme_property: iff
-  lexicon_property: deontic_priority
+  lexicon_property: dp_restricted
   counts: true
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
   prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
   utility_fn: data/utility/${experiment.effcomm.inf.utility}.csv
+  grammar_fn: data/grammar/${experiment.effcomm.comp.grammar}.yaml
   typological_data: data/natural_languages
   modality_corpus:
     0:

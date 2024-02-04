@@ -134,9 +134,9 @@ def main(config: DictConfig):
         for modal in vocabulary:
             form = modal
             meaning = ModalMeaning(
-                points=[
+                points=tuple(
                     ModalMeaningPoint.from_yaml_rep(name) for name in vocabulary[modal]
-                ],
+                ),
                 meaning_space=universe,
             )
             if not meaning.referents: # often there will be no usable referents due to can_express being False, above

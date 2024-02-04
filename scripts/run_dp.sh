@@ -12,7 +12,7 @@ python src/explore_languages.py "$@"
 
 # crucially this comes after explore, since we hackily overwrite
 # the results of artificial.yml but not dominant.yml
-python src/shuffle_languages.py "$@"
+python src/perturb_languages.py "$@"
 
 python src/measure_tradeoff.py "$@"
 

@@ -61,7 +61,7 @@ class ModalExpression(Expression):
             - rep: a dictionary of the form {'form': str, 'meaning': list[str], 'lot': str}
         """
         form = rep["form"]
-        points = [ModalMeaningPoint.from_yaml_rep(name=name) for name in rep["meaning"]]
+        points = tuple(ModalMeaningPoint.from_yaml_rep(name=name) for name in rep["meaning"])
         # points = [ModalMeaningPoint(name=name) for name in rep["meaning"]]
         lot = rep["lot"]
 

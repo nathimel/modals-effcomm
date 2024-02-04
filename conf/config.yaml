@@ -21,10 +21,12 @@ filepaths:
   ############################################################################
   # universe; see experiment.universe
   universe_fn: data/universe/${experiment.universe}.csv
-  # prior; see experiment.prior
+  # prior; see experiment.effcomm.inf.prior
   prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
-  # utiltiy; see experiment.utility
+  # utility; see experiment.effcomm.inf.utility
   utility_fn: data/utility/${experiment.effcomm.inf.utility}.csv
+  # grammar; see experiment.effcomm.comp.grammar
+  grammar_fn: data/grammar/${experiment.effcomm.comp.grammar}.yaml
 
   # Typological data
   typological_data: data/natural_languages

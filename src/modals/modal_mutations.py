@@ -72,6 +72,7 @@ class Add_Point(Add_Modal):
                 new_expression = e
 
         if new_expression is None:
+            breakpoint()
             raise ValueError("new meaning not found in set of possible meanings")
 
         # Add it

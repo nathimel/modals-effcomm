@@ -140,7 +140,7 @@ class ModalMeaningSpace(Universe):
             for i in product([0, 1], repeat=len(self.referents))
         ]
         arrs = arrs[1:]  # remove the empty array meaning to prevent div by 0
-        meanings = [ModalMeaning(self.array_to_points(arr), self) for arr in arrs]
+        meanings = [ModalMeaning(tuple(self.array_to_points(arr)), self) for arr in arrs]
         return meanings
 
     def array_to_points(self, a: np.ndarray) -> set:
@@ -203,9 +203,7 @@ class ModalMeaningSpace(Universe):
 
         return p
 
-    def __str__(self):
-        return str(self.arr)
-
+    # TODO: maybe use the dataclass
     def __hash__(self) -> int:
         return hash((tuple(self.forces), tuple(self.flavors)))
 
@@ -277,9 +275,6 @@ class ModalMeaning(Meaning):
             index=self.universe.forces,
             columns=self.universe.flavors,
         )
-
-    def __str__(self) -> str:
-        return str(self.referents)
 
     def __hash__(self) -> int:
         return hash(tuple(sorted([point.data for point in self.referents])))

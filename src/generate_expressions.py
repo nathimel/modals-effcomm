@@ -35,7 +35,7 @@ def main(config: DictConfig):
     if config.experiment.lot_estimation == 'ultk':
         print("Evaluating lot expressions via ultk grammar...")
         # TODO: perform systematic comparison of complexities of expressions under both measures
-        modal_expressions = get_all_expressions(experiment.grammar, experiment.universe)
+        modal_expressions = get_all_expressions(experiment.grammar, experiment.universe,)
 
     elif config.experiment.lot_estimation == 'homebuilt':
         # Generate lot expressions
