@@ -154,9 +154,16 @@ def main(config: DictConfig):
         # lang.data["family"] = family
         experiment_languages.append(lang)
 
+
+    # Finally restrict to languages that express deontic impossibility at all
+    DP = ModalMeaningPoint(force="impossibility", flavor="deontic",)
+    experiment_languages = [
+        lang for lang in experiment_languages if any(exp.can_express(DP) for exp in lang.expressions)
+    ]
+
     # save for analysis
     experiment.natural_languages = {"languages": experiment_languages, "id_start": None}
-    experiment.write_files(["natural_languages"], kinds=["natural"])
+    experiment.write_files(["natural_languages"])
 
 
 if __name__ == "__main__":

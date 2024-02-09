@@ -28,7 +28,7 @@ def main(config: DictConfig):
 
     experiment = Experiment(config, load_files=["expressions"])
 
-    if experiment.expressions is not None and not config.experiment.overwrite_expressions:
+    if experiment.expressions is not None and not config.experiment.overwrites.expressions:
         print(f"Expressions already generated, skipping.")
         return
     

@@ -1,6 +1,7 @@
 defaults:
   - sampling: small
   - effcomm/inf: hcl
+  - overwrites: default
   - _self_ # stuff below can override stuff above  
 
 # Modal universe/meaning space
@@ -9,9 +10,6 @@ universe: experiment_prohibition
 
 # Complexity measures
 lot_estimation: 'ultk' # 'ultk' or 'homebuilt'
-
-overwrite_expressions: False
-overwrite_languages: False
 
 effcomm:
   # complexity

@@ -71,7 +71,7 @@ filepaths:
     ttest_natural: ttest_natural.csv
     ttest_dlsav: ttest_dlsav.csv  
     ttest_dp: ttest_deontic_priority.csv    # deontic priority
-  
+
   ############################################################################
   # Hydra automatic folder naming
   ############################################################################
@@ -90,7 +90,7 @@ filepaths:
   # where the current working directory will be when hydra is running
   leaf_subdir: ${filepaths.measure_subdir}
 
-  languages_subdir: ${filepaths.generate_subdir}/languages
+  languages_subdir: ${filepaths.measure_subdir}/languages
   analysis_subdir: ${filepaths.measure_subdir}/analysis
 
   # hydra run root directory

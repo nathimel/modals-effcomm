@@ -1,14 +1,20 @@
 experiment:
   sampling:
-    maximum_lang_size: 10
-    unbiased:
-      sample_size: 2000
-      lexeme_property: iff
     evol:
       generation_size: 200
       num_generations: 20
       max_mutations: 5
       explore: 0
+      directions:
+      - lower_left
+      seed_generation_pool:
+      - random
+      - existing
+      - natural
+    maximum_lang_size: 10
+    unbiased:
+      sample_size: 2000
+      lexeme_property: iff
     total_pool_cap: 5000
     variants:
       num_variants_per_language: 100
@@ -20,10 +26,14 @@ experiment:
     comp:
       lot_negation: true
       grammar: dp_grammar
+  overwrites:
+    expressions: false
+    languages:
+      natural: false
+      artificial: false
+      dominant: false
   universe: experiment_prohibition
   lot_estimation: ultk
-  overwrite_expressions: true
-  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -78,7 +88,7 @@ filepaths:
   generate_subdir: universe=${experiment.universe}
   measure_subdir: ${filepaths.generate_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
   leaf_subdir: ${filepaths.measure_subdir}
-  languages_subdir: ${filepaths.generate_subdir}/languages
+  languages_subdir: ${filepaths.measure_subdir}/languages
   analysis_subdir: ${filepaths.measure_subdir}/analysis
   hydra_run_root: outputs
   hydra_sweep_root: multirun

@@ -58,7 +58,9 @@ def get_modals_plot(
 
     kwargs["shape"] = lexicon_property
     # kwargs["size"] = lexicon_property
-    kwargs["color"] = lexicon_property
+    # kwargs["color"] = lexicon_property
+
+    kwargs["color"] = "original_name" # for seeing variant
 
     if counts:
         pass
@@ -79,6 +81,14 @@ def get_modals_plot(
         # + pn.scale_color_cmap("cividis")
         + pn.scale_color_discrete()
         + pn.theme_classic()
+    )
+
+    plot = plot + (
+        pn.geom_point(
+            data=data[data["natural"] == True],
+            mapping=pn.aes(**kwargs),
+            size=8,            
+        )
     )
 
     if axis_titles:
@@ -105,15 +115,16 @@ def get_modals_plot(
             + pn.geom_point(  # The natural languages
                 data=natural_data,
                 # mapping=pn.aes(**kwargs),
+                # mapping=pn.aes(color=kwargs["color"]),
                 # color="red",
                 shape="+",
-                size=4,
+                size=8,
             )
             + pn.geom_text(
                 natural_data,
                 pn.aes(label="name"),
                 ha="left",
-                size=6,  # orig 9
+                size=9,  # orig 9
                 nudge_x=1,
             )
         )

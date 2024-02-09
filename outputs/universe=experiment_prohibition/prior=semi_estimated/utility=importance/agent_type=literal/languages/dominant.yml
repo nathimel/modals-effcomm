@@ -1,0 +1,181 @@
+flavors:
+- epistemic
+- circumstantial
+- deontic
+forces:
+- impossibility
+- possibility
+id_start: null
+languages:
+- Thai_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.529440748952944
+      complexity: 22
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.470559251047056
+      name: Thai_variant_99
+      optimality: 0.9941866997358142
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_... dai_99
+      lot: and(possibility, not(epistemic))
+      meaning:
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: perturbed_Aat (ca)_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_Anuyard_99
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: perturbed_Harm_99
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: perturbed_Kong ca_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_saamaat... dai_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_saamaat_99
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    length: 7
+- Basque_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5316118502094112
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.4683881497905888
+      name: Basque_variant_99
+      optimality: 0.9999829222080244
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_ahal_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_daiteke_99
+      lot: and(impossibility, not(epistemic))
+      meaning:
+      - impossibility+deontic
+      - impossibility+circumstantial
+    - form: perturbed_ezin_99
+      lot: possibility
+      meaning:
+      - possibility+epistemic
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: perturbed_liteke_99
+      lot: and(impossibility, not(circumstantial))
+      meaning:
+      - impossibility+deontic
+      - impossibility+epistemic
+    length: 4
+- Russian_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6122505543237251
+      complexity: 11
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.38774944567627495
+      name: Russian_variant_99
+      optimality: 0.978222281089998
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "perturbed_Nel\u2019zya_99"
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: "perturbed_mo\u017Eet_99"
+      lot: impossibility
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+deontic
+      - impossibility+epistemic
+    - form: "perturbed_mo\u017Eno_99"
+      lot: and(impossibility, epistemic)
+      meaning:
+      - impossibility+epistemic
+    - form: "perturbed_vozmo\u017Eno_99"
+      lot: and(impossibility, not(epistemic))
+      meaning:
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 4
+- Basque_variant_99:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5316118502094112
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.4683881497905888
+      name: Basque_variant_99
+      optimality: 0.9999829222080244
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: perturbed_ahal_99
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: perturbed_daiteke_99
+      lot: and(impossibility, not(deontic))
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+    - form: perturbed_ezin_99
+      lot: possibility
+      meaning:
+      - possibility+deontic
+      - possibility+epistemic
+      - possibility+circumstantial
+    - form: perturbed_liteke_99
+      lot: and(impossibility, not(circumstantial))
+      meaning:
+      - impossibility+epistemic
+      - impossibility+deontic
+    length: 4

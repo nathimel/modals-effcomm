@@ -1,6 +1,7 @@
 """Script for analyzing the results of the trade-off."""
 
 import hydra
+import re
 import pandas as pd
 
 from ultk.effcomm.analysis import get_dataframe
@@ -79,11 +80,9 @@ def main(config: DictConfig):
     experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
     experiment.natural_languages = {"languages": nat_langs, "id_start": None}
     save_files = ["artificial_languages", "dominant_languages"]
-    kinds = ["explored", "dominant"]
     if nat_langs:
         save_files += ["natural_languages"]
-        kinds += ["natural"]
-    experiment.write_files(save_files, kinds=kinds)
+    experiment.write_files(save_files)
     print("saved languages.")
 
     # TODO: store the language.data fields in a common spot for repeat access in a uniform way
@@ -95,6 +94,11 @@ def main(config: DictConfig):
     all_data["natural"] = [lang.natural for lang in langs]
     all_data["dominant"] = [lang in dom_langs for lang in langs]
     all_data["name"] = [lang.data["name"] for lang in langs]
+
+    # For each of the perturbed variants, record the name of the original natural language
+    get_orig = lambda name: re.sub( r"_variant_\d+", "", name )
+    all_data["original_name"] = [get_orig(lang.data["name"]) for lang in langs]
+
     all_data.to_csv(df_fn, index=False)
     print("saved df.")
 

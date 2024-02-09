@@ -95,7 +95,7 @@ class Experiment:
 
         self.config = config
         self.universe = universe
-        self.prior = universe._prior
+        self.prior = universe.prior
         self.lot_negation = config.experiment.effcomm.comp.lot_negation
         self.mlot = ModalLOT(self.universe, self.lot_negation)
         self.meanings = [x for x in self.universe.generate_meanings()]
@@ -165,7 +165,7 @@ class Experiment:
                 print(f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None.")
             setattr(self, key, result)
 
-    def write_files(self, files: list[str], kinds = []) -> None:
+    def write_files(self, files: list[str]) -> None:
         """Write the language data contained in the Experiment to the corresponding files."""
 
         self.ensure_paths(files)
@@ -182,14 +182,15 @@ class Experiment:
 
             if key == "expressions":
                 saver = save_expressions
-                overwrite = self.config.experiment.overwrite_expressions
+                overwrite = self.config.experiment.overwrites.expressions
                 save_args = [fullpath, data]
                 save_kwargs = dict()
             else:
                 saver = save_languages
-                overwrite = self.config.experiment.overwrite_languages
+                kind = key.replace("_languages", "")
+                overwrite = getattr(self.config.experiment.overwrites.languages, kind)
                 save_args = [fullpath] + list(data.values()) # langs, id_start
-                save_kwargs = {"kind":kinds[i]}
+                save_kwargs = dict(kind=kind)
             
             if not self.path_exists(key) or overwrite:
                 saver(*save_args, **save_kwargs)

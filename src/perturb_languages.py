@@ -91,6 +91,7 @@ def perturb_meaning_space(
     for i in range(num_variants_per_language):
         shuffled_referents = copy.deepcopy(referents)
         random.shuffle(shuffled_referents)
+        # TODO: preclude the identity mapping
         mappings.append(
             # Need to map each current meaning to the new meaning induced by the rotated meaning space
             {referents[idx]: shuffled_referents[idx] for idx in range(len(referents))}
@@ -145,7 +146,7 @@ def main(config: DictConfig):
     )
     lang_fn = "artificial_languages"
     experiment.set_filepaths([lang_fn])
-    if not config.experiment.overwrite_languages and experiment.path_exists(lang_fn):
+    if not config.experiment.overwrites.languages.artificial and experiment.path_exists(lang_fn):
         print("Language file found and will not be overwritten; skipping sampling of languages.")
         return
 
@@ -169,7 +170,7 @@ def main(config: DictConfig):
 
     languages = list(set(languages))
     experiment.artificial_languages = {"languages": languages, "id_start": None}
-    experiment.write_files([lang_fn], kinds=["shuffled"])
+    experiment.write_files([lang_fn])
 
 if __name__ == "__main__":
     main()

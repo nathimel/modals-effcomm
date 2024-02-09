@@ -1,4 +1,7 @@
 # Parameters for generating languages via unbiased sampling and evolutionary algorithm
+defaults:
+  - evol: default
+  - _self_ # stuff below can override stuff above  
 
 # Maximum number of expressions per language permitted in both sampling procedures
 maximum_lang_size: 10
@@ -12,6 +15,9 @@ evol:
   num_generations: 20
   max_mutations: 5
   explore: 0 # what fraction [0,1] to include of dominated population to seed next generation
+  directions:
+    - lower_left
+
 total_pool_cap: 5000  # maximum total size of all languages generated via sampling and evol alg
 
 

@@ -107,12 +107,10 @@ hydra:
     - hydra.mode=RUN
     task:
     - experiment=dp
-    - experiment.overwrite_expressions=True
-    - experiment.overwrite_languages=True
   job:
     name: analyze
     chdir: true
-    override_dirname: experiment.overwrite_expressions=True,experiment.overwrite_languages=True,experiment=dp
+    override_dirname: experiment=dp
     id: ???
     num: ???
     config_name: config
@@ -156,8 +154,10 @@ hydra:
       plot: custom
       typology: dev
       experiment: dp
+      experiment/overwrites: default
       experiment/effcomm/inf: hcl
       experiment/sampling: small
+      experiment/sampling/evol: default
       hydra/env: default
       hydra/callbacks: null
       hydra/job_logging: custom

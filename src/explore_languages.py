@@ -35,28 +35,42 @@ def main(config: DictConfig):
         config, 
     )
 
-    experiment.set_filepaths(["artificial_languages"])
-    if not config.experiment.overwrite_languages and experiment.path_exists("artificial_languages"):
+    experiment.set_filepaths(["artificial_languages", "dominant_languages"])
+    if not config.experiment.overwrites.languages.dominant and config.experiment.overwrite_languages and experiment.path_exists("dominant_languages"):
         print(" found and will not be overwritten; skipping evolutionary algorithm exploration of languages.")
         return
 
     experiment.load_files(["expressions", "artificial_languages", "natural_languages"])
 
     expressions = experiment.expressions
-    result = experiment.artificial_languages
-    # sampled_languages = result["languages"]
-    # id_start = result["id_start"]
 
-    print("Sampling seed generation...")
-    result = generate_languages(
-        language_class=ModalLanguage,
-        expressions=expressions,
-        lang_size=lang_size,
-        sample_size=sample_size,
-        # id_start=id_start if id_start is not None else 0,
-    )
-    seed_population = result["languages"]
-    id_start = result["id_start"]
+    # Load seed generation
+    seed_population: list[ModalLanguage] = []
+    seed_pool_configs = evolutionary_alg_configs.seed_generation_pool
+    id_start = None
+
+    if "existing" in seed_pool_configs:
+        result = experiment.artificial_languages
+        if result is not None:
+            seed_population.extend(result["languages"])
+            id_start = result["id_start"]
+
+    if "natural" in seed_pool_configs:
+        result = experiment.natural_languages
+        if result is not None:
+            seed_population.extend(result["languages"])
+
+    if "random" in seed_pool_configs:
+        print("Sampling seed generation...")
+        result = generate_languages(
+            language_class=ModalLanguage,
+            expressions=expressions,
+            lang_size=lang_size,
+            sample_size=sample_size,
+            id_start=id_start if id_start is not None else 0,
+        )
+        seed_population.extend(result["languages"])
+        id_start = result["id_start"]
 
     comp = experiment.complexity_measure
     inf = experiment.informativity_measure
@@ -102,7 +116,7 @@ def main(config: DictConfig):
     # Explore all four corners of the possible language space
     results = {k: None for k in directions}
     pool = []
-    for direction in directions:
+    for direction in evolutionary_alg_configs.directions:
         # set directions of optimization
         x, y = directions[direction]
         optimizer.objectives = [objectives[x], objectives[y]]
@@ -132,6 +146,7 @@ def main(config: DictConfig):
     dominant_langs = list(set(dominant_langs))
 
     # remove some non-dominant to limit final pool to a standard size
+    # TODO: remove this hack
     num_natural_langs = len(experiment.natural_languages["languages"]) if experiment.natural_languages is not None else 0
     cap = config.experiment.sampling.total_pool_cap - len(dominant_langs) - num_natural_langs
     candidate_langs = [lang for lang in pool if lang not in dominant_langs]
@@ -142,7 +157,7 @@ def main(config: DictConfig):
     print("Saving languages...")
     experiment.artificial_languages = {"languages": pool, "id_start": id_start}
     experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}
-    experiment.write_files(["artificial_languages", "dominant_languages"], kinds=["explored", "dominant"])
+    experiment.write_files(["artificial_languages", "dominant_languages"])
     print("done.")
 
 

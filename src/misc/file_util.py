@@ -116,6 +116,7 @@ def save_expressions(fn, expressions: list[ModalExpression]):
 
     with open(fn, "w") as outfile:
         yaml.safe_dump(data, outfile)
+    print(f"Saved {len(expressions)} expressions to {fn}")
 
 
 def load_expressions(fn) -> list[ModalExpression]:

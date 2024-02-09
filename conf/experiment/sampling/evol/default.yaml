@@ -1,0 +1,14 @@
+generation_size: 2000
+num_generations: 200
+max_mutations: 5
+explore: 0 # what fraction [0,1] to include of dominated population to seed next generation
+directions:
+  - lower_left
+  - lower_right
+  - upper_left
+  - upper_right
+seed_generation_pool:
+# Include randomly generated, existing artificial langs, and natural langs in the seed generation of the optimization
+  - random
+  - existing
+  - natural
