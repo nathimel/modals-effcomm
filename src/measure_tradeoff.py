@@ -39,7 +39,10 @@ def main(config: DictConfig):
     dominant_languages = experiment.dominant_languages["languages"]
     natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
 
-    langs = list(set(sampled_languages + natural_languages + dominant_languages))
+    # TODO: removing this uniqueness condition for the comparison w variants
+
+    # langs = list(set(sampled_languages + natural_languages + dominant_languages))
+    langs = sampled_languages + natural_languages + dominant_languages
 
     print(f"{len(langs)} total langs.")
 

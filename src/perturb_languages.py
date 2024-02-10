@@ -14,6 +14,8 @@ from typing import Any
 from misc.file_util import set_seed
 from omegaconf import DictConfig
 
+from itertools import permutations
+
 def shuffle_point(referent: ModalMeaningPoint, universe: ModalMeaningSpace) -> ModalMeaningPoint:
     new_referent = referent
     while new_referent == referent:
@@ -87,22 +89,33 @@ def perturb_meaning_space(
     referents = universe.referents
 
     # A 'rotation' of the meaning space
-    mappings = []
-    for i in range(num_variants_per_language):
-        shuffled_referents = copy.deepcopy(referents)
-        random.shuffle(shuffled_referents)
-        # TODO: preclude the identity mapping
-        mappings.append(
-            # Need to map each current meaning to the new meaning induced by the rotated meaning space
-            {referents[idx]: shuffled_referents[idx] for idx in range(len(referents))}
-        )
+
+    # TODO: make this all more general
+    if len(referents) <= 6:
+        perms = [x for x in permutations(referents) if x != referents]
+        mappings = [
+            {referents[idx]: perm[idx] for idx in range(len(referents))} for perm in perms[:num_variants_per_language]
+        ]
+
+    else:
+        mappings = []
+        for _ in range(num_variants_per_language):
+            shuffled_referents = copy.deepcopy(referents)
+            random.shuffle(shuffled_referents)
+            if shuffled_referents == referents:
+                continue
+            mappings.append(
+                # Need to map each current meaning to the new meaning induced by the rotated meaning space
+                {referents[idx]: shuffled_referents[idx] for idx in range(len(referents))}
+            )
+
 
     # Iterate over languages and obtain their variants
     variants = []
     for language in languages:
 
         # TODO: you won't get more than one possible variant per language unless you shuffle the referents more than once. So do the shuffling num_variants times, and have a list of dicts, and iterate over it here.
-        for referent_mapping in mappings:
+        for variant_idx, referent_mapping in enumerate(mappings):
             new_vocab = []
 
             # Obtain a hypothetical variant of a language induced by the referent_mapping
@@ -118,7 +131,7 @@ def perturb_meaning_space(
                         lot_expression = candidate.lot_expression
 
                 new_expression = ModalExpression(
-                    form=f"perturbed_{expression.form}_{i}",
+                    form=f"perturbed_{expression.form}_{variant_idx}",
                     meaning=new_meaning,
                     lot_expression=lot_expression,
                 )
@@ -126,12 +139,15 @@ def perturb_meaning_space(
 
             variant = ModalLanguage(
                 expressions=new_vocab,
-                name=f"{language.data['name']}_variant_{i}",
+                name=f"{language.data['name']}_variant_{variant_idx}",
             )
 
             variants.append(variant)
 
-    variants = list(set(variants)) # weak guard against getting same lang again
+
+    # Since we actually want to compare each lang against its variants, its actually unclear that we should filter these variants for uniqueness.
+            
+    # variants = list(set(variants)) # weak guard against getting same lang again
         
     return variants
 
@@ -167,8 +183,8 @@ def main(config: DictConfig):
     #     expressions=experiment.expressions,
     #     num_variants_per_language=config.experiment.sampling.shuffling.num_variants_per_language,
     #     )
+    # languages = list(set(languages))
 
-    languages = list(set(languages))
     experiment.artificial_languages = {"languages": languages, "id_start": None}
     experiment.write_files([lang_fn])
 

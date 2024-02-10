@@ -83,13 +83,13 @@ def get_modals_plot(
         + pn.theme_classic()
     )
 
-    plot = plot + (
-        pn.geom_point(
-            data=data[data["natural"] == True],
-            mapping=pn.aes(**kwargs),
-            size=8,            
-        )
-    )
+    # plot = plot + (
+    #     pn.geom_point(
+    #         data=data[data["natural"] == True],
+    #         mapping=pn.aes(**kwargs),
+    #         size=8,            
+    #     )
+    # )
 
     if axis_titles:
         plot = (
