@@ -410,3 +410,13 @@ def dp_restricted(language: ModalLanguage) -> bool:
         if (flavors) and (not any(fl == DEONTIC for fl in flavors)):
             return False
     return True
+
+def dp_medium(language: ModalLanguage) -> bool:
+    """For every lexical item, if it has impossibiities, then it has deontic possibility in its meaning."""
+    for expression in language.expressions:
+        forces = [point.force for point in expression.meaning.referents]
+        flavors = [point.flavor for point in expression.meaning.referents]
+        if IMPOSSIBILITY in forces:
+            if not any(fl == DEONTIC for fl in flavors):
+                return False
+    return True

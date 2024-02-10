@@ -174,6 +174,8 @@ def main(config: DictConfig):
     # TEMP: add a column for which kind of dp is satisfied
     # DP-restricted, DP-nontriial, DP-trivial, and DP-false
     def label_dp(row):
+        if row["dp_medium"] == True:
+            return "dp_medium"
         if row["dp_restricted"] == True:
             return "dp_restricted"
         if row["dp_trivial"] == True:

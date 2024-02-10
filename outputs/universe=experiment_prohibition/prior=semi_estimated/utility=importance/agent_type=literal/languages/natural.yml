@@ -1,7 +1,7 @@
 flavors:
+- epistemic
 - circumstantial
 - deontic
-- epistemic
 forces:
 - impossibility
 - possibility
@@ -11,19 +11,20 @@ languages:
     data:
       Language: natural
       circ_priority: false
-      comm_cost: 0.5699987681694998
+      comm_cost: 0.5699987681694999
       complexity: 22
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
       epistemic_priority: false
       family: artificial
       iff: 1.0
-      informativity: 0.43000123183050015
+      informativity: 0.4300012318305001
       name: Thai
-      optimality: 0.7655682491899318
+      optimality: 0.8115730420925644
       sav: 1.0
       simplicity: null
     expressions:
@@ -65,15 +66,16 @@ languages:
       complexity: 16
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
       epistemic_priority: false
       family: artificial
       iff: 1.0
-      informativity: 0.4123244641537324
+      informativity: 0.4123244641537325
       name: Hungarian
-      optimality: 0.8952291358903913
+      optimality: 0.9157893204026958
       sav: 1.0
       simplicity: null
     expressions:
@@ -103,19 +105,20 @@ languages:
     data:
       Language: natural
       circ_priority: false
-      comm_cost: 0.6140367085489036
+      comm_cost: 0.6140367085489037
       complexity: 11
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
       epistemic_priority: false
       family: artificial
       iff: 1.0
-      informativity: 0.38596329145109637
+      informativity: 0.3859632914510963
       name: Russian
-      optimality: 0.9747867699896973
+      optimality: 0.9752349312091261
       sav: 1.0
       simplicity: null
     expressions:
@@ -126,8 +129,8 @@ languages:
     - form: "mo\u017Eet"
       lot: possibility
       meaning:
-      - possibility+epistemic
       - possibility+circumstantial
+      - possibility+epistemic
       - possibility+deontic
     - form: "mo\u017Eno"
       lot: and(possibility, deontic)
@@ -136,8 +139,8 @@ languages:
     - form: "vozmo\u017Eno"
       lot: and(possibility, not(deontic))
       meaning:
-      - possibility+epistemic
       - possibility+circumstantial
+      - possibility+epistemic
     length: 4
 - Tlingit:
     data:
@@ -147,6 +150,7 @@ languages:
       complexity: 15
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
@@ -155,7 +159,7 @@ languages:
       iff: 1.0
       informativity: 0.32409460458240946
       name: Tlingit
-      optimality: 0.8814058481656509
+      optimality: 0.893975495212172
       sav: 1.0
       simplicity: null
     expressions:
@@ -188,6 +192,7 @@ languages:
       complexity: 16
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
@@ -196,7 +201,7 @@ languages:
       iff: 1.0
       informativity: 0.4101995565410199
       name: Hebrew
-      optimality: 0.8946298998161253
+      optimality: 0.915307679239607
       sav: 1.0
       simplicity: null
     expressions:
@@ -230,15 +235,16 @@ languages:
       complexity: 12
       deontic_priority: true
       dlsav: true
+      dp_medium: true
       dp_nontrivial: true
       dp_restricted: true
       dp_trivial: false
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.46553954175905393
+      informativity: 0.465539541759054
       name: Basque
-      optimality: 0.9999758942067645
+      optimality: 0.9999763226834685
       sav: 1.0
       simplicity: null
     expressions:
@@ -260,6 +266,6 @@ languages:
     - form: liteke
       lot: and(possibility, not(deontic))
       meaning:
-      - possibility+epistemic
       - possibility+circumstantial
+      - possibility+epistemic
     length: 4

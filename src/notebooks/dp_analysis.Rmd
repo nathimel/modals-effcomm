@@ -1,0 +1,119 @@
+---
+title: "dp_analysis"
+author: "Nathaniel Imel"
+date: "2024-02-09"
+output: html_document
+---
+
+```{r setup}
+library(tidyverse)
+library(lme4)
+library(modelr)
+library(viridis)
+library(ggrepel)
+library(latex2exp)
+```
+
+
+```{r load}
+df <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal/analysis/all_data.csv")
+
+
+# Make an alias, facet_var, for original name
+df <- mutate(df, facet_var = paste(original_name, "and variants"))
+
+pareto_data <- filter(df, dominant == TRUE)
+natural_data <- filter(df, natural == TRUE)
+variants_data <- filter(df, natural == FALSE)
+```
+
+```{r reproduce_plot}
+
+plot = (
+  # Set data and the axes
+  ggplot(
+    data=natural_data, # set for faceting
+    mapping=aes(x=complexity, y=comm_cost),
+  )
+  # + scale_y_continuous(limits=[0, 1])
+  + geom_line(data=pareto_data)
+  + geom_point(  # all langs
+      data=df,
+      stroke=0,
+      # alpha=.5,
+      mapping=aes(
+        color=original_name,
+        shape=dp_restricted,
+      ),
+      size=4,
+  )
+  + geom_point( # natural langs
+    data=natural_data,
+    shape="+",
+    size=8,
+  )
+  + geom_text_repel(
+    data=natural_data,
+    mapping=aes(label=name),
+    size=6,
+    nudge_x=1,
+  )
+  + scale_color_discrete()
+  + theme_classic()
+)
+plot
+```
+
+```{r facet}
+
+
+(
+  # Set data and the axes
+  ggplot(
+    mapping=aes(x=complexity, y=comm_cost),
+  )
+  # + scale_y_continuous(limits=[0, 1])
+  + geom_line(
+    # remove faceting variable here so it is present in facet_wrap
+    data=select(pareto_data, -facet_var),
+  )
+  + geom_point(  # all langs
+      data=df,
+      stroke=0,
+      # alpha=.5,
+      mapping=aes(
+        # color=original_name,
+        color=dp_restricted,
+        shape=dp_restricted,
+      ),
+      size=4,
+  )
+  + geom_point( # natural langs
+    data=natural_data,
+    shape="+",
+    size=8,
+  )
+  # Annotate originals
+  + geom_text_repel(
+    data=natural_data,
+    mapping=aes(label=name),
+    size=4,
+    nudge_x=2,
+  )  
+  
+  + facet_wrap(vars(facet_var))
+  
+  + scale_color_discrete()
+  # + theme_classic()
+)
+
+```
+
+```{r save plot}
+ggsave(
+  "faceted_langs.png",
+  width=10,
+  height=10,
+)
+```
+
