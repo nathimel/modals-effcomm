@@ -41,8 +41,8 @@ def main(config: DictConfig):
 
     # TODO: removing this uniqueness condition for the comparison w variants
 
-    # langs = list(set(sampled_languages + natural_languages + dominant_languages))
-    langs = sampled_languages + natural_languages + dominant_languages
+    langs = list(set(sampled_languages + natural_languages + dominant_languages))
+    # langs = sampled_languages + natural_languages + dominant_languages
 
     print(f"{len(langs)} total langs.")
 
@@ -83,18 +83,19 @@ def main(config: DictConfig):
     experiment.artificial_languages = {"languages": langs, "id_start": id_start}
     experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
     experiment.natural_languages = {"languages": nat_langs, "id_start": None}
-    save_files = ["artificial_languages", "dominant_languages"]
+    save_files = [
+        # "artificial_languages", 
+        "dominant_languages",
+    ]
     if nat_langs:
         save_files += ["natural_languages"]
     experiment.write_files(save_files)
     print("saved languages.")
 
-    # TODO: store the language.data fields in a common spot for repeat access in a uniform way
     all_data = get_dataframe(
         langs, 
         columns=list(properties_to_measure.keys()) + ["optimality"] # + ["family"]
     )
-    # TODO: make this more efficient
     all_data["natural"] = [lang.natural for lang in langs]
     all_data["dominant"] = [lang in dom_langs for lang in langs]
     all_data["name"] = [lang.data["name"] for lang in langs]

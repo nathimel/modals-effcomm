@@ -36,7 +36,7 @@ def main(config: DictConfig):
     )
 
     experiment.set_filepaths(["artificial_languages", "dominant_languages"])
-    if not config.experiment.overwrites.languages.dominant and config.experiment.overwrite_languages and experiment.path_exists("dominant_languages"):
+    if not config.experiment.overwrites.languages.dominant and experiment.path_exists("dominant_languages"):
         print(" found and will not be overwritten; skipping evolutionary algorithm exploration of languages.")
         return
 
@@ -113,6 +113,10 @@ def main(config: DictConfig):
         lang_size=lang_size,
     )
 
+
+    # TODO: To debug why evol alg is not finding more than 1 dominant, 
+    # copypaste the indefinites example evol alg.
+
     # Explore all four corners of the possible language space
     results = {k: None for k in directions}
     pool = []
@@ -122,7 +126,6 @@ def main(config: DictConfig):
         optimizer.objectives = [objectives[x], objectives[y]]
         print(f"Minimizing for {x}, {y} ...")
 
-        # breakpoint()
 
         # run algorithm
         result = optimizer.fit(
@@ -141,7 +144,7 @@ def main(config: DictConfig):
 
     print(f"Discovered {len(pool)} languages.")
     print(f"Filtering languages...")
-    # pool.extend(sampled_languages)
+
     pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 

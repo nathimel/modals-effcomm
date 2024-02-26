@@ -63,6 +63,7 @@ class Experiment:
             prior_df["probability"] = random_stochastic_matrix(
                 (len(referents_df),), beta=prior
             ).tolist()
+        referents_df["probability"] = prior_df["probability"]
         
         # Construct Universe
         universe = ModalMeaningSpace.from_dataframe(referents_df)

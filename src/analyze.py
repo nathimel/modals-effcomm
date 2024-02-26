@@ -62,6 +62,8 @@ def get_modals_plot(
 
     kwargs["color"] = "original_name" # for seeing variant
 
+    naturals_and_variants = data[data["name"].str.contains("sampled_lang_") == False]
+
     if counts:
         pass
         # kwargs["size"] = "counts"
@@ -71,13 +73,23 @@ def get_modals_plot(
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
         # + pn.scale_y_continuous(limits=[0, 1])
         + pn.geom_line(data=pareto_data)
+
+        # + pn.geom_point(  # all langs
+        #     data=data,
+        #     stroke=0,
+        #     # alpha=.5,
+        #     mapping=pn.aes(**kwargs),
+        #     size=4,
+        # )
+
         + pn.geom_point(  # all langs
-            data=data,
+            data=naturals_and_variants,
             stroke=0,
             # alpha=.5,
             mapping=pn.aes(**kwargs),
             size=4,
         )
+
         # + pn.scale_color_cmap("cividis")
         + pn.scale_color_discrete()
         + pn.theme_classic()
@@ -168,8 +180,8 @@ def main(config: DictConfig):
     pareto_data = data[data["dominant"] == True]
     natural_data = data[data["natural"] == True]
 
-    print("Excluding Thai from final analysis.")
-    natural_data = natural_data[natural_data["name"] != "Thai"]
+    # print("Excluding Thai from final analysis.")
+    # natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # TEMP: add a column for which kind of dp is satisfied
     # DP-restricted, DP-nontriial, DP-trivial, and DP-false
@@ -326,6 +338,15 @@ def main(config: DictConfig):
     ]
     pareto_data.to_csv(pareto_df_fn, index=False)
     data.to_csv(df_fn, index=False)
+
+    # Extra for DP analysis: Run the R script
+    chdir = f"cd {hydra.utils.get_original_cwd()}"
+    save_dir = os.path.join(os.getcwd(), "analysis")
+    args = f"{save_dir}/all_data.csv  {save_dir}"
+    run_rscript = f"Rscript src/dp_analysis.R {args}"
+    command = f"{chdir}; {run_rscript}"
+    os.system(f"echo '{command}'")
+    os.system(command)
 
 
 if __name__ == "__main__":

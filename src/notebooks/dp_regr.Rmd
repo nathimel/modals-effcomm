@@ -1,0 +1,78 @@
+---
+title: "dp_regr"
+author: "Nathaniel Imel"
+date: "2024-02-12"
+output: html_document
+---
+
+```{r setup}
+library(tidyverse)
+library(lme4)
+library(modelr)
+library(car)
+```
+
+
+```{r load}
+df = read_csv("df_regr.csv")
+head(df)
+```
+
+
+```{r scale}
+
+df_s <- df %>% 
+  mutate(
+    optimality_z = scale(optimality),
+  )
+```
+
+```{r model0}
+
+# Predict (unscaled for now, so range [0,1]) optimality from
+# - natural (bool)
+# - dp_medium (bool)
+# - no interaction, because no case where natural=1 and dp=0
+
+model0 <- lm(optimality ~ natural + dp_medium, df_s)
+summary(model0)
+```
+
+
+```{r model1}
+
+# Predict (unscaled for now, so range [0,1]) optimality from
+# - natural (bool)
+# - dp_medium (bool)
+# - random intercepts for original_name (shared name of natural and derived variants)
+# - no interaction, because no case where natural=1 and dp=0
+
+model1 <- lmer(optimality ~ natural + dp_medium + (1 | original_name), df_s)
+print(summary(model1))
+print(anova(model1))
+print(Anova(model1))
+```
+
+
+```{r model2}
+
+# Predict scaled optimality from
+# - natural (bool)
+# - dp_medium (bool)
+# - random intercepts for original_name (shared name of natural and derived variants)
+# - no interaction, because no case where natural=1 and dp=0
+
+model2 <- lmer(optimality_z ~ natural + dp_medium + (1 | original_name), df_s)
+print(summary(model2))
+print(anova(model2))
+print(Anova(model2))
+```
+
+
+```{r debug}
+# alias(model0)
+# cor(df_s$natural, df_s$dp_medium)
+
+
+
+```

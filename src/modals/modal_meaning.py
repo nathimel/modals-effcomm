@@ -59,7 +59,13 @@ class ModalMeaningSpace(Universe):
 
     """
 
-    def __init__(self, forces: list[str], flavors: list[str], referents: Iterable[ModalMeaningPoint] = None,):
+    def __init__(
+        self, 
+        forces: list[str], 
+        flavors: list[str], 
+        referents: Iterable[ModalMeaningPoint] = None,
+        prior: tuple[float] = None,
+        ):
         """Construct a meaning space for modals, using two axes of variation.
 
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
@@ -74,13 +80,11 @@ class ModalMeaningSpace(Universe):
         self.arr = np.zeros((len(forces), len(flavors)))
         if referents is None:
             referents = {
-                # ModalMeaningPoint(name=f"{force}+{flavor}")
                 ModalMeaningPoint(force=force, flavor=flavor)
                 for force in forces
                 for flavor in flavors
             }
-        # breakpoint()
-        super().__init__(referents)
+        super().__init__(referents, prior)
 
     @classmethod
     def from_dataframe(cls, df: pd.DataFrame):
@@ -91,15 +95,16 @@ class ModalMeaningSpace(Universe):
             forces,
             flavors,
             [ModalMeaningPoint(point.force, point.flavor) for point in universe.referents],
+            prior=universe.prior,
         )
 
     def force_to_index(self, force: str):
         """Converts a force name to a table row index.
 
         Args:
-            - force: the name of the modal force
+            force: the name of the modal force
         Returns:
-            - index: an integer representing the row of the table of modal variation corresponding to the force passed.
+            index: an integer representing the row of the table of modal variation corresponding to the force passed.
 
         Example usage:
 
@@ -205,7 +210,7 @@ class ModalMeaningSpace(Universe):
 
     # TODO: maybe use the dataclass
     def __hash__(self) -> int:
-        return hash((tuple(self.forces), tuple(self.flavors)))
+        return hash((tuple(sorted(self.forces)), tuple(sorted(self.flavors))))
 
 
 class ModalMeaning(Meaning):

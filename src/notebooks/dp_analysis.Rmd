@@ -18,13 +18,20 @@ library(latex2exp)
 ```{r load}
 df <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal/analysis/all_data.csv")
 
+# df <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=1e-20/utility=importance/agent_type=literal/analysis/all_data.csv")
+
 
 # Make an alias, facet_var, for original name
 df <- mutate(df, facet_var = paste(original_name, "and variants"))
 
 pareto_data <- filter(df, dominant == TRUE)
 natural_data <- filter(df, natural == TRUE)
-variants_data <- filter(df, natural == FALSE)
+
+# Careful, this is incorrect.
+variants_data <- filter(df, str_detect(name, "_variant_"))
+
+# Be careful, this might not always be the case
+naturals_and_variants_df <- bind_rows(natural_data, variants_data)
 ```
 
 ```{r reproduce_plot}
@@ -37,8 +44,8 @@ plot = (
   )
   # + scale_y_continuous(limits=[0, 1])
   + geom_line(data=pareto_data)
-  + geom_point(  # all langs
-      data=df,
+  + geom_point(  # naturals and variants
+      data=naturals_and_variants_df,
       stroke=0,
       # alpha=.5,
       mapping=aes(
@@ -78,15 +85,15 @@ plot
     data=select(pareto_data, -facet_var),
   )
   + geom_point(  # all langs
-      data=df,
+      data=naturals_and_variants_df,
       stroke=0,
-      # alpha=.5,
+      alpha=.3,
       mapping=aes(
         # color=original_name,
         color=dp_restricted,
         shape=dp_restricted,
       ),
-      size=4,
+      size=3,
   )
   + geom_point( # natural langs
     data=natural_data,
