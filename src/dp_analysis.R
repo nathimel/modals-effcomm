@@ -57,8 +57,8 @@ naturals_and_variants_df <- bind_rows(natural_data, variants_data)
       alpha=.5,
       mapping=aes(
         # color=original_name,
-        color=dp_restricted,
-        shape=dp_restricted,
+        color=dp_medium,
+        shape=dp_medium,
       ),
       size=3,
   )
@@ -113,11 +113,11 @@ writeLines(anova_output, paste(save_dir, "/", "model_anova_1", ".txt", sep=""))
 # Likelihood Ratio Tests
 
 #fit full model
-model_full <- lm(optimality ~ natural + dp_medium, data = df_s)
+model_full <- lmer(optimality ~ natural + dp_medium + (1 | original_name), data = df_s)
 
 #fit reduced models
-model_natural <- lm(optimality ~ natural, data = df_s)
-model_dp <- lm(optimality ~ dp_medium, data = df_s)
+model_natural <- lmer(optimality ~ natural + (1 | original_name), data = df_s)
+model_dp <- lmer(optimality ~ dp_medium + (1 | original_name), data = df_s)
 
 #perform likelihood ratio test for differences in models
 lr_dp <- lrtest(model_full, model_natural)
