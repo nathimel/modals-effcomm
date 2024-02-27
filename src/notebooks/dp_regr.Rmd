@@ -10,6 +10,7 @@ library(tidyverse)
 library(lme4)
 library(modelr)
 library(car)
+library(lmtest)
 ```
 
 
@@ -69,10 +70,21 @@ print(Anova(model2))
 ```
 
 
-```{r debug}
-# alias(model0)
-# cor(df_s$natural, df_s$dp_medium)
+```{r lr}
 
+#fit full model
+model_full <- lm(optimality ~ natural + dp_medium, data = df_s)
 
+#fit reduced models
+model_natural <- lm(optimality ~ natural, data = df_s)
+model_dp <- lm(optimality ~ dp_medium, data = df_s)
 
+#perform likelihood ratio test for differences in models
+lr_dp <- lrtest(model_full, model_natural)
+lr_natural <- lrtest(model_full, model_dp)
+print("Likelihood ratio of full model without DP as predictor:")
+print(summary(lr_dp))
+
+print("Likelihood ratio of full model without natural as predictor")
+print(summary(lr_natural))
 ```

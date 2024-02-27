@@ -1,6 +1,7 @@
 library(tidyverse)
 library(lme4)
 library(modelr)
+library(lmtest)
 library(car)
 library(viridis)
 library(ggrepel)
@@ -107,3 +108,23 @@ summary_output <- capture.output(summary(model1))
 anova_output <- capture.output(Anova(model1))
 writeLines(summary_output, paste(save_dir, "/", "model_summary_1", ".txt", sep=""))
 writeLines(anova_output, paste(save_dir, "/", "model_anova_1", ".txt", sep=""))
+
+
+# Likelihood Ratio Tests
+
+#fit full model
+model_full <- lm(optimality ~ natural + dp_medium, data = df_s)
+
+#fit reduced models
+model_natural <- lm(optimality ~ natural, data = df_s)
+model_dp <- lm(optimality ~ dp_medium, data = df_s)
+
+#perform likelihood ratio test for differences in models
+lr_dp <- lrtest(model_full, model_natural)
+lr_natural <- lrtest(model_full, model_dp)
+
+summary_output <- capture.output(summary(lr_dp))
+writeLines(summary_output, paste(save_dir, "/", "likelihood_ratio_without_dp", ".txt", sep=""))
+
+summary_output <- capture.output(summary(lr_natural))
+writeLines(summary_output, paste(save_dir, "/", "likelihood_ratio_without_natural", ".txt", sep=""))

@@ -387,6 +387,14 @@ library(car)</code></pre>
 ## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     some</code></pre>
+<pre class="r"><code>library(lmtest)</code></pre>
+<pre><code>## Loading required package: zoo
+## 
+## Attaching package: &#39;zoo&#39;
+## 
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
 <pre class="r"><code>df = read_csv(&quot;df_regr.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 606 Columns: 5
@@ -532,8 +540,38 @@ print(summary(model2))</code></pre>
 ## dp_medium 27.2930  1  1.748e-07 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code># alias(model0)
-# cor(df_s$natural, df_s$dp_medium)</code></pre>
+<pre class="r"><code>#fit full model
+model_full &lt;- lm(optimality ~ natural + dp_medium, data = df_s)
+
+#fit reduced models
+model_natural &lt;- lm(optimality ~ natural, data = df_s)
+model_dp &lt;- lm(optimality ~ dp_medium, data = df_s)
+
+#perform likelihood ratio test for differences in models
+lr_dp &lt;- lrtest(model_full, model_natural)
+lr_natural &lt;- lrtest(model_full, model_dp)
+print(&quot;Likelihood ratio of full model without DP as predictor:&quot;)</code></pre>
+<pre><code>## [1] &quot;Likelihood ratio of full model without DP as predictor:&quot;</code></pre>
+<pre class="r"><code>print(summary(lr_dp))</code></pre>
+<pre><code>##       #Df           LogLik            Df         Chisq         Pr(&gt;Chisq)   
+##  Min.   :3.00   Min.   :875.7   Min.   :-1   Min.   :26.79   Min.   :2e-07  
+##  1st Qu.:3.25   1st Qu.:879.1   1st Qu.:-1   1st Qu.:26.79   1st Qu.:2e-07  
+##  Median :3.50   Median :882.4   Median :-1   Median :26.79   Median :2e-07  
+##  Mean   :3.50   Mean   :882.4   Mean   :-1   Mean   :26.79   Mean   :2e-07  
+##  3rd Qu.:3.75   3rd Qu.:885.8   3rd Qu.:-1   3rd Qu.:26.79   3rd Qu.:2e-07  
+##  Max.   :4.00   Max.   :889.1   Max.   :-1   Max.   :26.79   Max.   :2e-07  
+##                                 NA&#39;s   :1    NA&#39;s   :1       NA&#39;s   :1</code></pre>
+<pre class="r"><code>print(&quot;Likelihood ratio of full model without natural as predictor&quot;)</code></pre>
+<pre><code>## [1] &quot;Likelihood ratio of full model without natural as predictor&quot;</code></pre>
+<pre class="r"><code>print(summary(lr_natural))</code></pre>
+<pre><code>##       #Df           LogLik            Df         Chisq         Pr(&gt;Chisq)     
+##  Min.   :3.00   Min.   :887.4   Min.   :-1   Min.   :3.373   Min.   :0.06628  
+##  1st Qu.:3.25   1st Qu.:887.9   1st Qu.:-1   1st Qu.:3.373   1st Qu.:0.06628  
+##  Median :3.50   Median :888.3   Median :-1   Median :3.373   Median :0.06628  
+##  Mean   :3.50   Mean   :888.3   Mean   :-1   Mean   :3.373   Mean   :0.06628  
+##  3rd Qu.:3.75   3rd Qu.:888.7   3rd Qu.:-1   3rd Qu.:3.373   3rd Qu.:0.06628  
+##  Max.   :4.00   Max.   :889.1   Max.   :-1   Max.   :3.373   Max.   :0.06628  
+##                                 NA&#39;s   :1    NA&#39;s   :1       NA&#39;s   :1</code></pre>
 
 
 
