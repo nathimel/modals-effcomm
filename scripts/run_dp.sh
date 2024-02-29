@@ -1,19 +1,21 @@
 #!/bin/sh
 
-python src/setup.py "$@"
+python src/setup.py experiment=dp "$@"
 
-python src/generate_expressions.py "$@"
+python src/generate_expressions.py experiment=dp experiment.overwrites.expressions=True "$@"
 
-# python src/sample_languages.py "$@"
+python src/add_dp_natural_languages.py experiment=dp experiment.overwrites.languages.natural=True "$@"
 
-python src/add_dp_natural_languages.py "$@"
-
-python src/explore_languages.py "$@"
+# DO want to save these artificial langs
+python src/perturb_languages.py experiment=dp experiment.overwrites.languages.artificial=True "$@"
 
 # crucially this comes after explore, since we hackily overwrite
 # the results of artificial.yml but not dominant.yml
-python src/perturb_languages.py "$@"
+# Do not overwrite the artificial langs from above, only the dominant
+# python src/explore_languages.py  experiment=dp experiment.overwrites.languages.dominant=True
+python src/estimate_pareto.py  experiment=dp experiment.overwrites.languages.dominant=True "$@"
 
-python src/measure_tradeoff.py "$@"
+# Overwrite all languages with the new data
+python src/measure_tradeoff.py  experiment=dp "experiment.overwrites.languages={"natural":True, "artificial":True, "dominant":True}" "$@"
 
-python3 src/analyze.py "$@"
+python src/analyze.py experiment=dp "$@"

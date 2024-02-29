@@ -1,223 +1,12 @@
 flavors:
-- circumstantial
 - epistemic
 - deontic
+- circumstantial
 forces:
-- impossibility
 - possibility
+- impossibility
 id_start: null
 languages:
-- Hungarian:
-    data:
-      Language: natural
-      circ_priority: false
-      comm_cost: 0.5876755358462675
-      complexity: 16
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: false
-      family: artificial
-      iff: 1.0
-      informativity: 0.4123244641537325
-      name: Hungarian
-      optimality: 0.819495386511945
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: -het-
-      lot: and(possibility, not(circumstantial))
-      meaning:
-      - possibility+deontic
-      - possibility+epistemic
-    - form: kep-
-      lot: and(possibility, circumstantial)
-      meaning:
-      - possibility+circumstantial
-    - form: lehet
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    - form: tilos
-      lot: and(impossibility, deontic)
-      meaning:
-      - impossibility+deontic
-    - form: tud-
-      lot: and(possibility, circumstantial)
-      meaning:
-      - possibility+circumstantial
-    length: 5
-- Russian:
-    data:
-      Language: natural
-      circ_priority: false
-      comm_cost: 0.6140367085489036
-      complexity: 11
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: false
-      family: artificial
-      iff: 1.0
-      informativity: 0.3859632914510964
-      name: Russian
-      optimality: 0.8646162512242177
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: "Nel\u2019zya"
-      lot: and(impossibility, deontic)
-      meaning:
-      - impossibility+deontic
-    - form: "mo\u017Eet"
-      lot: possibility
-      meaning:
-      - possibility+circumstantial
-      - possibility+deontic
-      - possibility+epistemic
-    - form: "mo\u017Eno"
-      lot: and(possibility, deontic)
-      meaning:
-      - possibility+deontic
-    - form: "vozmo\u017Eno"
-      lot: and(possibility, not(deontic))
-      meaning:
-      - possibility+circumstantial
-      - possibility+epistemic
-    length: 4
-- Basque:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.534460458240946
-      complexity: 12
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.46553954175905404
-      name: Basque
-      optimality: 0.9252634859528235
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: ahal
-      lot: and(possibility, deontic)
-      meaning:
-      - possibility+deontic
-    - form: daiteke
-      lot: and(possibility, not(epistemic))
-      meaning:
-      - possibility+circumstantial
-      - possibility+deontic
-    - form: ezin
-      lot: impossibility
-      meaning:
-      - impossibility+epistemic
-      - impossibility+deontic
-      - impossibility+circumstantial
-    - form: liteke
-      lot: and(possibility, not(deontic))
-      meaning:
-      - possibility+circumstantial
-      - possibility+epistemic
-    length: 4
-- Hebrew:
-    data:
-      Language: natural
-      circ_priority: false
-      comm_cost: 0.58980044345898
-      complexity: 16
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: false
-      family: artificial
-      iff: 1.0
-      informativity: 0.41019955654102
-      name: Hebrew
-      optimality: 0.8179594597014804
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: asur
-      lot: and(impossibility, deontic)
-      meaning:
-      - impossibility+deontic
-    - form: mesugelet
-      lot: and(possibility, circumstantial)
-      meaning:
-      - possibility+circumstantial
-    - form: oolay
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    - form: yakhol
-      lot: and(possibility, not(epistemic))
-      meaning:
-      - possibility+circumstantial
-      - possibility+deontic
-    - form: yitakhen
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    length: 5
-- Tlingit:
-    data:
-      Language: natural
-      circ_priority: false
-      comm_cost: 0.6759053954175904
-      complexity: 15
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: true
-      dp_restricted: true
-      dp_trivial: false
-      epistemic_priority: false
-      family: artificial
-      iff: 1.0
-      informativity: 0.3240946045824095
-      name: Tlingit
-      optimality: 0.7705578724684683
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: giwe
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    - form: "gw\xE1l"
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    - form: potential mode
-      lot: and(possibility, circumstantial)
-      meaning:
-      - possibility+circumstantial
-    - form: prohibitive mode
-      lot: and(impossibility, deontic)
-      meaning:
-      - impossibility+deontic
-    - form: "sh\xE1kd\xE9"
-      lot: and(possibility, epistemic)
-      meaning:
-      - possibility+epistemic
-    length: 5
 - Thai:
     data:
       Language: natural
@@ -233,17 +22,17 @@ languages:
       epistemic_priority: false
       family: artificial
       iff: 1.0
-      informativity: 0.4300012318305002
+      informativity: 0.43000123183050015
       name: Thai
-      optimality: 0.7268946770607283
+      optimality: 0.83432651363798
       sav: 1.0
       simplicity: null
     expressions:
     - form: '... dai'
       lot: and(possibility, not(epistemic))
       meaning:
-      - possibility+circumstantial
       - possibility+deontic
+      - possibility+circumstantial
     - form: Aat (ca)
       lot: and(possibility, epistemic)
       meaning:
@@ -269,3 +58,208 @@ languages:
       meaning:
       - possibility+circumstantial
     length: 7
+- Hausa:
+    data:
+      Language: natural
+      circ_priority: false
+      comm_cost: 0.6182557280118255
+      complexity: 11
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.3817442719881745
+      name: Hausa
+      optimality: 0.8276984849373163
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: Za ... iya
+      lot: and(possibility, not(epistemic))
+      meaning:
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: kada
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: "wata\u0199ila"
+      lot: and(possibility, not(circumstantial))
+      meaning:
+      - possibility+deontic
+      - possibility+epistemic
+    length: 3
+- Russian:
+    data:
+      Language: natural
+      circ_priority: false
+      comm_cost: 0.6140367085489036
+      complexity: 11
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.38596329145109637
+      name: Russian
+      optimality: 0.8314686954543228
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: "Nel\u2019zya"
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: "mo\u017Eet"
+      lot: possibility
+      meaning:
+      - possibility+deontic
+      - possibility+circumstantial
+      - possibility+epistemic
+    - form: "mo\u017Eno"
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: "vozmo\u017Eno"
+      lot: and(possibility, not(deontic))
+      meaning:
+      - possibility+circumstantial
+      - possibility+epistemic
+    length: 4
+- Hungarian:
+    data:
+      Language: natural
+      circ_priority: false
+      comm_cost: 0.5876755358462675
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.4123244641537325
+      name: Hungarian
+      optimality: 0.8269616828843932
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -het-
+      lot: and(possibility, not(circumstantial))
+      meaning:
+      - possibility+deontic
+      - possibility+epistemic
+    - form: kep-
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: lehet
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: tilos
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: tud-
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    length: 5
+- Hebrew:
+    data:
+      Language: natural
+      circ_priority: false
+      comm_cost: 0.5898004434589801
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: false
+      family: artificial
+      iff: 1.0
+      informativity: 0.41019955654101997
+      name: Hebrew
+      optimality: 0.8250312359822911
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: asur
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: mesugelet
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: oolay
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: yakhol
+      lot: and(possibility, not(epistemic))
+      meaning:
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: yitakhen
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    length: 5
+- Basque:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.534460458240946
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.46553954175905404
+      name: Basque
+      optimality: 0.8960576711099776
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: ahal
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: daiteke
+      lot: and(possibility, not(epistemic))
+      meaning:
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: ezin
+      lot: impossibility
+      meaning:
+      - impossibility+deontic
+      - impossibility+epistemic
+      - impossibility+circumstantial
+    - form: liteke
+      lot: and(possibility, not(deontic))
+      meaning:
+      - possibility+circumstantial
+      - possibility+epistemic
+    length: 4

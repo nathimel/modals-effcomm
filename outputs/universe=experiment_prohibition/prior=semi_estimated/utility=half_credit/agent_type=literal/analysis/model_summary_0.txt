@@ -1,0 +1,20 @@
+
+Call:
+lm(formula = optimality ~ natural + dp_medium, data = df_s)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.21305 -0.07474 -0.00275  0.06041  0.33901 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.660987   0.006658  99.280  < 2e-16 ***
+naturalTRUE   0.070681   0.043673   1.618 0.106679    
+dp_mediumTRUE 0.052231   0.015656   3.336 0.000962 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1012 on 285 degrees of freedom
+Multiple R-squared:  0.06101,	Adjusted R-squared:  0.05442 
+F-statistic: 9.259 on 2 and 285 DF,  p-value: 0.0001271
+

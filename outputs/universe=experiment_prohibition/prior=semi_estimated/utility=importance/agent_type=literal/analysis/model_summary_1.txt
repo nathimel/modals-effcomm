@@ -2,25 +2,25 @@ Linear mixed model fit by REML ['lmerMod']
 Formula: optimality ~ natural + dp_medium + (1 | original_name)
    Data: df_s
 
-REML criterion at convergence: -651.3
+REML criterion at convergence: -894.5
 
 Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--2.5530 -0.6970  0.0030  0.6229  2.5713 
+     Min       1Q   Median       3Q      Max 
+-2.67173 -0.68190 -0.01528  0.71235  2.51945 
 
 Random effects:
  Groups        Name        Variance Std.Dev.
- original_name (Intercept) 0.011624 0.10782 
- Residual                  0.003264 0.05713 
-Number of obs: 245, groups:  original_name, 14
+ original_name (Intercept) 0.010752 0.10369 
+ Residual                  0.002054 0.04532 
+Number of obs: 286, groups:  original_name, 14
 
 Fixed effects:
               Estimate Std. Error t value
-(Intercept)    0.87947    0.03097  28.395
-naturalTRUE    0.03424    0.02521   1.358
-dp_mediumTRUE  0.02572    0.01033   2.490
+(Intercept)   0.890387   0.029155  30.539
+naturalTRUE   0.048541   0.019667   2.468
+dp_mediumTRUE 0.004967   0.007300   0.680
 
 Correlation of Fixed Effects:
             (Intr) ntTRUE
-naturalTRUE  0.011       
-dp_medmTRUE -0.073 -0.334
+naturalTRUE  0.009       
+dp_medmTRUE -0.055 -0.303

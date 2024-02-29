@@ -1,0 +1,364 @@
+flavors:
+- epistemic
+- circumstantial
+- deontic
+forces:
+- possibility
+- impossibility
+id_start: null
+languages:
+- sampled_lang_0:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.23151378256891297
+      complexity: 6
+      deontic_priority: true
+      dlsav: true
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.768486217431087
+      name: sampled_lang_0
+      optimality: 0.9999983964843622
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_2
+      lot: epistemic
+      meaning:
+      - possibility+epistemic
+      - impossibility+epistemic
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - possibility+deontic
+      - impossibility+deontic
+    - form: dummy_form_4
+      lot: circumstantial
+      meaning:
+      - possibility+circumstantial
+      - impossibility+circumstantial
+    - form: dummy_form_8
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    length: 4
+- sampled_lang_9:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.06737408687043445
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.9326259131295656
+      name: sampled_lang_9
+      optimality: 0.9999733063560059
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_10
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_26
+      lot: and(impossibility, not(deontic))
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+    - form: dummy_form_6
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: dummy_form_7
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_ahal_24
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    length: 5
+- sampled_lang_2:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.1974770290518122
+      complexity: 8
+      deontic_priority: true
+      dlsav: false
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8025229709481878
+      name: sampled_lang_2
+      optimality: 0.9999675275766184
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_4
+      lot: circumstantial
+      meaning:
+      - possibility+circumstantial
+      - impossibility+circumstantial
+    - form: dummy_form_6
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: dummy_form_7
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_ezin_24
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 4
+- sampled_lang_7:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.05217326086630458
+      complexity: 19
+      deontic_priority: true
+      dlsav: true
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.9478267391336954
+      name: sampled_lang_7
+      optimality: 0.9999150283207693
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_10
+      lot: and(impossibility, deontic)
+      meaning:
+      - impossibility+deontic
+    - form: dummy_form_26
+      lot: and(impossibility, not(deontic))
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+    - form: dummy_form_6
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: dummy_form_7
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: dummy_form_9
+      lot: and(impossibility, epistemic)
+      meaning:
+      - impossibility+epistemic
+    - form: perturbed_ahal_24
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    length: 6
+- sampled_lang_4:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.14201837675855056
+      complexity: 13
+      deontic_priority: true
+      dlsav: true
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8579816232414494
+      name: sampled_lang_4
+      optimality: 0.9999464788556738
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_11
+      lot: and(impossibility, circumstantial)
+      meaning:
+      - impossibility+circumstantial
+    - form: dummy_form_6
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: dummy_form_7
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_ahal_24
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: perturbed_ezin_24
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 5
+- sampled_lang_6:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.16666666666666696
+      complexity: 10
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.833333333333333
+      name: sampled_lang_6
+      optimality: 0.9999293067628267
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_6
+      lot: and(possibility, epistemic)
+      meaning:
+      - possibility+epistemic
+    - form: dummy_form_7
+      lot: and(possibility, deontic)
+      meaning:
+      - possibility+deontic
+    - form: perturbed_ahal_24
+      lot: and(possibility, circumstantial)
+      meaning:
+      - possibility+circumstantial
+    - form: perturbed_ezin_24
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+circumstantial
+      - impossibility+deontic
+    length: 4
+- sampled_lang_1:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.6666666666666667
+      complexity: 1
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.3333333333333333
+      name: sampled_lang_1
+      optimality: 0.7635446953204241
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_1
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+deontic
+      - impossibility+circumstantial
+    length: 1
+- sampled_lang_5:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.2500000000000001
+      complexity: 3
+      deontic_priority: true
+      dlsav: true
+      dp_medium: false
+      dp_nontrivial: true
+      dp_restricted: false
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.7499999999999999
+      name: sampled_lang_5
+      optimality: 0.9999938118586407
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_2
+      lot: epistemic
+      meaning:
+      - possibility+epistemic
+      - impossibility+epistemic
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - possibility+deontic
+      - impossibility+deontic
+    - form: dummy_form_4
+      lot: circumstantial
+      meaning:
+      - possibility+circumstantial
+      - impossibility+circumstantial
+    length: 3
+- sampled_lang_8:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.3333333333333335
+      complexity: 2
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: true
+      dp_restricted: true
+      dp_trivial: false
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.6666666666666665
+      name: sampled_lang_8
+      optimality: 0.9999752474345626
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_0
+      lot: possibility
+      meaning:
+      - possibility+epistemic
+      - possibility+deontic
+      - possibility+circumstantial
+    - form: dummy_form_1
+      lot: impossibility
+      meaning:
+      - impossibility+epistemic
+      - impossibility+deontic
+      - impossibility+circumstantial
+    length: 2

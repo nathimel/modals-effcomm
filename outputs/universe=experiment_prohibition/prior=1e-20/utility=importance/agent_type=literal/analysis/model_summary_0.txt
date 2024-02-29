@@ -4,17 +4,17 @@ lm(formula = optimality ~ natural + dp_medium, data = df_s)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
--0.179869 -0.055634 -0.001659  0.046973  0.257577 
+-0.115728 -0.036043 -0.008395  0.032160  0.226977 
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   0.742422   0.005976 124.229   <2e-16 ***
-naturalTRUE   0.046703   0.037156   1.257   0.2100    
-dp_mediumTRUE 0.031674   0.014825   2.136   0.0336 *  
+(Intercept)   0.772953   0.003840 201.279   <2e-16 ***
+naturalTRUE   0.044719   0.025162   1.777   0.0766 .  
+dp_mediumTRUE 0.022585   0.009088   2.485   0.0135 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.08473 on 243 degrees of freedom
-Multiple R-squared:  0.03547,	Adjusted R-squared:  0.02754 
-F-statistic: 4.469 on 2 and 243 DF,  p-value: 0.01242
+Residual standard error: 0.05824 on 283 degrees of freedom
+Multiple R-squared:  0.04427,	Adjusted R-squared:  0.03752 
+F-statistic: 6.555 on 2 and 283 DF,  p-value: 0.001649
 
