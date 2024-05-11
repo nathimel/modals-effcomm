@@ -85,6 +85,7 @@ class Experiment:
             utility = utility_func_from_csv(fn)
         else:
             raise ValueError(f"Invalid utility function name. You must pass either 'indicator' or 'half_credit' or the name of a file located at the data/utility folder.")
+        self.utility = utility
         
         ######################################################################
         # Initialize experiment parameters
@@ -107,7 +108,7 @@ class Experiment:
         self.informativity_measure = lambda lang: informativity(
             language=lang,
             prior=prior,
-            utility=utility,
+            utility=self.utility,
             agent_type=config.experiment.effcomm.inf.agent_type,
         )
 

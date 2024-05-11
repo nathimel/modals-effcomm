@@ -107,9 +107,10 @@ hydra:
     - hydra.mode=RUN
     task:
     - experiment=dp
+    - experiment.effcomm.inf.utility=importance
     - experiment.effcomm.inf.prior=1e-20
   job:
-    name: analyze
+    name: setup
     chdir: true
     override_dirname: experiment=dp
     id: ???
