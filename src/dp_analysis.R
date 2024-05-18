@@ -98,33 +98,42 @@ df_s <- df %>%
 # - dp_medium (bool)
 # - no interaction, because no case where natural=1 and dp=0
 
-model0 <- lm(optimality ~ natural + dp_medium, df_s)
-summary_output <- capture.output(summary(model0))
-save_fn <- paste(save_dir, "/", "model_summary_0", ".txt", sep="")
-writeLines(summary_output, save_fn)
-
-model1 <- lmer(optimality ~ natural + dp_medium + (1 | original_name), df_s)
-summary_output <- capture.output(summary(model1))
-anova_output <- capture.output(Anova(model1))
-writeLines(summary_output, paste(save_dir, "/", "model_summary_1", ".txt", sep=""))
-writeLines(anova_output, paste(save_dir, "/", "model_anova_1", ".txt", sep=""))
-
 
 # Likelihood Ratio Tests
 
-#fit full model
+# fit full model
 model_full <- lmer(optimality ~ natural + dp_medium + (1 | original_name), data = df_s)
+# model_full <- lm(optimality ~ natural + dp_medium, data = df_s)
 
-#fit reduced models
+
+# fit reduced models
 model_natural <- lmer(optimality ~ natural + (1 | original_name), data = df_s)
+# model_natural <- lm(optimality ~ natural, data = df_s)
+
 model_dp <- lmer(optimality ~ dp_medium + (1 | original_name), data = df_s)
+# model_dp <- lm(optimality ~ dp_medium, data = df_s)
 
-#perform likelihood ratio test for differences in models
+
+
+# perform likelihood ratio test for differences in models
 lr_dp <- lrtest(model_full, model_natural)
-lr_natural <- lrtest(model_full, model_dp)
 
-summary_output <- capture.output(summary(lr_dp))
-writeLines(summary_output, paste(save_dir, "/", "likelihood_ratio_without_dp", ".txt", sep=""))
+print("LR TEST DP")
+print(lr_dp)
 
-summary_output <- capture.output(summary(lr_natural))
-writeLines(summary_output, paste(save_dir, "/", "likelihood_ratio_without_natural", ".txt", sep=""))
+# lr_natural <- lrtest(model_full, model_dp)
+
+# summary with little variance explained suggests we should try model without random effects
+
+print("FULL MODEL SUMMARY")
+print(summary(model_full))
+
+anova_output <- capture.output(anova(
+  model_full,
+  model_natural
+  # model_dp
+))
+
+
+writeLines(anova_output, paste(save_dir, "/", "anova_output", ".txt", sep=""))
+

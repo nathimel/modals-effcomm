@@ -108,7 +108,7 @@ hydra:
     task:
     - experiment=dp
     - experiment.effcomm.inf.utility=importance
-    - experiment.effcomm.inf.prior=semi_estimated
+    - experiment.effcomm.inf.prior=half_credit
   job:
     name: analyze
     chdir: true
@@ -151,7 +151,7 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal
+    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=half_credit/utility=importance/agent_type=literal
     choices:
       plot: custom
       typology: dev
