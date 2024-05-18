@@ -84,7 +84,7 @@ def main(config: DictConfig):
     experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
     experiment.natural_languages = {"languages": nat_langs, "id_start": None}
     save_files = [
-        # "artificial_languages", 
+        "artificial_languages", 
         "dominant_languages",
     ]
     if nat_langs:
@@ -100,9 +100,10 @@ def main(config: DictConfig):
     all_data["dominant"] = [lang in dom_langs for lang in langs]
     all_data["name"] = [lang.data["name"] for lang in langs]
 
+    # FOR DP ONLY
     # For each of the perturbed variants, record the name of the original natural language
-    get_orig = lambda name: re.sub( r"_variant_\d+", "", name )
-    all_data["original_name"] = [get_orig(lang.data["name"]) for lang in langs]
+    # get_orig = lambda name: re.sub( r"_variant_\d+", "", name )
+    # all_data["original_name"] = [get_orig(lang.data["name"]) for lang in langs]
 
     all_data.to_csv(df_fn, index=False)
     print("saved df.")

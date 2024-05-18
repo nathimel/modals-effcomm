@@ -164,7 +164,7 @@ class Experiment:
                 result = loader(self.paths[key])
                 print("done.")
             else:
-                print(f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None.")
+                print(f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None. Ignore this message if you are creating this file for the first time.")
             setattr(self, key, result)
 
     def write_files(self, files: list[str]) -> None:

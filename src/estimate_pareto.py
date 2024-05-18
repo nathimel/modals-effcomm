@@ -102,6 +102,7 @@ def main(config: DictConfig):
     result = optimizer.fit(seed_population)
 
     dominant_langs = result["dominating_languages"]
+    explored_langs = result["explored_languages"]
 
     # assign dummy names
     for idx, lang in enumerate(dominant_langs):
@@ -112,6 +113,8 @@ def main(config: DictConfig):
     print("Saving languages...")
     experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}
     experiment.write_files(["dominant_languages"])
+    experiment.artificial_languages = {"languages": explored_langs, "id_start": id_start}
+    experiment.write_files(["artificial_languages"])
     print("done.")
 
 

@@ -160,7 +160,7 @@ def main(config: DictConfig):
 
     # save for analysis
     experiment.natural_languages = {"languages": experiment_languages, "id_start": None}
-    experiment.write_files(["natural_languages"], kinds=["natural"])
+    experiment.write_files(["natural_languages"])
 
 
 if __name__ == "__main__":

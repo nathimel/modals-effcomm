@@ -34,7 +34,10 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     exp = Experiment(config)
-    plot_pointwise_inf_weights(exp).save("pointwise_inf_weights.png", width=10, height=10, dpi=300)
+    
+    plot_fn = "pointwise_inf_weights.png"
+    plot_pointwise_inf_weights(exp).save(plot_fn, width=10, height=10, dpi=300)
+    print(f"Saved plot to {plot_fn}.")
 
 
 

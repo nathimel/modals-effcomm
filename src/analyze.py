@@ -53,20 +53,20 @@ def get_modals_plot(
 
     # aesthetics for all data
     kwargs = {
-        # "color": lexeme_property,
+        "color": lexeme_property,
     }
 
-    kwargs["shape"] = lexicon_property
+    # kwargs["shape"] = lexicon_property
     # kwargs["size"] = lexicon_property
     # kwargs["color"] = lexicon_property
 
-    kwargs["color"] = "original_name" # for seeing variant
+    # DP ONLY
+    # kwargs["color"] = "original_name" # for seeing variant
 
     naturals_and_variants = data[data["name"].str.contains("sampled_lang_") == False]
 
     if counts:
-        pass
-        # kwargs["size"] = "counts"
+        kwargs["size"] = "counts"
 
     plot = (
         # Set data and the axes
@@ -74,34 +74,26 @@ def get_modals_plot(
         # + pn.scale_y_continuous(limits=[0, 1])
         + pn.geom_line(data=pareto_data)
 
+        + pn.geom_point(  # all langs
+            data=data,
+            stroke=0,
+            # alpha=.5,
+            mapping=pn.aes(**kwargs),
+            # size=4,
+        )
+
         # + pn.geom_point(  # all langs
-        #     data=data,
+        #     data=naturals_and_variants,
         #     stroke=0,
         #     # alpha=.5,
         #     mapping=pn.aes(**kwargs),
         #     size=4,
         # )
 
-        + pn.geom_point(  # all langs
-            data=naturals_and_variants,
-            stroke=0,
-            # alpha=.5,
-            mapping=pn.aes(**kwargs),
-            size=4,
-        )
-
-        # + pn.scale_color_cmap("cividis")
-        + pn.scale_color_discrete()
+        + pn.scale_color_cmap("cividis")
+        # + pn.scale_color_discrete()
         + pn.theme_classic()
     )
-
-    # plot = plot + (
-    #     pn.geom_point(
-    #         data=data[data["natural"] == True],
-    #         mapping=pn.aes(**kwargs),
-    #         size=8,            
-    #     )
-    # )
 
     if axis_titles:
         plot = (
@@ -128,7 +120,7 @@ def get_modals_plot(
                 data=natural_data,
                 # mapping=pn.aes(**kwargs),
                 # mapping=pn.aes(color=kwargs["color"]),
-                # color="red",
+                color="red",
                 shape="+",
                 size=8,
             )
@@ -180,36 +172,12 @@ def main(config: DictConfig):
     pareto_data = data[data["dominant"] == True]
     natural_data = data[data["natural"] == True]
 
-    # print("Excluding Thai from final analysis.")
-    # natural_data = natural_data[natural_data["name"] != "Thai"]
-
-    # TEMP: add a column for which kind of dp is satisfied
-    # DP-restricted, DP-nontriial, DP-trivial, and DP-false
-    def label_dp(row):
-        if row["dp_medium"] == True:
-            return "dp_medium"
-        if row["dp_restricted"] == True:
-            return "dp_restricted"
-        if row["dp_trivial"] == True:
-            return "trivial"
-        if row["dp_nontrivial"] == True:
-            return "nontrivial"
-        if row["deontic_priority"] == False:
-            return "false"
-    
-    dp = data.apply(label_dp, axis=1)
-    data["dp"] = dp
+    print("Excluding Thai from final analysis.")
+    natural_data = natural_data[natural_data["name"] != "Thai"]
 
     # Plot
     lexeme_property = config.plot.lexeme_property
     lexicon_property = config.plot.lexicon_property
-
-    # lexicon_property = "dp"
-    # lexicon_property = "dp_restricted"
-
-    # wataru sanity check
-    df_wataru = data[data["name"].isin(["wataru_language_1", "wataru_language_2"])]
-    df_wataru["counts"] = 1
 
     # Add counts only for plot
     plot_data = data.copy()
@@ -219,7 +187,6 @@ def main(config: DictConfig):
     plot_data = plot_data.sort_values(by=subset)
     plot_data["counts"] = vcs.values
 
-    plot_data = pd.concat([plot_data, df_wataru])
 
     plot = get_modals_plot(
         data=plot_data,
@@ -340,13 +307,13 @@ def main(config: DictConfig):
     data.to_csv(df_fn, index=False)
 
     # Extra for DP analysis: Run the R script
-    chdir = f"cd {hydra.utils.get_original_cwd()}"
-    save_dir = os.path.join(os.getcwd(), "analysis")
-    args = f"{save_dir}/all_data.csv  {save_dir}"
-    run_rscript = f"Rscript src/dp_analysis.R {args}"
-    command = f"{chdir}; {run_rscript}"
-    os.system(f"echo '{command}'")
-    os.system(command)
+    # chdir = f"cd {hydra.utils.get_original_cwd()}"
+    # save_dir = os.path.join(os.getcwd(), "analysis")
+    # args = f"{save_dir}/all_data.csv  {save_dir}"
+    # run_rscript = f"Rscript src/dp_analysis.R {args}"
+    # command = f"{chdir}; {run_rscript}"
+    # os.system(f"echo '{command}'")
+    # os.system(command)
 
 
 if __name__ == "__main__":
