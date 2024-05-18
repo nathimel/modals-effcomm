@@ -9,9 +9,17 @@ and an extension thereof. The codebase is structured to support computational ex
 
 ## Setting up an experiment
 
-A single file specifies the parameters and filepaths for an experiment, e.g. `half_credit_literal.yml`. These will include:
+This codebase uses [hydra](https://hydra.cc/) to organize configurations and outputs:
 
-- size of the semantic space to measure (number of quantificational forces and modal flavors).
+- The [conf](./conf/) folder contains the main `config.yaml` file, which can be overriden with additional YAML files or command-line arguments.
+
+- Running the shell script [scripts/run.sh](scripts/run.sh) will generate folders and files in [outputs](outputs), where a `.hydra` folder will be found with a `config.yaml` file. Reference this file as an exhaustive list of config fields to override.
+
+These will include (among other parameters):
+
+- the semantic space to measure (the discrete quantificational forces and modal flavors).
+- the prior / communicative need distribution over modal meanings
+- other parameters to measuring informativity
 - vocabulary size for artificial modal languages
 - the number of total languages to generate
 - how long to run algorithm to estimate optimal languages
@@ -123,34 +131,7 @@ Additionally, this project requires [the artificial language toolkit (ALTK)](htt
   
 ## Replicating the experimental results
 
-The main experimental results can be reproduced by running `./scripts/run_full_experiment.sh configs/salt.yml`.
-
-This just runs the following python scripts, which can also be run individually:
-<details>
-<summary>individual scripts</summary>
-<br>
-
-`python3 src/create_folders.py path_to_config`
-
-`python3 src/build_meaning_space.py path_to_config`
-
-`python3 src/generate_expressions.py path_to_config`
-
-`python3 src/sample_languages.py`
-
-`python3 src/add_natural_languages.py`
-
-`python3 src/extract_prior.py`
-
-`python3 src/estimate_pareto.py`
-
-`python3 src/measure_tradeoff.py`
-
-`python3 src/analyze.py`
-</details>
-
-### Specific experiments
-To replicate each of our experiments, use the following hydra overrides to the above scripts:
+To replicate each of our experiments, use the following commands:
 
 <details>
 <summary>commands</summary>
@@ -186,7 +167,7 @@ To replicate each of our experiments, use the following hydra overrides to the a
 - Prior=Estimated, Utility=Graded, Agents=Pragmatic
 
   `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=modality_corpus experiment.effcomm.inf.utility=half_credit experiment.effcomm.inf.agent_type=pragmatic`
-  
+
 </details>
 
 ## Citation
