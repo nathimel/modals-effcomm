@@ -20,7 +20,7 @@ A single file specifies the parameters and filepaths for an experiment, e.g. `ha
 
 Generate a large and diverse sample of mathematically possible languages.
 
-This is accomplished by the scripts `generate_expressions.py` `sample_languages.py` and `estimate_pareto_frontier.py`, which perform the following steps:
+This is accomplished by the scripts `generate_expressions.py` and `estimate_pareto.py`, which perform the following steps:
 
 - Expression generating from the set of meanings
 - Sampling expresions into languages
@@ -136,17 +136,57 @@ This just runs the following python scripts, which can also be run individually:
 
 `python3 src/generate_expressions.py path_to_config`
 
-`python3 src/sample_languages.py path_to_config`
+`python3 src/sample_languages.py`
 
-`python3 src/add_natural_languages.py path_to_config`
+`python3 src/add_natural_languages.py`
 
-`python3 src/extract_prior.py path_to_config`
+`python3 src/extract_prior.py`
 
-`python3 src/estimate_pareto_frontier.py path_to_config`
+`python3 src/estimate_pareto.py`
 
-`python3 src/measure_tradeoff.py path_to_config`
+`python3 src/measure_tradeoff.py`
 
-`python3 src/analyze.py path_to_config`
+`python3 src/analyze.py`
+</details>
+
+### Specific experiments
+To replicate each of our experiments, use the following hydra overrides to the above scripts:
+
+<details>
+<summary>commands</summary>
+<br>
+
+- Prior=Uniform, Utility=Binary, Agents=Literal
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=1e-20 experiment.effcomm.inf.utility=indicator experiment.effcomm.inf.agent_type=literal`
+
+- Prior=Uniform, Utility=Graded, Agents=Literal
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=1e-20 experiment.effcomm.inf.utility=half_credit experiment.effcomm.inf.agent_type=literal`
+
+- Prior=Estimated, Utility=Graded, Agents=Literal
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=modality_corpus experiment.effcomm.inf.utility=half_credit experiment.effcomm.inf.agent_type=literal`
+
+- Prior=Estimated, Utility=Binary, Agents=Literal
+- 
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=modality_corpus experiment.effcomm.inf.utility=indicator experiment.effcomm.inf.agent_type=literal`
+
+- Prior=Uniform, Utility=Binary, Agents=Pragmatic
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=1e-20 experiment.effcomm.inf.utility=indicator experiment.effcomm.inf.agent_type=pragmatic`
+
+- Prior=Uniform, Utility=Graded, Agent=Pragmatic
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=1e-20 experiment.effcomm.inf.utility=half_credit experiment.effcomm.inf.agent_type=pragmatic`
+
+- Prior=Estimated, Utility=Binary, Agents=Pragmatic
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=modality_corpus experiment.effcomm.inf.utility=indicator experiment.effcomm.inf.agent_type=pragmatic`
+
+- Prior=Estimated, Utility=Graded, Agents=Pragmatic
+
+  `./scripts/run.sh experiment.universe=cognition experiment.effcomm.inf.prior=modality_corpus experiment.effcomm.inf.utility=half_credit experiment.effcomm.inf.agent_type=pragmatic`
+  
 </details>
 
 ## Citation

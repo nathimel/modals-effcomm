@@ -1,0 +1,175 @@
+hydra:
+  run:
+    dir: ${filepaths.hydra_run_root}/${filepaths.leaf_subdir}
+  sweep:
+    dir: ${filepaths.hydra_sweep_root}
+    subdir: ${filepaths.leaf_subdir}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      handlers:
+      - console
+    disable_existing_loggers: false
+  env: {}
+  mode: RUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.mode=RUN
+    task:
+    - experiment.universe=cognition
+    - experiment.effcomm.inf.prior=modality_corpus
+    - experiment.effcomm.inf.utility=indicator
+    - experiment.effcomm.inf.agent_type=pragmatic
+  job:
+    name: analyze
+    chdir: true
+    override_dirname: ''
+    id: ???
+    num: ???
+    config_name: config
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys:
+        - experiment.universe
+        - experiment.sampling.unbiased.lexeme_property
+        - experiment.effcomm.comp.lot_negation
+        - experiment.effcomm.inf.prior
+        - experiment.effcomm.inf.utility
+        - experiment.effcomm.inf.agent_type
+        - experiment.sampling.maximum_lang_size
+        - experiment.sampling.total_pool_cap
+        - experiment.sampling.unbiased.sample_size
+        - experiment.sampling.evol.max_mutations
+        - experiment.sampling.evol.generation_size
+        - experiment.sampling.evol.num_generations
+        - experiment.sampling.evol.explore
+        - seed
+  runtime:
+    version: 1.3.2
+    version_base: '1.3'
+    cwd: /Users/nathanielimel/uw/projects/modals-effcomm
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /Users/nathanielimel/uw/projects/modals-effcomm/conf
+      schema: file
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=cognition/prior=modality_corpus/utility=indicator/agent_type=pragmatic
+    choices:
+      plot: custom
+      typology: dev
+      experiment: dev
+      experiment/overwrites: default
+      experiment/sampling: small
+      experiment/sampling/evol: default
+      experiment/effcomm: half_credit_literal
+      experiment/effcomm/inf: hcl
+      experiment/effcomm/comp: default
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: custom
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false
