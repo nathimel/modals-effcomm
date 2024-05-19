@@ -71,7 +71,24 @@ def main(config: DictConfig):
     comp = experiment.complexity_measure
     inf = experiment.informativity_measure
     comm_cost = lambda lang: 1 - inf(lang)
-    objectives = [comp, comm_cost]
+
+    # Use optimizer as an exploration / sampling method as follows:
+    # estimate FOUR pareto frontiers using the evolutionary algorithm; one for each corner of the 2D space of possible langs
+    directions = {
+        "lower_left": ("comm_cost", "complexity"),
+        "lower_right": ("informativity", "complexity"),
+        "upper_left": ("comm_cost", "simplicity"),
+        "upper_right": ("informativity", "simplicity"),
+    }
+    objectives = {
+        "comm_cost": lambda lang: 1 - inf(lang),
+        "informativity": inf,
+        "complexity": comp,
+        "simplicity": lambda lang: 1
+        / comp(
+            lang
+        ),  # this is different from the simplicity value computed during analysis. The data['simplicity'] field will be reset to None before then, in measure_tradeoff.
+    }
 
     # Load modals-specifc mutations
     mutations = [
@@ -93,22 +110,61 @@ def main(config: DictConfig):
         lang_size=lang_size,
     )        
 
-    print(f"Minimizing for complexity, comm_cost ...")
-    result = optimizer.fit(seed_population)
+    # Explore all four corners of the possible language space
+    results = {k: None for k in directions}
+    pool = []
+    for direction in evolutionary_alg_configs.directions:
+        # set directions of optimization
+        x, y = directions[direction]
+        optimizer.objectives = [objectives[x], objectives[y]]
+        print(f"Minimizing for {x}, {y} ...")    
 
-    dominant_langs = result["dominating_languages"]
-    explored_langs = result["explored_languages"]
+        # run algorithm
+        result = optimizer.fit(
+            seed_population=seed_population,
+            # id_start=id_start,
+            explore=explore,
+        )
 
-    # assign dummy names
-    for idx, lang in enumerate(dominant_langs):
-        lang.data["name"] = f"sampled_lang_{idx}"
+        explored_langs = result["explored_languages"]
+        # assign dummy names
+        if id_start is None:
+            id_start = 0
+        for idx, lang in enumerate(explored_langs):
+            lang.data["name"] = f"sampled_lang_{id_start + idx}"
+        result["explored_languages"] = explored_langs
 
+        # collect results
+        results[direction] = result
+        id_start += len(result["explored_languages"])
+        pool.extend(results[direction]["explored_languages"])
+
+    # the Pareto langs for the complexity/comm_cost trade-off.
+    # Unclear to me whether I need to assign dummy names to these.
+    dominant_langs = results["lower_left"]["dominating_languages"]
+
+    print(f"Discovered {len(pool)} languages.")
+    print(f"Filtering languages...")
+
+    pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
 
     print("Saving languages...")
+    # Save the pareto front
     experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}
     experiment.write_files(["dominant_languages"])
-    experiment.artificial_languages = {"languages": explored_langs, "id_start": id_start}
+
+    # remove some non-dominant to limit final pool to a standard size
+    # TODO: remove this hack
+    num_natural_langs = len(experiment.natural_languages["languages"]) if experiment.natural_languages is not None else 0
+    cap = config.experiment.sampling.total_pool_cap - len(dominant_langs) - num_natural_langs
+    candidate_langs = [lang for lang in pool if lang not in dominant_langs]
+    if len(pool) > cap:
+        reduced_pool = random.sample(candidate_langs, cap)
+        pool = reduced_pool + dominant_langs
+
+    # Save all the langs
+    experiment.artificial_languages = {"languages": pool, "id_start": id_start}
     experiment.write_files(["artificial_languages"])
     print("done.")
 

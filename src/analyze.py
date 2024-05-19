@@ -53,7 +53,7 @@ def get_modals_plot(
 
     # aesthetics for all data
     kwargs = {
-        "color": lexeme_property,
+        "fill": lexeme_property,
     }
 
     # kwargs["shape"] = lexicon_property
@@ -65,14 +65,18 @@ def get_modals_plot(
 
     naturals_and_variants = data[data["name"].str.contains("sampled_lang_") == False]
 
-    if counts:
-        kwargs["size"] = "counts"
+    # if counts:
+        # kwargs["size"] = "counts"
 
     plot = (
         # Set data and the axes
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
         # + pn.scale_y_continuous(limits=[0, 1])
-        + pn.geom_line(data=pareto_data)
+        # + pn.geom_line(data=pareto_data)
+        + pn.geom_point(
+            data=pareto_data,
+            color="black",
+        )
 
         + pn.geom_point(  # all langs
             data=data,

@@ -9,21 +9,24 @@ experiment:
       agent_type: literal
   sampling:
     evol:
-      generation_size: 200
-      num_generations: 20
+      generation_size: 2000
+      num_generations: 200
       max_mutations: 5
       explore: 0
       directions:
       - lower_left
+      - lower_right
+      - upper_left
+      - upper_right
       seed_generation_pool:
       - random
       - existing
       - natural
     maximum_lang_size: 10
     unbiased:
-      sample_size: 2000
+      sample_size: 40000
       lexeme_property: iff
-    total_pool_cap: 5000
+    total_pool_cap: 75000
     variants:
       num_variants_per_language: 100
   overwrites:
