@@ -1,0 +1,77 @@
+---
+title: "multiplot"
+author: "Nathaniel Imel"
+date: "2024-06-01"
+output: html_document
+---
+
+```{r setup}
+library(ggplot2)
+library(tidyverse)
+library(lme4)
+library(modelr)
+library(viridis)
+library(ggrepel)
+library(latex2exp)
+```
+
+
+```{r load}
+
+df <- read_csv("../../analysis_data/all_data.csv")
+head(df)
+```
+
+
+```{r filter}
+
+df_an <- df %>% filter(
+  universe == "cognition",
+  # and filter to literal for now, this is one reason to use patchwork
+  agent_type == "literal",
+)
+
+df_natural <- df_an %>% filter(
+  natural == TRUE
+)
+
+df_dominant <- df_an %>% filter(
+  dominant == TRUE
+)
+
+```
+
+
+```{r plot1}
+
+(
+  ggplot(
+    df_an,
+    aes(
+      x=complexity,
+      y=comm_cost,
+    )
+  )
+  # dominant
+  + geom_point(
+    data = df_dominant,
+    color = "black",
+  )
+  # all langs
+  + geom_point(
+    aes(
+      color = iff,
+    ),
+    alpha=0.1,
+  )
+  # natural
+  + geom_point(
+    data = df_natural,
+    shape = "+",
+    color = "red",
+  )
+  + scale_color_viridis(option = "cividis")
+  + facet_grid("prior ~ utility")
+)
+
+```

@@ -179,7 +179,7 @@ class ModalLanguage(Language):
         return f"Modal_Language: {self.data['name']}\n[\n{expressions_str}\n]"
 
     def __hash__(self) -> int:
-        """Return a unique hash for a ModalLanguage. Two languages are unique if they differ in their vocabulary only by the forms of each expression.
+        """Return a unique hash for a ModalLanguage. See description below.
 
         Because we've specified that expressions are hashed as a function of their meaning, lot formula, AND their form. This was necessary for differentiating synonymous expressions on the informativity calculation side, where we map expressions to indices and vice versa. However, we need to make sure that all natural languages are distinct, even if they have exactly the same modal meanings, differing only in form.
 

@@ -5,7 +5,8 @@ import random
 from ultk.effcomm.optimization import EvolutionaryOptimizer
 from experiment import Experiment
 from misc.file_util import set_seed
-from modals.modal_language import ModalLanguage
+from modals.modal_language import ModalLanguage, iff
+from modals.modal_language import ModalExpression, ModalMeaning, ModalMeaningPoint
 from sample_languages import generate_languages
 from modals.modal_mutations import (
     Add_Modal,
@@ -25,7 +26,8 @@ def main(config: DictConfig):
     print("Estimating pareto frontier ...")
     # Load optimization params
     evolutionary_alg_configs = config.experiment.sampling.evol
-    sample_size = evolutionary_alg_configs.generation_size
+    sample_size = config.experiment.sampling.unbiased.sample_size
+    generation_size = evolutionary_alg_configs.generation_size
     max_mutations = evolutionary_alg_configs.max_mutations
     generations = evolutionary_alg_configs.num_generations
     explore = evolutionary_alg_configs.explore
@@ -50,27 +52,54 @@ def main(config: DictConfig):
     seed_pool_configs = evolutionary_alg_configs.seed_generation_pool
     id_start = None
 
-    if "existing" in seed_pool_configs:
-        result = experiment.artificial_languages
-        if result is not None:
-            seed_population.extend(result["languages"])
-            id_start = result["id_start"]
-
     if "random" in seed_pool_configs:
         print("Sampling seed generation...")
 
-        langs = random_languages(
-            expressions, 
-            sampling_strategy="stratified",
-            sample_size=1000, 
-            max_size=10,
+        # TODO: consider generate_languages, which can sample by degree-iff
+
+        result = generate_languages(
             language_class=ModalLanguage,
+            expressions=expressions,
+            lang_size=10,
+            sample_size=sample_size,
+            criterion=iff,
         )
+        langs = result["languages"]
+        id_start = result["id_start"]
+
+
+        # Add perfect informativity lang
+
+        inf_1_lang = ModalLanguage(
+            expressions=[
+                ModalExpression(
+                    form=f"perfect_inf_lang_form_{referent.name}",
+                    meaning=ModalMeaning(
+                        points=(referent,),
+                        meaning_space=experiment.universe,
+                    ),
+                    # This is a complete hack, we should just search, but this is for debugging purposes anyway
+                    lot_expression=f"and({referent.force}, {referent.flavor})",
+                ) for referent in experiment.universe.referents
+            ],
+            name = "perfect_inf_lang",
+        )
+        langs = langs + [inf_1_lang]
+        id_start += 1
+
+        # breakpoint()
+
+        # langs = random_languages(
+        #     expressions, 
+        #     sampling_strategy="stratified",
+        #     sample_size=sample_size, 
+        #     max_size=10,
+        #     language_class=ModalLanguage,
+        # )
         seed_population.extend(langs)
 
     comp = experiment.complexity_measure
     inf = experiment.informativity_measure
-    comm_cost = lambda lang: 1 - inf(lang)
 
     # Use optimizer as an exploration / sampling method as follows:
     # estimate FOUR pareto frontiers using the evolutionary algorithm; one for each corner of the 2D space of possible langs
@@ -104,15 +133,15 @@ def main(config: DictConfig):
         objectives=objectives,
         expressions=expressions,
         mutations=mutations,
-        sample_size=sample_size,
+        sample_size=generation_size, # TODO: change name to gen_size
         max_mutations=max_mutations,
         generations=generations,
         lang_size=lang_size,
-    )        
+    )
 
     # Explore all four corners of the possible language space
     results = {k: None for k in directions}
-    pool = []
+    pool: list[ModalLanguage] = []
     for direction in evolutionary_alg_configs.directions:
         # set directions of optimization
         x, y = directions[direction]
@@ -121,7 +150,8 @@ def main(config: DictConfig):
 
         # run algorithm
         result = optimizer.fit(
-            seed_population=seed_population,
+            # seed_population=seed_population,
+            seed_population=pool if pool else seed_population,
             # id_start=id_start,
             explore=explore,
         )
@@ -131,6 +161,8 @@ def main(config: DictConfig):
         if id_start is None:
             id_start = 0
         for idx, lang in enumerate(explored_langs):
+            if lang.data["name"] == "perfect_inf_lang":
+                continue
             lang.data["name"] = f"sampled_lang_{id_start + idx}"
         result["explored_languages"] = explored_langs
 
@@ -146,8 +178,12 @@ def main(config: DictConfig):
     print(f"Discovered {len(pool)} languages.")
     print(f"Filtering languages...")
 
-    pool = list(set(pool))
+    # pool = list(set(pool))
     dominant_langs = list(set(dominant_langs))
+
+    # TODO: add a sanity check language with perfect informativity.
+
+    # print(f"Discovered {len(pool)} unique languages.")
 
     print("Saving languages...")
     # Save the pareto front

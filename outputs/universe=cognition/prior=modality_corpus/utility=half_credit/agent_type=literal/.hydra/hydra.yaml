@@ -106,14 +106,16 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
+    - experiment.overwrites.languages={natural:False, artificial:True, dominant:True}
     - experiment.universe=cognition
     - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.agent_type=literal
   job:
-    name: analyze
+    name: new_explore_languages
     chdir: true
-    override_dirname: ''
+    override_dirname: experiment.overwrites.languages={natural:False, artificial:True,
+      dominant:True}
     id: ???
     num: ???
     config_name: config
@@ -158,7 +160,7 @@ hydra:
       typology: dev
       experiment: dev
       experiment/overwrites: default
-      experiment/sampling: small
+      experiment/sampling: large
       experiment/sampling/evol: default
       experiment/effcomm: half_credit_literal
       experiment/effcomm/inf: hcl

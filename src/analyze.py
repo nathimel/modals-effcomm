@@ -94,7 +94,11 @@ def get_modals_plot(
         #     size=4,
         # )
 
-        + pn.scale_color_cmap("cividis")
+        # May want to change this based on agent type etc.
+        + pn.scale_y_continuous(breaks=[0., 0.25, 0.5, 1.], limits=[0,1])
+
+        # + pn.scale_color_cmap("cividis")
+        + pn.scale_fill_cmap("cividis")
         # + pn.scale_color_discrete()
         + pn.theme_classic()
     )
