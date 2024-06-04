@@ -106,16 +106,14 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - experiment.overwrites.languages={natural:False, artificial:True, dominant:True}
     - experiment.universe=cognition
     - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.agent_type=literal
   job:
-    name: new_explore_languages
+    name: analyze
     chdir: true
-    override_dirname: experiment.overwrites.languages={natural:False, artificial:True,
-      dominant:True}
+    override_dirname: ''
     id: ???
     num: ???
     config_name: config
