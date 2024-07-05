@@ -17,12 +17,14 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     experiment = Experiment(
-        config, 
+        config,
     )
     lang_fn = "artificial_languages"
     experiment.set_filepaths([lang_fn])
     if not config.experiment.overwrite_languages and experiment.path_exists(lang_fn):
-        print("Language file found and will not be overwritten; skipping sampling of languages.")
+        print(
+            "Language file found and will not be overwritten; skipping sampling of languages."
+        )
         return
 
     experiment.load_files(["expressions", lang_fn])
@@ -33,7 +35,9 @@ def main(config: DictConfig):
 
     # Turn the knob on lexeme-level property
     expressions = experiment.expressions
-    lexeme_property = getattr(modal_language, config.experiment.sampling.unbiased.lexeme_property)
+    lexeme_property = getattr(
+        modal_language, config.experiment.sampling.unbiased.lexeme_property
+    )
 
     print("Sampling random languages ...")
     result = generate_languages(

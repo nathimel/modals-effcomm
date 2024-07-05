@@ -16,26 +16,30 @@ from omegaconf import DictConfig
 
 from itertools import permutations
 
-def shuffle_point(referent: ModalMeaningPoint, universe: ModalMeaningSpace) -> ModalMeaningPoint:
+
+def shuffle_point(
+    referent: ModalMeaningPoint, universe: ModalMeaningSpace
+) -> ModalMeaningPoint:
     new_referent = referent
     while new_referent == referent:
         force, flavor = referent.data
 
-        if random.choice([0,1]):
+        if random.choice([0, 1]):
             # sample a force
             force = random.choice(universe.forces)
         else:
             # sample a flavor
             flavor = random.choice(universe.flavors)
-        
+
         new_referent = ModalMeaningPoint(force, flavor)
 
     return new_referent
 
+
 def shuffle_languages_by_expression(
     languages: list[ModalLanguage],
     expressions: list[ModalExpression],
-    num_variants_per_language: int = 100, 
+    num_variants_per_language: int = 100,
 ) -> dict[str, Any]:
     """For each language, obtain a hypothetical variant, by for each expression, randomly changing the meanings it can express by swapping either the force or flavor of each meaning points."""
     variants = []
@@ -51,7 +55,9 @@ def shuffle_languages_by_expression(
                     new_referent = shuffle_point(referent, language.universe)
                     new_referents.append(new_referent)
 
-                new_meaning = ModalMeaning(points=new_referents, meaning_space=language.universe)
+                new_meaning = ModalMeaning(
+                    points=new_referents, meaning_space=language.universe
+                )
                 # search the expressions for correct lot
                 for candidate in expressions:
                     if candidate.meaning == new_meaning:
@@ -65,8 +71,8 @@ def shuffle_languages_by_expression(
                 new_vocab.append(new_expression)
 
             variant = ModalLanguage(
-            expressions=new_vocab, 
-            name=f"{language.data['name']}_variant_{i}",
+                expressions=new_vocab,
+                name=f"{language.data['name']}_variant_{i}",
             )
 
             # ensure they are different; I don' think this is guaranteed
@@ -75,15 +81,16 @@ def shuffle_languages_by_expression(
 
             variants.append(variant)
 
-    variants = list(set(variants)) # weak guard against getting same lang again
-    
+    variants = list(set(variants))  # weak guard against getting same lang again
+
     return variants
+
 
 def perturb_meaning_space(
     universe: ModalMeaningSpace,
     languages: list[ModalLanguage],
     expressions: list[ModalExpression],
-    num_variants_per_language: int = 1, 
+    num_variants_per_language: int = 1,
 ) -> dict[str, Any]:
     """Rotate a modal meaning space and obtain the resulting hypothetical variants resulting new meaning for each expression, for each language. Since there is no similarity structure within each axis, a 'rotation' of the meaning space amounts to shuffling the space of referents in the meaning space."""
     referents = universe.referents
@@ -94,13 +101,14 @@ def perturb_meaning_space(
     if len(referents) <= 6:
         perms = [x for x in permutations(referents) if x != referents]
         mappings = [
-            {referents[idx]: perm[idx] for idx in range(len(referents))} for perm in perms[:num_variants_per_language]
+            {referents[idx]: perm[idx] for idx in range(len(referents))}
+            for perm in perms[:num_variants_per_language]
         ]
 
     else:
         mappings = []
         for _ in range(num_variants_per_language):
-            
+
             # only shuffle flavors
             flavors = [ref.flavor for ref in referents]
             shuffled_flavors = copy.deepcopy(flavors)
@@ -111,11 +119,14 @@ def perturb_meaning_space(
                 continue
             mappings.append(
                 # Need to map each current meaning to the new meaning induced by the rotated meaning space
-
                 # TODO: make the mapping (fo, fll) -> (fo, shuffled fl)
-                {referents[idx]: ModalMeaningPoint((referents[idx].force, shuffled_flavors[idx])) for idx in range(len(referents))}
+                {
+                    referents[idx]: ModalMeaningPoint(
+                        (referents[idx].force, shuffled_flavors[idx])
+                    )
+                    for idx in range(len(referents))
+                }
             )
-
 
     # Iterate over languages and obtain their variants
     variants = []
@@ -128,9 +139,14 @@ def perturb_meaning_space(
             # Obtain a hypothetical variant of a language induced by the referent_mapping
             for expression in language.expressions:
 
-                new_referents = tuple(referent_mapping[referent] for referent in expression.meaning.referents)
+                new_referents = tuple(
+                    referent_mapping[referent]
+                    for referent in expression.meaning.referents
+                )
 
-                new_meaning = ModalMeaning(points=new_referents, meaning_space=language.universe)
+                new_meaning = ModalMeaning(
+                    points=new_referents, meaning_space=language.universe
+                )
 
                 # search the expressions for correct lot
                 for candidate in expressions:
@@ -151,13 +167,11 @@ def perturb_meaning_space(
 
             variants.append(variant)
 
-
     # Since we actually want to compare each lang against its variants, its actually unclear that we should filter these variants for uniqueness.
-            
-    # variants = list(set(variants)) # weak guard against getting same lang again
-        
-    return variants
 
+    # variants = list(set(variants)) # weak guard against getting same lang again
+
+    return variants
 
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
@@ -165,12 +179,17 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     experiment = Experiment(
-        config, 
+        config,
     )
     lang_fn = "artificial_languages"
     experiment.set_filepaths([lang_fn])
-    if not config.experiment.overwrites.languages.artificial and experiment.path_exists(lang_fn):
-        print("Language file found and will not be overwritten; skipping sampling of languages.")
+    if (
+        not config.experiment.overwrites.languages.artificial
+        and experiment.path_exists(lang_fn)
+    ):
+        print(
+            "Language file found and will not be overwritten; skipping sampling of languages."
+        )
         return
 
     print("natural...")
@@ -194,6 +213,7 @@ def main(config: DictConfig):
 
     experiment.artificial_languages = {"languages": languages, "id_start": None}
     experiment.write_files([lang_fn])
+
 
 if __name__ == "__main__":
     main()

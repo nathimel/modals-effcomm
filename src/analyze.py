@@ -18,7 +18,7 @@ def get_modals_plot(
     lexeme_property: str = None,
     natural_data: pd.DataFrame = None,
     counts=False,
-    axis_titles = True,
+    axis_titles=True,
     lexicon_property: str = None,
 ) -> pn.ggplot:
     """Create the main plotnine plot for the communicative cost, complexity trade-off for the experiment.
@@ -60,7 +60,7 @@ def get_modals_plot(
     # kwargs["size"] = lexicon_property
     # kwargs["color"] = lexicon_property
 
-    kwargs["color"] = "original_name" # for seeing variant
+    kwargs["color"] = "original_name"  # for seeing variant
 
     naturals_and_variants = data[data["name"].str.contains("sampled_lang_") == False]
 
@@ -73,7 +73,6 @@ def get_modals_plot(
         pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
         # + pn.scale_y_continuous(limits=[0, 1])
         + pn.geom_line(data=pareto_data)
-
         # + pn.geom_point(  # all langs
         #     data=data,
         #     stroke=0,
@@ -81,7 +80,6 @@ def get_modals_plot(
         #     mapping=pn.aes(**kwargs),
         #     size=4,
         # )
-
         + pn.geom_point(  # all langs
             data=naturals_and_variants,
             stroke=0,
@@ -89,7 +87,6 @@ def get_modals_plot(
             mapping=pn.aes(**kwargs),
             size=4,
         )
-
         # + pn.scale_color_cmap("cividis")
         + pn.scale_color_discrete()
         + pn.theme_classic()
@@ -99,23 +96,16 @@ def get_modals_plot(
     #     pn.geom_point(
     #         data=data[data["natural"] == True],
     #         mapping=pn.aes(**kwargs),
-    #         size=8,            
+    #         size=8,
     #     )
     # )
 
     if axis_titles:
-        plot = (
-        plot
-        + pn.xlab("Complexity")
-        + pn.ylab("Communicative cost")        
-        )
+        plot = plot + pn.xlab("Complexity") + pn.ylab("Communicative cost")
     else:
-        plot = (
-        plot
-        + pn.theme(
+        plot = plot + pn.theme(
             axis_title_x=pn.element_blank(),
             axis_title_y=pn.element_blank(),
-        )
         )
 
     # wataru sanity check
@@ -156,7 +146,9 @@ def main(config: DictConfig):
     pd.set_option("display.max_columns", None)
 
     ensure_dir(get_original_fp(config.filepaths.analysis_subdir))
-    get_analysis_fn = lambda fn: get_subdir_fn(config, config.filepaths.analysis_subdir, fn)
+    get_analysis_fn = lambda fn: get_subdir_fn(
+        config, config.filepaths.analysis_subdir, fn
+    )
 
     # Load analysis files
     analysis_fns = config.filepaths.analysis
@@ -196,7 +188,7 @@ def main(config: DictConfig):
             return "nontrivial"
         if row["deontic_priority"] == False:
             return "false"
-    
+
     dp = data.apply(label_dp, axis=1)
     data["dp"] = dp
 
@@ -263,7 +255,7 @@ def main(config: DictConfig):
     dp_data = data[data["deontic_priority"] == True]
     ep_data = data[data["epistemic_priority"] == True]
     cp_data = data[data["circ_priority"] == True]
-    dpr_data = data[data["dp_restricted"] == True] 
+    dpr_data = data[data["dp_restricted"] == True]
 
     dlsav_means = trade_off_means("dlsav_means", dlsav_data, properties)
     dp_means = trade_off_means("deontic_priority_means", dp_data, properties)
@@ -273,17 +265,17 @@ def main(config: DictConfig):
 
     natural_means = trade_off_means("natural_means", natural_data, properties)
     population_means = trade_off_means("population_means", data, properties)
-    means_df = pd.concat([
-        natural_means, 
-        dlsav_means, 
-        dp_means, 
-        ep_means, 
-        cp_means, 
-        dpr_means, 
-        population_means,
-    ]).set_index(
-        "name"
-    )
+    means_df = pd.concat(
+        [
+            natural_means,
+            dlsav_means,
+            dp_means,
+            ep_means,
+            cp_means,
+            dpr_means,
+            population_means,
+        ]
+    ).set_index("name")
     pop_means_dict = population_means.iloc[0].to_dict()
     ttest_natural_df = trade_off_ttest(natural_data, pop_means_dict, properties)
     ttest_dlsav_df = trade_off_ttest(dlsav_data, pop_means_dict, properties)
@@ -312,19 +304,25 @@ def main(config: DictConfig):
     print(f"dlsav languages ({len(dlsav_data)}) against population ({len(data)})")
     print(ttest_dlsav_df)
     print()
-    print(f"deontic priority languages ({len(dp_data)}) against population ({len(data)})")
+    print(
+        f"deontic priority languages ({len(dp_data)}) against population ({len(data)})"
+    )
     print(ttest_dp_df)
-    print()    
     print()
-    print(f"epistemic priority languages ({len(ep_data)}) against population ({len(data)})")
+    print()
+    print(
+        f"epistemic priority languages ({len(ep_data)}) against population ({len(data)})"
+    )
     print(ttest_ep_df)
-    print()        
+    print()
     print(f"circ priority languages ({len(cp_data)}) against population ({len(data)})")
     print(ttest_cp_df)
     print()
-    print(f"deontic priority restricted languages ({len(cp_data)}) against population ({len(data)})")
+    print(
+        f"deontic priority restricted languages ({len(cp_data)}) against population ({len(data)})"
+    )
     print(ttest_cp_df)
-    print()    
+    print()
 
     # Save results
     means_df.to_csv(means_fn)
@@ -333,7 +331,9 @@ def main(config: DictConfig):
     ttest_dp_df.to_csv(ttest_dp_fn)
     ensure_dir(os.path.abspath(os.path.join(correlations_fn, os.pardir)))
     [
-        intervals.to_csv(f"{correlations_fn.replace('correlation_property', prop)}", index=False)
+        intervals.to_csv(
+            f"{correlations_fn.replace('correlation_property', prop)}", index=False
+        )
         for prop, intervals in zip(*[properties, confidence_intervals])
     ]
     pareto_data.to_csv(pareto_df_fn, index=False)

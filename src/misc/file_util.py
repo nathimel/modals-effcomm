@@ -25,35 +25,39 @@ def set_seed(seed: int) -> None:
 # Hydra
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def get_original_fp(fn: str):
     return os.path.join(hydra.utils.get_original_cwd(), fn)
 
+
 def get_subdir_fn(config: DictConfig, subdir: str, fn: str):
     """Get correct absolute path of a filename joined to a subdir, correcting for hydra run directory."""
-    absolute_subdir = os.getcwd().replace(
-        config.filepaths.leaf_subdir, subdir
-    )
-    ensure_dir(absolute_subdir)    
+    absolute_subdir = os.getcwd().replace(config.filepaths.leaf_subdir, subdir)
+    ensure_dir(absolute_subdir)
     fullpath = os.path.join(absolute_subdir, fn)
     return fullpath
+
 
 def get_subdir_fn_abbrev(config: DictConfig, subdir: str, filename: str):
     """N.B.: this is an abbreviated version of get_subdir_fn."""
     return get_subdir_fn(
-        config, 
+        config,
         getattr(config.filepaths, subdir),
         getattr(config.filepaths, filename),
     )
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Setup
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def ensure_dir(path: str) -> None:
-    """Creates the dir recursively if it does not exist."""    
+    """Creates the dir recursively if it does not exist."""
     if not os.path.isdir(path):
         os.makedirs(path)
         print(f"Created directory {path}.")
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Configs
@@ -84,6 +88,7 @@ def load_space(fn: str) -> ModalMeaningSpace:
     with open(fn, "r") as stream:
         d = yaml.safe_load(stream)
     return ModalMeaningSpace(d["forces"], d["flavors"])
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Expressions

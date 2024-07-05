@@ -19,15 +19,16 @@ from ultk.language.grammar import Grammar
 #     return sum([item_complexity(e, mlot) for e in language.expressions])
 
 # TODO: this is so hacky, clean it up
-def language_complexity(language: ModalLanguage, mlot: ModalLOT, grammar: Grammar, config) -> float:
+def language_complexity(
+    language: ModalLanguage, mlot: ModalLOT, grammar: Grammar, config
+) -> float:
     """Sum of all the language's item's (prerecorded) complexitites."""
-    if config.experiment.lot_estimation == 'ultk':
+    if config.experiment.lot_estimation == "ultk":
         return sum([len(grammar.parse(e.lot_expression)) for e in language.expressions])
-    elif config.experiment.lot_estimation == 'homebuilt':
+    elif config.experiment.lot_estimation == "homebuilt":
         return sum([item_complexity(e, mlot) for e in language.expressions])
 
 
 def item_complexity(item: ModalExpression, mlot: ModalLOT) -> int:
     """Measure the complexity of a single item."""
     return mlot.expression_complexity(ExpressionTree.from_string(item.lot_expression))
-

@@ -14,18 +14,19 @@ def plot_pointwise_inf_weights(exp: Experiment) -> pn.ggplot:
     df = pd.DataFrame(
         [
             # Referent, Referent, Weight
-            (str(ref), str(ref_), exp.prior[idx] * exp.utility(ref, ref_)) 
-            for ref_ in exp.universe for idx, ref in enumerate(exp.universe)
+            (str(ref), str(ref_), exp.prior[idx] * exp.utility(ref, ref_))
+            for ref_ in exp.universe
+            for idx, ref in enumerate(exp.universe)
         ],
-        columns=["ref", "ref_", "weight"]
+        columns=["ref", "ref_", "weight"],
     )
 
     return (
-        pn.ggplot(df) 
-        + pn.geom_tile(pn.aes(x="ref_", y="ref", fill="weight") ) 
+        pn.ggplot(df)
+        + pn.geom_tile(pn.aes(x="ref_", y="ref", fill="weight"))
         + pn.ylab("Speaker meaning")
         + pn.xlab("Listener meaning")
-        + pn.theme(axis_text_x = pn.element_text(angle=45))
+        + pn.theme(axis_text_x=pn.element_text(angle=45))
     )
 
 
@@ -34,8 +35,9 @@ def main(config: DictConfig):
     set_seed(config.seed)
 
     exp = Experiment(config)
-    plot_pointwise_inf_weights(exp).save("pointwise_inf_weights.png", width=10, height=10, dpi=300)
-
+    plot_pointwise_inf_weights(exp).save(
+        "pointwise_inf_weights.png", width=10, height=10, dpi=300
+    )
 
 
 if __name__ == "__main__":

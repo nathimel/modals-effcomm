@@ -7,7 +7,14 @@ from ultk.effcomm.informativity import informativity
 from ultk.language.grammar import Grammar, Rule
 
 from typing import Any
-from misc.file_util import get_original_fp, load_expressions, load_languages, save_expressions, save_languages, get_subdir_fn_abbrev
+from misc.file_util import (
+    get_original_fp,
+    load_expressions,
+    load_languages,
+    save_expressions,
+    save_languages,
+    get_subdir_fn_abbrev,
+)
 from modals.modal_meaning import ModalMeaningSpace
 from modals.modal_utility_measures import half_credit, indicator, utility_func_from_csv
 from modals.modal_language_of_thought import ModalLOT
@@ -16,10 +23,12 @@ from omegaconf import DictConfig
 
 from scipy.special import softmax
 
+
 def random_stochastic_matrix(shape: tuple[int], beta: float = 1e-2):
     """Generate a random stochastic matrix using energy-based initialization, where lower `beta` -> more uniform initialization."""
     energies = beta * np.random.randn(*shape)
     return softmax(energies, axis=-1)
+
 
 class Experiment:
     """A simple data structure to contain initialized constructs for effcomm experiment, i.e. universe, prior, complexity and informativeness measures, etc."""
@@ -28,7 +37,7 @@ class Experiment:
         self,
         config: DictConfig,
         load_files: list[str] = [],
-        ) -> None:
+    ) -> None:
         """Construct an experiment object, which can contain all the necessary data for running the computational experiment measuring efficiency of modal languages.
 
         Args:
@@ -58,13 +67,13 @@ class Experiment:
         if isinstance(prior, str):
             fn = get_original_fp(config.filepaths.prior_fn)
             prior_df = pd.read_csv(fn)
-        else: # is an int or float
+        else:  # is an int or float
             prior_df = referents_df.copy()[["name"]]
             prior_df["probability"] = random_stochastic_matrix(
                 (len(referents_df),), beta=prior
             ).tolist()
         referents_df["probability"] = prior_df["probability"]
-        
+
         # Construct Universe
         universe = ModalMeaningSpace.from_dataframe(referents_df)
 
@@ -73,7 +82,7 @@ class Experiment:
         if not np.isclose(prior.sum(), 1.0):
             raise Exception(f"Prior does not sum to 1.0. (sum={prior.sum()})")
 
-        # Construct the utility function for the experiment        
+        # Construct the utility function for the experiment
         utility = None
         name = config.experiment.effcomm.inf.utility
         fn = get_original_fp(config.filepaths.utility_fn)
@@ -84,16 +93,17 @@ class Experiment:
         elif os.path.exists(fn):
             utility = utility_func_from_csv(fn)
         else:
-            raise ValueError(f"Invalid utility function name. You must pass either 'indicator' or 'half_credit' or the name of a file located at the data/utility folder.")
+            raise ValueError(
+                f"Invalid utility function name. You must pass either 'indicator' or 'half_credit' or the name of a file located at the data/utility folder."
+            )
         self.utility = utility
-        
+
         ######################################################################
         # Initialize experiment parameters
         ######################################################################
 
         grammar_fn = get_original_fp(config.filepaths.grammar_fn)
         modal_grammar = Grammar.from_yaml(grammar_fn)
-
 
         self.config = config
         self.universe = universe
@@ -104,7 +114,9 @@ class Experiment:
         self.grammar = modal_grammar
 
         # Measures of Complexity and Informativeness
-        self.complexity_measure = lambda lang: language_complexity(lang, self.mlot, self.grammar, config)
+        self.complexity_measure = lambda lang: language_complexity(
+            lang, self.mlot, self.grammar, config
+        )
         self.informativity_measure = lambda lang: informativity(
             language=lang,
             prior=prior,
@@ -134,7 +146,7 @@ class Experiment:
         if not all(self.paths[key] is not None for key in keys):
             self.set_filepaths(keys)
 
-    def path_exists(self, path: str, absolute=False) -> bool: 
+    def path_exists(self, path: str, absolute=False) -> bool:
         """Check whether the absolute path corresponding to the file key exists."""
         path = path if absolute else self.paths[path]
         return os.path.exists(path)
@@ -143,11 +155,12 @@ class Experiment:
         """Infer the absolute paths of language data filenames relative to hydra interpolations."""
         for key in keys:
             if key not in self.paths:
-                raise KeyError(f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}.")
+                raise KeyError(
+                    f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}."
+                )
 
             subdir = "generate_subdir" if key == "expressions" else "languages_subdir"
             self.paths[key] = get_subdir_fn_abbrev(self.config, subdir, key)
-
 
     def load_files(self, files: list[str]) -> None:
         """Load language data from filenames."""
@@ -155,7 +168,9 @@ class Experiment:
 
         for key in files:
             if key not in self.paths:
-                raise KeyError(f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}.")
+                raise KeyError(
+                    f"The file {key} cannot be loaded because it is not one of {self.paths.keys()}."
+                )
 
             result = None
             loader = load_expressions if key == "expressions" else load_languages
@@ -164,7 +179,9 @@ class Experiment:
                 result = loader(self.paths[key])
                 print("done.")
             else:
-                print(f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None.")
+                print(
+                    f"Cannot load file {self.paths[key]} because it does not exist; setting Experiment.{key}=None."
+                )
             setattr(self, key, result)
 
     def write_files(self, files: list[str]) -> None:
@@ -175,8 +192,10 @@ class Experiment:
         for i, key in enumerate(files):
 
             if key not in self.paths:
-                raise KeyError(f"The file {key} cannot be written to because it is not one of {self.paths.keys()}.")
-            
+                raise KeyError(
+                    f"The file {key} cannot be written to because it is not one of {self.paths.keys()}."
+                )
+
             fullpath = self.paths[key]
             data = getattr(self, key)
             if data is None:
@@ -191,11 +210,10 @@ class Experiment:
                 saver = save_languages
                 kind = key.replace("_languages", "")
                 overwrite = getattr(self.config.experiment.overwrites.languages, kind)
-                save_args = [fullpath] + list(data.values()) # langs, id_start
+                save_args = [fullpath] + list(data.values())  # langs, id_start
                 save_kwargs = dict(kind=kind)
-            
+
             if not self.path_exists(key) or overwrite:
                 saver(*save_args, **save_kwargs)
             else:
                 print(f"File {fullpath} already exists, not overwriting.")
-

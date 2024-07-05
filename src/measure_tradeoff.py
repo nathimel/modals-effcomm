@@ -9,6 +9,7 @@ from ultk.effcomm.tradeoff import tradeoff
 
 from experiment import Experiment
 from misc.file_util import set_seed, get_subdir_fn
+
 # from modals.modal_language import iff, sav, dlsav, deontic_priority, dp_trivial, dp_nontrivial
 from modals import modal_language as ml
 from omegaconf import DictConfig
@@ -22,13 +23,15 @@ def main(config: DictConfig):
 
     # Load the experimental data and paths to save results
 
-    df_fn = get_subdir_fn(config, config.filepaths.analysis_subdir, config.filepaths.analysis.data)
+    df_fn = get_subdir_fn(
+        config, config.filepaths.analysis_subdir, config.filepaths.analysis.data
+    )
 
     experiment = Experiment(config)
 
     # load languages
     print("sampled...")
-    experiment.load_files(["artificial_languages"])    
+    experiment.load_files(["artificial_languages"])
     print("dominant...")
     experiment.load_files(["dominant_languages"])
     print("natural...")
@@ -37,7 +40,11 @@ def main(config: DictConfig):
     id_start = experiment.artificial_languages["id_start"]
     sampled_languages = experiment.artificial_languages["languages"]
     dominant_languages = experiment.dominant_languages["languages"]
-    natural_languages = experiment.natural_languages["languages"] if experiment.natural_languages is not None else []
+    natural_languages = (
+        experiment.natural_languages["languages"]
+        if experiment.natural_languages is not None
+        else []
+    )
 
     # TODO: removing this uniqueness condition for the comparison w variants
 
@@ -84,7 +91,7 @@ def main(config: DictConfig):
     experiment.dominant_languages = {"languages": dom_langs, "id_start": id_start}
     experiment.natural_languages = {"languages": nat_langs, "id_start": None}
     save_files = [
-        # "artificial_languages", 
+        # "artificial_languages",
         "dominant_languages",
     ]
     if nat_langs:
@@ -93,15 +100,15 @@ def main(config: DictConfig):
     print("saved languages.")
 
     all_data = get_dataframe(
-        langs, 
-        columns=list(properties_to_measure.keys()) + ["optimality"] # + ["family"]
+        langs,
+        columns=list(properties_to_measure.keys()) + ["optimality"],  # + ["family"]
     )
     all_data["natural"] = [lang.natural for lang in langs]
     all_data["dominant"] = [lang in dom_langs for lang in langs]
     all_data["name"] = [lang.data["name"] for lang in langs]
 
     # For each of the perturbed variants, record the name of the original natural language
-    get_orig = lambda name: re.sub( r"_variant_\d+", "", name )
+    get_orig = lambda name: re.sub(r"_variant_\d+", "", name)
     all_data["original_name"] = [get_orig(lang.data["name"]) for lang in langs]
 
     all_data.to_csv(df_fn, index=False)

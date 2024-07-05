@@ -61,7 +61,9 @@ class ModalExpression(Expression):
             - rep: a dictionary of the form {'form': str, 'meaning': list[str], 'lot': str}
         """
         form = rep["form"]
-        points = tuple(ModalMeaningPoint.from_yaml_rep(name=name) for name in rep["meaning"])
+        points = tuple(
+            ModalMeaningPoint.from_yaml_rep(name=name) for name in rep["meaning"]
+        )
         # points = [ModalMeaningPoint(name=name) for name in rep["meaning"]]
         lot = rep["lot"]
 
@@ -332,14 +334,16 @@ def dlsav(language: ModalLanguage) -> bool:
         return True
     return False
 
+
 IMPOSSIBILITY = "impossibility"
 EPISTEMIC = "epistemic"
 DEONTIC = "deontic"
 CIRCUMSTANTIAL = "circumstantial"
 
+
 def deontic_priority(language: ModalLanguage) -> bool:
-    """The deontic priority universal: 'If a language lexicalizes any impossibility, it lexicalizes deontic impossibility'. 
-    
+    """The deontic priority universal: 'If a language lexicalizes any impossibility, it lexicalizes deontic impossibility'.
+
     Equivalently: A language lexicalizes no impossibilities or it lexicalizes deontic impossiblity.
     """
     impossibility = False
@@ -349,32 +353,43 @@ def deontic_priority(language: ModalLanguage) -> bool:
         for point in expression.meaning.referents:
             if point.data[0] == IMPOSSIBILITY:
                 impossibility = True
-            if point.data == (IMPOSSIBILITY, DEONTIC,):
+            if point.data == (
+                IMPOSSIBILITY,
+                DEONTIC,
+            ):
                 deontic_impossibility = True
-    
+
     return (not impossibility) or deontic_impossibility
+
 
 def dp_trivial(language: ModalLanguage) -> bool:
     """The trivial disjunct of dp: a language lexicalizes no impossibilities."""
     return not any(
         [
-            point.data[0] == IMPOSSIBILITY 
+            point.data[0] == IMPOSSIBILITY
             for expression in language.expressions
             for point in expression.meaning.referents
         ]
     )
 
+
 def dp_nontrivial(language: ModalLanguage) -> bool:
     """The nontrivial disjunct of dp: a language lexicalizes deontic impossibility."""
     return any(
         [
-            point.data == (IMPOSSIBILITY, DEONTIC,)
+            point.data
+            == (
+                IMPOSSIBILITY,
+                DEONTIC,
+            )
             for expression in language.expressions
             for point in expression.meaning.referents
         ]
-    )    
+    )
+
 
 # Some sanity checks: other priorities.
+
 
 def epistemic_priority(language: ModalLanguage) -> bool:
     impossibility = False
@@ -384,10 +399,14 @@ def epistemic_priority(language: ModalLanguage) -> bool:
         for point in expression.meaning.referents:
             if point.data[0] == IMPOSSIBILITY:
                 impossibility = True
-            if point.data == (IMPOSSIBILITY, EPISTEMIC,):
+            if point.data == (
+                IMPOSSIBILITY,
+                EPISTEMIC,
+            ):
                 epistemic_impossibility = True
-    
+
     return (not impossibility) or epistemic_impossibility
+
 
 def circ_priority(language: ModalLanguage) -> bool:
     impossibility = False
@@ -397,19 +416,28 @@ def circ_priority(language: ModalLanguage) -> bool:
         for point in expression.meaning.referents:
             if point.data[0] == IMPOSSIBILITY:
                 impossibility = True
-            if point.data == (IMPOSSIBILITY, CIRCUMSTANTIAL,):
+            if point.data == (
+                IMPOSSIBILITY,
+                CIRCUMSTANTIAL,
+            ):
                 circ_impossibility = True
-    
+
     return (not impossibility) or circ_impossibility
+
 
 def dp_restricted(language: ModalLanguage) -> bool:
     """A language doesn’t have impossibility, or if it has impossibility, *all* forms that have an impossibility meaning have a deontic impossibility meaning."""
     for expression in language.expressions:
         # check at least one of the points is deontic, if an impossibility force
-        flavors = [point.data[1] for point in expression.meaning.referents if point.data[0] == IMPOSSIBILITY]
+        flavors = [
+            point.data[1]
+            for point in expression.meaning.referents
+            if point.data[0] == IMPOSSIBILITY
+        ]
         if (flavors) and (not any(fl == DEONTIC for fl in flavors)):
             return False
     return True
+
 
 def dp_medium(language: ModalLanguage) -> bool:
     """For every lexical item, if it has impossibiities, then it has deontic possibility in its meaning."""

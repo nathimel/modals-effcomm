@@ -51,6 +51,7 @@ def process_can_express(val: Any, can_express: dict):
 #         print("Usage: python3 src/add_natural_languages.py path_to_config_file")
 #         raise TypeError(f"Expected {2} arguments but received {len(sys.argv)}.")
 
+
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     set_seed(config.seed)
@@ -66,7 +67,6 @@ def main(config: DictConfig):
         if os.path.isdir(os.path.join(language_data_dir, x))
     ]
 
-
     dataframes = dict()
     for dir in dirs:
         # Ensure that is one of allowed reference types
@@ -74,20 +74,20 @@ def main(config: DictConfig):
         metadata_path = os.path.join(dirpath, METADATA_FN)
 
         with open(metadata_path, "r") as stream:
-            metadata = yaml.safe_load(stream) # dict
+            metadata = yaml.safe_load(stream)  # dict
 
         reference_type = metadata[REFERENCE_TYPE_KEY]
         # must be paper-journal or elicitation
         if reference_type in ALLOWED_REFERENCE_TYPES:
-                modals_fn = os.path.join(dirpath, MODALS_FN)
-                if FAMILY_KEY not in metadata:
-                    pass
-                    # breakpoint()
-                data = {
-                    "df": pd.read_csv(modals_fn),
-                    # "family": metadata[FAMILY_KEY],
-                }
-                dataframes[dir] = data
+            modals_fn = os.path.join(dirpath, MODALS_FN)
+            if FAMILY_KEY not in metadata:
+                pass
+                # breakpoint()
+            data = {
+                "df": pd.read_csv(modals_fn),
+                # "family": metadata[FAMILY_KEY],
+            }
+            dataframes[dir] = data
         else:
             # Skip reference-grammar obtained data if incomplete.
             print(f"Data for {dir} is of type {reference_type}; skipping.")
@@ -123,10 +123,7 @@ def main(config: DictConfig):
                 vocabulary[modal] = set()
 
             # Add only the flavors specified as possible for the experiment
-            if (
-                row["flavor"] in universe.flavors
-                and row["force"] in universe.forces
-            ):
+            if row["flavor"] in universe.flavors and row["force"] in universe.forces:
                 if process_can_express(row["can_express"], config.typology.can_express):
                     observation = f"{row['force']}+{row['flavor']}"
                     vocabulary[modal].add(observation)
@@ -141,7 +138,9 @@ def main(config: DictConfig):
                 ),
                 meaning_space=universe,
             )
-            if not meaning.referents: # often there will be no usable referents due to can_express being False, above
+            if (
+                not meaning.referents
+            ):  # often there will be no usable referents due to can_express being False, above
                 continue
             # search for a matching recorded meaning to reuse LoT solutions
             for expression in expressions:
@@ -151,7 +150,7 @@ def main(config: DictConfig):
                     )
                     experiment_vocabulary.append(experiment_modal)
                     break
-        
+
         if experiment_vocabulary:
             lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name)
             lang.natural = True

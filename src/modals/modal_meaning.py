@@ -60,12 +60,12 @@ class ModalMeaningSpace(Universe):
     """
 
     def __init__(
-        self, 
-        forces: list[str], 
-        flavors: list[str], 
+        self,
+        forces: list[str],
+        flavors: list[str],
         referents: Iterable[ModalMeaningPoint] = None,
         prior: tuple[float] = None,
-        ):
+    ):
         """Construct a meaning space for modals, using two axes of variation.
 
         A modal meaning space inherits from altk.semantics.Universe, and the set of (force,flavor) pairs is the set of objects in the Universe.
@@ -94,7 +94,10 @@ class ModalMeaningSpace(Universe):
         return cls(
             forces,
             flavors,
-            [ModalMeaningPoint(point.force, point.flavor) for point in universe.referents],
+            [
+                ModalMeaningPoint(point.force, point.flavor)
+                for point in universe.referents
+            ],
             prior=universe.prior,
         )
 
@@ -145,7 +148,9 @@ class ModalMeaningSpace(Universe):
             for i in product([0, 1], repeat=len(self.referents))
         ]
         arrs = arrs[1:]  # remove the empty array meaning to prevent div by 0
-        meanings = [ModalMeaning(tuple(self.array_to_points(arr)), self) for arr in arrs]
+        meanings = [
+            ModalMeaning(tuple(self.array_to_points(arr)), self) for arr in arrs
+        ]
         return meanings
 
     def array_to_points(self, a: np.ndarray) -> set:

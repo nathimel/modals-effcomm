@@ -10,10 +10,9 @@ from modals.modal_language import ModalExpression
 def get_all_expressions(
     modal_grammar: Grammar,
     modal_universe: ModalMeaningSpace,
-    depth = 5,
-    ) -> list[str]:
-    """Use an ALTK grammar to find the shortest description length expressions denoting every possible meaning (subset of the universe), and return a corresponding list of `ModalExpression`s.
-    """
+    depth=5,
+) -> list[str]:
+    """Use an ALTK grammar to find the shortest description length expressions denoting every possible meaning (subset of the universe), and return a corresponding list of `ModalExpression`s."""
 
     expressions_by_meaning = modal_grammar.get_unique_expressions(
         depth=depth,
@@ -29,10 +28,12 @@ def get_all_expressions(
         ModalExpression(
             form=f"dummy_form_{i}",
             meaning=meaning,
-            lot_expression=str(expressions_by_meaning[meaning]) # crucial, for saving, reading, etc.
+            lot_expression=str(
+                expressions_by_meaning[meaning]
+            ),  # crucial, for saving, reading, etc.
         )
         for i, meaning in enumerate(expressions_by_meaning)
-        if len(meaning.referents) # excludes bottom
+        if len(meaning.referents)  # excludes bottom
     ]
 
     return modal_expressions

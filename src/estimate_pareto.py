@@ -18,6 +18,7 @@ from omegaconf import DictConfig
 
 from ultk.language.sampling import random_languages
 
+
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     set_seed(config.seed)
@@ -29,16 +30,20 @@ def main(config: DictConfig):
     max_mutations = evolutionary_alg_configs.max_mutations
     generations = evolutionary_alg_configs.num_generations
     explore = evolutionary_alg_configs.explore
-    lang_size = config.experiment.sampling.maximum_lang_size    
+    lang_size = config.experiment.sampling.maximum_lang_size
 
     # Create the first generation of languages
     experiment = Experiment(
-        config, 
+        config,
     )
 
     experiment.set_filepaths(["artificial_languages", "dominant_languages"])
-    if not config.experiment.overwrites.languages.dominant and experiment.path_exists("dominant_languages"):
-        print(" found and will not be overwritten; skipping evolutionary algorithm exploration of languages.")
+    if not config.experiment.overwrites.languages.dominant and experiment.path_exists(
+        "dominant_languages"
+    ):
+        print(
+            " found and will not be overwritten; skipping evolutionary algorithm exploration of languages."
+        )
         return
 
     experiment.load_files(["expressions", "artificial_languages", "natural_languages"])
@@ -65,9 +70,9 @@ def main(config: DictConfig):
         print("Sampling seed generation...")
 
         langs = random_languages(
-            expressions, 
+            expressions,
             sampling_strategy="stratified",
-            sample_size=1000, 
+            sample_size=1000,
             max_size=10,
             language_class=ModalLanguage,
         )
@@ -96,7 +101,7 @@ def main(config: DictConfig):
         max_mutations=max_mutations,
         generations=generations,
         lang_size=lang_size,
-    )        
+    )
 
     print(f"Minimizing for complexity, comm_cost ...")
     result = optimizer.fit(seed_population)
@@ -113,7 +118,6 @@ def main(config: DictConfig):
     experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}
     experiment.write_files(["dominant_languages"])
     print("done.")
-
 
 
 if __name__ == "__main__":

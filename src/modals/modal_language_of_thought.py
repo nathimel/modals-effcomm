@@ -121,7 +121,7 @@ class ExpressionTree:
 
 
 class ModalLOT:
-    def __init__(self, meaning_space: ModalMeaningSpace, lot_negation = True):
+    def __init__(self, meaning_space: ModalMeaningSpace, lot_negation=True):
         """Initialize the LoT, which depends on the number of forces and flavors.
 
         Args:

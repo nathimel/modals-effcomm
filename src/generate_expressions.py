@@ -28,25 +28,29 @@ def main(config: DictConfig):
 
     experiment = Experiment(config, load_files=["expressions"])
 
-    if experiment.expressions is not None and not config.experiment.overwrites.expressions:
+    if (
+        experiment.expressions is not None
+        and not config.experiment.overwrites.expressions
+    ):
         print(f"Expressions already generated, skipping.")
         return
-    
-    if config.experiment.lot_estimation == 'ultk':
+
+    if config.experiment.lot_estimation == "ultk":
         print("Evaluating lot expressions via ultk grammar...")
         # TODO: perform systematic comparison of complexities of expressions under both measures
-        modal_expressions = get_all_expressions(experiment.grammar, experiment.universe,)
+        modal_expressions = get_all_expressions(
+            experiment.grammar,
+            experiment.universe,
+        )
 
-    elif config.experiment.lot_estimation == 'homebuilt':
+    elif config.experiment.lot_estimation == "homebuilt":
         # Generate lot expressions
         meanings = experiment.meanings
         mdl = experiment.mlot.minimum_lot_description
         print("Evaluating lot expressions via homebuilt heuristic...")
         # Measure expressions for complexity
         with Pool(cpu_count()) as p:
-            lot_expressions = list(
-                tqdm(p.imap(mdl, meanings), total=len(meanings))
-            )
+            lot_expressions = list(tqdm(p.imap(mdl, meanings), total=len(meanings)))
 
         # Check if negation shouldn't be there
         # N.B.: this is old stuff just for debugging
@@ -68,11 +72,14 @@ def main(config: DictConfig):
             for i, meaning in enumerate(meanings)
         ]
     else:
-        raise ValueError(f"Incorrect config for lot_estimation; possible values are 'altk' or 'homebuilt'.")
+        raise ValueError(
+            f"Incorrect config for lot_estimation; possible values are 'altk' or 'homebuilt'."
+        )
 
     experiment.expressions = modal_expressions
     experiment.write_files(["expressions"])
     print("done.")
+
 
 if __name__ == "__main__":
     main()

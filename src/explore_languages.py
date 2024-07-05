@@ -28,16 +28,20 @@ def main(config: DictConfig):
     max_mutations = evolutionary_alg_configs.max_mutations
     generations = evolutionary_alg_configs.num_generations
     explore = evolutionary_alg_configs.explore
-    lang_size = config.experiment.sampling.maximum_lang_size    
+    lang_size = config.experiment.sampling.maximum_lang_size
 
     # Create the first generation of languages
     experiment = Experiment(
-        config, 
+        config,
     )
 
     experiment.set_filepaths(["artificial_languages", "dominant_languages"])
-    if not config.experiment.overwrites.languages.dominant and experiment.path_exists("dominant_languages"):
-        print(" found and will not be overwritten; skipping evolutionary algorithm exploration of languages.")
+    if not config.experiment.overwrites.languages.dominant and experiment.path_exists(
+        "dominant_languages"
+    ):
+        print(
+            " found and will not be overwritten; skipping evolutionary algorithm exploration of languages."
+        )
         return
 
     experiment.load_files(["expressions", "artificial_languages", "natural_languages"])
@@ -113,8 +117,7 @@ def main(config: DictConfig):
         lang_size=lang_size,
     )
 
-
-    # TODO: To debug why evol alg is not finding more than 1 dominant, 
+    # TODO: To debug why evol alg is not finding more than 1 dominant,
     # copypaste the indefinites example evol alg.
 
     # Explore all four corners of the possible language space
@@ -125,7 +128,6 @@ def main(config: DictConfig):
         x, y = directions[direction]
         optimizer.objectives = [objectives[x], objectives[y]]
         print(f"Minimizing for {x}, {y} ...")
-
 
         # run algorithm
         result = optimizer.fit(
@@ -150,13 +152,21 @@ def main(config: DictConfig):
 
     # remove some non-dominant to limit final pool to a standard size
     # TODO: remove this hack
-    num_natural_langs = len(experiment.natural_languages["languages"]) if experiment.natural_languages is not None else 0
-    cap = config.experiment.sampling.total_pool_cap - len(dominant_langs) - num_natural_langs
+    num_natural_langs = (
+        len(experiment.natural_languages["languages"])
+        if experiment.natural_languages is not None
+        else 0
+    )
+    cap = (
+        config.experiment.sampling.total_pool_cap
+        - len(dominant_langs)
+        - num_natural_langs
+    )
     candidate_langs = [lang for lang in pool if lang not in dominant_langs]
     if len(pool) > cap:
         reduced_pool = random.sample(candidate_langs, cap)
         pool = reduced_pool + dominant_langs
-    
+
     print("Saving languages...")
     experiment.artificial_languages = {"languages": pool, "id_start": id_start}
     experiment.dominant_languages = {"languages": dominant_langs, "id_start": id_start}

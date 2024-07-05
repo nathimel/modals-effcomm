@@ -7,6 +7,7 @@ from modals.modal_meaning import ModalMeaningPoint
 # Utility (reward) functions for informativity measure
 ##############################################################################
 
+
 def indicator(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> int:
     """Utility function that rewards only perfect recovery of meaning point m.
 
@@ -34,17 +35,19 @@ def half_credit(m: ModalMeaningPoint, m_: ModalMeaningPoint) -> float:
     """
     intended = m.data
     guess = m_.data
-    score = 0.
+    score = 0.0
     for feature in intended:
         if feature in guess:
             score += 0.5
     return score
 
+
 def utility_func_from_csv(
-        fn: str, 
-        base_util: Callable[[ModalMeaningPoint, ModalMeaningPoint], int] = half_credit) -> Callable[[ModalMeaningPoint, ModalMeaningPoint], int]:
+    fn: str,
+    base_util: Callable[[ModalMeaningPoint, ModalMeaningPoint], int] = half_credit,
+) -> Callable[[ModalMeaningPoint, ModalMeaningPoint], int]:
     """Load a utility function from a csv file containing nonnegative weights for modal meaning points. Will be normalized so that the maximum utility is 1.
-    
+
     Args:
         fn: the csv file to read in, which must specify weights for correctly identifying meaning points
 
@@ -58,11 +61,11 @@ def utility_func_from_csv(
 
     # Normalize weights of meaning points in df so maximum is 1.
     weights = {
-        (force, flavor):  df.loc[
-            (df['force'] == force) & (df['flavor'] == flavor), 
-            "weight"
-            ].iloc[0]
-        for force in set(df.force.values) for flavor in set(df.flavor.values)
+        (force, flavor): df.loc[
+            (df["force"] == force) & (df["flavor"] == flavor), "weight"
+        ].iloc[0]
+        for force in set(df.force.values)
+        for flavor in set(df.flavor.values)
     }
     total = max(list(weights.values()))
     weights = {point: weight / total for point, weight in weights.items()}

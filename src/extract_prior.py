@@ -4,6 +4,7 @@ import sys
 import spacy
 import hydra
 import pandas as pd
+
 pd.options.mode.chained_assignment = None  # default='warn'
 from spacy.tokens import Doc
 from misc import file_util
@@ -98,7 +99,9 @@ def main(config: DictConfig):
         print("Loading dataframes...")
         # list of filenames of each dataset used
         fns = [
-            get_original_fp(fn) for folder in modality_corpus for fn in modality_corpus[folder].values()
+            get_original_fp(fn)
+            for folder in modality_corpus
+            for fn in modality_corpus[folder].values()
         ]
         # load dataframe of all files concatenated
         df_all = pd.concat(
@@ -187,8 +190,11 @@ def main(config: DictConfig):
     # save prior for experiment
     prior_fn = get_original_fp(config.filepaths.prior_fn)
     pd.DataFrame(
-        list(prior.items()), 
-        columns=["name", "probability",]
+        list(prior.items()),
+        columns=[
+            "name",
+            "probability",
+        ],
     ).to_csv(prior_fn, index=False)
     print(f"Wrote prior to {prior_fn}.")
 
