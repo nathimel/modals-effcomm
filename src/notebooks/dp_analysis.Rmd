@@ -12,115 +12,88 @@ library(modelr)
 library(viridis)
 library(ggrepel)
 library(latex2exp)
+library(broom.mixed)
+library(jtools)
 ```
 
 
 ```{r load}
-df <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal/analysis/all_data.csv")
-
-# df <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=1e-20/utility=importance/agent_type=literal/analysis/all_data.csv")
-
-
-# Make an alias, facet_var, for original name
-df <- mutate(df, facet_var = paste(original_name, "and variants"))
-
-pareto_data <- filter(df, dominant == TRUE)
-natural_data <- filter(df, natural == TRUE)
-
-# Careful, this is incorrect.
-variants_data <- filter(df, str_detect(name, "_variant_"))
-
-# Be careful, this might not always be the case
-naturals_and_variants_df <- bind_rows(natural_data, variants_data)
-```
-
-```{r reproduce_plot}
-
-plot = (
-  # Set data and the axes
-  ggplot(
-    data=natural_data, # set for faceting
-    mapping=aes(x=complexity, y=comm_cost),
-  )
-  # + scale_y_continuous(limits=[0, 1])
-  + geom_line(data=pareto_data)
-  + geom_point(  # naturals and variants
-      data=naturals_and_variants_df,
-      stroke=0,
-      # alpha=.5,
-      mapping=aes(
-        color=original_name,
-        shape=dp_restricted,
-      ),
-      size=4,
-  )
-  + geom_point( # natural langs
-    data=natural_data,
-    shape="+",
-    size=8,
-  )
-  + geom_text_repel(
-    data=natural_data,
-    mapping=aes(label=name),
-    size=6,
-    nudge_x=1,
-  )
-  + scale_color_discrete()
-  + theme_classic()
+df_se_imp <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=importance/agent_type=literal/analysis/all_data.csv") %>% mutate(
+  prior = "semi_estimated",
+  utility = "importance",
 )
-plot
+
+df_se_flat <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=semi_estimated/utility=half_credit/agent_type=literal/analysis/all_data.csv") %>% mutate(
+  prior = "semi_estimated",
+  utility = "half_credit",
+)
+
+df_uniform_imp <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=1e-20/utility=importance/agent_type=literal/analysis/all_data.csv") %>% mutate(
+  prior = "uniform",
+  utility = "importance",
+)
+
+
+df_uniform_flat <- read_csv("/Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=experiment_prohibition/prior=1e-20/utility=half_credit/agent_type=literal/analysis/all_data.csv") %>% mutate(
+  prior = "uniform",
+  utility = "half_credit",
+)
+
+# R sucks
+df_all <- rbind( rbind( rbind(df_se_imp, df_se_flat), df_uniform_imp), df_uniform_flat)
+df_all
 ```
 
-```{r facet}
 
+```{r regression}
 
-(
-  # Set data and the axes
-  ggplot(
-    mapping=aes(x=complexity, y=comm_cost),
-  )
-  # + scale_y_continuous(limits=[0, 1])
-  + geom_line(
-    # remove faceting variable here so it is present in facet_wrap
-    data=select(pareto_data, -facet_var),
-  )
-  + geom_point(  # all langs
-      data=naturals_and_variants_df,
-      stroke=0,
-      alpha=.3,
-      mapping=aes(
-        # color=original_name,
-        color=dp_restricted,
-        shape=dp_restricted,
-      ),
-      size=3,
-  )
-  + geom_point( # natural langs
-    data=natural_data,
-    shape="+",
-    size=8,
-  )
-  # Annotate originals
-  + geom_text_repel(
-    data=natural_data,
-    mapping=aes(label=name),
-    size=4,
-    nudge_x=2,
-  )  
+# Regression
+getregr <- function(y, prior_name, util_name) {
   
-  + facet_wrap(vars(facet_var))
+  df_regr <- df_all %>% filter(
+    prior == prior_name,
+    utility == util_name,
+  ) %>% mutate(
+    optimality_z = scale(optimality),
+    informativity_z = scale(informativity),
+)
   
-  + scale_color_discrete()
-  # + theme_classic()
-)
+    
+  # fit reduced models
+  model_natural <- lmer(informativity ~ natural + (1 | original_name), data = df_regr)
+  # model_natural <- lm(optimality ~ natural, data = df_s)
+  
+  model_dp <- lmer(informativity ~ dp_medium + (1 | original_name), data = df_regr)
+  # model_dp <- lm(optimality ~ dp_medium, data = df_s)  
+
+  return(model_dp)
+    
+}
+
 
 ```
 
-```{r save plot}
-ggsave(
-  "faceted_langs.png",
-  width=10,
-  height=10,
-)
-```
 
+```{r coefficients}
+
+for (prior_name in c("uniform", "semi_estimated")) {
+  for (util_name in c("half_credit", "importance")) {
+    (
+     plot_summs(
+        getregr(prior_name, util_name),
+        # colors = "Rainbow",
+        point.shape = FALSE,
+        # robust=TRUE,
+        inner_ci_level = .9
+        # plot.distributions = TRUE
+      )
+      + theme(
+        axis.text.x = element_text(size=24),
+        axis.text.y = element_blank()
+      )
+  
+    )
+  }
+}
+
+```

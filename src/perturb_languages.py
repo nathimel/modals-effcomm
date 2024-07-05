@@ -100,13 +100,20 @@ def perturb_meaning_space(
     else:
         mappings = []
         for _ in range(num_variants_per_language):
-            shuffled_referents = copy.deepcopy(referents)
-            random.shuffle(shuffled_referents)
-            if shuffled_referents == referents:
+            
+            # only shuffle flavors
+            flavors = [ref.flavor for ref in referents]
+            shuffled_flavors = copy.deepcopy(flavors)
+            # shuffled_referents = copy.deepcopy(referents)
+            random.shuffle(shuffled_flavors)
+
+            if shuffled_flavors == flavors:
                 continue
             mappings.append(
                 # Need to map each current meaning to the new meaning induced by the rotated meaning space
-                {referents[idx]: shuffled_referents[idx] for idx in range(len(referents))}
+
+                # TODO: make the mapping (fo, fll) -> (fo, shuffled fl)
+                {referents[idx]: ModalMeaningPoint((referents[idx].force, shuffled_flavors[idx])) for idx in range(len(referents))}
             )
 
 

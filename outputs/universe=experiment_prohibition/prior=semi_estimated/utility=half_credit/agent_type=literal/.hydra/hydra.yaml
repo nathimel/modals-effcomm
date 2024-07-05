@@ -107,8 +107,8 @@ hydra:
     - hydra.mode=RUN
     task:
     - experiment=dp
-    - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.prior=semi_estimated
+    - experiment.effcomm.inf.utility=half_credit
   job:
     name: analyze
     chdir: true
