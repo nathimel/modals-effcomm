@@ -1,7 +1,9 @@
 Data: df_s
 Models:
-model_natural: informativity ~ natural + (1 | original_name)
-model_full: informativity ~ natural + dp_medium + (1 | original_name)
-              npar     AIC     BIC logLik deviance  Chisq Df Pr(>Chisq)
-model_natural    4 -715.08 -700.43 361.54  -723.08                     
-model_full       5 -714.25 -695.93 362.12  -724.25 1.1664  1     0.2801
+model_natural: optimality ~ natural + (1 | original_name)
+model_full: optimality ~ natural + dp_medium + (1 | original_name)
+              npar     AIC     BIC logLik deviance  Chisq Df Pr(>Chisq)  
+model_natural    4 -567.34 -552.70 287.67  -575.34                       
+model_full       5 -568.54 -550.24 289.27  -578.54 3.1988  1    0.07369 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

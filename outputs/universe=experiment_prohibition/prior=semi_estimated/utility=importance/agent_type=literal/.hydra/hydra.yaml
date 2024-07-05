@@ -107,6 +107,8 @@ hydra:
     - hydra.mode=RUN
     task:
     - experiment=dp
+    - experiment.effcomm.inf.prior=semi_estimated
+    - experiment.effcomm.inf.utility=importance
   job:
     name: analyze
     chdir: true

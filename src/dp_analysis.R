@@ -102,15 +102,15 @@ df_s <- df %>%
 # Likelihood Ratio Tests
 
 # fit full model
-model_full <- lmer(informativity ~ natural + dp_medium + (1 | original_name), data = df_s)
+model_full <- lmer(optimality ~ natural + dp_medium + (1 | original_name), data = df_s)
 # model_full <- lm(optimality ~ natural + dp_medium, data = df_s)
 
 
 # fit reduced models
-model_natural <- lmer(informativity ~ natural + (1 | original_name), data = df_s)
+model_natural <- lmer(optimality ~ natural + (1 | original_name), data = df_s)
 # model_natural <- lm(optimality ~ natural, data = df_s)
 
-model_dp <- lmer(informativity ~ dp_medium + (1 | original_name), data = df_s)
+model_dp <- lmer(optimality ~ dp_medium + (1 | original_name), data = df_s)
 # model_dp <- lm(optimality ~ dp_medium, data = df_s)
 
 
