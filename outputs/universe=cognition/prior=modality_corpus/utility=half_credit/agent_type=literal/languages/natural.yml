@@ -7,12 +7,12 @@ forces:
 - strong
 id_start: null
 languages:
-- Farsi:
+- Vietnamese:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.19475736568457558
-      complexity: 19
+      comm_cost: 0.2142487483150397
+      complexity: 12
       deontic_priority: true
       dlsav: true
       dp_medium: true
@@ -22,235 +22,104 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.8052426343154244
-      name: Farsi
-      optimality: 0.9058855334377919
+      informativity: 0.7857512516849603
+      name: Vietnamese
+      optimality: 0.9314974989436374
       sav: 1.0
       simplicity: null
     expressions:
-    - form: -shav-
+    - form: "ch\u1EAFc ch\u1EAFn"
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: "ch\u1EAFc h\u1EB3n"
+      lot: and(strong, not(deontic))
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+    - form: "c\u1EA7n ph\u1EA3i"
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: "ph\u1EA3i"
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: "th\u1EC3"
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: "\u0111\u01B0\u1EE3c1"
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    length: 6
+- Thai:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.15330131908338163
+      complexity: 15
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8466986809166184
+      name: Thai
+      optimality: 0.9232844056188116
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: '... dai'
       lot: and(weak, not(epistemic))
       meaning:
       - weak+deontic
       - weak+circumstantial
-    - form: -tavan-
-      lot: and(weak, not(epistemic))
+    - form: Aat (ca)
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: Anuyard
+      lot: and(weak, deontic)
       meaning:
       - weak+deontic
-      - weak+circumstantial
-    - form: 'balad ast '
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: bayad
+    - form: Dong (ca)
       lot: strong
       meaning:
       - strong+epistemic
       - strong+circumstantial
       - strong+deontic
-    - form: ejaze dad/dasht
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: emkand ast
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: lazem ast
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: momken ast
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: shayad
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    length: 9
-- Greek:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.4103139643109316
-      complexity: 5
-      deontic_priority: true
-      dlsav: false
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 0.6666666666666666
-      informativity: 0.5896860356890684
-      name: Greek
-      optimality: 0.9638888448162531
-      sav: 0.6666666666666666
-      simplicity: null
-    expressions:
-    - form: Isos
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: Mporei
-      lot: weak
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
-      - weak+epistemic
-    - form: Prepei
-      lot: or(strong, epistemic)
+    - form: Jambpen dong (ca)
+      lot: strong
       meaning:
       - strong+epistemic
       - strong+circumstantial
       - strong+deontic
-      - weak+epistemic
-    length: 3
-- Telugu:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.3981561717696902
-      complexity: 9
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.6018438282303098
-      name: Telugu
-      optimality: 0.9185688326619078
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: V-ccu
-      lot: weak
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
-      - weak+epistemic
-    - form: tappakuNdaa
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: v-aali
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: v-anakuntaa
+    - form: Kong ca
       lot: and(weak, epistemic)
       meaning:
       - weak+epistemic
-    - form: v-gala
+    - form: saamaat
       lot: and(weak, circumstantial)
       meaning:
       - weak+circumstantial
-    length: 5
-- Tlingit:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.2852397458116698
-      complexity: 10
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.7147602541883302
-      name: Tlingit
-      optimality: 0.9287535720061705
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: future mode
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: giwe
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: "gw\xE1l"
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: potential mode
+    - form: saamaat... dai
       lot: and(weak, circumstantial)
       meaning:
       - weak+circumstantial
-    - form: "sh\xE1kd\xE9"
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    length: 5
-- Korean:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.16433781051415386
-      complexity: 16
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.8356621894858461
-      name: Korean
-      optimality: 0.9394606014875573
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: -keyss-
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: -napo-
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: -to + toy-
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: -ya + ha-
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: an -myeon an-toy-
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: ci(-to) molun-
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: swu(-to) iss-
-      lot: and(weak, not(deontic))
-      meaning:
-      - weak+circumstantial
-      - weak+epistemic
-    length: 7
+    length: 8
 - Hausa:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.27939052570768363
+      comm_cost: 0.2667653572116312
       complexity: 9
       deontic_priority: true
       dlsav: true
@@ -261,9 +130,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7206094742923164
+      informativity: 0.7332346427883688
       name: Hausa
-      optimality: 0.9406066937488544
+      optimality: 0.9495227785646698
       sav: 1.0
       simplicity: null
     expressions:
@@ -288,11 +157,73 @@ languages:
       - weak+deontic
       - weak+epistemic
     length: 4
+- Cantonese:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.14762059503177372
+      complexity: 22
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8523794049682263
+      name: Cantonese
+      optimality: 0.8585116988194433
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: '... dou'
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: Dak
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: Hoji
+      lot: and(weak, not(epistemic))
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+    - form: Honang
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: Jatding
+      lot: and(strong, not(circumstantial))
+      meaning:
+      - strong+epistemic
+      - strong+deontic
+    - form: Jinggoi
+      lot: and(weak, not(deontic))
+      meaning:
+      - weak+circumstantial
+      - weak+epistemic
+    - form: Jiu
+      lot: and(strong, not(epistemic))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    - form: bei
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: soeijiu
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    length: 9
 - Javanese-Paciran:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.11424032351242064
+      comm_cost: 0.06080300404390537
       complexity: 11
       deontic_priority: true
       dlsav: true
@@ -303,9 +234,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.8857596764875794
+      informativity: 0.9391969959560946
       name: Javanese-Paciran
-      optimality: 0.9950053678746196
+      optimality: 0.9999657457676145
       sav: 1.0
       simplicity: null
     expressions:
@@ -331,12 +262,12 @@ languages:
       meaning:
       - weak+epistemic
     length: 5
-- Hindi:
+- Mapudungun:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.23229989087874725
-      complexity: 9
+      comm_cost: 0.15594309647602556
+      complexity: 15
       deontic_priority: true
       dlsav: true
       dp_medium: true
@@ -346,44 +277,48 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7677001091212527
-      name: Hindi
-      optimality: 0.9550654881209282
+      informativity: 0.8440569035239744
+      name: Mapudungun
+      optimality: 0.9221889288385621
       sav: 1.0
       simplicity: null
     expressions:
-    - form: dative on subject + fut on verb+ clause final hoga/hogi
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: sakte/sakti/sakta hai
-      lot: weak
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
-      - weak+epistemic
-    - form: sakte/sakti/sakta ho
-      lot: weak
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
-      - weak+epistemic
-    - form: shayad
+    - form: -pelayafuy
       lot: and(weak, epistemic)
       meaning:
       - weak+epistemic
-    - form: zaroor+hogi/hoga
+    - form: "m\xFCley [...] V-al"
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: "m\xFCleyafuy kam"
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: "m\xFCleyafuy may"
       lot: and(strong, epistemic)
       meaning:
       - strong+epistemic
-    length: 5
-- Hebrew:
+    - form: pepi-
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: pepi-_-a-
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: pepi-_-afu
+      lot: and(weak, not(deontic))
+      meaning:
+      - weak+circumstantial
+      - weak+epistemic
+    length: 7
+- Logoori:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.1980791450028887
-      complexity: 12
+      comm_cost: 0.30155979202772976
+      complexity: 6
       deontic_priority: true
       dlsav: true
       dp_medium: true
@@ -393,45 +328,81 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.8019208549971113
-      name: Hebrew
-      optimality: 0.9331488321765913
+      informativity: 0.6984402079722702
+      name: Logoori
+      optimality: 0.9755486652255332
       sav: 1.0
       simplicity: null
     expressions:
-    - form: batuakh
-      lot: and(strong, epistemic)
+    - form: fwana
+      lot: and(weak, epistemic)
       meaning:
-      - strong+epistemic
-    - form: khayav
+      - weak+epistemic
+    - form: haondi
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: kudoka
       lot: strong
       meaning:
       - strong+epistemic
       - strong+circumstantial
       - strong+deontic
-    - form: mesugelet
-      lot: and(weak, circumstantial)
+    - form: kunyala
+      lot: weak
       meaning:
       - weak+circumstantial
-    - form: oolay
-      lot: and(weak, epistemic)
-      meaning:
+      - weak+deontic
       - weak+epistemic
-    - form: yakhol
+    length: 4
+- Basque:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.3141789428076258
+      complexity: 13
+      deontic_priority: true
+      dlsav: false
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 0.75
+      informativity: 0.6858210571923742
+      name: Basque
+      optimality: 0.895120852555576
+      sav: 0.75
+      simplicity: null
+    expressions:
+    - form: ahal
+      lot: and(or(weak, circumstantial), or(strong, deontic))
+      meaning:
+      - weak+deontic
+      - strong+circumstantial
+    - form: behar
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    - form: daiteke
       lot: and(weak, not(epistemic))
       meaning:
       - weak+deontic
       - weak+circumstantial
-    - form: yitakhen
-      lot: and(weak, epistemic)
+    - form: liteke
+      lot: and(weak, not(deontic))
       meaning:
+      - weak+circumstantial
       - weak+epistemic
-    length: 6
+    length: 4
 - Mandarin:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.160492489890237
+      comm_cost: 0.20374783362218385
       complexity: 25
       deontic_priority: true
       dlsav: true
@@ -442,9 +413,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.839507510109763
+      informativity: 0.7962521663778162
       name: Mandarin
-      optimality: 0.9041149093516768
+      optimality: 0.8064679710654009
       sav: 1.0
       simplicity: null
     expressions:
@@ -494,11 +465,99 @@ languages:
       meaning:
       - strong+epistemic
     length: 10
+- Hebrew:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.19126709031388422
+      complexity: 12
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8087329096861158
+      name: Hebrew
+      optimality: 0.9395817807809098
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: batuakh
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: khayav
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    - form: mesugelet
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: oolay
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: yakhol
+      lot: and(weak, not(epistemic))
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+    - form: yitakhen
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    length: 6
+- Greek:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.37363397843250556
+      complexity: 5
+      deontic_priority: true
+      dlsav: false
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 0.6666666666666666
+      informativity: 0.6263660215674944
+      name: Greek
+      optimality: 0.9683487466837551
+      sav: 0.6666666666666666
+      simplicity: null
+    expressions:
+    - form: Isos
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: Mporei
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: Prepei
+      lot: or(strong, epistemic)
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+      - weak+epistemic
+    length: 3
 - Japanese:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.1559069901790875
+      comm_cost: 0.09826930483342977
       complexity: 18
       deontic_priority: true
       dlsav: false
@@ -509,9 +568,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 0.875
-      informativity: 0.8440930098209125
+      informativity: 0.9017306951665702
       name: Japanese
-      optimality: 0.9368143739592409
+      optimality: 0.9173353810301158
       sav: 0.875
       simplicity: null
     expressions:
@@ -550,169 +609,11 @@ languages:
       meaning:
       - weak+deontic
     length: 8
-- Khmer:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.2678846524167151
-      complexity: 6
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.7321153475832849
-      name: Khmer
-      optimality: 0.9737696704232724
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: ac
-      lot: weak
-      meaning:
-      - weak+deontic
-      - weak+epistemic
-      - weak+circumstantial
-    - form: chambac
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: prohai
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: treuv
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    length: 4
-- Dutch:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.185562295397651
-      complexity: 16
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.814437704602349
-      name: Dutch
-      optimality: 0.9248696021555953
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: kan/kunnen
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: mag/mogen
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: misschien
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: moet/moeten
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    - form: 'waarschijnlijk '
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: zal
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: zou/zouden ... kunnen
-      lot: and(weak, not(deontic))
-      meaning:
-      - weak+circumstantial
-      - weak+epistemic
-    - form: zou/zouden ... moeten
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    length: 8
-- Thai:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.20424730406316205
-      complexity: 15
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.795752695936838
-      name: Thai
-      optimality: 0.9162457054788233
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: '... dai'
-      lot: and(weak, not(epistemic))
-      meaning:
-      - weak+deontic
-      - weak+circumstantial
-    - form: Aat (ca)
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: Anuyard
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: Dong (ca)
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    - form: Jambpen dong (ca)
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    - form: Kong ca
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: saamaat
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: saamaat... dai
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    length: 8
 - Tagalog:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.39021278644328916
+      comm_cost: 0.24802618910071272
       complexity: 11
       deontic_priority: true
       dlsav: true
@@ -723,9 +624,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.6097872135567108
+      informativity: 0.7519738108992873
       name: Tagalog
-      optimality: 0.8971057307413133
+      optimality: 0.9357050162836611
       sav: 1.0
       simplicity: null
     expressions:
@@ -756,73 +657,11 @@ languages:
       meaning:
       - weak+epistemic
     length: 6
-- Cantonese:
+- Tlingit:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.1554015020219528
-      complexity: 22
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.8445984979780472
-      name: Cantonese
-      optimality: 0.9202776452131537
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: '... dou'
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: Dak
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: Hoji
-      lot: and(weak, not(epistemic))
-      meaning:
-      - weak+deontic
-      - weak+circumstantial
-    - form: Honang
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: Jatding
-      lot: and(strong, not(circumstantial))
-      meaning:
-      - strong+epistemic
-      - strong+deontic
-    - form: Jinggoi
-      lot: and(weak, not(deontic))
-      meaning:
-      - weak+circumstantial
-      - weak+epistemic
-    - form: Jiu
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: bei
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: soeijiu
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    length: 9
-- Kiitharaka:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.1750734161371078
+      comm_cost: 0.43471981513575986
       complexity: 10
       deontic_priority: true
       dlsav: true
@@ -833,41 +672,132 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.8249265838628922
-      name: Kiitharaka
-      optimality: 0.9574064703560712
+      informativity: 0.5652801848642401
+      name: Tlingit
+      optimality: 0.9039604535273599
       sav: 1.0
       simplicity: null
     expressions:
-    - form: mwanka
+    - form: future mode
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: giwe
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: "gw\xE1l"
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: potential mode
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: "sh\xE1kd\xE9"
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    length: 5
+- Telugu:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.26569420373579833
+      complexity: 9
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.7343057962642017
+      name: Telugu
+      optimality: 0.9497474934058304
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: V-ccu
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: tappakuNdaa
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: v-aali
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: v-anakuntaa
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: v-gala
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    length: 5
+- Hungarian:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.16625746196803393
+      complexity: 13
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8337425380319661
+      name: Hungarian
+      optimality: 0.9390614070251166
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -het-
+      lot: and(weak, not(circumstantial))
+      meaning:
+      - weak+deontic
+      - weak+epistemic
+    - form: kell
       lot: strong
       meaning:
       - strong+epistemic
       - strong+circumstantial
       - strong+deontic
-    - form: n'wa + ka
-      lot: and(weak, deontic)
+    - form: kep-
+      lot: and(weak, circumstantial)
       meaning:
-      - weak+deontic
-    - form: 'n''wa +verb '
-      lot: and(weak, not(epistemic))
-      meaning:
-      - weak+deontic
       - weak+circumstantial
-    - form: perfective aspect
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: "w\xEEgue"
+    - form: lehet
       lot: and(weak, epistemic)
       meaning:
       - weak+epistemic
-    length: 5
+    - form: "musz\xE1j"
+      lot: and(strong, not(epistemic))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    - form: tud-
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    length: 6
 - Gitksan:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.20374783362218385
+      comm_cost: 0.10705517042172175
       complexity: 9
       deontic_priority: true
       dlsav: false
@@ -878,9 +808,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7962521663778162
+      informativity: 0.8929448295782783
       name: Gitksan
-      optimality: 0.9613958699831594
+      optimality: 0.999974412840208
       sav: 1.0
       simplicity: null
     expressions:
@@ -908,11 +838,217 @@ languages:
       - strong+circumstantial
       - strong+deontic
     length: 5
+- Turkish:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.2752262661274796
+      complexity: 15
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.7247737338725204
+      name: Turkish
+      optimality: 0.8851980081405586
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -abil // -ebil
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: "-d\u0131r"
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: -ma-
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: gerek
+      lot: and(strong, not(epistemic))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    - form: "laz\u0131m"
+      lot: and(strong, not(epistemic))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    - form: "m\xFCmk\xFCn"
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: "\u015Fart"
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    length: 7
+- Lillooet-Salish:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.2429953783939921
+      complexity: 7
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.7570046216060079
+      name: Lillooet-Salish
+      optimality: 0.978031787598636
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -an'
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: -ku7
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: k'a
+      lot: epistemic
+      meaning:
+      - strong+epistemic
+      - weak+epistemic
+    - form: ka
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: ka-...-a
+      lot: circumstantial
+      meaning:
+      - strong+circumstantial
+      - weak+circumstantial
+    length: 5
+- Farsi:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.16722029655305237
+      complexity: 19
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8327797034469476
+      name: Farsi
+      optimality: 0.8791535355204346
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -shav-
+      lot: and(weak, not(epistemic))
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+    - form: -tavan-
+      lot: and(weak, not(epistemic))
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+    - form: 'balad ast '
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: bayad
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    - form: ejaze dad/dasht
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: emkand ast
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: lazem ast
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: momken ast
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: shayad
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    length: 9
+- Kiitharaka:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.18892619872905847
+      complexity: 10
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8110738012709415
+      name: Kiitharaka
+      optimality: 0.9582054636137116
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: mwanka
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    - form: n'wa + ka
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: 'n''wa +verb '
+      lot: and(weak, not(epistemic))
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+    - form: perfective aspect
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: "w\xEEgue"
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    length: 5
 - Akan:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.2270163360934594
+      comm_cost: 0.2709135695487517
       complexity: 13
       deontic_priority: true
       dlsav: true
@@ -923,9 +1059,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7729836639065406
+      informativity: 0.7290864304512483
       name: Akan
-      optimality: 0.9120104356647968
+      optimality: 0.9073500876466665
       sav: 1.0
       simplicity: null
     expressions:
@@ -963,61 +1099,11 @@ languages:
       - strong+circumstantial
       - strong+deontic
     length: 7
-- Hungarian:
+- Igbo:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.21026502021952642
-      complexity: 13
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.7897349797804736
-      name: Hungarian
-      optimality: 0.9205507650537419
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: -het-
-      lot: and(weak, not(circumstantial))
-      meaning:
-      - weak+deontic
-      - weak+epistemic
-    - form: kell
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    - form: kep-
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: lehet
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: "musz\xE1j"
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: tud-
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    length: 6
-- Logoori:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.2769433211374288
+      comm_cost: 0.26295012516849625
       complexity: 6
       deontic_priority: true
       dlsav: true
@@ -1028,83 +1114,38 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7230566788625712
-      name: Logoori
-      optimality: 0.9721739808765018
+      informativity: 0.7370498748315037
+      name: Igbo
+      optimality: 0.9836649007545482
       sav: 1.0
       simplicity: null
     expressions:
-    - form: fwana
-      lot: and(weak, epistemic)
+    - form: (e)kwesiri
+      lot: and(strong, circumstantial)
       meaning:
-      - weak+epistemic
-    - form: haondi
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: kudoka
-      lot: strong
-      meaning:
-      - strong+epistemic
       - strong+circumstantial
-      - strong+deontic
-    - form: kunyala
+    - form: Nwe-rV ike
       lot: weak
       meaning:
       - weak+circumstantial
       - weak+deontic
       - weak+epistemic
-    length: 4
-- Lillooet-Salish:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.23262083574042003
-      complexity: 7
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.76737916425958
-      name: Lillooet-Salish
-      optimality: 0.9771075100884034
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: -an'
-      lot: and(strong, epistemic)
+    - form: ga-v-ni
+      lot: and(weak, circumstantial)
       meaning:
-      - strong+epistemic
-    - form: -ku7
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: k'a
-      lot: epistemic
-      meaning:
-      - strong+epistemic
-      - weak+epistemic
-    - form: ka
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    - form: ka-...-a
-      lot: circumstantial
-      meaning:
-      - strong+circumstantial
       - weak+circumstantial
-    length: 5
+    - form: ga-v-riri
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    length: 4
 - Russian:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.1927975961229862
+      comm_cost: 0.21616438795814896
       complexity: 17
       deontic_priority: true
       dlsav: true
@@ -1115,9 +1156,9 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.8072024038770138
+      informativity: 0.783835612041851
       name: Russian
-      optimality: 0.9156747087619261
+      optimality: 0.8810638107553872
       sav: 1.0
       simplicity: null
     expressions:
@@ -1163,12 +1204,12 @@ languages:
       - weak+circumstantial
       - weak+epistemic
     length: 9
-- Mapudungun:
+- Hindi:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.357043134989409
-      complexity: 15
+      comm_cost: 0.2831696514538806
+      complexity: 9
       deontic_priority: true
       dlsav: true
       dp_medium: true
@@ -1178,47 +1219,152 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.642956865010591
-      name: Mapudungun
-      optimality: 0.8568260036331503
+      informativity: 0.7168303485461194
+      name: Hindi
+      optimality: 0.9460815356490313
       sav: 1.0
       simplicity: null
     expressions:
-    - form: -pelayafuy
-      lot: and(weak, epistemic)
+    - form: dative on subject + fut on verb+ clause final hoga/hogi
+      lot: and(strong, not(epistemic))
       meaning:
-      - weak+epistemic
-    - form: "m\xFCley [...] V-al"
-      lot: and(strong, deontic)
-      meaning:
+      - strong+circumstantial
       - strong+deontic
-    - form: "m\xFCleyafuy kam"
+    - form: sakte/sakti/sakta hai
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: sakte/sakti/sakta ho
+      lot: weak
+      meaning:
+      - weak+circumstantial
+      - weak+deontic
+      - weak+epistemic
+    - form: shayad
       lot: and(weak, epistemic)
       meaning:
       - weak+epistemic
-    - form: "m\xFCleyafuy may"
+    - form: zaroor+hogi/hoga
       lot: and(strong, epistemic)
       meaning:
       - strong+epistemic
-    - form: pepi-
+    length: 5
+- Dutch:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.11658723281340289
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8834127671865971
+      name: Dutch
+      optimality: 0.9289189550641728
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: kan/kunnen
       lot: and(weak, circumstantial)
       meaning:
       - weak+circumstantial
-    - form: pepi-_-a-
+    - form: mag/mogen
       lot: and(weak, deontic)
       meaning:
       - weak+deontic
-    - form: pepi-_-afu
+    - form: misschien
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: moet/moeten
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+circumstantial
+      - strong+deontic
+    - form: 'waarschijnlijk '
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: zal
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: zou/zouden ... kunnen
+      lot: and(weak, not(deontic))
+      meaning:
+      - weak+circumstantial
+      - weak+epistemic
+    - form: zou/zouden ... moeten
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    length: 8
+- Korean:
+    data:
+      Language: natural
+      circ_priority: true
+      comm_cost: 0.14081455805892573
+      complexity: 16
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.8591854419410743
+      name: Korean
+      optimality: 0.9188725522022227
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: -keyss-
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: -napo-
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    - form: -to + toy-
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: -ya + ha-
+      lot: and(strong, not(epistemic))
+      meaning:
+      - strong+circumstantial
+      - strong+deontic
+    - form: an -myeon an-toy-
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: ci(-to) molun-
+      lot: and(weak, epistemic)
+      meaning:
+      - weak+epistemic
+    - form: swu(-to) iss-
       lot: and(weak, not(deontic))
       meaning:
       - weak+circumstantial
       - weak+epistemic
     length: 7
-- Igbo:
+- Khmer:
     data:
       Language: natural
       circ_priority: true
-      comm_cost: 0.25649913344887376
+      comm_cost: 0.2863470055844408
       complexity: 6
       deontic_priority: true
       dlsav: true
@@ -1229,176 +1375,30 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7435008665511262
-      name: Igbo
-      optimality: 0.9779057328750803
+      informativity: 0.7136529944155592
+      name: Khmer
+      optimality: 0.9787567746394534
       sav: 1.0
       simplicity: null
     expressions:
-    - form: (e)kwesiri
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: Nwe-rV ike
+    - form: ac
       lot: weak
       meaning:
-      - weak+circumstantial
       - weak+deontic
       - weak+epistemic
-    - form: ga-v-ni
-      lot: and(weak, circumstantial)
-      meaning:
       - weak+circumstantial
-    - form: ga-v-riri
-      lot: strong
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-      - strong+deontic
-    length: 4
-- Vietnamese:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.19203735798189892
-      complexity: 12
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.8079626420181011
-      name: Vietnamese
-      optimality: 0.937302505143691
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: "ch\u1EAFc ch\u1EAFn"
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: "ch\u1EAFc h\u1EB3n"
-      lot: and(strong, not(deontic))
-      meaning:
-      - strong+epistemic
-      - strong+circumstantial
-    - form: "c\u1EA7n ph\u1EA3i"
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: "ph\u1EA3i"
+    - form: chambac
       lot: and(strong, deontic)
       meaning:
       - strong+deontic
-    - form: "th\u1EC3"
-      lot: weak
+    - form: prohai
+      lot: and(weak, epistemic)
       meaning:
-      - weak+circumstantial
-      - weak+deontic
       - weak+epistemic
-    - form: "\u0111\u01B0\u1EE3c1"
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    length: 6
-- Basque:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.3285251781243985
-      complexity: 13
-      deontic_priority: true
-      dlsav: false
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 0.75
-      informativity: 0.6714748218756015
-      name: Basque
-      optimality: 0.8842891174544433
-      sav: 0.75
-      simplicity: null
-    expressions:
-    - form: ahal
-      lot: and(or(weak, circumstantial), or(strong, deontic))
-      meaning:
-      - weak+deontic
-      - strong+circumstantial
-    - form: behar
+    - form: treuv
       lot: strong
       meaning:
       - strong+epistemic
       - strong+circumstantial
       - strong+deontic
-    - form: daiteke
-      lot: and(weak, not(epistemic))
-      meaning:
-      - weak+deontic
-      - weak+circumstantial
-    - form: liteke
-      lot: and(weak, not(deontic))
-      meaning:
-      - weak+circumstantial
-      - weak+epistemic
     length: 4
-- Turkish:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.21820238782977097
-      complexity: 15
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.781797612170229
-      name: Turkish
-      optimality: 0.9066522393595332
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: -abil // -ebil
-      lot: weak
-      meaning:
-      - weak+circumstantial
-      - weak+deontic
-      - weak+epistemic
-    - form: "-d\u0131r"
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: -ma-
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    - form: gerek
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: "laz\u0131m"
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    - form: "m\xFCmk\xFCn"
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: "\u015Fart"
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    length: 7

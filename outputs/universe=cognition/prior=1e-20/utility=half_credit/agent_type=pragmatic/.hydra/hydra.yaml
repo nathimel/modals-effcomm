@@ -141,24 +141,24 @@ hydra:
   runtime:
     version: 1.3.2
     version_base: '1.3'
-    cwd: /Users/nathanielimel/uw/projects/modals-effcomm
+    cwd: /dfs6/pub/nimel/projects/modals-effcomm
     config_sources:
     - path: hydra.conf
       schema: pkg
       provider: hydra
-    - path: /Users/nathanielimel/uw/projects/modals-effcomm/conf
+    - path: /dfs6/pub/nimel/projects/modals-effcomm/conf
       schema: file
       provider: main
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /Users/nathanielimel/uw/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=half_credit/agent_type=pragmatic
+    output_dir: /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=half_credit/agent_type=pragmatic
     choices:
       plot: custom
       typology: dev
       experiment: dev
       experiment/overwrites: default
-      experiment/sampling: small
+      experiment/sampling: large
       experiment/sampling/evol: default
       experiment/effcomm: half_credit_literal
       experiment/effcomm/inf: hcl
