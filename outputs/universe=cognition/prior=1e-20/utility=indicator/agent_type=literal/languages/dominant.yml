@@ -7,12 +7,58 @@ forces:
 - weak
 id_start: 67573
 languages:
-- sampled_lang_67055:
+- sampled_lang_57836:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.29166666666666674
-      complexity: 10
+      comm_cost: 0.43981481481481477
+      complexity: 7
+      deontic_priority: true
+      dlsav: false
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.5601851851851852
+      name: sampled_lang_57836
+      optimality: 0.999996038638196
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_1
+      lot: strong
+      meaning:
+      - strong+epistemic
+      - strong+deontic
+      - strong+circumstantial
+    - form: dummy_form_11
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_2
+      lot: epistemic
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_4
+      lot: circumstantial
+      meaning:
+      - weak+circumstantial
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    length: 5
+- sampled_lang_53376:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.33333333333333337
+      complexity: 8
       deontic_priority: true
       dlsav: true
       dp_medium: true
@@ -22,18 +68,50 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.7083333333333333
-      name: sampled_lang_67055
-      optimality: 0.9999478995610813
+      informativity: 0.6666666666666666
+      name: sampled_lang_53376
+      optimality: 0.9999429563900206
       sav: 1.0
       simplicity: null
     expressions:
-    - form: dummy_form_0
-      lot: weak
+    - form: dummy_form_10
+      lot: and(strong, deontic)
       meaning:
-      - weak+epistemic
-      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_11
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_8
+      lot: and(weak, circumstantial)
+      meaning:
       - weak+circumstantial
+    - form: dummy_form_9
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    length: 4
+- sampled_lang_59556:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.45833333333333337
+      complexity: 6
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.5416666666666666
+      name: sampled_lang_59556
+      optimality: 0.9999501973431156
+      sav: 1.0
+      simplicity: null
+    expressions:
     - form: dummy_form_11
       lot: and(strong, circumstantial)
       meaning:
@@ -43,20 +121,17 @@ languages:
       meaning:
       - weak+deontic
       - strong+deontic
-    - form: dummy_form_6
-      lot: and(weak, epistemic)
-      meaning:
-      - weak+epistemic
-    - form: dummy_form_8
-      lot: and(weak, circumstantial)
+    - form: dummy_form_4
+      lot: circumstantial
       meaning:
       - weak+circumstantial
+      - strong+circumstantial
     - form: dummy_form_9
       lot: and(strong, epistemic)
       meaning:
       - strong+epistemic
-    length: 6
-- sampled_lang_45220:
+    length: 4
+- sampled_lang_42787:
     data:
       Language: artificial
       circ_priority: true
@@ -72,7 +147,43 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.49999999999999994
-      name: sampled_lang_45220
+      name: sampled_lang_42787
+      optimality: 0.9999605319704072
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_11
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_2
+      lot: epistemic
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    length: 3
+- sampled_lang_56061:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5
+      complexity: 4
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.49999999999999994
+      name: sampled_lang_56061
       optimality: 0.9999605319704072
       sav: 1.0
       simplicity: null
@@ -135,7 +246,7 @@ languages:
       meaning:
       - weak+epistemic
     length: 5
-- sampled_lang_52185:
+- sampled_lang_44565:
     data:
       Language: artificial
       circ_priority: true
@@ -151,282 +262,7 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.6666666666666666
-      name: sampled_lang_52185
-      optimality: 0.9999429563900206
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_10
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: dummy_form_11
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_8
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: dummy_form_9
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    length: 4
-- Gitksan:
-    data:
-      Language: natural
-      circ_priority: true
-      comm_cost: 0.33333333333333326
-      complexity: 9
-      deontic_priority: true
-      dlsav: false
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.6666666666666667
-      name: Gitksan
-      optimality: 0.9999354946946721
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: anook(xw)
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: "da\u2019akhlxw"
-      lot: and(weak, circumstantial)
-      meaning:
-      - weak+circumstantial
-    - form: gat
-      lot: epistemic
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: "ima(\u2019a)"
-      lot: epistemic
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: sgi
-      lot: and(strong, not(epistemic))
-      meaning:
-      - strong+circumstantial
-      - strong+deontic
-    length: 5
-- sampled_lang_43667:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.625
-      complexity: 3
-      deontic_priority: true
-      dlsav: false
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.37499999999999994
-      name: sampled_lang_43667
-      optimality: 0.9999881423423732
-      sav: 0.6666666666666666
-      simplicity: null
-    expressions:
-    - form: dummy_form_2
-      lot: epistemic
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: dummy_form_21
-      lot: not(epistemic)
-      meaning:
-      - weak+deontic
-      - weak+circumstantial
-      - strong+deontic
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    length: 3
-- sampled_lang_63762:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.625
-      complexity: 3
-      deontic_priority: true
-      dlsav: false
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.375
-      name: sampled_lang_63762
-      optimality: 0.9999881423423732
-      sav: 0.6666666666666666
-      simplicity: null
-    expressions:
-    - form: dummy_form_20
-      lot: not(deontic)
-      meaning:
-      - weak+epistemic
-      - weak+circumstantial
-      - strong+epistemic
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    - form: dummy_form_4
-      lot: circumstantial
-      meaning:
-      - weak+circumstantial
-      - strong+circumstantial
-    length: 3
-- sampled_lang_66439:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.33333333333333337
-      complexity: 8
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.6666666666666666
-      name: sampled_lang_66439
-      optimality: 0.9999429563900206
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_10
-      lot: and(strong, deontic)
-      meaning:
-      - strong+deontic
-    - form: dummy_form_11
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_7
-      lot: and(weak, deontic)
-      meaning:
-      - weak+deontic
-    - form: dummy_form_9
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    length: 4
-- sampled_lang_40170:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.45833333333333337
-      complexity: 6
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.5416666666666666
-      name: sampled_lang_40170
-      optimality: 0.9999501973431156
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_11
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    - form: dummy_form_4
-      lot: circumstantial
-      meaning:
-      - weak+circumstantial
-      - strong+circumstantial
-    - form: dummy_form_9
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    length: 4
-- sampled_lang_48295:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.5
-      complexity: 4
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.49999999999999994
-      name: sampled_lang_48295
-      optimality: 0.9999605319704072
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_11
-      lot: and(strong, circumstantial)
-      meaning:
-      - strong+circumstantial
-    - form: dummy_form_2
-      lot: epistemic
-      meaning:
-      - weak+epistemic
-      - strong+epistemic
-    - form: dummy_form_3
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    length: 3
-- sampled_lang_39127:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.33333333333333337
-      complexity: 8
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.6666666666666666
-      name: sampled_lang_39127
+      name: sampled_lang_44565
       optimality: 0.9999429563900206
       sav: 1.0
       simplicity: null
@@ -448,7 +284,7 @@ languages:
       meaning:
       - strong+epistemic
     length: 4
-- sampled_lang_51294:
+- sampled_lang_37550:
     data:
       Language: artificial
       circ_priority: true
@@ -464,25 +300,63 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.33333333333333337
-      name: sampled_lang_51294
+      name: sampled_lang_37550
       optimality: 0.9999950380534364
       sav: 0.5
       simplicity: null
     expressions:
-    - form: dummy_form_20
-      lot: not(deontic)
+    - form: dummy_form_2
+      lot: epistemic
       meaning:
       - weak+epistemic
-      - weak+circumstantial
       - strong+epistemic
-      - strong+circumstantial
-    - form: dummy_form_3
-      lot: deontic
+    - form: dummy_form_21
+      lot: not(epistemic)
       meaning:
       - weak+deontic
+      - weak+circumstantial
       - strong+deontic
+      - strong+circumstantial
     length: 2
-- sampled_lang_38530:
+- sampled_lang_61640:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.33333333333333337
+      complexity: 8
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.6666666666666666
+      name: sampled_lang_61640
+      optimality: 0.9999429563900206
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_10
+      lot: and(strong, deontic)
+      meaning:
+      - strong+deontic
+    - form: dummy_form_11
+      lot: and(strong, circumstantial)
+      meaning:
+      - strong+circumstantial
+    - form: dummy_form_7
+      lot: and(weak, deontic)
+      meaning:
+      - weak+deontic
+    - form: dummy_form_9
+      lot: and(strong, epistemic)
+      meaning:
+      - strong+epistemic
+    length: 4
+- sampled_lang_38085:
     data:
       Language: artificial
       circ_priority: true
@@ -498,7 +372,7 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.6666666666666666
-      name: sampled_lang_38530
+      name: sampled_lang_38085
       optimality: 0.9999429563900206
       sav: 1.0
       simplicity: null
@@ -522,43 +396,7 @@ languages:
       - weak+deontic
       - weak+circumstantial
     length: 4
-- sampled_lang_67005:
-    data:
-      Language: artificial
-      circ_priority: true
-      comm_cost: 0.5
-      complexity: 4
-      deontic_priority: true
-      dlsav: true
-      dp_medium: true
-      dp_nontrivial: false
-      dp_restricted: true
-      dp_trivial: true
-      epistemic_priority: true
-      family: artificial
-      iff: 1.0
-      informativity: 0.49999999999999994
-      name: sampled_lang_67005
-      optimality: 0.9999605319704072
-      sav: 1.0
-      simplicity: null
-    expressions:
-    - form: dummy_form_3
-      lot: deontic
-      meaning:
-      - weak+deontic
-      - strong+deontic
-    - form: dummy_form_4
-      lot: circumstantial
-      meaning:
-      - weak+circumstantial
-      - strong+circumstantial
-    - form: dummy_form_9
-      lot: and(strong, epistemic)
-      meaning:
-      - strong+epistemic
-    length: 3
-- sampled_lang_51502:
+- sampled_lang_53363:
     data:
       Language: artificial
       circ_priority: true
@@ -574,7 +412,85 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.375
-      name: sampled_lang_51502
+      name: sampled_lang_53363
+      optimality: 0.9999881423423732
+      sav: 0.6666666666666666
+      simplicity: null
+    expressions:
+    - form: dummy_form_2
+      lot: epistemic
+      meaning:
+      - weak+epistemic
+      - strong+epistemic
+    - form: dummy_form_21
+      lot: not(epistemic)
+      meaning:
+      - weak+deontic
+      - weak+circumstantial
+      - strong+deontic
+      - strong+circumstantial
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    length: 3
+- sampled_lang_56496:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.625
+      complexity: 3
+      deontic_priority: true
+      dlsav: false
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.37499999999999994
+      name: sampled_lang_56496
+      optimality: 0.9999881423423732
+      sav: 0.6666666666666666
+      simplicity: null
+    expressions:
+    - form: dummy_form_20
+      lot: not(deontic)
+      meaning:
+      - weak+epistemic
+      - weak+circumstantial
+      - strong+epistemic
+      - strong+circumstantial
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_4
+      lot: circumstantial
+      meaning:
+      - weak+circumstantial
+      - strong+circumstantial
+    length: 3
+- sampled_lang_61458:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.625
+      complexity: 3
+      deontic_priority: true
+      dlsav: false
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.375
+      name: sampled_lang_61458
       optimality: 0.9999881423423732
       sav: 0.6666666666666666
       simplicity: null
@@ -597,14 +513,14 @@ languages:
       - weak+circumstantial
       - strong+circumstantial
     length: 3
-- sampled_lang_65520:
+- sampled_lang_37819:
     data:
       Language: artificial
       circ_priority: true
-      comm_cost: 0.43981481481481477
-      complexity: 7
+      comm_cost: 0.29166666666666674
+      complexity: 10
       deontic_priority: true
-      dlsav: false
+      dlsav: true
       dp_medium: true
       dp_nontrivial: false
       dp_restricted: true
@@ -612,38 +528,77 @@ languages:
       epistemic_priority: true
       family: artificial
       iff: 1.0
-      informativity: 0.5601851851851852
-      name: sampled_lang_65520
-      optimality: 0.999996038638196
+      informativity: 0.7083333333333333
+      name: sampled_lang_37819
+      optimality: 0.9999407979556107
       sav: 1.0
       simplicity: null
     expressions:
-    - form: dummy_form_1
-      lot: strong
+    - form: dummy_form_0
+      lot: weak
       meaning:
-      - strong+epistemic
-      - strong+deontic
-      - strong+circumstantial
+      - weak+epistemic
+      - weak+deontic
+      - weak+circumstantial
     - form: dummy_form_11
       lot: and(strong, circumstantial)
       meaning:
       - strong+circumstantial
-    - form: dummy_form_2
-      lot: epistemic
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
+    - form: dummy_form_6
+      lot: and(weak, epistemic)
       meaning:
       - weak+epistemic
+    - form: dummy_form_8
+      lot: and(weak, circumstantial)
+      meaning:
+      - weak+circumstantial
+    - form: dummy_form_9
+      lot: and(strong, epistemic)
+      meaning:
       - strong+epistemic
+    length: 6
+- sampled_lang_49223:
+    data:
+      Language: artificial
+      circ_priority: true
+      comm_cost: 0.5
+      complexity: 4
+      deontic_priority: true
+      dlsav: true
+      dp_medium: true
+      dp_nontrivial: false
+      dp_restricted: true
+      dp_trivial: true
+      epistemic_priority: true
+      family: artificial
+      iff: 1.0
+      informativity: 0.49999999999999994
+      name: sampled_lang_49223
+      optimality: 0.9999605319704072
+      sav: 1.0
+      simplicity: null
+    expressions:
+    - form: dummy_form_3
+      lot: deontic
+      meaning:
+      - weak+deontic
+      - strong+deontic
     - form: dummy_form_4
       lot: circumstantial
       meaning:
       - weak+circumstantial
       - strong+circumstantial
-    - form: dummy_form_7
-      lot: and(weak, deontic)
+    - form: dummy_form_9
+      lot: and(strong, epistemic)
       meaning:
-      - weak+deontic
-    length: 5
-- sampled_lang_40392:
+      - strong+epistemic
+    length: 3
+- sampled_lang_64891:
     data:
       Language: artificial
       circ_priority: true
@@ -659,7 +614,7 @@ languages:
       family: artificial
       iff: 1.0
       informativity: 0.5416666666666666
-      name: sampled_lang_40392
+      name: sampled_lang_64891
       optimality: 0.9999501973431156
       sav: 1.0
       simplicity: null

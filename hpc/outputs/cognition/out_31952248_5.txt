@@ -1,0 +1,284 @@
+Running job on host hpc3-20-07
+SLURM_NTASKS is 1
+I am task SLURM_ARRAY_TASK_ID = 5
+I am job SLURM_JOB_ID = 31952253
+I am array job SLURM_ARRAY_JOB_ID = 31952248
+no change     /opt/apps/miniconda3/4.8.5/condabin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda
+no change     /opt/apps/miniconda3/4.8.5/bin/conda-env
+no change     /opt/apps/miniconda3/4.8.5/bin/activate
+no change     /opt/apps/miniconda3/4.8.5/bin/deactivate
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.sh
+no change     /opt/apps/miniconda3/4.8.5/etc/fish/conf.d/conda.fish
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/Conda.psm1
+no change     /opt/apps/miniconda3/4.8.5/shell/condabin/conda-hook.ps1
+no change     /opt/apps/miniconda3/4.8.5/lib/python3.8/site-packages/xontrib/conda.xsh
+no change     /opt/apps/miniconda3/4.8.5/etc/profile.d/conda.csh
+no change     /data/homezvol0/nimel/.bashrc
+No action taken.
+python src/setup.py "$@"
+[INFO] - Fontsize 0.00 < 1.0 pt not allowed by FreeType. Setting fontsize = 1 pt
+Saved plot to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/pointwise_inf_weights.png.
+python src/add_natural_languages.py "$@"
+Loading expressions...
+done.
+Expressions already generated, skipping.
+python src/add_natural_languages.py "$@"
+Data for Qiang is of type reference-grammar; skipping.
+Data for Donmari is of type reference-grammar; skipping.
+Data for Goemai is of type reference-grammar; skipping.
+Data for Hinuq is of type reference-grammar; skipping.
+Data for Hup is of type reference-grammar; skipping.
+Data for Jamul-Tipay is of type reference-grammar; skipping.
+Data for Kwaza is of type reference-grammar; skipping.
+Data for Mani is of type reference-grammar; skipping.
+Data for Mian is of type reference-grammar; skipping.
+Data for Nuosu is of type reference-grammar; skipping.
+Data for Tundra-Nenets is of type reference-grammar; skipping.
+Data for Vaeakau-Taumako is of type reference-grammar; skipping.
+Loading expressions...
+done.
+Adding Akan
+Adding Basque
+Adding Cantonese
+Adding Dutch
+Adding Farsi
+Adding Gitksan
+Adding Greek
+Adding Hausa
+Adding Hebrew
+Adding Hindi
+Adding Hungarian
+Adding Igbo
+Adding Japanese
+Adding Javanese-Paciran
+Adding Khmer
+Adding Kiitharaka
+Adding Korean
+Adding Lillooet-Salish
+Adding Logoori
+Adding Mandarin
+Adding Mapudungun
+Adding Russian
+Adding Tagalog
+Adding Telugu
+Adding Thai
+Adding Tlingit
+Adding Turkish
+Adding Vietnamese
+File /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/natural.yml already exists, not overwriting.
+python src/new_explore_languages.py "experiment.overwrites.languages={"natural":False, "artificial":True, "dominant":True}" "$@"
+Estimating pareto frontier ...
+Loading expressions...
+done.
+Loading artificial_languages...
+Loaded 33569 languages in 146.47 seconds
+done.
+Loading natural_languages...
+Loaded 28 languages in 0.10 seconds
+done.
+Sampling seed generation...
+Minimizing for comm_cost, complexity ...
+Discovered 33541 languages.
+Filtering languages...
+Saving languages...
+Saved 1 dominant languages in 0.00 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/dominant.yml
+Saved 33541 artificial languages in 63.29 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/artificial.yml
+done.
+python src/measure_tradeoff.py "experiment.overwrites.languages={"natural":True, "artificial":True, "dominant":True}" "$@"
+Measuring tradeoff ...
+sampled...
+Loading artificial_languages...
+Loaded 33541 languages in 130.74 seconds
+done.
+dominant...
+Loading dominant_languages...
+Loaded 1 languages in 0.01 seconds
+done.
+natural...
+Loading natural_languages...
+Loaded 28 languages in 0.10 seconds
+done.
+33569 total langs.
+Measuring min distance to frontier ...
+Setting optimality ...
+Saving languages...
+Saved 33569 artificial languages in 71.46 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/artificial.yml
+Saved 23 dominant languages in 0.03 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/dominant.yml
+Saved 28 natural languages in 0.05 seconds to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/languages/natural.yml
+saved languages.
+saved df.
+python3 src/analyze.py "$@"
+Excluding Thai from final analysis.
+NATURAL DATA
+       complexity  simplicity  informativity  comm_cost       iff       sav  \
+363             7         NaN       0.611111   0.388889  1.000000  1.000000   
+524            12         NaN       0.722222   0.277778  1.000000  1.000000   
+597             9         NaN       0.555556   0.444444  1.000000  1.000000   
+5521           13         NaN       0.638889   0.361111  1.000000  1.000000   
+6966           25         NaN       0.666667   0.333333  1.000000  1.000000   
+7041            9         NaN       0.583333   0.416667  1.000000  1.000000   
+11811           5         NaN       0.419048   0.580952  0.666667  0.666667   
+12773          13         NaN       0.464646   0.535354  0.750000  0.750000   
+12938          17         NaN       0.728571   0.271429  1.000000  1.000000   
+13569          10         NaN       0.694444   0.305556  1.000000  1.000000   
+15340          11         NaN       0.833333   0.166667  1.000000  1.000000   
+15705          22         NaN       0.748148   0.251852  1.000000  1.000000   
+16073          10         NaN       0.357143   0.642857  1.000000  1.000000   
+16632           9         NaN       0.614508   0.385492  1.000000  1.000000   
+18576          15         NaN       0.611111   0.388889  1.000000  1.000000   
+19050           6         NaN       0.466667   0.533333  1.000000  1.000000   
+20779           6         NaN       0.555556   0.444444  1.000000  1.000000   
+21203          18         NaN       0.897436   0.102564  0.875000  0.875000   
+21730          19         NaN       0.694444   0.305556  1.000000  1.000000   
+21831           6         NaN       0.555556   0.444444  1.000000  1.000000   
+24122           9         NaN       0.666667   0.333333  1.000000  1.000000   
+26169          16         NaN       0.833333   0.166667  1.000000  1.000000   
+26458          11         NaN       0.638086   0.361914  1.000000  1.000000   
+27645          12         NaN       0.694444   0.305556  1.000000  1.000000   
+29538          15         NaN       0.695186   0.304814  1.000000  1.000000   
+30537          13         NaN       0.650068   0.349932  1.000000  1.000000   
+31294          16         NaN       0.833333   0.166667  1.000000  1.000000   
+
+       dlsav  deontic_priority  dp_trivial  dp_nontrivial  epistemic_priority  \
+363     True              True        True          False                True   
+524     True              True        True          False                True   
+597     True              True        True          False                True   
+5521    True              True        True          False                True   
+6966    True              True        True          False                True   
+7041    True              True        True          False                True   
+11811  False              True        True          False                True   
+12773  False              True        True          False                True   
+12938   True              True        True          False                True   
+13569   True              True        True          False                True   
+15340   True              True        True          False                True   
+15705   True              True        True          False                True   
+16073   True              True        True          False                True   
+16632   True              True        True          False                True   
+18576   True              True        True          False                True   
+19050   True              True        True          False                True   
+20779   True              True        True          False                True   
+21203  False              True        True          False                True   
+21730   True              True        True          False                True   
+21831   True              True        True          False                True   
+24122  False              True        True          False                True   
+26169   True              True        True          False                True   
+26458   True              True        True          False                True   
+27645   True              True        True          False                True   
+29538   True              True        True          False                True   
+30537   True              True        True          False                True   
+31294   True              True        True          False                True   
+
+       circ_priority  dp_restricted  dp_medium  optimality  natural  dominant  \
+363             True           True       True    0.999948     True      True   
+524             True           True       True    0.961985     True     False   
+597             True           True       True    0.966230     True     False   
+5521            True           True       True    0.933801     True     False   
+6966            True           True       True    0.809498     True     False   
+7041            True           True       True    0.971859     True     False   
+11811           True           True       True    0.978599     True     False   
+12773           True           True       True    0.902533     True     False   
+12938           True           True       True    0.915008     True     False   
+13569           True           True       True    0.974012     True     False   
+15340           True           True       True    0.999971     True      True   
+15705           True           True       True    0.865402     True     False   
+16073           True           True       True    0.911755     True     False   
+16632           True           True       True    0.977333     True     False   
+18576           True           True       True    0.907942     True     False   
+19050           True           True       True    0.980173     True     False   
+20779           True           True       True    0.999956     True      True   
+21203           True           True       True    0.999909     True      True   
+21730           True           True       True    0.882412     True     False   
+21831           True           True       True    0.999956     True      True   
+24122           True           True       True    0.982675     True     False   
+26169           True           True       True    0.959665     True     False   
+26458           True           True       True    0.956733     True     False   
+27645           True           True       True    0.950997     True     False   
+29538           True           True       True    0.921066     True     False   
+30537           True           True       True    0.934946     True     False   
+31294           True           True       True    0.959665     True     False   
+
+                   name  
+363     Lillooet-Salish  
+524          Vietnamese  
+597               Hausa  
+5521          Hungarian  
+6966           Mandarin  
+7041              Hindi  
+11811             Greek  
+12773            Basque  
+12938           Russian  
+13569        Kiitharaka  
+15340  Javanese-Paciran  
+15705         Cantonese  
+16073           Tlingit  
+16632            Telugu  
+18576           Turkish  
+19050           Logoori  
+20779             Khmer  
+21203          Japanese  
+21730             Farsi  
+21831              Igbo  
+24122           Gitksan  
+26169             Dutch  
+26458           Tagalog  
+27645            Hebrew  
+29538        Mapudungun  
+30537              Akan  
+31294            Korean  
+[INFO] - Fontsize 0.00 < 1.0 pt not allowed by FreeType. Setting fontsize = 1 pt
+Saved plot to /dfs6/pub/nimel/projects/modals-effcomm/outputs/universe=cognition/prior=1e-20/utility=indicator/agent_type=pragmatic/analysis/plot.png.
+Degree iff pearson correlations:
+simplicity: 0.48291339633186864
+informativity: 0.5709648711533097
+optimality: 0.5839293758350721
+
+MEANS
+                          simplicity  informativity  optimality
+name                                                           
+natural_means               0.797207       0.645537    0.948297
+dlsav_means                 0.862396       0.410744    0.937608
+deontic_priority_means      0.657703       0.408624    0.800838
+epistemic_priority_means    0.657703       0.408624    0.800838
+circ_priority_means         0.657703       0.408624    0.800838
+dp_restricted_means         0.657703       0.408624    0.800838
+population_means            0.657703       0.408624    0.800838
+
+TTEST STATS
+natural languages (27) against population (33569)
+                     simplicity  informativity    optimality
+stat                                                        
+t-statistic        8.801045e+00   9.529461e+00  1.634526e+01
+Two-sided p-value  2.823299e-09   5.727881e-10  3.396993e-15
+
+dlsav languages (815) against population (33569)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic          93.18718       0.417021   131.88542
+Two-sided p-value     0.00000       0.676773     0.00000
+
+deontic priority languages (33569) against population (33569)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic               0.0            0.0         0.0
+Two-sided p-value         1.0            1.0         1.0
+
+
+epistemic priority languages (33569) against population (33569)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic               0.0            0.0         0.0
+Two-sided p-value         1.0            1.0         1.0
+
+circ priority languages (33569) against population (33569)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic               0.0            0.0         0.0
+Two-sided p-value         1.0            1.0         1.0
+
+deontic priority restricted languages (33569) against population (33569)
+                   simplicity  informativity  optimality
+stat                                                    
+t-statistic               0.0            0.0         0.0
+Two-sided p-value         1.0            1.0         1.0
+
