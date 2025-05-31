@@ -106,16 +106,14 @@ hydra:
     hydra:
     - hydra.mode=MULTIRUN
     task:
-    - experiment.universe=experiment_prohibition
-    - experiment.effcomm.inf.prior=semi_estimated
-    - experiment.effcomm.inf.utility=importance
-    - experiment.overwrite_expressions=True
-    - experiment.overwrite_languages=True
-    - plot.counts=False
+    - experiment.universe=cognition
+    - experiment.effcomm.inf.prior=modality_corpus
+    - experiment.effcomm.inf.utility=half_credit
+    - experiment.effcomm.inf.agent_type=literal
   job:
     name: analyze
     chdir: true
-    override_dirname: experiment.overwrite_expressions=True,experiment.overwrite_languages=True,plot.counts=False
+    override_dirname: ''
     id: ???
     num: ???
     config_name: config
@@ -159,8 +157,12 @@ hydra:
       plot: custom
       typology: dev
       experiment: dev
-      experiment/sampling: small
+      experiment/overwrites: default
+      experiment/sampling: large
+      experiment/sampling/evol: default
       experiment/effcomm: half_credit_literal
+      experiment/effcomm/inf: hcl
+      experiment/effcomm/comp: default
       hydra/env: default
       hydra/callbacks: null
       hydra/job_logging: custom
@@ -175,27 +177,36 @@ experiment:
   effcomm:
     comp:
       lot_negation: true
+      grammar: default_grammar
     'inf':
-      prior: semi_estimated
-      utility: importance
+      prior: modality_corpus
+      utility: half_credit
       agent_type: literal
   sampling:
-    maximum_lang_size: 10
-    unbiased:
-      sample_size: 2000
-      lexeme_property: iff
     evol:
-      generation_size: 200
-      num_generations: 20
+      generation_size: 2000
+      num_generations: 200
       max_mutations: 5
       explore: 0
-    total_pool_cap: 5000
-    shuffling:
-      num_variants_per_language: 10
-  universe: experiment_prohibition
+      directions:
+      - lower_left
+      seed_generation_pool:
+      - random
+    maximum_lang_size: 10
+    unbiased:
+      sample_size: 40000
+      lexeme_property: iff
+    total_pool_cap: 75000
+    variants:
+      num_variants_per_language: 100
+  overwrites:
+    expressions: false
+    languages:
+      natural: false
+      artificial: false
+      dominant: false
+  universe: cognition
   lot_estimation: ultk
-  overwrite_expressions: true
-  overwrite_languages: true
 typology:
   can_express:
     true:
@@ -207,13 +218,14 @@ typology:
   syn_neg: na
 plot:
   lexeme_property: iff
-  lexicon_property: dp_restricted
-  counts: false
+  lexicon_property: null
+  counts: true
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
   prior_fn: data/prior/${experiment.effcomm.inf.prior}.csv
   utility_fn: data/utility/${experiment.effcomm.inf.utility}.csv
+  grammar_fn: data/grammar/${experiment.effcomm.comp.grammar}.yaml
   typological_data: data/natural_languages
   modality_corpus:
     0:
@@ -249,7 +261,7 @@ filepaths:
   generate_subdir: universe=${experiment.universe}
   measure_subdir: ${filepaths.generate_subdir}/prior=${experiment.effcomm.inf.prior}/utility=${experiment.effcomm.inf.utility}/agent_type=${experiment.effcomm.inf.agent_type}
   leaf_subdir: ${filepaths.measure_subdir}
-  languages_subdir: ${filepaths.generate_subdir}/languages
+  languages_subdir: ${filepaths.measure_subdir}/languages
   analysis_subdir: ${filepaths.measure_subdir}/analysis
   hydra_run_root: outputs
   hydra_sweep_root: multirun
