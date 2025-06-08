@@ -105,11 +105,23 @@ class Experiment:
 
         # Measures of Complexity and Informativeness
         self.complexity_measure = lambda lang: language_complexity(lang, self.mlot, self.grammar, config)
+
+        # my crufty hack of the agent_type config
+        agent_type = config.experiment.effcomm.inf.agent_type
+        if config.experiment.effcomm.inf.agent_type in [
+            "literal_hw",
+            "literal_num_words",
+            "ib_mdl",
+            "ib_hw",
+            "ib_num_words",
+        ]:
+            agent_type = "literal"
+
         self.informativity_measure = lambda lang: informativity(
             language=lang,
             prior=prior,
             utility=self.utility,
-            agent_type=config.experiment.effcomm.inf.agent_type,
+            agent_type=agent_type,
         )
 
         # dict containing absolute paths to language data files

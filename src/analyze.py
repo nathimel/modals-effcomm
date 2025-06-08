@@ -68,9 +68,27 @@ def get_modals_plot(
     # if counts:
         # kwargs["size"] = "counts"
 
+    comm_cost_measure = "comm_cost"
+    complexity_measure = "complexity"
+    nudge_x = {
+        "complexity": 1,
+        "num_words_complexity": 0.25,
+        "entropy_words": 0.1,
+    }
+    axis_titles=False
+
     plot = (
         # Set data and the axes
-        pn.ggplot(mapping=pn.aes(x="complexity", y="comm_cost"))
+        pn.ggplot(
+            mapping=pn.aes(
+                # x="num_words_complexity",
+                x=complexity_measure,
+                # x="complexity", 
+                y=comm_cost_measure,
+                # y="comm_cost"
+                # y="ib_comm_cost",
+            )
+        )
         # + pn.scale_y_continuous(limits=[0, 1])
         # + pn.geom_line(data=pareto_data)
         + pn.geom_point(
@@ -95,12 +113,16 @@ def get_modals_plot(
         # )
 
         # May want to change this based on agent type etc.
-        + pn.scale_y_continuous(breaks=[0., 0.25, 0.5, 1.], limits=[0,1])
+        # + pn.scale_y_continuous(breaks=[0., 0.25, 0.5, 1.], limits=[0,1])
 
         # + pn.scale_color_cmap("cividis")
         + pn.scale_fill_cmap("cividis")
         # + pn.scale_color_discrete()
         + pn.theme_classic()
+        + pn.theme(
+            axis_text=pn.element_text(size=18),
+            legend_position="none",
+        )
     )
 
     if axis_titles:
@@ -137,8 +159,8 @@ def get_modals_plot(
                 pn.aes(label="name"),
                 ha="left",
                 size=9,  # orig 9
-                nudge_x=1,
-            )
+                nudge_x=nudge_x[complexity_measure],
+            )            
         )
     return plot
 
@@ -217,6 +239,19 @@ def main(config: DictConfig):
     simplicity = lambda x: 1 - (x["complexity"] / max_complexity)
     data["simplicity"] = simplicity(data)
     natural_data["simplicity"] = simplicity(natural_data)
+
+    # Gross
+    # Scale 'num_words_complexity' to measure simplicity
+    max_num_words_complexity = data["num_words_complexity"].max()
+    simplicity_num_words = lambda x: 1 - (x["num_words_complexity"] / max_num_words_complexity)
+    data["num_words_simplicity"] = simplicity_num_words(data)
+    natural_data["num_words_simplicity"] = simplicity_num_words(natural_data)
+
+    # Scale 'entropy_words' to measure simplicity
+    max_entropy_words = data["entropy_words"].max()
+    simplicity_entropy_words = lambda x: 1 - (x["entropy_words"] / max_entropy_words)
+    data["entropy_words_simplicity"] = simplicity_entropy_words(data)
+    natural_data["entropy_words_simplicity"] = simplicity_entropy_words(natural_data)
 
     # tradeoff properties
     properties = ["simplicity", "informativity", "optimality"]

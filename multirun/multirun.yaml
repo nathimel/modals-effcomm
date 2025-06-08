@@ -109,7 +109,7 @@ hydra:
     - experiment.universe=cognition
     - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
-    - experiment.effcomm.inf.agent_type=literal
+    - experiment.effcomm.inf.agent_type=literal_hw,literal_num_words,ib_mdl,ib_hw,ib_num_words
   job:
     name: analyze
     chdir: true

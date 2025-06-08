@@ -13,6 +13,7 @@ from misc.file_util import set_seed, get_subdir_fn
 from modals import modal_language as ml
 from omegaconf import DictConfig
 
+from extended_analysis import IBCommCostMeasurer, num_words_complexity, entropy_words
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
@@ -24,7 +25,32 @@ def main(config: DictConfig):
 
     df_fn = get_subdir_fn(config, config.filepaths.analysis_subdir, config.filepaths.analysis.data)
 
+    extended_analysis = config.experiment.effcomm.inf.agent_type
+    # config.experiment.effcomm.inf.agent_type = "literal" # messes up filepaths
+
+    comm_cost_measure = "comm_cost"
+    complexity_measure = "complexity"
+    if "ib" in extended_analysis:
+        comm_cost_measure = "ib_comm_cost"
+    if "_hw" in extended_analysis:
+        complexity_measure = "entropy_words"
+    if "_num_words" in extended_analysis:
+        complexity_measure = "num_words_complexity"
+
     experiment = Experiment(config)
+
+    # # DEBUG
+    # experiment.load_files(["natural_languages"])
+    # ib_comm_cost = IBCommCostMeasurer(
+    #     experiment.universe, 
+    #     utility_func=experiment.utility,
+    # ).generate_ib_comm_cost_func()
+
+    # tlingit, = [lang for lang in experiment.natural_languages["languages"] if lang.data["name"] == "Tlingit"]
+
+    # # ib_comm_cost(tlingit)
+
+    # breakpoint()
 
     # load languages
     print("sampled...")
@@ -49,6 +75,13 @@ def main(config: DictConfig):
     comp = experiment.complexity_measure
     inf = experiment.informativity_measure
 
+    # Extended analysis
+    ib_measurer = IBCommCostMeasurer(
+        experiment.universe, 
+        utility_func=experiment.utility,
+    )
+    ib_comm_cost = ib_measurer.generate_ib_comm_cost_func()
+
     # Get trade-off results
     # TODO: outsource this to config
     properties_to_measure = {
@@ -66,16 +99,26 @@ def main(config: DictConfig):
         "circ_priority": ml.circ_priority,
         "dp_restricted": ml.dp_restricted,
         "dp_medium": ml.dp_medium,
+
+        # Extended analysis
+        "ib_comm_cost": ib_comm_cost,
+        "ib_accuracy": lambda lang: ib_measurer.memory_cap - ib_comm_cost(lang),
+        "num_words_complexity": num_words_complexity,
+        "entropy_words": entropy_words,
     }
+
+    # breakpoint() # TODO: first lets check ib_comm_cost and num_words_complexity on a single lang
 
     result = tradeoff(
         languages=langs,
         properties=properties_to_measure,
-        x="comm_cost",
-        y="complexity",
+        x=comm_cost_measure,
+        y=complexity_measure,
     )
     dom_langs = result["dominating_languages"]
     langs = result["languages"]
+
+    # breakpoint()
 
     nat_langs = [lang for lang in langs if lang.natural]
 
@@ -89,6 +132,7 @@ def main(config: DictConfig):
     ]
     if nat_langs:
         save_files += ["natural_languages"]
+    # breakpoint()
     experiment.write_files(save_files)
     print("saved languages.")
 
