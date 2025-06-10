@@ -77,11 +77,6 @@ class ModalExpression(Expression):
 class ModalLanguage(Language):
 
     """A container for modal expressions, and other efficient communication data.
-
-    Example usage:
-
-        language = Modal_Language(expressions)
-        c = language.complexity
     """
 
     def __init__(
@@ -90,7 +85,9 @@ class ModalLanguage(Language):
         name: str = None,
         data=None,
         natural=False,
+        drop_synonyms=False,
     ):
+        self.drop_synonyms = drop_synonyms
         super().__init__(expressions)
         # Initialize / load all data
         self.data = (
@@ -142,10 +139,20 @@ class ModalLanguage(Language):
     def rename_synonyms(
         self, expressions: list[ModalExpression]
     ) -> list[ModalExpression]:
-        """Give any expressions with exactly the same meanings (e.g., synonyms) different forms.
+        """Give any expressions with exactly the same meanings (e.g., synonyms) different forms. (or drop them if self.drop_synonyms is True.)
 
         This is necessary at least because a speaker and listener need to be able to distinguish them.
         """
+        if self.drop_synonyms:
+            # Keep only one instance of each unique expression
+            seen = set()
+            unique_expressions = []
+            for expr in expressions:
+                if expr not in seen:
+                    seen.add(expr)
+                    unique_expressions.append(expr)
+            return unique_expressions
+
         synonyms = {
             item: count for item, count in Counter(expressions).items() if count > 1
         }
