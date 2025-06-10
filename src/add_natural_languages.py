@@ -153,7 +153,9 @@ def main(config: DictConfig):
                     break
         
         if experiment_vocabulary:
-            lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name)
+            lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name,
+            drop_synonyms=True,                                 
+            )
             lang.natural = True
             # lang.data["family"] = family
             experiment_languages.append(lang)

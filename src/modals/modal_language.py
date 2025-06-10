@@ -1,6 +1,6 @@
 import numpy as np
 
-from collections import Counter
+from collections import Counter, defaultdict
 from copy import deepcopy
 from itertools import product
 
@@ -85,7 +85,7 @@ class ModalLanguage(Language):
         name: str = None,
         data=None,
         natural=False,
-        drop_synonyms=False,
+        drop_synonyms=True, # by default for all langs, incl artificial ones
     ):
         self.drop_synonyms = drop_synonyms
         super().__init__(expressions)
@@ -143,15 +143,15 @@ class ModalLanguage(Language):
 
         This is necessary at least because a speaker and listener need to be able to distinguish them.
         """
+        # Count how many expressions share the same meaning
+        meaning_to_exprs = defaultdict(list)
+        for expr in expressions:
+            meaning_to_exprs[expr.meaning].append(expr)
+
         if self.drop_synonyms:
-            # Keep only one instance of each unique expression
-            seen = set()
-            unique_expressions = []
-            for expr in expressions:
-                if expr not in seen:
-                    seen.add(expr)
-                    unique_expressions.append(expr)
-            return unique_expressions
+            # Keep only one representative per meaning
+            new_expressions = [exprs[0] for exprs in meaning_to_exprs.values()]
+            return new_expressions
 
         synonyms = {
             item: count for item, count in Counter(expressions).items() if count > 1
