@@ -154,7 +154,7 @@ def main(config: DictConfig):
         
         if experiment_vocabulary:
             lang = ModalLanguage(expressions=experiment_vocabulary, name=language_name,
-            drop_synonyms=True,                                 
+            # drop_synonyms=False,                                 
             )
             lang.natural = True
             # lang.data["family"] = family

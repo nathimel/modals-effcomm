@@ -39,7 +39,7 @@ def main(config: DictConfig):
 
     experiment = Experiment(config)
 
-    # # DEBUG
+    # DEBUG
     # experiment.load_files(["natural_languages"])
     # ib_comm_cost = IBCommCostMeasurer(
     #     experiment.universe, 
@@ -50,7 +50,7 @@ def main(config: DictConfig):
 
     # # ib_comm_cost(tlingit)
 
-    # breakpoint()
+    # # breakpoint()
 
     # load languages
     print("sampled...")

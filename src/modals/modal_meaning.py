@@ -84,7 +84,8 @@ class ModalMeaningSpace(Universe):
                 for force in forces
                 for flavor in flavors
             }
-        super().__init__(referents, prior)
+        referents_sorted = tuple(sorted(referents))
+        super().__init__(referents_sorted, prior)
 
     @classmethod
     def from_dataframe(cls, df: pd.DataFrame):
