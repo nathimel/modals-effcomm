@@ -107,9 +107,9 @@ hydra:
     - hydra.mode=MULTIRUN
     task:
     - experiment.universe=cognition
-    - experiment.effcomm.inf.prior=1e-20
+    - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
-    - experiment.effcomm.inf.agent_type=pragmatic
+    - experiment.effcomm.inf.agent_type=ib_num_words
   job:
     name: analyze
     chdir: true
@@ -179,9 +179,9 @@ experiment:
       lot_negation: true
       grammar: default_grammar
     'inf':
-      prior: 1.0e-20
+      prior: modality_corpus
       utility: half_credit
-      agent_type: pragmatic
+      agent_type: ib_num_words
   sampling:
     evol:
       generation_size: 2000

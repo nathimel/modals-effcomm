@@ -114,6 +114,7 @@ def main(config: DictConfig):
         properties=properties_to_measure,
         x=comm_cost_measure,
         y=complexity_measure,
+        distance_metric="cityblock",
     )
     dom_langs = result["dominating_languages"]
     langs = result["languages"]

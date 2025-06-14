@@ -85,7 +85,7 @@ class ModalLanguage(Language):
         name: str = None,
         data=None,
         natural=False,
-        drop_synonyms=False, # by default for all langs, incl artificial ones
+        drop_synonyms=True, # by default for all langs, incl artificial ones
     ):
         self.drop_synonyms = drop_synonyms
         super().__init__(expressions)
