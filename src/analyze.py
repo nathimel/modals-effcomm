@@ -65,8 +65,8 @@ def get_modals_plot(
 
     naturals_and_variants = data[data["name"].str.contains("sampled_lang_") == False]
 
-    # if counts:
-        # kwargs["size"] = "counts"
+    if counts:
+        kwargs["size"] = "counts"
 
     comm_cost_measure = "comm_cost"
     complexity_measure = "complexity"
@@ -121,7 +121,7 @@ def get_modals_plot(
         + pn.theme_classic()
         + pn.theme(
             axis_text=pn.element_text(size=18),
-            legend_position="none",
+            # legend_position="none",
         )
     )
 

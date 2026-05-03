@@ -109,11 +109,12 @@ hydra:
     - experiment.universe=cognition
     - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
-    - experiment.effcomm.inf.agent_type=ib_num_words
+    - experiment.effcomm.inf.agent_type=literal
+    - plot.counts=False
   job:
     name: analyze
     chdir: true
-    override_dirname: ''
+    override_dirname: plot.counts=False
     id: ???
     num: ???
     config_name: config
@@ -181,7 +182,7 @@ experiment:
     'inf':
       prior: modality_corpus
       utility: half_credit
-      agent_type: ib_num_words
+      agent_type: literal
   sampling:
     evol:
       generation_size: 2000
@@ -222,7 +223,7 @@ typology:
 plot:
   lexeme_property: iff
   lexicon_property: null
-  counts: true
+  counts: false
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
@@ -256,7 +257,7 @@ filepaths:
     correlations: correlations/correlation_property.csv
     data: all_data.csv
     pareto_data: pareto_data.csv
-    plot: plot.png
+    plot: plot.pdf
     means: means.csv
     ttest_natural: ttest_natural.csv
     ttest_dlsav: ttest_dlsav.csv

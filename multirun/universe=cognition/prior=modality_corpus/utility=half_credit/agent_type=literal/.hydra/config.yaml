@@ -47,7 +47,7 @@ typology:
 plot:
   lexeme_property: iff
   lexicon_property: null
-  counts: true
+  counts: false
 seed: 42
 filepaths:
   universe_fn: data/universe/${experiment.universe}.csv
@@ -81,7 +81,7 @@ filepaths:
     correlations: correlations/correlation_property.csv
     data: all_data.csv
     pareto_data: pareto_data.csv
-    plot: plot.png
+    plot: plot.pdf
     means: means.csv
     ttest_natural: ttest_natural.csv
     ttest_dlsav: ttest_dlsav.csv

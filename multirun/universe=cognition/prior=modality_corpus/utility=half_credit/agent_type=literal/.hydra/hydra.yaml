@@ -110,10 +110,11 @@ hydra:
     - experiment.effcomm.inf.prior=modality_corpus
     - experiment.effcomm.inf.utility=half_credit
     - experiment.effcomm.inf.agent_type=literal
+    - plot.counts=False
   job:
     name: analyze
     chdir: true
-    override_dirname: ''
+    override_dirname: plot.counts=False
     id: '0'
     num: 0
     config_name: config
